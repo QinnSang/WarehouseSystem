@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:c="http://www.springframework.org/schema/c"
+       xmlns:cache="http://www.springframework.org/schema/cache"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xmlns:jee="http://www.springframework.org/schema/jee"
+       xmlns:lang="http://www.springframework.org/schema/lang"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.3.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.3.xsd
+		http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-4.3.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd ">
+
+    <!--基于XML的声明式事务管理：-->
+    <!--1. 引入数据库相关的配置文件-->
+    <context:property-placeholder location="classpath:jdbc.properties"/>
+    <!--2. 配置数据源-->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <!--可以通过${}引用properties里面的属性-->
+        <property name="jdbcUrl" value="${jdbc.url}"/>
+        <property name="driverClass" value="${jdbc.driver}"/>
+        <!--property不能写为username，会与系统的username冲突-->
+        <property name="user" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <!--c3p0连接池的私有属性-->
+        <property name="maxPoolSize" value="30"/>
+        <property name="minPoolSize" value="10"/>
+        <!--关闭后不自动提交-->
+        <property name="autoCommitOnClose" value="false"/>
+        <!--获取连接超时时间-->
+        <property name="checkoutTimeout" value="100000"/>
+        <!--当获取连接失败时重试次数-->
+        <property name="acquireRetryAttempts" value="2"/>
+    </bean>
+
+    <!--3. 为数据源添加事务管理器/事务工厂-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!--4. 编写通知声明事务，即确定事务管理的策略,transaction-manager指向上面配置的transactionManager-->
+    <tx:advice transaction-manager="transactionManager" id="transactionAdvice">
+        <!--事务处理的相关值及其传播性-->
+        <tx:attributes>
+            <!--查询相关配置为只读，-->
+            <tx:method name="select*" read-only="true"/>
+            <tx:method name="get*" read-only="true"/>
+            <tx:method name="query*" read-only="true"/>
+            <tx:method name="delete*" propagation="REQUIRED" rollback-for="Exception"/>
+            <tx:method name="update*" propagation="REQUIRED" rollback-for="Exception"/>
+            <tx:method name="insert*" propagation="REQUIRED" rollback-for="Exception"/>
+            <tx:method name="add*" propagation="REQUIRED" rollback-for="Exception"/>
+        </tx:attributes>
+    </tx:advice>
+
+    <!--5. 使用aop对事物管理的范围进行织入，所以需要明确几点：-->
+    <!--a. 哪些地方需要事务管理（execution书写，明确边界）-->
+    <!--b. 使用什么策略管理：在tx:advice中进行配置，然后在aop:advisor中进行引用即可-->
+    <aop:config>
+        <aop:pointcut id="txCut" expression="execution(* service..*.*(..))"/>
+        <aop:advisor advice-ref="transactionAdvice" pointcut-ref="txCut"/>
+    </aop:config>
+
+    <!--6. 使用Spring管理MyBatis，根据数据源配置MyBatis工厂SqlSessionFactory-->
+    <bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!--引入上面配置的数据源-->
+        <property name="dataSource" ref="dataSource"/>
+        <!--引入mapper文件，这就要求所有的mapper.xml文件必须在resources下的mapper包下-->
+        <property name="mapperLocations" value="classpath:mapper/**/*.xml"/>
+        <property name="configuration">
+            <bean class="org.apache.ibatis.session.Configuration">
+                <!--将其他mybatis.cfg.xml中的setting配置全部转移到这里-->
+                <!--配置驼峰命名：u_id变为uId-->
+                <property name="mapUnderscoreToCamelCase" value="true"/>
+                <!--也加入日志-->
+                <property name="logImpl" value="org.apache.ibatis.logging.log4j.Log4jImpl"/>
+            </bean>
+        </property>
+        
+        <!--插件配置-->
+        <property name="plugins">
+            <array>
+                <!--使用拦截器实现分页功能-->
+                <bean class="com.github.pagehelper.PageInterceptor">
+                    <!--这里几个配置主要演示如何使用，如果不懂一定要去掉-->
+                    <property name="properties">
+                        <value>
+                            helperDialect=mysql
+                            reasonable=true
+                            supportMethodArguments=true
+                            params=count=countSql
+                            autoRuntimeDialect=true
+                        </value>
+                    </property>
+                </bean>
+            </array>
+        </property>
+    </bean>
+
+    <!--Mapper代理开发，使用Spring自动扫描MyBatis的接口并装配-->
+    <!--（Spring将指定包中所有被@Mapper注解标注的接口自动装配为MyBatis的映射接口）-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!--mapper接口所在路径-->
+        <property name="basePackage" value="mapper"/>
+        <!--引用上面配置的sqlSessionFactoryBean，id与value必须一致！-->
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactoryBean"/>
+    </bean>
+
+    <!--扫描mapper接口-->
+    <context:component-scan base-package="mapper">
+        <!--排除controller注解-->
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+    <!--也可以采用注解进行事务配置，所以请在Service实现类上加上@Transactional注解-->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+</beans>
