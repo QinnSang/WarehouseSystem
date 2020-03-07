@@ -3,12 +3,12 @@ package controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-
 @Controller
-@RequestMapping("/index")
-public class DevUserController {
+@RequestMapping("/settle")
+public class SettleController {
+
     @RequestMapping("/index")
     public String index(){
-        return "index";
+        return "settle/index";
     }
 }

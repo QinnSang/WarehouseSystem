@@ -21,31 +21,31 @@
         <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
         <ul class="layui-nav layui-nav-tree"  lay-filter="test">
             <li class="layui-nav-item layui-nav-itemed">
-                <a class="" href="javascript:;">首页</a>
+                <a class="" href="${ctx}/index/index">首页</a>
             </li>
             <li class="layui-nav-item">
-                <a href="javascript:;">合同管理</a>
+                <a href="${ctx}/contract/index">合同管理</a>
             </li>
             <li class="layui-nav-item">
                 <a href="javascript:;">仓储管理</a>
                 <dl class="layui-nav-child">
-                    <dd><a href="">仓库管理</a></dd>
-                    <dd><a href="">库位管理</a></dd>
-                    <dd><a href="">货物配置</a></dd>
-                    <dd><a href="">仓储订单管理</a></dd>
-                    <dd><a href="">入库管理</a></dd>
-                    <dd><a href="">出库管理</a></dd>
+                    <dd><a href="${ctx}/warehouse/index">仓库管理</a></dd>
+                    <dd><a href="${ctx}/location/index">库位管理</a></dd>
+                    <dd><a href="${ctx}/goods/index">货物配置</a></dd>
+                    <dd><a href="${ctx}/storage/index">仓储订单管理</a></dd>
+                    <dd><a href="${ctx}/receiving/index">入库管理</a></dd>
+                    <dd><a href="${ctx}/shipping/index">出库管理</a></dd>
                 </dl>
             </li>
             <li class="layui-nav-item">
-                <a href="javascript:;">结算管理</a>
+                <a href="${ctx}/settle/index">结算管理</a>
             </li>
             <li class="layui-nav-item">
                 <a href="javascript:;">系统管理</a>
                 <dl class="layui-nav-child">
-                    <dd><a href="">用户管理</a></dd>
-                    <dd><a href="">角色管理</a></dd>
-                    <dd><a href="">客户管理</a></dd>
+                    <dd><a href="${ctx}/employee/index">用户管理</a></dd>
+                    <dd><a href="${ctx}/role/index">角色管理</a></dd>
+                    <dd><a href="${ctx}/client/index">客户管理</a></dd>
                 </dl>
             </li>
             <li class="layui-nav-item">

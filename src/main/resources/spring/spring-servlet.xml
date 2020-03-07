@@ -33,7 +33,7 @@
     <!--配置视图解析器，常用内部资源视图解析器:InternalResourceViewResolver-->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <!--jsp页面所属的目录，所以是前缀-->
-        <property name="prefix" value="/jsp/"/>
+        <property name="prefix" value="/jsp/warehouse/"/>
         <!--是jsp页面，所以是.jsp后缀-->
         <property name="suffix" value=".jsp"/>
     </bean>
