@@ -69,13 +69,12 @@
                         </button>
                     </div>
                 </div>
-                    <%--数据表格--%>
                 <div id="tableRes" class="table-overlay">
                     <table id="expenseTable" lay-filter="expenseTable" class="layui-hide"></table>
                 </div>
 
                 <div class="layui-form-item">
-                    <div class="layui-input-block" style="right:10px">
+                    <div class="layui-input-block">
                         <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">保存</button>
                         <input type="button" class="layui-btn" onclick="javascript:history.back(-1);" value="返回">
                     </div>
@@ -89,19 +88,20 @@
 
 </div>
 <script src="${ctx}/static/plugins/layui/layui.js"></script>
-<script type="text/javascript">
-    //准备视图对象
+<script>
+    //费用明细数据测试
     window.viewObj = {
         tbData: [{
             tempId: new Date().valueOf(),
-            name: 2,
+            expense: 2,
             price: 1.2,
+            unit:'元/月'
         }],
         expenseData: [
-            {expenseId: 1, expenseName: '收费1'},
-            {expenseId: 2, expenseName: '收费2'},
-            {expenseId: 3, expenseName: '收费3'},
-            {expenseId: 4, expenseName: '收费4'}
+            {id: 1, name: '收费1'},
+            {id: 2, name: '收费2'},
+            {id: 3, name: '收费3'},
+            {id: 4, name: '收费4'}
         ],
         renderSelectOptions: function(data, settings){
             settings =  settings || {};
@@ -140,26 +140,25 @@
             ,range: true
         });
 
-        //合同添加费用 数据表格实例化  https://demo.lanrenzhijia.com/demo/64/6480/demo/
+        //添加费用明细，参考：https://demo.lanrenzhijia.com/demo/64/6480/demo/
         var layTableId = "layTable";
         var tableIns = table.render({
             elem: '#expenseTable',
             id: layTableId,
             data: viewObj.tbData,
-            // page: true,
             loading: true,
             even: false, //不开启隔行背景
             cols: [[
                 {title: '序号', type: 'numbers'},
                 {field: 'expense', title: '收费项目', templet: function(d){
-                        var options = viewObj.renderSelectOptions(viewObj.expenseData, {valueField: "expenseId", textField: "expenseName", selectedValue: d.type});
+                        var options = viewObj.renderSelectOptions(viewObj.expenseData, {valueField: "id", textField: "name", selectedValue: d.expense});
                         return '<a lay-event="expense"></a><select name="expense" lay-filter="expense"><option value="">请选择收费项目</option>' + options + '</select>';
                     }},
                 {field: 'price', title: '单价', edit: 'text'},
                 {field: 'unit', title: '计价单位', edit: 'text'},
-                {field: 'tempId', title: '操作',templet: function(d){
-                     return '<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" lay-id="'+ d.tempId +'"><i class="layui-icon layui-icon-delete"></i>移除</a>';
-                }}
+                {field: 'tempId', title: '操作', templet: function(d){
+                        return '<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" lay-id="'+ d.tempId +'"><i class="layui-icon layui-icon-delete"></i>移除</a>';
+                    }}
             ]],
             done: function(res, curr, count){
                 viewObj.tbData = res.data;
@@ -171,7 +170,7 @@
             addRow: function(){	//添加一行
                 var oldData = table.cache[layTableId];
                 console.log(oldData);
-                var newRow = {tempId: new Date().valueOf(), expense: null, price:null,unit:null};
+                var newRow = {tempId: new Date().valueOf(), expense: null, unit: null};
                 oldData.push(newRow);
                 tableIns.reload({
                     data : oldData
@@ -217,8 +216,7 @@
                 document.getElementById("jsonResult").innerHTML = JSON.stringify(table.cache[layTableId], null, 2);	//使用JSON.stringify() 格式化输出JSON字符串
             }
         }
-
-        //激活事件
+        //激活事件  不知道type是分类还是，如实分类，就要修改为expense
         var activeByType = function (type, arg) {
             if(arguments.length === 2){
                 active[type] ? active[type].call(this, arg) : '';
@@ -234,9 +232,9 @@
         });
 
         //监听select下拉选中事件
-        form.on('select(type)', function(data){
+        form.on('select(expense)', function(data){
             var elem = data.elem; //得到select原始DOM对象
-            $(elem).prev("a[lay-event='type']").trigger("click");
+            $(elem).prev("a[lay-event='expense']").trigger("click");
         });
 
         //监听工具条
@@ -250,7 +248,7 @@
                     if(select){
                         var selectedVal = select.val();
                         if(!selectedVal){
-                            layer.tips("请选择一个分类", select.next('.layui-form-select'), { tips: [3, '#FF5722'] }); //吸附提示
+                            layer.tips("请选择收费项目", select.next('.layui-form-select'), { tips: [3, '#FF5722'] }); //吸附提示
                         }
                         console.log(selectedVal);
                         $.extend(obj.data, {'expense': selectedVal});
@@ -267,7 +265,6 @@
             }
         });
     });
-
 </script>
 <style type="text/css">
     /*设置 layui 表格中单元格内容溢出可见样式*/

@@ -16,20 +16,20 @@
                 <div class="layui-form-item">
                     <div class="layui-inline">
                         <label class="layui-form-label">合同编号</label>
-                        <div class="layui-input-inline">
+                        <div class="layui-input-inline" style="width:180px">
                             <input type="tel" name="softwareName" lay-verify="title" autocomplete="off" class="layui-input">
                         </div>
                         <label class="layui-form-label">合同名称</label>
-                        <div class="layui-input-inline">
+                        <div class="layui-input-inline" style="width:180px">
                             <input type="tel" name="softwareName" lay-verify="title" autocomplete="off" class="layui-input">
                         </div>
-                        <label class="layui-form-label">客户名称</label>
-                        <div class="layui-input-inline">
+                        <label class="layui-form-label">公司名称</label>
+                        <div class="layui-input-inline" style="width:180px">
                             <input type="tel" name="softwareName" lay-verify="title" autocomplete="off" class="layui-input">
                         </div>
                         <label class="layui-form-label">状态</label>
-                        <div class="layui-input-inline">
-                            <select name="Level1Id" id="levelOne" lay-filter="levelOne">
+                        <div class="layui-input-inline" style="width:100px">
+                            <select name="Level1Id" id="levelOne" lay-filter="levelOne" >
                                 <option value="">-请选择-</option>
                                 <option value="0" >草稿</option>
                                 <option value="1" >待审核</option>
@@ -39,8 +39,8 @@
                         </div>
                     </div>
                 </div>
-                    <div class="layui-form-item">
-                        <div class="layui-input-inline">
+                    <div class="layui-form-item" >
+                        <div class="layui-input-inline" style="left:40px">
                             <button class="layui-btn " lay-submit  lay-filter="formDemo" >查 询</button>
                             <button type="reset" class="layui-btn ">重 置</button>
                         </div>
@@ -57,8 +57,9 @@
                     <%--<shiro:hasPermission name="admin">--%>
                     <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
                     <%--</shiro:hasPermission>--%>
-                    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-                    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+                    <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="edit">编辑</a>
+                    <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del">作废</a>
+                    <a class="layui-btn layui-btn-xs" lay-event="sub">提交</a>
                 </script>
         </div>
     </div>
@@ -105,7 +106,7 @@
                 ,{field:'flatform',title: '创建人'}
                 ,{field:'category',title: '创建日期'}
                 ,{field:'appStatus', title: '状态'}
-                ,{fixed: 'right', title: '操作',align:'center', toolbar: '#barDemo'}
+                ,{fixed: 'right', title: '操作',align:'center', toolbar: '#barDemo',width:210}
             ]]
             ,parseData: function(res){ //res 即为原始返回的数据
                 return {
@@ -120,13 +121,13 @@
                 filename: 'APP信息.xlsx', // 文件名
                 head:{ // 表头样式
                     family: 'Calibri', // 字体
-                    size: 14, // 字号
+                    size: 12, // 字号
                     color: '000000', // 字体颜色
                     bgColor: 'C7C7C7' // 背景颜色
                 },
                 font: { // 正文样式
                     family: 'Calibri', // 字体
-                    size: 12, // 字号
+                    size: 10, // 字号
                     color: '000000', // 字体颜色
                     bgColor: 'ffffff' //背景颜色
                 }
@@ -177,12 +178,15 @@
                         }
                     });
                 });
-            } else if(layEvent === 'edit'){
+            } else if(layEvent === 'sub'){
+                //提交
+            }
+            else if(layEvent === 'edit'){
                 //1. 跳转到另一个界面进行修改
-                <%--window.location.href = "${ctx}/app/toEdit/"+data.id;--%>
+                window.location.href = "${ctx}/contract/toEdit/"+data.id;
                 // layer.alert('编辑行：<br>'+ JSON.stringify(data))
                 //2. 使用弹出层进行修改
-                EidtUv(data,obj); //发送修改的Ajax请求
+                // EidtUv(data,obj); //发送修改的Ajax请求
             }
         });
         function  EidtUv(data,obj) {
@@ -266,9 +270,9 @@
     .layui-table-cell {
         height: auto;
         /*设置字体大小*/
-        font-size:18px;
+        /*font-size:12px;*/
         /*设置表格行高*/
-        line-height: 60px;
+        /*line-height: 60px;*/
     }
     .layui-table-page{
         /*设置分页居中*/
