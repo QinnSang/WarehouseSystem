@@ -6,77 +6,447 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6f805ce2-7a00-466c-ae07-1f9960a427da" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/jsp/warehouse/contract/addContract.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/jsp/warehouse/contract/index1.jsp" afterDir="false" />
+    <list default="true" id="6f805ce2-7a00-466c-ae07-1f9960a427da" name="Default Changelist" comment="添加页面以及controller页面跳转">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/ContractController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/ContractController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/jsp/warehouse/contract/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/jsp/warehouse/contract/index.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/jsp/include/header.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/jsp/include/header.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/WEB-INF/classes/META-INF/WarehouseSystem.kotlin_module" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/WEB-INF/lib/aspectjweaver-1.9.4.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/WEB-INF/lib/c3p0-0.9.5.2.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/WEB-INF/lib/commons-beanutils-1.8.0.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/WEB-INF/lib/commons-codec-1.10.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/WEB-INF/lib/commons-collections-3.2.1.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/WEB-INF/lib/commons-fileupload-1.3.3.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/WEB-INF/lib/commons-io-2.2.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/WEB-INF/lib/commons-lang-2.5.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/WEB-INF/lib/commons-logging-1.1.1.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/WEB-INF/lib/ezmorph-1.0.6.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/WEB-INF/lib/jackson-annotations-2.9.8.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/WEB-INF/lib/jackson-core-2.9.8.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/WEB-INF/lib/jackson-core-asl-1.9.13.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/WEB-INF/lib/jackson-databind-2.9.8.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/WEB-INF/lib/jackson-mapper-asl-1.9.13.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/WEB-INF/lib/joda-time-2.9.9.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/WEB-INF/lib/json-lib-2.4-jdk15.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/WEB-INF/lib/jsqlparser-1.2.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/WEB-INF/lib/jstl-1.2.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/WEB-INF/lib/log4j-1.2.17.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/WEB-INF/lib/mchange-commons-java-0.2.11.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/WEB-INF/lib/mybatis-3.4.6.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/WEB-INF/lib/mybatis-spring-1.3.0.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/WEB-INF/lib/mysql-connector-java-5.1.38.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/WEB-INF/lib/pagehelper-5.1.8.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/WEB-INF/lib/slf4j-api-1.7.25.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/WEB-INF/lib/spring-aop-5.2.0.RELEASE.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/WEB-INF/lib/spring-aspects-5.2.0.RELEASE.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/WEB-INF/lib/spring-beans-5.2.0.RELEASE.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/WEB-INF/lib/spring-context-5.2.0.RELEASE.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/WEB-INF/lib/spring-context-support-5.2.0.RELEASE.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/WEB-INF/lib/spring-core-5.2.0.RELEASE.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/WEB-INF/lib/spring-expression-5.2.0.RELEASE.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/WEB-INF/lib/spring-jcl-5.2.0.RELEASE.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/WEB-INF/lib/spring-jdbc-5.2.0.RELEASE.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/WEB-INF/lib/spring-orm-5.2.0.RELEASE.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/WEB-INF/lib/spring-tx-5.2.0.RELEASE.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/WEB-INF/lib/spring-web-5.2.0.RELEASE.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/WEB-INF/lib/spring-webmvc-5.2.0.RELEASE.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/WEB-INF/web.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/index.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/jsp/include/footer.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/jsp/include/header.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/jsp/include/in.js.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/jsp/include/include.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/jsp/warehouse/index.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/echarts/echarts.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/API_cn.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/apiCss/api.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/apiCss/common.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/apiCss/common_ie6.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/apiCss/img/apiMenu.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/apiCss/img/apiMenu.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/apiCss/img/background.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/apiCss/img/chinese.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/apiCss/img/close.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/apiCss/img/contact-bg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/apiCss/img/english.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/apiCss/img/header-bg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/apiCss/img/lightbulb.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/apiCss/img/overlay_arrow.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/apiCss/img/overlay_arrow.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/apiCss/img/overlay_bg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/apiCss/img/overlay_close_IE6.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/apiCss/img/zTreeStandard.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/apiCss/img/zTreeStandard.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/apiCss/zTreeStyleForApi.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/fn.zTree._z.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/fn.zTree.destroy.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/fn.zTree.getZTreeObj.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/fn.zTree.init.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.async.autoParam.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.async.contentType.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.async.dataFilter.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.async.dataType.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.async.enable.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.async.otherParam.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.async.type.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.async.url.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.callback.beforeAsync.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.callback.beforeCheck.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.callback.beforeClick.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.callback.beforeCollapse.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.callback.beforeDblClick.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.callback.beforeDrag.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.callback.beforeDragOpen.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.callback.beforeDrop.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.callback.beforeEditName.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.callback.beforeExpand.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.callback.beforeMouseDown.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.callback.beforeMouseUp.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.callback.beforeRemove.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.callback.beforeRename.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.callback.beforeRightClick.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.callback.onAsyncError.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.callback.onAsyncSuccess.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.callback.onCheck.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.callback.onClick.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.callback.onCollapse.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.callback.onDblClick.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.callback.onDrag.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.callback.onDrop.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.callback.onExpand.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.callback.onMouseDown.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.callback.onMouseUp.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.callback.onNodeCreated.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.callback.onRemove.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.callback.onRename.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.callback.onRightClick.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.check.autoCheckTrigger.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.check.chkDisabledInherit.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.check.chkStyle.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.check.chkboxType.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.check.enable.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.check.nocheckInherit.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.check.radioType.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.data.keep.leaf.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.data.keep.parent.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.data.key.checked.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.data.key.children.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.data.key.name.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.data.key.title.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.data.key.url.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.data.simpleData.enable.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.data.simpleData.idKey.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.data.simpleData.pIdKey.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.data.simpleData.rootPId.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.edit.drag.autoExpandTrigger.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.edit.drag.autoOpenTime.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.edit.drag.borderMax.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.edit.drag.borderMin.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.edit.drag.inner.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.edit.drag.isCopy.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.edit.drag.isMove.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.edit.drag.maxShowNodeNum.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.edit.drag.minMoveSize.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.edit.drag.next.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.edit.drag.prev.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.edit.editNameSelectAll.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.edit.enable.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.edit.removeTitle.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.edit.renameTitle.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.edit.showRemoveBtn.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.edit.showRenameBtn.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.treeId.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.treeObj.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.view.addDiyDom.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.view.addHoverDom.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.view.autoCancelSelected.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.view.dblClickExpand.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.view.expandSpeed.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.view.fontCss.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.view.nameIsHTML.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.view.removeHoverDom.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.view.selectedMulti.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.view.showIcon.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.view.showLine.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/setting.view.showTitle.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/treeNode.check_Child_State.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/treeNode.check_Focus.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/treeNode.checked.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/treeNode.checkedOld.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/treeNode.children.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/treeNode.chkDisabled.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/treeNode.click.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/treeNode.diy.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/treeNode.editNameFlag.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/treeNode.getCheckStatus.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/treeNode.getNextNode.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/treeNode.getParentNode.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/treeNode.getPreNode.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/treeNode.halfCheck.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/treeNode.icon.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/treeNode.iconClose.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/treeNode.iconOpen.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/treeNode.iconSkin.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/treeNode.isAjaxing.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/treeNode.isFirstNode.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/treeNode.isHidden.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/treeNode.isHover.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/treeNode.isLastNode.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/treeNode.isParent.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/treeNode.level.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/treeNode.name.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/treeNode.nocheck.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/treeNode.open.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/treeNode.parentTId.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/treeNode.tId.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/treeNode.target.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/treeNode.url.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/treeNode.zAsync.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/zTreeObj.addNodes.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/zTreeObj.cancelEditName.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/zTreeObj.cancelSelectedNode.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/zTreeObj.checkAllNodes.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/zTreeObj.checkNode.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/zTreeObj.copyNode.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/zTreeObj.destroy.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/zTreeObj.editName.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/zTreeObj.expandAll.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/zTreeObj.expandNode.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/zTreeObj.getChangeCheckedNodes.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/zTreeObj.getCheckedNodes.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/zTreeObj.getNodeByParam.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/zTreeObj.getNodeByTId.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/zTreeObj.getNodeIndex.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/zTreeObj.getNodes.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/zTreeObj.getNodesByFilter.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/zTreeObj.getNodesByParam.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/zTreeObj.getNodesByParamFuzzy.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/zTreeObj.getSelectedNodes.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/zTreeObj.hideNode.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/zTreeObj.hideNodes.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/zTreeObj.moveNode.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/zTreeObj.reAsyncChildNodes.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/zTreeObj.refresh.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/zTreeObj.removeChildNodes.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/zTreeObj.removeNode.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/zTreeObj.selectNode.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/zTreeObj.setChkDisabled.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/zTreeObj.setEditable.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/zTreeObj.setting.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/zTreeObj.showNode.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/zTreeObj.showNodes.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/zTreeObj.transformToArray.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/zTreeObj.transformTozTreeNodes.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/api/cn/zTreeObj.updateNode.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/css/demo.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/css/zTreeStyle/img/diy/1_close.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/css/zTreeStyle/img/diy/1_open.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/css/zTreeStyle/img/diy/2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/css/zTreeStyle/img/diy/3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/css/zTreeStyle/img/diy/4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/css/zTreeStyle/img/diy/5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/css/zTreeStyle/img/diy/6.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/css/zTreeStyle/img/diy/7.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/css/zTreeStyle/img/diy/8.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/css/zTreeStyle/img/diy/9.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/css/zTreeStyle/img/line_conn.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/css/zTreeStyle/img/loading.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/css/zTreeStyle/img/zTreeStandard.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/css/zTreeStyle/img/zTreeStandard.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/css/zTreeStyle/zTreeStyle.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/css/zTreeStyle/zTreeStyle.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/demo/cn/asyncData/getNodes.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/demo/cn/asyncData/getNodesForBigData.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/demo/cn/bigdata/common.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/demo/cn/bigdata/diy_async.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/demo/cn/bigdata/page.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/demo/cn/core/async.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/demo/cn/core/async_fun.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/demo/cn/core/click.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/demo/cn/core/custom_font.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/demo/cn/core/custom_icon.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/demo/cn/core/custom_iconSkin.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/demo/cn/core/expand.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/demo/cn/core/noicon.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/demo/cn/core/noline.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/demo/cn/core/otherMouse.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/demo/cn/core/searchNodes.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/demo/cn/core/simpleData.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/demo/cn/core/standardData.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/demo/cn/core/update_fun.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/demo/cn/core/url.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/demo/cn/excheck/checkbox.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/demo/cn/excheck/checkbox_chkDisabled.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/demo/cn/excheck/checkbox_count.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/demo/cn/excheck/checkbox_fun.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/demo/cn/excheck/checkbox_halfCheck.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/demo/cn/excheck/checkbox_nocheck.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/demo/cn/excheck/radio.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/demo/cn/excheck/radio_chkDisabled.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/demo/cn/excheck/radio_fun.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/demo/cn/excheck/radio_halfCheck.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/demo/cn/excheck/radio_nocheck.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/demo/cn/exedit/async_edit.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/demo/cn/exedit/drag.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/demo/cn/exedit/drag_fun.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/demo/cn/exedit/drag_super.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/demo/cn/exedit/edit.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/demo/cn/exedit/edit_fun.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/demo/cn/exedit/edit_super.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/demo/cn/exedit/multiTree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/demo/cn/exhide/checkbox.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/demo/cn/exhide/common.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/demo/cn/exhide/radio.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/demo/cn/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/demo/cn/super/asyncForAll.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/demo/cn/super/checkbox_radio.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/demo/cn/super/diydom.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/demo/cn/super/dragWithOther.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/demo/cn/super/left_menu.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/demo/cn/super/left_menuForOutLook.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/demo/cn/super/left_menuForOutLook.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/demo/cn/super/left_menuForOutLook.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/demo/cn/super/oneclick.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/demo/cn/super/oneroot.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/demo/cn/super/rightClickMenu.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/demo/cn/super/select_menu.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/demo/cn/super/select_menu_checkbox.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/demo/cn/super/select_menu_radio.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/demo/cn/super/singlepath.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/js/jquery-1.4.4.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/js/jquery.ztree.all-3.5.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/js/jquery.ztree.all-3.5.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/js/jquery.ztree.core-3.5.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/js/jquery.ztree.core-3.5.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/js/jquery.ztree.excheck-3.5.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/js/jquery.ztree.excheck-3.5.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/js/jquery.ztree.exedit-3.5.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/js/jquery.ztree.exedit-3.5.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/js/jquery.ztree.exhide-3.5.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/js/jquery.ztree.exhide-3.5.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery-ztree/3.5.12/log v3.x.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/jquery/jquery.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/css/layui.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/css/layui.mobile.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/css/modules/code.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/css/modules/laydate/default/laydate.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/css/modules/layer/default/icon-ext.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/css/modules/layer/default/icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/css/modules/layer/default/layer.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/css/modules/layer/default/loading-0.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/css/modules/layer/default/loading-1.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/css/modules/layer/default/loading-2.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/font/iconfont.eot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/font/iconfont.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/font/iconfont.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/font/iconfont.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/font/iconfont.woff2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/0.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/1.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/10.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/11.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/12.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/13.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/14.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/15.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/16.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/17.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/18.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/19.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/2.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/20.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/21.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/22.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/23.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/24.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/25.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/26.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/27.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/28.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/29.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/3.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/30.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/31.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/32.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/33.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/34.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/35.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/36.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/37.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/38.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/39.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/4.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/40.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/41.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/42.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/43.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/44.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/45.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/46.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/47.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/48.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/49.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/5.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/50.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/51.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/52.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/53.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/54.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/55.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/56.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/57.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/58.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/59.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/6.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/60.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/61.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/62.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/63.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/64.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/65.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/66.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/67.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/68.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/69.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/7.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/70.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/71.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/8.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/images/face/9.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/lay/modules/carousel.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/lay/modules/code.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/lay/modules/colorpicker.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/lay/modules/element.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/lay/modules/flow.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/lay/modules/form.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/lay/modules/jquery.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/lay/modules/laydate.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/lay/modules/layedit.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/lay/modules/layer.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/lay/modules/laypage.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/lay/modules/laytpl.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/lay/modules/mobile.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/lay/modules/rate.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/lay/modules/slider.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/lay/modules/table.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/lay/modules/transfer.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/lay/modules/tree.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/lay/modules/upload.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/lay/modules/util.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/layui.all.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/plugins/layui/layui.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/soulTable/excel.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/soulTable/soulTable.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/soulTable/soulTable.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/soulTable/tableChild.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/soulTable/tableFilter.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/static/soulTable/tableMerge.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/WarehouseSystem/template.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/META-INF/WarehouseSystem.kotlin_module" beforeDir="false" />
     </list>
-    <ignored path="$PROJECT_DIR$/out/" />
-    <ignored path="$PROJECT_DIR$/target/" />
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="FileEditorManager">
-    <leaf>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/warehouse/contract/index.jsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="49" column="44" selection-start-line="49" selection-start-column="44" selection-end-line="49" selection-end-column="44" />
-              <folding>
-                <element signature="n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
-                <element signature="n#div#1;n#form#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
-                <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="e#8067#8099#0#HTML" />
-                <element signature="e#8175#8447#0#HTML" />
-                <element signature="e#8530#9946#0#HTML" />
-                <element signature="e#9984#11069#0#HTML" />
-                <element signature="e#12764#12840#0#HTML" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/warehouse/contract/addContract.jsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="248">
-              <caret line="26" column="13" selection-start-line="26" selection-start-column="13" selection-end-line="26" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/controller/ContractController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="189">
-              <caret line="13" column="5" lean-forward="true" selection-start-line="13" selection-start-column="5" selection-end-line="13" selection-end-column="5" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#266#267#0" expanded="true" />
-                <element signature="e#305#306#0" expanded="true" />
-                <element signature="e#374#375#0" expanded="true" />
-                <element signature="e#420#421#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/template.jsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="279">
-              <caret line="9" column="43" selection-end-line="28" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -98,48 +468,6 @@
       <GitPushTagMode />
     </option>
   </component>
-  <component name="IdeDocumentHistory">
-    <option name="CHANGED_PATHS">
-      <list>
-        <option value="$PROJECT_DIR$/src/main/java/servlet/WebPathServlet.java" />
-        <option value="$PROJECT_DIR$/src/main/webapp/static.jsp" />
-        <option value="$PROJECT_DIR$/src/main/webapp/jsp/include/in.js.jsp" />
-        <option value="$PROJECT_DIR$/src/main/resources/spring/spring-context.xml" />
-        <option value="$PROJECT_DIR$/src/main/resources/spring/spring-context-shiro.xml" />
-        <option value="$PROJECT_DIR$/src/main/webapp/index.jsp" />
-        <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/src/main/resources/mapper/DevUserMapper.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/mapper/DevUserMapper.java" />
-        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" />
-        <option value="$PROJECT_DIR$/src/main/webapp/jsp/warehouse/index.jsp" />
-        <option value="$PROJECT_DIR$/src/main/webapp/jsp/include/include.jsp" />
-        <option value="$PROJECT_DIR$/src/main/java/controller/SettleController.java" />
-        <option value="$PROJECT_DIR$/src/main/webapp/jsp/warehouse/storage/warehouse.jsp" />
-        <option value="$PROJECT_DIR$/src/main/webapp/jsp/warehouse/storage/location.jsp" />
-        <option value="$PROJECT_DIR$/src/main/webapp/jsp/warehouse/storage/storage.jsp" />
-        <option value="$PROJECT_DIR$/src/main/webapp/jsp/warehouse/storage/recieving.jsp" />
-        <option value="$PROJECT_DIR$/src/main/webapp/jsp/warehouse/storage/shipping.jsp" />
-        <option value="$PROJECT_DIR$/src/main/webapp/jsp/warehouse/system/role.jsp" />
-        <option value="$PROJECT_DIR$/src/main/java/controller/storage/warehouseController.java" />
-        <option value="$PROJECT_DIR$/src/main/webapp/jsp/warehouse/storage/goods/index.jsp" />
-        <option value="$PROJECT_DIR$/src/main/java/controller/system/RoleController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/controller/system/EmployeeController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/controller/system/ClientController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/controller/storage/WarehouseController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/controller/storage/StorageController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/controller/storage/GoodsController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/controller/storage/LocationController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/controller/storage/ReceivingController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/controller/storage/ShippingController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/controller/DevUserController.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/spring/spring-servlet.xml" />
-        <option value="$PROJECT_DIR$/src/main/webapp/jsp/include/header.jsp" />
-        <option value="$PROJECT_DIR$/src/main/webapp/jsp/warehouse/contract/index.jsp" />
-        <option value="$PROJECT_DIR$/src/main/java/controller/ContractController.java" />
-        <option value="$PROJECT_DIR$/src/main/webapp/jsp/warehouse/contract/addContract.jsp" />
-      </list>
-    </option>
-  </component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
@@ -148,157 +476,18 @@
       </MavenGeneralSettings>
     </option>
   </component>
-  <component name="MavenProjectNavigator">
-    <treeState>
-      <expand>
-        <path>
-          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
-          <item name="WarehouseSystem Maven Webapp" type="9519ce18:MavenProjectsStructure$ProjectNode" />
-        </path>
-      </expand>
-      <select />
-    </treeState>
-  </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="676" />
-    <option name="width" value="697" />
-    <option name="height" value="735" />
-  </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
-  <component name="ProjectView">
-    <navigator proportions="" version="1">
-      <foldersAlwaysOnTop value="true" />
-    </navigator>
-    <panes>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="WarehouseSystem" type="b2602c69:ProjectViewProjectNode" />
-              <item name="WarehouseSystem" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="WarehouseSystem" type="b2602c69:ProjectViewProjectNode" />
-              <item name="WarehouseSystem" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="WarehouseSystem" type="b2602c69:ProjectViewProjectNode" />
-              <item name="WarehouseSystem" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="WarehouseSystem" type="b2602c69:ProjectViewProjectNode" />
-              <item name="WarehouseSystem" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="WarehouseSystem" type="b2602c69:ProjectViewProjectNode" />
-              <item name="WarehouseSystem" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="controller" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="WarehouseSystem" type="b2602c69:ProjectViewProjectNode" />
-              <item name="WarehouseSystem" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="WarehouseSystem" type="b2602c69:ProjectViewProjectNode" />
-              <item name="WarehouseSystem" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="mapper" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="WarehouseSystem" type="b2602c69:ProjectViewProjectNode" />
-              <item name="WarehouseSystem" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="spring" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="WarehouseSystem" type="b2602c69:ProjectViewProjectNode" />
-              <item name="WarehouseSystem" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="webapp" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="WarehouseSystem" type="b2602c69:ProjectViewProjectNode" />
-              <item name="WarehouseSystem" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="webapp" type="462c0819:PsiDirectoryNode" />
-              <item name="jsp" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="WarehouseSystem" type="b2602c69:ProjectViewProjectNode" />
-              <item name="WarehouseSystem" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="webapp" type="462c0819:PsiDirectoryNode" />
-              <item name="jsp" type="462c0819:PsiDirectoryNode" />
-              <item name="include" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="WarehouseSystem" type="b2602c69:ProjectViewProjectNode" />
-              <item name="WarehouseSystem" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="webapp" type="462c0819:PsiDirectoryNode" />
-              <item name="jsp" type="462c0819:PsiDirectoryNode" />
-              <item name="warehouse" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="WarehouseSystem" type="b2602c69:ProjectViewProjectNode" />
-              <item name="WarehouseSystem" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="webapp" type="462c0819:PsiDirectoryNode" />
-              <item name="jsp" type="462c0819:PsiDirectoryNode" />
-              <item name="warehouse" type="462c0819:PsiDirectoryNode" />
-              <item name="contract" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="WarehouseSystem" type="b2602c69:ProjectViewProjectNode" />
-              <item name="WarehouseSystem" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="webapp" type="462c0819:PsiDirectoryNode" />
-              <item name="WEB-INF" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="WarehouseSystem" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-    </panes>
-  </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1583649210290" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../AppManageSystem" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="project.structure.last.edited" value="SDKs" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
-    <property name="settings.editor.selected.configurable" value="reference.projectsettings.compiler.javacompiler" />
+    <property name="settings.editor.selected.configurable" value="MavenSettings" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -323,20 +512,9 @@
       <recent name="F:\项目源码\WarehouseSystem\src\main\webapp\jsp\warehouse\storage\location" />
     </key>
   </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
-  </component>
   <component name="RunManager">
     <configuration name="RunSystem" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 7.0.921" ALTERNATIVE_JRE_ENABLED="false">
+      <option name="OPEN_IN_BROWSER_URL" value="http://localhost:8088/" />
       <option name="UPDATE_ON_FRAME_DEACTIVATION" value="true" />
       <option name="UPDATE_CLASSES_ON_FRAME_DEACTIVATION" value="true" />
       <deployment>
@@ -348,6 +526,8 @@
       </deployment>
       <server-settings>
         <option name="BASE_DIRECTORY_NAME" value="Unnamed_WarehouseSystem" />
+        <option name="HTTP_PORT" value="8088" />
+        <option name="JNDI_PORT" value="1233" />
       </server-settings>
       <predefined_log_file enabled="true" id="Tomcat" />
       <predefined_log_file enabled="true" id="Tomcat Catalina" />
@@ -410,6 +590,33 @@
       </method>
     </configuration>
   </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand>
+              <path>
+                <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+                <item name="Tomcat Server" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              </path>
+              <path>
+                <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+                <item name="Tomcat Server" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+                <item name="Running" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              </path>
+              <path>
+                <item name="services root" type="e789fda9:ObjectUtils$Sentinel" />
+                <item name="Tomcat Server" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+                <item name="Finished" type="7427dc5b:ServiceModel$ServiceGroupNode" />
+              </path>
+            </expand>
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -430,363 +637,83 @@
       <option name="project" value="LOCAL" />
       <updated>1583589130256</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="添加页面以及controller页面跳转">
+      <created>1583744004539</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1583744004540</updated>
+    </task>
+    <task id="LOCAL-00003" summary="添加shiro依赖">
+      <created>1583744177901</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1583744177901</updated>
+    </task>
+    <task id="LOCAL-00004" summary="添加页面以及controller页面跳转">
+      <created>1583744239746</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1583744239746</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
-  </component>
-  <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="20665000" />
-  </component>
-  <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
-    <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.34871408" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="Designer" order="2" />
-      <window_info id="Image Layers" order="3" />
-      <window_info id="Capture Tool" order="4" />
-      <window_info id="UI Designer" order="5" />
-      <window_info id="Favorites" order="6" side_tool="true" />
-      <window_info id="Web" order="7" side_tool="true" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.20163934" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Application Servers" order="7" weight="0.3289689" />
-      <window_info anchor="bottom" id="Spring" order="8" weight="0.3289689" />
-      <window_info anchor="bottom" id="Terminal" order="9" />
-      <window_info anchor="bottom" id="Docker" order="10" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
-      <window_info anchor="bottom" id="Messages" order="12" weight="0.32405892" />
-      <window_info anchor="bottom" id="Java Enterprise" order="13" />
-      <window_info anchor="bottom" id="Database Changes" order="14" />
-      <window_info anchor="bottom" id="Version Control" order="15" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Maven" order="3" weight="0.32980332" />
-      <window_info anchor="right" id="Palette" order="4" />
-      <window_info anchor="right" id="Capture Analysis" order="5" />
-      <window_info anchor="right" id="Database" order="6" />
-      <window_info anchor="right" id="Palette&#9;" order="7" />
-      <window_info anchor="right" id="Theme Preview" order="8" />
-    </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
   <component name="VcsManagerConfiguration">
+    <MESSAGE value="添加shiro依赖" />
     <MESSAGE value="添加页面以及controller页面跳转" />
     <option name="LAST_COMMIT_MESSAGE" value="添加页面以及controller页面跳转" />
   </component>
-  <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/resources/ehcache.xml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/generatorConfig.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="93">
-          <caret line="3" column="39" selection-start-line="3" selection-start-column="39" selection-end-line="3" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/log4j.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="93">
-          <caret line="3" column="13" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/jdbc.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="93">
-          <caret line="3" column="13" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/mapper/DevUserMapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="186">
-          <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/mapper/DevUserMapper.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="93">
-          <caret line="3" column="9" lean-forward="true" selection-start-line="3" selection-start-column="9" selection-end-line="3" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/mybatis/mybatis-spring/1.3.0/mybatis-spring-1.3.0.jar!/org/mybatis/spring/SqlSessionFactoryBean.class">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/spring/applicationContext.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="155">
-          <caret line="5" column="25" lean-forward="true" selection-start-line="5" selection-start-column="25" selection-end-line="5" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/spring/spring-context.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1138">
-          <caret line="50" column="31" lean-forward="true" selection-start-line="50" selection-start-column="31" selection-end-line="50" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/index.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="155">
-          <caret line="5" column="8" lean-forward="true" selection-start-line="5" selection-start-column="8" selection-end-line="5" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="877">
-          <caret line="76" column="42" lean-forward="true" selection-start-line="76" selection-start-column="42" selection-end-line="76" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/servlet/WebPathServlet.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="248">
-          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="149">
-          <caret line="52" column="6" selection-start-line="52" selection-start-column="6" selection-end-line="52" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/include/include.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="155">
-          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/warehouse/index.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="186">
-          <caret line="6" column="7" lean-forward="true" selection-start-line="6" selection-start-column="7" selection-end-line="6" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/spring/spring-mybatis.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-878">
-          <caret line="78" column="4" selection-start-line="78" selection-start-column="4" selection-end-line="78" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/controller/SettleController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="310">
-          <caret line="11" column="28" selection-start-line="11" selection-start-column="16" selection-end-line="11" selection-end-column="28" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/warehouse/settle/index.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="6" column="32" lean-forward="true" selection-start-line="6" selection-start-column="32" selection-end-line="6" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/warehouse/storage/shipping/shipping.jsp" />
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/warehouse/storage/receiving/recieving.jsp" />
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/warehouse/storage/storage/storage.jsp" />
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/warehouse/system/client.jsp" />
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/warehouse/system/employee.jsp" />
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/warehouse/system/role.jsp" />
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/warehouse/storage/warehouse/warehouse.jsp" />
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/warehouse/storage/goods/index.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-93" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/warehouse/storage/location/index.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="356">
-          <caret line="28" selection-start-line="28" selection-end-line="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/warehouse/storage/receiving/index.jsp">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/warehouse/storage/shipping/index.jsp">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/warehouse/storage/storage/index.jsp">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/warehouse/storage/warehouse/index.jsp">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/warehouse/system/client/index.jsp">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/warehouse/system/role/index.jsp">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/warehouse/system/employee/index.jsp">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/controller/storage/GoodsController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="93">
-          <caret line="11" column="16" selection-start-line="11" selection-start-column="16" selection-end-line="11" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/controller/storage/LocationController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="11" column="16" selection-start-line="11" selection-start-column="16" selection-end-line="11" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/controller/storage/ReceivingController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="70">
-          <caret line="11" column="16" selection-start-line="11" selection-start-column="16" selection-end-line="11" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/controller/storage/ShippingController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="39">
-          <caret line="11" column="16" selection-start-line="11" selection-start-column="16" selection-end-line="11" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/controller/storage/StorageController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="112">
-          <caret line="11" column="16" selection-start-line="11" selection-start-column="16" selection-end-line="11" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/controller/DevUserController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="62">
-          <caret line="8" column="32" lean-forward="true" selection-start-line="8" selection-start-column="32" selection-end-line="8" selection-end-column="32" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/spring/spring-servlet.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="35" column="54" selection-start-line="35" selection-start-column="54" selection-end-line="35" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/include/header.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="46">
-          <caret line="43" column="47" lean-forward="true" selection-start-line="43" selection-start-column="47" selection-end-line="43" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/controller/system/EmployeeController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="194">
-          <caret line="11" column="31" selection-start-line="11" selection-start-column="31" selection-end-line="11" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/controller/system/RoleController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="8">
-          <caret line="11" column="27" selection-start-line="11" selection-start-column="27" selection-end-line="11" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/controller/system/ClientController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="8">
-          <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/controller/storage/WarehouseController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="112">
-          <caret line="11" column="16" selection-start-line="11" selection-start-column="16" selection-end-line="11" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/template.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="279">
-          <caret line="9" column="43" selection-end-line="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/warehouse/contract/index1.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="66" column="40" selection-start-line="66" selection-start-column="38" selection-end-line="66" selection-end-column="40" />
-          <folding>
-            <element signature="n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#div#0;n#div#1;n#form#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/warehouse/contract/index.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="49" column="44" selection-start-line="49" selection-start-column="44" selection-end-line="49" selection-end-column="44" />
-          <folding>
-            <element signature="n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#div#1;n#form#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="e#8067#8099#0#HTML" />
-            <element signature="e#8175#8447#0#HTML" />
-            <element signature="e#8530#9946#0#HTML" />
-            <element signature="e#9984#11069#0#HTML" />
-            <element signature="e#12764#12840#0#HTML" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/controller/ContractController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="13" column="5" lean-forward="true" selection-start-line="13" selection-start-column="5" selection-end-line="13" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#266#267#0" expanded="true" />
-            <element signature="e#305#306#0" expanded="true" />
-            <element signature="e#374#375#0" expanded="true" />
-            <element signature="e#420#421#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/warehouse/contract/addContract.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="248">
-          <caret line="26" column="13" selection-start-line="26" selection-start-column="13" selection-end-line="26" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
+  <component name="WindowStateProjectService">
+    <state x="137" y="21" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1583734396246">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="137" y="21" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1366.728@0.0.1366.728" timestamp="1583734396246" />
+    <state x="275" y="0" key="CommitChangelistDialog2" timestamp="1583744220134">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="275" y="0" key="CommitChangelistDialog2/0.0.1366.728@0.0.1366.728" timestamp="1583744220134" />
+    <state x="463" y="121" key="FileChooserDialogImpl" timestamp="1583740773475">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="463" y="121" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1583740773475" />
+    <state width="442" height="157" key="GridCell.Tab.0.bottom" timestamp="1583743919846">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state width="442" height="157" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1583743919846" />
+    <state width="442" height="157" key="GridCell.Tab.0.center" timestamp="1583743919845">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state width="442" height="157" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1583743919845" />
+    <state width="442" height="157" key="GridCell.Tab.0.left" timestamp="1583743919845">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state width="442" height="157" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1583743919845" />
+    <state width="442" height="157" key="GridCell.Tab.0.right" timestamp="1583743919845">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state width="442" height="157" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1583743919845" />
+    <state x="186" y="0" key="SettingsEditor" timestamp="1583741587292">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="186" y="0" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1583741587292" />
+    <state x="477" y="281" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1583738117093">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="477" y="281" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1366.728@0.0.1366.728" timestamp="1583738117093" />
+    <state x="366" y="165" key="git4idea.merge.GitPullDialog" timestamp="1583743619375">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="366" y="165" key="git4idea.merge.GitPullDialog/0.0.1366.728@0.0.1366.728" timestamp="1583743619375" />
+    <state x="339" y="157" width="672" height="677" key="run.anything.popup" timestamp="1583740891261">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="339" y="157" width="672" height="677" key="run.anything.popup/0.0.1366.728@0.0.1366.728" timestamp="1583740891261" />
   </component>
   <component name="masterDetails">
     <states>
