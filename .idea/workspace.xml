@@ -6,7 +6,9 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6f805ce2-7a00-466c-ae07-1f9960a427da" name="Default Changelist" comment="" />
+    <list default="true" id="6f805ce2-7a00-466c-ae07-1f9960a427da" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -261,7 +263,14 @@
       <option name="project" value="LOCAL" />
       <updated>1583758715630</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="添加页面以及controller页面跳转">
+      <created>1583758842857</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1583758842857</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -277,10 +286,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="137" y="21" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1366.728@0.0.1366.728" timestamp="1583734396246" />
-    <state x="275" y="0" key="CommitChangelistDialog2" timestamp="1583758750260">
+    <state x="275" y="0" key="CommitChangelistDialog2" timestamp="1583758870566">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="275" y="0" key="CommitChangelistDialog2/0.0.1366.728@0.0.1366.728" timestamp="1583758750260" />
+    <state x="275" y="0" key="CommitChangelistDialog2/0.0.1366.728@0.0.1366.728" timestamp="1583758870566" />
     <state x="463" y="121" key="FileChooserDialogImpl" timestamp="1583740773475">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -305,18 +314,18 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="186" y="0" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1583741587292" />
-    <state x="275" y="99" key="Vcs.Push.Dialog.v2" timestamp="1583758329721">
+    <state x="275" y="99" key="Vcs.Push.Dialog.v2" timestamp="1583759183860">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="275" y="99" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1583758329721" />
-    <state x="477" y="281" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1583744622336">
+    <state x="275" y="99" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1583759183860" />
+    <state x="477" y="281" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1583759024337">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="477" y="281" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1366.728@0.0.1366.728" timestamp="1583744622336" />
-    <state x="366" y="165" key="git4idea.merge.GitPullDialog" timestamp="1583743619375">
+    <state x="477" y="281" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1366.728@0.0.1366.728" timestamp="1583759024337" />
+    <state x="366" y="165" key="git4idea.merge.GitPullDialog" timestamp="1583759110858">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="366" y="165" key="git4idea.merge.GitPullDialog/0.0.1366.728@0.0.1366.728" timestamp="1583743619375" />
+    <state x="366" y="165" key="git4idea.merge.GitPullDialog/0.0.1366.728@0.0.1366.728" timestamp="1583759110858" />
     <state x="339" y="157" width="672" height="677" key="run.anything.popup" timestamp="1583740891261">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
