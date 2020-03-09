@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="layui-header">
-    <div class="layui-logo">仓储物流系統</div>
+    <div class="layui-logo">仓储物流系統</div><A>DSD</A>
     <ul class="layui-nav layui-layout-right">
         <li class="layui-nav-item">
             <a href="javascript:;">
