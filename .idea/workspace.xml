@@ -235,7 +235,14 @@
       <option name="project" value="LOCAL" />
       <updated>1583744444659</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="添加页面以及controller页面跳转">
+      <created>1583757875074</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1583757875074</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -251,10 +258,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="137" y="21" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1366.728@0.0.1366.728" timestamp="1583734396246" />
-    <state x="275" y="0" key="CommitChangelistDialog2" timestamp="1583744430526">
+    <state x="275" y="0" key="CommitChangelistDialog2" timestamp="1583757868061">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="275" y="0" key="CommitChangelistDialog2/0.0.1366.728@0.0.1366.728" timestamp="1583744430526" />
+    <state x="275" y="0" key="CommitChangelistDialog2/0.0.1366.728@0.0.1366.728" timestamp="1583757868061" />
     <state x="463" y="121" key="FileChooserDialogImpl" timestamp="1583740773475">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
