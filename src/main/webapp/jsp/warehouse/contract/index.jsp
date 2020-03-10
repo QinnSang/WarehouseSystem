@@ -3,6 +3,7 @@
 <head>
     <title>仓储物流系统</title>
     <link rel="stylesheet" href="${ctx}/static/plugins/layui/css/layui.css">
+    <link rel="stylesheet" href="${ctx}/static/layuiExtend/dropdown.css" media="all">
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
@@ -54,12 +55,17 @@
                 <%--数据表格展示--%>
                 <table id="contractTable" lay-filter="contractFilter"></table>
                 <script type="text/html" id="barDemo">
-                    <%--<shiro:hasPermission name="admin">--%>
                     <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
-                    <%--</shiro:hasPermission>--%>
                     <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="edit">编辑</a>
-                    <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del">作废</a>
-                    <a class="layui-btn layui-btn-xs" lay-event="sub">提交</a>
+                    <div class="urp-dropdown urp-dropdown-table">
+                        <button class="layui-btn layui-btn-primary layui-btn-xs urp-dropdown-btn">
+                            更多<i class="layui-icon layui-icon-down"></i>
+                        </button>
+                    </div>
+                    <%--<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del">作废</a>--%>
+                    <%--<a class="layui-btn layui-btn-xs" lay-event="sub">提交</a>--%>
+                    <%--<a class="layui-btn layui-btn-xs" lay-event="sub">驳回</a>--%>
+                    <%--<a class="layui-btn layui-btn-xs" lay-event="sub">确认</a>--%>
                 </script>
         </div>
     </div>
@@ -74,13 +80,14 @@
 
 <script>
     //JavaScript代码区域
-    layui.use(['element','jquery','form','table','layer','soulTable'], function(){
+    layui.use(['element','jquery','form','table','layer','soulTable','dropdown'], function(){
         var element = layui.element;
         $ =layui.jquery;
         var table = layui.table;
         var form = layui.form;
         var layer = layui.layer;
         var soulTable = layui.soulTable; //使用soulTable导出数据
+        var dropdown = layui.dropdown;
         var index = layer.load(); //添加laoding,0-2两种方式
 
         //第一个实例
@@ -115,6 +122,120 @@
                     "count": res.count, //解析数据长度
                     "data": res.data.list //解析数据列表
                 };
+            },
+            done: function (res, curr, count) { ////返回数据执行回调函数
+                layer.close(index);    //返回数据关闭loading
+                //操作中更多选项初始化，参考：https://github.com/hsiangleev/layuiExtend/blob/master/dropdown/index.html
+                dropdown(res.data,function(data) {
+                        var options = [
+                            {
+                                title: "作废",
+                                // icon: "layui-icon-release",
+                                // url: "http://baidu.com" //可直接跳转到该url
+                                icon: "layui-icon-release",
+                                event: function() {
+                                    layer.confirm('确认提交吗？', {
+                                        skin: 'layui-layer-molv',
+                                        shade: .1
+                                    }, function(index){
+                                        //向服务端发送删除指令
+                                        $.ajax({
+                                            url: "${ctx}/app/delete",
+                                            type: "POST",
+                                            data:{"appId":data.id},
+                                            dataType: "json",
+                                            success: function(data){
+                                                // obj.del(); //删除对应行（tr）的DOM结构
+                                                layer.msg("删除成功", {icon: 6});
+                                                table.reload('appTable');
+                                            },
+                                            error:function (data) {
+                                                layer.msg("删除失败", {icon: 5});
+                                            }
+                                        });
+                                    });
+                                }
+                            },
+                            {
+                                title: "提交",
+                                event: function() {
+                                    layer.confirm('确认提交吗？', {
+                                        skin: 'layui-layer-molv',
+                                        shade: .1
+                                    }, function(index){
+                                        //向服务端发送删除指令
+                                        $.ajax({
+                                            url: "${ctx}/app/delete",
+                                            type: "POST",
+                                            data:{"appId":data.id},
+                                            dataType: "json",
+                                            success: function(data){
+                                                // obj.del(); //删除对应行（tr）的DOM结构
+                                                layer.msg("删除成功", {icon: 6});
+                                                table.reload('appTable');
+                                            },
+                                            error:function (data) {
+                                                layer.msg("删除失败", {icon: 5});
+                                            }
+                                        });
+                                    });
+                                }
+                            },
+                            {
+                                title: "审核",
+                                event: function() {
+                                    layer.confirm('确认提交吗？', {
+                                        skin: 'layui-layer-molv',
+                                        shade: .1
+                                    }, function(index){
+                                        //向服务端发送删除指令
+                                        $.ajax({
+                                            url: "${ctx}/app/delete",
+                                            type: "POST",
+                                            data:{"appId":data.id},
+                                            dataType: "json",
+                                            success: function(data){
+                                                // obj.del(); //删除对应行（tr）的DOM结构
+                                                layer.msg("删除成功", {icon: 6});
+                                                table.reload('appTable');
+                                            },
+                                            error:function (data) {
+                                                layer.msg("删除失败", {icon: 5});
+                                            }
+                                        });
+                                    });
+                                }
+                            },
+                            {
+                                title: "确认",
+                                event: function() {
+                                    layer.confirm('确认提交吗？', {
+                                        skin: 'layui-layer-molv',
+                                        shade: .1
+                                    }, function(index){
+                                        //向服务端发送删除指令
+                                        $.ajax({
+                                            url: "${ctx}/app/delete",
+                                            type: "POST",
+                                            data:{"appId":data.id},
+                                            dataType: "json",
+                                            success: function(data){
+                                                // obj.del(); //删除对应行（tr）的DOM结构
+                                                layer.msg("删除成功", {icon: 6});
+                                                table.reload('appTable');
+                                            },
+                                            error:function (data) {
+                                                layer.msg("删除失败", {icon: 5});
+                                            }
+                                        });
+                                    });
+                                }
+                            }
+                        ];
+                    return options;
+                })
+                // 如果有使用到导出、下拉筛选，这句话必须要
+                soulTable.render(this);
             }
             , excel:{ // 导出excel配置
                 on: true, //是否启用, 默认开启
@@ -132,11 +253,7 @@
                     bgColor: 'ffffff' //背景颜色
                 }
             }
-            , done: function (res, curr, count) { ////返回数据执行回调函数
-                layer.close(index);    //返回数据关闭loading
-                // 如果有使用到导出、下拉筛选，这句话必须要
-                soulTable.render(this);
-            }
+
         });
 
         //监听排序事件，会自动向后台传where中的排序字段和排序方式

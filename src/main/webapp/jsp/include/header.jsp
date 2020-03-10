@@ -34,8 +34,6 @@
             </li>
         </ul>
     </div>
->>>>>>> Stashed changes
-
 <!-- 侧边栏 -->
 <div class="layui-side layui-bg-black">
     <div class="layui-side-scroll">
@@ -50,8 +48,7 @@
             <li class="layui-nav-item">
                 <a href="javascript:;">仓储管理</a>
                 <dl class="layui-nav-child">
-                    <dd><a href="${ctx}/warehouse/index">仓库管理</a></dd>
-                    <dd><a href="${ctx}/location/index">库位管理</a></dd>
+                    <dd><a href="${ctx}/warehouse/index">仓库库位管理</a></dd>
                     <dd><a href="${ctx}/goods/index">货物配置</a></dd>
                     <dd><a href="${ctx}/storage/index">仓储订单管理</a></dd>
                     <dd><a href="${ctx}/receiving/index">入库管理</a></dd>

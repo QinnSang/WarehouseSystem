@@ -1,4 +1,3 @@
-%--模板文件--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -10,38 +9,39 @@
     <jsp:include page="/jsp/include/header.jsp"/>
     <div class="layui-body">
         <!-- 内容主体区域 -->
-        <div style="padding: 15px;">内容主体区域</div>
-        <div class="layui-form-item" style="height: 70px">
-            <button id="addRoleBtn" data-method="offset" data-type="auto" class="layui-btn layui-btn-m">新建角色</button>
-            <a  onclick="export_data()" >
-                <button id="export" data-method="offset" data-type="auto" class="layui-btn layui-btn-m">导出</button>
-            </a>
-    </div>
-        <%--数据展示--%>
-        <table class="layui-table">
-            <thead>
-            <tr>
-                <th>角色名称</th>
-                <th>角色描述</th>
-                <th>创建时间</th>
-                <th>操作</th>
-            </tr>
-            </thead>
-            <tbody>
-            <c:forEach items="${roleList}" var="role">
+        <div style="padding: 15px;">
+            <div class="layui-form-item" style="height: 70px">
+                <button id="addRoleBtn" data-method="offset" data-type="auto" class="layui-btn layui-btn-m">新建角色</button>
+                <a  onclick="export_data()" >
+                    <button id="export" data-method="offset" data-type="auto" class="layui-btn layui-btn-m">导出</button>
+                </a>
+            </div>
+            <%--数据展示--%>
+            <table class="layui-table">
+                <thead>
                 <tr>
-                    <td>${role.name}</td>
-                    <td>${role.remark}</td>
-                    <td>${role.createDate}</td>
-                    <td>
-                        <a href="${ctx}/app/queryAppDetail/${obj.id}" class="layui-btn layui-btn-normal layui-btn-s" lay-event="detail">编辑</a>
-                        <a class="layui-btn layui-btn-s" lay-event="edit">授权</a>
-                        <a class="layui-btn layui-btn-danger layui-btn-s" lay-event="del">删除</a>
-                    </td>
+                    <th>角色名称</th>
+                    <th>角色描述</th>
+                    <th>创建时间</th>
+                    <th>操作</th>
                 </tr>
-            </c:forEach>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                <c:forEach items="${roleList}" var="role">
+                    <tr>
+                        <td>${role.name}</td>
+                        <td>${role.remark}</td>
+                        <td>${role.createDate}</td>
+                        <td>
+                            <a href="${ctx}/app/queryAppDetail/${obj.id}" class="layui-btn layui-btn-normal layui-btn-s" lay-event="detail">编辑</a>
+                            <a class="layui-btn layui-btn-s" lay-event="edit">授权</a>
+                            <a class="layui-btn layui-btn-danger layui-btn-s" lay-event="del">删除</a>
+                        </td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
     <jsp:include page="/jsp/include/footer.jsp"/>
