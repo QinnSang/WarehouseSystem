@@ -12,23 +12,23 @@
         <!-- 内容主体区域 -->
         <div style="padding: 15px;">
             <%--使用dto来接收参数--%>
-            <form class="layui-form" action="${ctx}/app/query" method="post">
+            <form class="layui-form" method="post">
                 <%--查询条件--%>
                 <div class="layui-form-item">
                     <div class="layui-inline">
-                        <label class="layui-form-label">合同编号</label>
+                        <label class="layui-form-label">合同编号：</label>
                         <div class="layui-input-inline" style="width:180px">
-                            <input type="tel" name="softwareName" lay-verify="title" autocomplete="off" class="layui-input">
+                            <input type="tel" name="softwareName" lay-verify="title" autocomplete="off" placeholder="请输入合同编号" class="layui-input">
                         </div>
-                        <label class="layui-form-label">合同名称</label>
+                        <label class="layui-form-label">合同名称：</label>
                         <div class="layui-input-inline" style="width:180px">
-                            <input type="tel" name="softwareName" lay-verify="title" autocomplete="off" class="layui-input">
+                            <input type="tel" name="softwareName" lay-verify="title" autocomplete="off" placeholder="请输入合同名称" class="layui-input">
                         </div>
-                        <label class="layui-form-label">公司名称</label>
+                        <label class="layui-form-label">公司名称：</label>
                         <div class="layui-input-inline" style="width:180px">
-                            <input type="tel" name="softwareName" lay-verify="title" autocomplete="off" class="layui-input">
+                            <input type="tel" name="softwareName" lay-verify="title" autocomplete="off" placeholder="请输入公司名称" class="layui-input">
                         </div>
-                        <label class="layui-form-label">状态</label>
+                        <label class="layui-form-label">状态：</label>
                         <div class="layui-input-inline" style="width:100px">
                             <select name="Level1Id" id="levelOne" lay-filter="levelOne" >
                                 <option value="">-请选择-</option>
@@ -53,9 +53,9 @@
                 </a>
             </div>
                 <%--数据表格展示--%>
-                <table id="contractTable" lay-filter="contractFilter"></table>
-                <script type="text/html" id="barDemo">
-                    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+            <table id="contractTable" lay-filter="contractFilter"></table>
+            <script type="text/html" id="barDemo">
+                    <a class="layui-btn  layui-btn-xs" lay-event="detail">查看</a>
                     <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="edit">编辑</a>
                     <div class="urp-dropdown urp-dropdown-table">
                         <button class="layui-btn layui-btn-primary layui-btn-xs urp-dropdown-btn">
@@ -102,18 +102,19 @@
                 ,last: '尾页'
                 ,layout: ['count', 'prev', 'page', 'next', 'skip']
             }
+            ,drag: false // 关闭拖拽列功能
             ,limit: 5
             ,even: true //隔行背景
             ,autoSort: false  //禁用前端的排序方法
             ,cols: [[ //表头
-                {field: 'softwareName', title: '合同编号',fixed: 'left'}
+                {field: 'softwareName', title: '合同编号',fixed: 'left',unresize: true}
                 ,{field: 'apkName', title: '合同名称'}
                 ,{field: 'softwareSize', title: '客户公司名称'}
                 //使用templet模板获取级联属性
-                ,{field:'flatform',title: '创建人'}
+                ,{field:'flatform',title: '创建人',unresize: true}
                 ,{field:'category',title: '创建日期'}
-                ,{field:'appStatus', title: '状态'}
-                ,{fixed: 'right', title: '操作',align:'center', toolbar: '#barDemo',width:210}
+                ,{field:'appStatus', title: '状态',unresize: true}
+                ,{fixed: 'right', title: '操作',align:'center', toolbar: '#barDemo',width:210,unresize: true}
             ]]
             ,parseData: function(res){ //res 即为原始返回的数据
                 return {
@@ -126,15 +127,16 @@
             done: function (res, curr, count) { ////返回数据执行回调函数
                 layer.close(index);    //返回数据关闭loading
                 //操作中更多选项初始化，参考：https://github.com/hsiangleev/layuiExtend/blob/master/dropdown/index.html
-                dropdown(res.data,function(data) {
+              //https://fly.layui.com/jie/43644/
+                dropdown(res.data,function(data) {  //两个data都是代表当前行数据
                         var options = [
                             {
                                 title: "作废",
                                 // icon: "layui-icon-release",
                                 // url: "http://baidu.com" //可直接跳转到该url
-                                icon: "layui-icon-release",
+                                // icon: "layui-icon-release",
                                 event: function() {
-                                    layer.confirm('确认提交吗？', {
+                                    layer.confirm('确认作废吗？', {
                                         skin: 'layui-layer-molv',
                                         shade: .1
                                     }, function(index){
@@ -146,11 +148,11 @@
                                             dataType: "json",
                                             success: function(data){
                                                 // obj.del(); //删除对应行（tr）的DOM结构
-                                                layer.msg("删除成功", {icon: 6});
+                                                layer.msg("合同作废成功", {icon: 6});
                                                 table.reload('appTable');
                                             },
                                             error:function (data) {
-                                                layer.msg("删除失败", {icon: 5});
+                                                layer.msg("合同作废失败，请重试！", {icon: 5});
                                             }
                                         });
                                     });
@@ -163,7 +165,7 @@
                                         skin: 'layui-layer-molv',
                                         shade: .1
                                     }, function(index){
-                                        //向服务端发送删除指令
+                                        //向服务端发送合同提交指令
                                         $.ajax({
                                             url: "${ctx}/app/delete",
                                             type: "POST",
@@ -171,24 +173,24 @@
                                             dataType: "json",
                                             success: function(data){
                                                 // obj.del(); //删除对应行（tr）的DOM结构
-                                                layer.msg("删除成功", {icon: 6});
+                                                layer.msg("合同已提交审核", {icon: 6});
                                                 table.reload('appTable');
                                             },
                                             error:function (data) {
-                                                layer.msg("删除失败", {icon: 5});
+                                                layer.msg("提交审核失败，请重试！", {icon: 5});
                                             }
                                         });
                                     });
                                 }
                             },
                             {
-                                title: "审核",
+                                title: "驳回",
                                 event: function() {
-                                    layer.confirm('确认提交吗？', {
+                                    layer.confirm('确认驳回吗？', {
                                         skin: 'layui-layer-molv',
                                         shade: .1
                                     }, function(index){
-                                        //向服务端发送删除指令
+                                        //向服务端发送审核驳回指令
                                         $.ajax({
                                             url: "${ctx}/app/delete",
                                             type: "POST",
@@ -196,11 +198,11 @@
                                             dataType: "json",
                                             success: function(data){
                                                 // obj.del(); //删除对应行（tr）的DOM结构
-                                                layer.msg("删除成功", {icon: 6});
+                                                layer.msg("驳回成功", {icon: 6});
                                                 table.reload('appTable');
                                             },
                                             error:function (data) {
-                                                layer.msg("删除失败", {icon: 5});
+                                                layer.msg("驳回失败，请重试！", {icon: 5});
                                             }
                                         });
                                     });
@@ -209,11 +211,11 @@
                             {
                                 title: "确认",
                                 event: function() {
-                                    layer.confirm('确认提交吗？', {
+                                    layer.confirm('是否确认？', {
                                         skin: 'layui-layer-molv',
                                         shade: .1
                                     }, function(index){
-                                        //向服务端发送删除指令
+                                        //向服务端发送确认合同审核通过指令
                                         $.ajax({
                                             url: "${ctx}/app/delete",
                                             type: "POST",
@@ -221,11 +223,11 @@
                                             dataType: "json",
                                             success: function(data){
                                                 // obj.del(); //删除对应行（tr）的DOM结构
-                                                layer.msg("删除成功", {icon: 6});
+                                                layer.msg("合同确认审核成功", {icon: 6});
                                                 table.reload('appTable');
                                             },
                                             error:function (data) {
-                                                layer.msg("删除失败", {icon: 5});
+                                                layer.msg("合同确认审核失败，请重试！", {icon: 5});
                                             }
                                         });
                                     });
@@ -239,7 +241,7 @@
             }
             , excel:{ // 导出excel配置
                 on: true, //是否启用, 默认开启
-                filename: 'APP信息.xlsx', // 文件名
+                filename: '合同信息表.xlsx', // 文件名
                 head:{ // 表头样式
                     family: 'Calibri', // 字体
                     size: 12, // 字号
@@ -387,24 +389,11 @@
     .layui-table-cell {
         height: auto;
         /*设置字体大小*/
-        /*font-size:12px;*/
+        font-size:15px;
         /*设置表格行高*/
         /*line-height: 60px;*/
     }
-    .layui-table-page{
-        /*设置分页居中*/
-        text-align: center;
-        font-size:30px;
-    }
-    .layui-table th{
-        /*表头加粗*/
-        font-weight: bold;
-        text-align: center;
-    }
-    .layui-table td{
-        /*每行都居中*/
-        text-align: center;
-    }
+
 </style>
 </body>
 </html>

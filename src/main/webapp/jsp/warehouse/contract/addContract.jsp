@@ -147,6 +147,7 @@
             data: viewObj.tbData,
             // page: true,
             loading: true,
+            drag: false, // 关闭拖拽列功能
             even: false, //不开启隔行背景
             cols: [[
                 {title: '序号', type: 'numbers'},
@@ -155,7 +156,6 @@
                         return '<a lay-event="expense"></a><select name="expense" lay-filter="expense"><option value="">请选择收费项目</option>' + options + '</select>';
                     }},
                 {field: 'price', title: '单价', edit: 'text'},
-                {field: 'unit', title: '计价单位', edit: 'text'},
                 {field: 'tempId', title: '操作',templet: function(d){
                      return '<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" lay-id="'+ d.tempId +'"><i class="layui-icon layui-icon-delete"></i>移除</a>';
                 }}
@@ -170,7 +170,7 @@
             addRow: function(){	//添加一行
                 var oldData = table.cache[layTableId];
                 console.log(oldData);
-                var newRow = {tempId: new Date().valueOf(), expense: null, price:null,unit:null};
+                var newRow = {tempId: new Date().valueOf(), expense: null, price:null};
                 oldData.push(newRow);
                 tableIns.reload({
                     data : oldData
@@ -275,15 +275,6 @@
     .table-overlay .layui-table-body{overflow: visible;}
     .table-overlay .layui-table-cell{height: auto; overflow: visible;}
 
-    .layui-table th{
-        /*表头加粗*/
-        font-weight: bold;
-        text-align: center;
-    }
-    .layui-table td{
-        /*每行都居中*/
-        text-align: center;
-    }
     /*layui 元素样式改写*/
     .layui-btn-sm{line-height: normal; font-size: 12.5px;}
     .layui-table-cell .layui-input.layui-unselect{height: 30px; line-height: 30px;}
