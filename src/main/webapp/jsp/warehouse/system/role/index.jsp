@@ -53,6 +53,11 @@
                 </c:forEach>
                 </tbody>
             </table>
+                <%--页码导航--%>
+                <div>
+                    <div style="position:absolute;left:30%; ">
+                        <div id="demo1"></div>
+                    </div>
         </div>
     </div>
 </div>
@@ -60,6 +65,40 @@
 </div>
 <script src='https://code.jquery.com/jquery-3.2.1.min.js'></script>
 <script src="${ctx}/static/plugins/layui/layui.js"></script>
+<script>
+    // 自定义模块
+    layui.config({
+        base: '${ctx}/static/soulTable/'   // 模块目录
+    }).extend({                         // 模块别名
+        soulTable: 'soulTable'
+    });
+
+    //JavaScript代码区域
+    layui.use(['element','jquery','laypage', 'layer'], function(){
+        var element = layui.element;
+        $ =layui.jquery;
+        var laypage = layui.laypage;
+        var layer = layui.layer;
+
+        //总页数大于页码总数
+        laypage.render({
+            elem: 'demo1'
+            ,count: 70 //数据总数
+            ,first: '首页'
+            ,last: '尾页'
+            ,layout: ['count', 'prev', 'page', 'next', 'skip']
+            ,jump: function(obj, first){
+                //首次不执行
+                if(!first){
+                    //更新隐藏域里的值
+                    $('input[name=pageNum]').val(obj.curr);
+                    //提交表单
+                    $('form').submit();
+                }
+            }
+        });
+    });
+</script>
 <!-- 需要弹出的添加角色界面 -->
 <script id='addRole' type='text/html'>
     <form class="layui-form layui-form-pane" id="inputForm">
