@@ -10,6 +10,18 @@
     <div class="layui-body">
         <!-- 内容主体区域 -->
         <div style="padding: 15px;">
+            <%--查询条件--%>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">角色名称</label>
+                    <div class="layui-input-inline" style="width:180px">
+                        <input type="tel" name="softwareName" lay-verify="title" autocomplete="off" placeholder="请输入角色名称" class="layui-input">
+                    </div>
+                    <button class="layui-btn " lay-submit  lay-filter="search" >查 询</button>
+                    </div>
+            </div>
+                </form>
+
             <div class="layui-form-item" style="height: 70px">
                 <button id="addRoleBtn" data-method="offset" data-type="auto" class="layui-btn layui-btn-m">新建角色</button>
                 <a  onclick="export_data()" >
@@ -94,6 +106,7 @@
     </form>
 </script>
 <script>
+
     //JavaScript代码区域
     layui.use(['element','tree','jquery','layer','form'], function(){
         $ =layui.jquery;
@@ -147,5 +160,38 @@
 
     });
 </script>
+<%--设置表单样式--%>
+<style type="text/css">
+    .layui-table-cell {
+        height: auto;
+        /*设置字体大小*/
+        font-size:12px;
+        /*设置表格行高*/
+        line-height: 40px;
+    }
+    .layui-table-page{
+        /*设置分页居中*/
+        text-align: center;
+        font-size:30px;
+    }
+    .layui-table th{
+        /*表头加粗*/
+        font-weight: bold;
+        text-align: center;
+    }
+    .layui-table td{
+        /*每行都居中*/
+        text-align: center;
+    }
+
+    /*!*表格第一列居左*!*/
+    /*.layui-table tr td:first-child{*/
+    /*text-align: left;*/
+    /*}*/
+
+    .layui-form-item{
+        margin-bottom: 25px;
+    }
+</style>
 </body>
 </html>
