@@ -88,11 +88,20 @@
 
             <%--库位数据弹框--%>
             <form class="layui-form layui-form-pane1" id="locationForm" style="display:none;padding: 20px 0 0 0;"  method="post" lay-filter="updateLocationFilter">
-                    <input type="hidden" name="warehouseId" >
                     <div class="layui-form-item">
                         <label class="layui-form-label">仓库：</label>
-                        <div class="layui-input-inline" style="width: 450px">
-                            <input type="text" name="warehouseNameInLocation" id="fixedWarehouse" lay-verify="title"  placeholder="请选择仓库" autocomplete="off" class="layui-input">
+                        <div class="layui-input-inline" style="width:450px">
+                            <select name="warehouseNameInLocation" id="fixedWarehouse" lay-filter="warehouseNameInLocation" >
+                                <option value="">-请选择所属仓库-</option>
+                                <option value="0" >仓库1</option>
+                                <option value="1" >仓库2</option>
+                                <%--后台传入所有仓库，如果是修改和查看会传入仓库id，根据仓库进行选择--%>
+                                <%--<c:forEach items="${warehouse}" var="obj">--%>
+                                    <%--<option value="${obj.valueId}"><c:if test="${obj.valueId eq warehouseId}">--%>
+                                        <%--selected--%>
+                                    <%--</c:if>${obj.valueName}</option>--%>
+                                <%--</c:forEach>--%>
+                            </select>
                         </div>
                     </div>
                     <div class="layui-form-item">
@@ -151,26 +160,25 @@
             elem: '#warehouseTable'
             ,url: '${ctx}/jsp/warehouse/storage/warehouse/data.json'
             <%--,url: '${ctx}/warehouse/index'--%>
-            ,height: $(document).height() - $('#warehouseTable').offset().top - 20
-            // ,height:1000
-            // ,limit: 30
-            // ,page: true
+            // ,height: $(document).height() - $('#warehouseTable').offset().top - 20  //该属性是高度固定的，所以需要取消
+            ,limit: 10
+            ,page: true
             ,fixResize: false
             ,cols: [[
-                {field: 'title', title: '仓库名称',childTitle: false, width: 150, children:[ //isChild: function(row){return row.dynasty === '宋代'},
+                {title: '#', width: 50, fixed: 'left',childTitle: false, children:[ //isChild: function(row){return row.dynasty === '宋代'},
                         {
                             url: '${ctx}/jsp/warehouse/storage/warehouse/data.json'
                             <%--url: function(row){//row 为当前父行数据--%>
-                                <%--return '${ctx}/location/index/'+row.id--%>
+                            <%--return '${ctx}/location/index/'+row.id--%>
                             <%--},--%>
                             ,height: 300
                             ,fixResize: false
                             ,cols: [[
-                                {field: 'title', title: '库位名称', width: 200},
-                                {field: 'dynasty', title: '库位面积(m²)', width: 150},
-                                {field: 'author', title: '所属仓库', width: 180 },
-                                {field: 'type', title: '创建人', width: 152},
-                                {field: 'createTime', title: '创建时间', width: 190, filter: {type: 'date[yyyy-MM-dd HH:mm:ss]'}, sort:true},
+                                {field: 'title', title: '库位名称', width: 300},
+                                {field: 'dynasty', title: '库位面积(m²)', width: 250},
+                                {field: 'author', title: '所属仓库', width: 300 },
+                                // {field: 'type', title: '创建人', width: 152},
+                                // {field: 'createTime', title: '创建时间', width: 190, filter: {type: 'date[yyyy-MM-dd HH:mm:ss]'}, sort:true},
                                 {title: '操作', width: 156, templet: '#childBar'}
                             ]],
                             filter: { bottom: false  }, //关闭底部编辑筛选按钮
@@ -190,12 +198,13 @@
                             }
                         }
                     ]},
-                {field: 'dynasty', title: '仓库编号', width: 100},
-                {field: 'author', title: '联系电话', width: 165 },
-                {field: 'type', title: '仓库位置', width: 112},
-                {field: 'content', title: '创建人', width: 100},
-                {field: 'createTime', title: '创建时间', width: 165, filter: {type: 'date[yyyy-MM-dd HH:mm:ss]'}, sort:true},
-                {field: 'heat', title: '备注', width: 112},
+                {field: 'title', title: '仓库名称',width: 200},
+                {field: 'dynasty', title: '仓库编号', width: 140},
+                {field: 'author', title: '联系电话', width: 200 },
+                {field: 'type', title: '仓库位置', width: 200},
+                // {field: 'content', title: '创建人', width: 100},
+                // {field: 'createTime', title: '创建时间', width: 165, filter: {type: 'date[yyyy-MM-dd HH:mm:ss]'}, sort:true},
+                {field: 'heat', title: '备注', width: 120},
                 {fixed: 'right',title: '操作', width: 200, templet: '#barDemo'}
             ]],
             filter: {bottom: false},
@@ -239,7 +248,7 @@
                 id:'addWarehousePopUp',
                 title: '添加仓库',
                 type: 1, //页面层
-                area: ['600px', '480px'],
+                area: ['600px', '440px'],
                 shade: false, //禁止使用遮罩，否则操作不了界面
                 resize:false, //禁止窗体拉伸
                 scrollbar: false,
@@ -294,7 +303,7 @@
                 id:'WarehousePopUp',
                 title: '仓库信息',
                 type: 1, //页面层
-                area: ['600px', '480px'],
+                area: ['600px', '440px'],
                 shade: false, //禁止使用遮罩，否则操作不了界面
                 resize:false, //禁止窗体拉伸
                 skin: 'layui-layer-molv',
@@ -318,7 +327,7 @@
             updateWarehousePopUp=layer.open({
                 title: '修改仓库',
                 type: 1, //页面层
-                area: ['600px', '480px'],
+                area: ['600px', '440px'],
                 shade: false, //禁止使用遮罩，否则操作不了界面
                 resize:false, //禁止窗体拉伸
                 skin: 'layui-layer-molv',
@@ -370,10 +379,10 @@
                 id:'addLocationPopUp',
                 title: '添加库位',
                 type: 1, //页面层
-                area: ['600px', '480px'],
+                area: ['600px', '460px'],
                 shade: false, //禁止使用遮罩，否则操作不了界面
                 resize:false, //禁止窗体拉伸
-                scrollbar: false,
+                offset: '70px',
                 skin: 'layui-layer-molv',
                 btn: ['添加', '取消'],
                 content: $("#locationForm"),
@@ -422,17 +431,17 @@
             updatelocationPopUp=layer.open({
                 title: '修改仓库',
                 type: 1, //页面层
-                area: ['600px', '480px'],
+                area: ['600px', '450px'],
                 shade: false, //禁止使用遮罩，否则操作不了界面
                 resize:false, //禁止窗体拉伸
+                offset: '70px',
                 skin: 'layui-layer-molv',
                 btn: ['保存', '取消'],
                 content: $("#locationForm"),
                 success: function(layero, index){
                     form.val('updateLocationFilter',{
                     //表单初始赋值
-                        "warehouseId": data.id,
-                        "warehouseNameInLocation": data.title // "name": "value"
+                        "warehouseNameInLocation": data.id // "name": "value"  //传入仓库id后就可直接定位到所选仓库
                     });
                     //通过删除只读属性使输入框可以编辑
                     layero.find('.layui-input').removeAttr('readonly');
@@ -500,13 +509,13 @@
         text-align: center;
     }
 
-    /*表格第一列居左*/
-    .layui-table tr td:first-child{
-        text-align: left;
-    }
+    /*!*表格第一列居左*!*/
+    /*.layui-table tr td:first-child{*/
+        /*text-align: left;*/
+    /*}*/
 
     .layui-form-item{
-        margin-bottom: 30px;
+        margin-bottom: 25px;
     }
 </style>
 </body>
