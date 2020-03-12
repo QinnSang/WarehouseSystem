@@ -163,23 +163,23 @@
             // ,height: $(document).height() - $('#warehouseTable').offset().top - 20  //该属性是高度固定的，所以需要取消
             ,limit: 10
             ,page: true
-            ,fixResize: false
+            ,drag: false // 关闭拖拽列功能
             ,cols: [[
-                {title: '#', width: 50, fixed: 'left',childTitle: false, children:[ //isChild: function(row){return row.dynasty === '宋代'},
+                {title: '#', width: 50, fixed: 'left',unresize: true,childTitle: false, children:[ //isChild: function(row){return row.dynasty === '宋代'},
                         {
                             url: '${ctx}/jsp/warehouse/storage/warehouse/data.json'
                             <%--url: function(row){//row 为当前父行数据--%>
                             <%--return '${ctx}/location/index/'+row.id--%>
                             <%--},--%>
                             ,height: 300
-                            ,fixResize: false
+                            ,drag: false // 关闭拖拽列功能
                             ,cols: [[
-                                {field: 'title', title: '库位名称', width: 300},
-                                {field: 'dynasty', title: '库位面积(m²)', width: 250},
-                                {field: 'author', title: '所属仓库', width: 300 },
+                                {field: 'title', title: '库位名称', width: 300,unresize: true},
+                                {field: 'dynasty', title: '库位面积(m²)', width: 250,unresize: true},
+                                {field: 'author', title: '所属仓库', width: 300 ,unresize: true},
                                 // {field: 'type', title: '创建人', width: 152},
                                 // {field: 'createTime', title: '创建时间', width: 190, filter: {type: 'date[yyyy-MM-dd HH:mm:ss]'}, sort:true},
-                                {title: '操作', width: 156, templet: '#childBar'}
+                                {title: '操作', width: 156, templet: '#childBar',unresize: true}
                             ]],
                             filter: { bottom: false  }, //关闭底部编辑筛选按钮
                             //行事件监听
@@ -198,14 +198,14 @@
                             }
                         }
                     ]},
-                {field: 'title', title: '仓库名称',width: 200},
-                {field: 'dynasty', title: '仓库编号', width: 140},
-                {field: 'author', title: '联系电话', width: 200 },
-                {field: 'type', title: '仓库位置', width: 200},
+                {field: 'title', title: '仓库名称',fixed: 'left',width: 200,unresize: true},
+                {field: 'dynasty', title: '仓库编号', width: 140,unresize: true},
+                {field: 'author', title: '联系电话', width: 200 ,unresize: true},
+                {field: 'type', title: '仓库位置', width: 200,unresize: true},
                 // {field: 'content', title: '创建人', width: 100},
                 // {field: 'createTime', title: '创建时间', width: 165, filter: {type: 'date[yyyy-MM-dd HH:mm:ss]'}, sort:true},
-                {field: 'heat', title: '备注', width: 120},
-                {fixed: 'right',title: '操作', width: 200, templet: '#barDemo'}
+                {field: 'heat', title: '备注', width: 120,unresize: true},
+                {fixed: 'right',title: '操作', width: 200, templet: '#barDemo',unresize: true}
             ]],
             filter: {bottom: false},
             excel:{ // 导出excel配置, （以下值均为默认值）
@@ -490,23 +490,9 @@
     .layui-table-cell {
         height: auto;
         /*设置字体大小*/
-        font-size:12px;
+        font-size:15px;
         /*设置表格行高*/
         line-height: 40px;
-    }
-    .layui-table-page{
-        /*设置分页居中*/
-        text-align: center;
-        font-size:30px;
-    }
-    .layui-table th{
-        /*表头加粗*/
-        font-weight: bold;
-        text-align: center;
-    }
-    .layui-table td{
-        /*每行都居中*/
-        text-align: center;
     }
 
     /*!*表格第一列居左*!*/

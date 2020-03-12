@@ -1,6 +1,5 @@
 package controller;
 
-import net.sf.json.JSON;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,10 +19,10 @@ public class ContractController {
 
     @RequestMapping("/toAdd")
     public String toAdd(Model model){
-        List<Expense> expense=new ArrayList<>();
-        expense.add(new Expense(1,"收费1"));
-        expense.add(new Expense(2,"收费2"));
-        model.addAttribute("expense", expense);
+//        List<Expense> expense=new ArrayList<>();
+//        expense.add(new Expense(1,"收费1"));
+//        expense.add(new Expense(2,"收费2"));
+//        model.addAttribute("expense", expense);
         return "contract/addContract";
     }
 

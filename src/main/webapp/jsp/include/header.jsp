@@ -53,6 +53,7 @@
                     <dd><a href="${ctx}/storage/index">仓储订单管理</a></dd>
                     <dd><a href="${ctx}/receiving/index">入库管理</a></dd>
                     <dd><a href="${ctx}/shipping/index">出库管理</a></dd>
+                    <dd><a href="${ctx}/log/index">仓储订单日志</a></dd>
                 </dl>
             </li>
             <li class="layui-nav-item">
