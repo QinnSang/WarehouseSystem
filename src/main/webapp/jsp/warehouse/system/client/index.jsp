@@ -97,7 +97,7 @@
                 var myTable = table.render({
                     elem: '#clientTable' //表格id
                     // ,height: 312
-                    <%--,url: '${ctx}/storage/query' //数据接口--%>
+                    <%--,url: '${ctx}/clientt/query' //数据接口--%>
                     , data: [[1, 2, 3, 4, 5, 6]]
                     , method: 'post' //防止查询时中文乱码
                     , page: { //开启分页,需要配合后台PageInfo进行分页
