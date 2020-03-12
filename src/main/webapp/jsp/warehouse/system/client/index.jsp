@@ -38,7 +38,7 @@
         </script>
             <%--客户信息弹框--%>
             <form class="layui-form layui-form-pane1" id="clientForm" style="display:none;padding: 20px 0 0 0;"  method="post" lay-filter="addClientFilter">
-                <%--添加仓储订单基本信息--%>
+                <%--添加客户基本信息--%>
                 <div class="layui-form-item">
                     <label class="layui-form-label"style="width: 110px"><span style="color: red;">* </span>客户名称：</label>
                     <div class="layui-input-inline" style="width: 430px">
