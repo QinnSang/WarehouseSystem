@@ -49,15 +49,15 @@
                     </div>
                 </div>
             </form>
-            <div class="layui-input-block" style="padding-top: 25px;margin-left: 15px">
-                <button class="layui-btn" id="popStorageForm"lay-submit lay-filter="formDemo">新增仓储订单</button>
+            <div class="layui-input-block" style="margin-left: 15px">
+                <button class="layui-btn" id="popStorageAddForm"lay-submit lay-filter="formDemo">新增仓储订单</button>
+                <button class="layui-btn" id="exportStorage">导出</button>
             </div>
-            <%--数据表格展示--%>
+            <%--仓储订单数据表格展示--%>
             <table id="storageTable" lay-filter="storageFilter"></table>
             <script type="text/html" id="barDemo">
-                <a class="layui-btn  layui-btn-xs" lay-event="goodsNumber">查看库存货物</a>
-                <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="receiving">入库</a>
-                <a class="layui-btn layui-btn-xs layui-btn-danger layui-btn-normal" lay-event="shipping">出库</a>
+                <a class="layui-btn  layui-btn-xs" lay-event="detail">查看</a>
+                <a class="layui-btn  layui-btn-danger layui-btn-xs" lay-event="goodsNumber">库存货物</a>
                 <div class="urp-dropdown urp-dropdown-table">
                     <button class="layui-btn layui-btn-primary layui-btn-xs urp-dropdown-btn">
                         更多<i class="layui-icon layui-icon-down"></i>
@@ -69,10 +69,10 @@
                 <%--<a class="layui-btn layui-btn-xs" lay-event="sub">确认</a>--%>
             </script>
 
-            <%--仓储订单弹框--%>
-            <form class="layui-form layui-form-pane1" id="storageForm" style="display:none;padding: 20px 0 0 0;"  method="post" lay-filter="addStorageFilter">
+            <%--新增仓储订单弹框--%>
+            <form class="layui-form layui-form-pane1" id="storageAddForm" style="display:none;padding: 20px 0 0 0;"  method="post" lay-filter="addStorageFilter" >
                 <%--添加仓储订单基本信息--%>
-                <div class="layui-form-item">
+                <div class="layui-form-item" >
                     <label class="layui-form-label"style="width: 110px"><span style="color: red;">* </span>仓储订单名称：</label>
                     <div class="layui-input-inline" style="width: 430px">
                         <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入仓储订单名称" class="layui-input">
@@ -113,6 +113,50 @@
                     </div>
                 </div>
             </form>
+            <%--查看仓储订单弹框--%>
+            <form class="layui-form layui-form-pane1" id="storageDetailForm" style="display:none;padding: 20px 0 0 0;"lay-filter="StorageDetailFilter">
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 110px">仓储订单号：</label>
+                    <div class="layui-input-inline" style="width: 250px">
+                        <input type="text" name="storageId" class="layui-input"readonly="readonly">
+                    </div>
+                    <label class="layui-form-label"style="width: 110px">仓储订单名称：</label>
+                    <div class="layui-input-inline" style="width: 250px">
+                        <input type="text" name="storageId" class="layui-input" readonly="readonly">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 110px">合同编号：</label>
+                    <div class="layui-input-inline" style="width: 250px">
+                        <input type="text" name="storageId" class="layui-input" readonly="readonly">
+                    </div>
+                    <label class="layui-form-label" style="width: 110px">公司名称：</label>
+                    <div class="layui-input-inline" style="width: 250px">
+                        <input type="text" name="storageId" class="layui-input" readonly="readonly">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 110px">库存数量：</label>
+                    <div class="layui-input-inline" style="width: 250px">
+                        <input type="text" name="storageId" class="layui-input" readonly="readonly">
+                    </div>
+                    <label class="layui-form-label" style="width: 110px">备注：</label>
+                    <div class="layui-input-inline" style="width: 250px">
+                        <input type="text" name="storageId" class="layui-input" readonly="readonly">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width: 110px">创建人：</label>
+                    <div class="layui-input-inline" style="width: 250px">
+                        <input type="text" name="storageId" class="layui-input" readonly="readonly">
+                    </div>
+                    <label class="layui-form-label" style="width: 110px">创建时间：</label>
+                    <div class="layui-input-inline" style="width: 250px">
+                        <input type="text" name="storageId" class="layui-input" readonly="readonly">
+                    </div>
+                </div>
+            </form>
+
         </div>
     </div>
 
@@ -152,14 +196,14 @@
             ,even: true //隔行背景
             ,autoSort: false  //禁用前端的排序方法
             ,cols: [[ //表头
-                {field: 'softwareName', title: '仓储订单名称',fixed: 'left'}
-                ,{field: 'apkName', title: '合同名称'}
-                ,{field: 'softwareSize', title: '公司名称'}
+                {field: 'softwareName', title: '仓储订单号',width:200,fixed: 'left'}
+                ,{field: 'softwareName', title: '仓储订单名称',width:180,fixed: 'left'}
+                ,{field: 'apkName', title: '合同编号',width:200,}
+                ,{field: 'softwareSize', title: '公司名称',width:180,}
                 //使用templet模板获取级联属性
-                ,{field:'flatform',title: '库存数量',unresize: true}
-                ,{field:'category',title: '创建人',unresize: true}
-                ,{field:'appStatus', title: '订单状态',unresize: true}
-                ,{fixed: 'right', title: '操作',align:'center', toolbar: '#barDemo',width:270,unresize: true}
+                ,{field:'flatform',title: '库存数量',width:100,unresize: true}
+                ,{field:'appStatus', title: '订单状态',width:90,unresize: true}
+                ,{fixed: 'right', title: '操作',align:'center', toolbar: '#barDemo',width:200,unresize: true}
             ]]
             ,parseData: function(res){ //res 即为原始返回的数据
                 return {
@@ -257,6 +301,15 @@
                             }
                         },
                         {
+                            title: "出库",
+                            url:"${ctx}/receiving/toAdd/"+data.id
+                            <%--window.location.href = "${ctx}/receiving/toAdd/"+data.id;--%>
+                        },
+                        {
+                            title: "入库",
+                            url: "${ctx}/shipping/toAdd/"+data.id //可直接跳转到该url
+                        },
+                        {
                             title: "进出库日志明细",
                             url: "${ctx}/log/logAlone"+data.id //可直接跳转到该url
                         }
@@ -285,21 +338,22 @@
 
         });
 
-        //新增仓储订单弹窗
-        $('#popStorageForm').click(function(){
+
+        //===============================新增仓储订单弹窗  start===============
+        $('#popStorageAddForm').click(function(){
             addStoragePopUp=layer.open({
                 id:'addStoragePopUp',
                 title: '新增仓储订单',
                 type: 1, //页面层
-                area: ['600px', '400px'],
+                area: ['600px', '470px'],
                 shade: false, //禁止使用遮罩，否则操作不了界面
                 resize:false, //禁止窗体拉伸
                 scrollbar: false,
                 skin: 'layui-layer-molv',
                 btn: ['确认', '取消'],
-                content: $("#storageForm"),
+                content: $("#storageAddForm"),
                 success : function(layero, index) { // 成功弹出后回调
-                    $('#storageForm')[0].reset(); //清空表单内容，防止修改查看公用一个表单时因赋值存在内容
+                    $('#storageAddForm')[0].reset(); //清空表单内容，防止修改查看公用一个表单时因赋值存在内容
                     // 将保存按钮改变成提交按钮
                     layero.find('.layui-layer-btn0').attr({
                         'lay-filter' : 'addGoodsTypeSubmit',
@@ -338,7 +392,7 @@
             });
         });
 
-        //========================选择关联合同后自动填写合同不编号和公司名称 start===============
+        //选择关联合同后自动填写合同不编号和公司名称
         form.on('select(contractId)',function () {
             //通过selected的id获取合同名称和id
             var contractId=$('#contractId').val();
@@ -358,7 +412,76 @@
             <%--}--%>
             <%--})--%>
         })
-        //========================选择关联合同后自动填写合同不编号和公司名称 end====================
+        //========================新增仓储订单弹窗 end====================
+
+
+        //==========================监听行工具事件 start==============
+        table.on('tool(storageFilter)', function(obj){ //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+            var data = obj.data //获得当前行数据
+                ,layEvent = obj.event; //获得 lay-event 对应的值
+            if (layEvent === 'detail'){
+                storageDetail(data,obj )
+            }else if(layEvent === 'goodsNumber'){
+                goodsNumber(data,obj );
+            }
+        });
+
+        //仓储订单信息弹窗
+        function storageDetail(data,obj ){
+            layer.open({
+                type: 1,
+                title: '仓储订单详情',
+                area:['60%','60%'],
+                skin: 'layui-layer-molv',
+                shade: false, //禁止使用遮罩，否则操作不了界面
+                resize:false, //禁止窗体拉伸
+                content: $("#storageDetailForm"),
+                success: function(layero, index){
+                    $('#storageDetailForm')[0].reset();
+                    //表单初始赋值
+                    form.val('StorageDetailFilter',{
+                        "storageId": "zhehdakhjadad",
+                        "title": data.title // "name": "value"
+                    })
+                }
+            })
+        }
+
+        //货物库存弹窗
+        function goodsNumber(data,obj ){
+            layer.open({
+                type: 1,
+                title: '货物库存数量详情',
+                area:['80%','60%'],
+                content: '<div><table id="goodsNumberTable" class="layui-hide"></table></div>',
+                success: function(layero, index){
+                    table.render({
+                        elem: '#goodsNumberTable'
+                        ,data:[[1,2,3,4,5,6]]
+                        ,method: 'post' //防止查询时中文乱码
+                        ,page: { //开启分页,需要配合后台PageInfo进行分页
+                            first: '首页'
+                            ,last: '尾页'
+                            ,layout: ['count', 'prev', 'page', 'next', 'skip']
+                        }
+                        ,limit: 5
+                        ,drag: false // 关闭拖拽列功能
+                        ,even: true //隔行背景
+                        ,cols: [[ //表头
+                            {field: 'softwareName', title: '所属仓库',fixed: 'left'}
+                            ,{field: 'softwareName', title: '所属库位',fixed: 'left'}
+                            ,{field: 'apkName', title: '货物类型'}
+                            ,{field: 'apkName', title: '货物名称'}
+                            ,{field:'flatform',title: '库存数量',unresize: true}
+                        ]]
+                        ,done: function (res, curr, count) { }////返回数据执行回调函数
+                        })
+                }
+            })
+        }
+
+        //==========================监听行工具事件 end==============
+
 
         //监听排序事件，会自动向后台传where中的排序字段和排序方式
         table.on('sort(storageFilter)', function(obj){ //注：appFilter是table lay-filter的值
@@ -370,93 +493,6 @@
                     ,order: obj.type //排序方式 desc（降序）、asc（升序）、null（空对象，默认排序）
                 }
             });
-        });
-
-        //监听行工具事件
-        table.on('tool(storageFilter)', function(obj){ //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
-            var data = obj.data //获得当前行数据
-                ,layEvent = obj.event; //获得 lay-event 对应的值
-            if(layEvent === 'detail'){
-                layer.msg('查看操作');
-            } else if(layEvent === 'del'){
-                layer.confirm('确认删除吗？', {
-                    skin: 'layui-layer-molv',
-                    shade: .1
-                }, function(index){
-                    //向服务端发送删除指令
-                    $.ajax({
-                        url: "${ctx}/app/delete",
-                        type: "POST",
-                        data:{"appId":data.id},
-                        dataType: "json",
-                        success: function(data){
-                            // obj.del(); //删除对应行（tr）的DOM结构
-                            layer.msg("删除成功", {icon: 6});
-                            table.reload('appTable');
-                        },
-                        error:function (data) {
-                            layer.msg("删除失败", {icon: 5});
-                        }
-                    });
-                });
-            } else if(layEvent === 'sub'){
-                //提交
-            }
-            else if(layEvent === 'edit'){
-                //1. 跳转到另一个界面进行修改
-                window.location.href = "${ctx}/storage/toEdit/"+data.id;
-                // layer.alert('编辑行：<br>'+ JSON.stringify(data))
-                //2. 使用弹出层进行修改
-                // EidtUv(data,obj); //发送修改的Ajax请求
-            }
-        });
-        function  EidtUv(data,obj) {
-            updatePopUp=layer.open({
-                title: '修改APP信息',
-                type: 1, //页面层
-                area: ['600px', '700px'],
-                shade: false, //禁止使用遮罩，否则操作不了界面
-                resize:false, //禁止窗体拉伸
-                skin: 'layui-layer-molv',
-                content: $("#popUpdateForm"),
-                success: function(layero, index){
-                    //表单初始赋值
-                    form.val('updateFilter',{
-                        "id": data.id,
-                        "softwareName": data.softwareName, // "name": "value"
-                        "apkName":data.apkName,
-                        "supportRom":data.supportRom,
-                        "interfaceLanguage":data.interfaceLanguage,
-                        "softwareSize":data.softwareSize,
-                        "latestAppVersion.versionNo":data.latestAppVersion ?  data.latestAppVersion.versionNo:'',
-                        "flatform.valueId":data.flatform.valueId,
-                        "appInfo":data.appInfo
-                    })
-                }
-            });
-        }
-
-        //监听表单修改提交
-        form.on('submit(updateSubmitBtn)', function(data) {
-            $.ajax({
-                url: '${ctx}/storage/edit',
-                type: 'POST',
-                // contentType: "application/json; charset=utf-8",
-                // data:  JSON.stringify(data.field),
-                data:  data.field,
-                success: function (StateType) {
-                    // var status = StateType.status;//取得返回数据（Sting类型的字符串）的信息进行取值判断
-                    if (StateType == 'UpdateSuccess') {
-                        // layer.closeAll('loading');
-                        layer.msg("修改成功", {icon: 6});
-                        layer.close(updatePopUp) ,//执行关闭
-                            table.reload('storageTable') //重载表格
-                    } else {
-                        layer.msg("修改失败", {icon: 5});
-                    }
-                }
-            });
-            return false;//false：阻止表单跳转 true：表单跳转
         });
 
         $(document).on('click', '#cancel', function() {
@@ -477,13 +513,26 @@
             });
             return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可
         });
-        // 导出
-        form.on('submit(export)', function (data) {
+
+        //导出
+        $('#exportStorage').click(function(){
             soulTable.export(myTable);
-            return false;
-        })
+        });
 
     });
 </script>
+<%--设置表单样式--%>
+<style type="text/css">
+    .layui-table-cell {
+        height: auto;
+        /*设置字体大小*/
+        font-size:15px;
+        /*设置表格行高*/
+        line-height: 40px;
+    }
+    .layui-form-item{
+        margin-bottom: 25px;
+    }
+</style>
 </body>
 </html>

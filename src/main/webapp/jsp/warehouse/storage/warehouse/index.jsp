@@ -479,7 +479,7 @@
 
 
         //导出
-        $('#exportExcel').click(function(){
+        $('#exportWarehouse').click(function(){
             soulTable.export(myTable);
         });
 

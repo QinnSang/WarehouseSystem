@@ -105,7 +105,6 @@
             ,drag: false // 关闭拖拽列功能
             ,limit: 5
             ,even: true //隔行背景
-            ,autoSort: false  //禁用前端的排序方法
             ,cols: [[ //表头
                 {field: 'softwareName', title: '合同编号',fixed: 'left',unresize: true}
                 ,{field: 'apkName', title: '合同名称'}
@@ -258,103 +257,16 @@
 
         });
 
-        //监听排序事件，会自动向后台传where中的排序字段和排序方式
-        table.on('sort(contractFilter)', function(obj){ //注：appFilter是table lay-filter的值
-            //重新向服务端发送请求，从而实现服务端排序，如：
-            table.reload('contractTable', {
-                initSort: obj //记录初始排序，如果不设的话，将无法标记表头的排序状态。
-                ,where: { //请求参数（注意：这里面的参数可任意定义，并非下面固定的格式）
-                    field: obj.field //排序字段
-                    ,order: obj.type //排序方式 desc（降序）、asc（升序）、null（空对象，默认排序）
-                }
-            });
-        });
-
         //监听行工具事件
         table.on('tool(contractFilter)', function(obj){ //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
             var data = obj.data //获得当前行数据
                 ,layEvent = obj.event; //获得 lay-event 对应的值
             if(layEvent === 'detail'){
-                layer.msg('查看操作');
-            } else if(layEvent === 'del'){
-                layer.confirm('确认删除吗？', {
-                    skin: 'layui-layer-molv',
-                    shade: .1
-                }, function(index){
-                    //向服务端发送删除指令
-                    $.ajax({
-                        url: "${ctx}/app/delete",
-                        type: "POST",
-                        data:{"appId":data.id},
-                        dataType: "json",
-                        success: function(data){
-                            // obj.del(); //删除对应行（tr）的DOM结构
-                            layer.msg("删除成功", {icon: 6});
-                            table.reload('appTable');
-                        },
-                        error:function (data) {
-                            layer.msg("删除失败", {icon: 5});
-                        }
-                    });
-                });
-            } else if(layEvent === 'sub'){
-                //提交
-            }
-            else if(layEvent === 'edit'){
-                //1. 跳转到另一个界面进行修改
+                window.location.href = "${ctx}/contract/contractDetail/1"//+data.id;
+            } else if(layEvent === 'edit'){
+                //跳转到另一个界面进行修改
                 window.location.href = "${ctx}/contract/toEdit/"+data.id;
-                // layer.alert('编辑行：<br>'+ JSON.stringify(data))
-                //2. 使用弹出层进行修改
-                // EidtUv(data,obj); //发送修改的Ajax请求
             }
-        });
-        function  EidtUv(data,obj) {
-            updatePopUp=layer.open({
-                title: '修改APP信息',
-                type: 1, //页面层
-                area: ['600px', '700px'],
-                shade: false, //禁止使用遮罩，否则操作不了界面
-                resize:false, //禁止窗体拉伸
-                skin: 'layui-layer-molv',
-                content: $("#popUpdateForm"),
-                success: function(layero, index){
-                    //表单初始赋值
-                    form.val('updateFilter',{
-                        "id": data.id,
-                        "softwareName": data.softwareName, // "name": "value"
-                        "apkName":data.apkName,
-                        "supportRom":data.supportRom,
-                        "interfaceLanguage":data.interfaceLanguage,
-                        "softwareSize":data.softwareSize,
-                        "latestAppVersion.versionNo":data.latestAppVersion ?  data.latestAppVersion.versionNo:'',
-                        "flatform.valueId":data.flatform.valueId,
-                        "appInfo":data.appInfo
-                    })
-                }
-            });
-        }
-
-        //监听表单修改提交
-        form.on('submit(updateSubmitBtn)', function(data) {
-            $.ajax({
-                url: '${ctx}/contract/edit',
-                type: 'POST',
-                // contentType: "application/json; charset=utf-8",
-                // data:  JSON.stringify(data.field),
-                data:  data.field,
-                success: function (StateType) {
-                    // var status = StateType.status;//取得返回数据（Sting类型的字符串）的信息进行取值判断
-                    if (StateType == 'UpdateSuccess') {
-                        // layer.closeAll('loading');
-                        layer.msg("修改成功", {icon: 6});
-                        layer.close(updatePopUp) ,//执行关闭
-                            table.reload('contractTable') //重载表格
-                    } else {
-                        layer.msg("修改失败", {icon: 5});
-                    }
-                }
-            });
-            return false;//false：阻止表单跳转 true：表单跳转
         });
 
         $(document).on('click', '#cancel', function() {
