@@ -43,8 +43,8 @@
                 <a class="layui-btn layui-btn-xs " lay-event="detail">查看</a>
                 <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="edit">编辑</a>
                 <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="freeze">冻结</a>
             </script>
-            <%--加上更多（授权，密码，详情等）--%>
                     </td>
                 </tr>
                 </tbody>
@@ -217,10 +217,12 @@
             if(layEvent === 'edit'){
                 //使用弹出层进行修改
                 EidtUv(data,obj); //发送修改的Ajax请求
-            }else if(layEvent ==='detail'){
-              employeeDetail(data,obj);
             } else if(layEvent === 'del'){
                 delUv(data,obj);
+            }else if(layEvent === 'freeze') {
+                freezeUv(data, obj);
+            }else if(layEvent === 'detail') {
+                employeeDetail(data, obj);
             }
         });
 
@@ -247,7 +249,7 @@
                 //通过删除只读属性使输入框可以编辑
                 layero.find('.layui-input').removeAttr('readonly');
             },
-            yes: function(index, layero){  //添加仓库表单监听事件
+            yes: function(index, layero){  //添加用户监听事件
                 form.on('submit(addEmployeeSubmit)', function(data){
                     // console.log(data.field) //当前容器的全部表单字段，名值对形式：{name: value}
                     $.ajax({
@@ -326,7 +328,29 @@
                 });
             });
         }
-
+        //冻结用户
+        function  freezeUv(data,obj) {
+            layer.confirm('确认冻结该用户吗？', {
+                skin: 'layui-layer-molv',
+                shade: .1
+            }, function(index){
+                //向服务端发送冻结指令
+                $.ajax({
+                    url: "${ctx}/app/delete",
+                    type: "POST",
+                    data:{"appId":data.id},
+                    dataType: "json",
+                    success: function(data){
+                        // obj.del(); //删除对应行（tr）的DOM结构
+                        layer.msg("该用户已冻结", {icon: 6});
+                        table.reload('appTable');
+                    },
+                    error:function (data) {
+                        layer.msg("冻结失败，请重试！", {icon: 5});
+                    }
+                });
+            });
+        }
 
         //用户信息弹窗
         function employeeDetail(data,obj ){
@@ -348,6 +372,36 @@
                 }
             })
         }
+        //监听排序事件，会自动向后台传where中的排序字段和排序方式
+        table.on('sort(employeeFilter)', function(obj){ //注：appFilter是table lay-filter的值
+            //重新向服务端发送请求，从而实现服务端排序，如：
+            table.reload('employeeTable', {
+                initSort: obj //记录初始排序，如果不设的话，将无法标记表头的排序状态。
+                ,where: { //请求参数（注意：这里面的参数可任意定义，并非下面固定的格式）
+                    field: obj.field //排序字段
+                    ,order: obj.type //排序方式 desc（降序）、asc（升序）、null（空对象，默认排序）
+                }
+            });
+        });
+
+        $(document).on('click', '#cancel', function() {
+            layer.close(updatePopUp) //执行关闭
+        });
+
+        /** 监听表单提交，并重载table
+         * 注意下:
+         * 1. form必须有filter：lay-filter=""
+         * 2. 查询按钮必须在form中，并且携带2个属性：lay-submit="" lay-filter="search"
+         * where 中的数据对应搜索表单，为搜索的条件，后台使用这些条件进行筛选数据返回
+         */
+        form.on('submit(search)', function (data) {
+            table.reload('appTable', {
+                url: '${ctx}/app/query2',
+                where: data.field //后台直接用实体接收，
+                                  // 如果是单个属性，可以以这种方式获取和传输：softwareName=data.field.softwareName
+            });
+            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可
+        });
 
     //导出
     $('#exportExcel').click(function(){
