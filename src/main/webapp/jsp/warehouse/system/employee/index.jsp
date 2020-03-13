@@ -45,13 +45,6 @@
                 <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
                 <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="freeze">冻结</a>
             </script>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-            </div>
-        </div>
-    </div>
             <%--用户数据弹框--%>
             <form class="layui-form layui-form-pane1" id="employeeForm"  style="display:none;padding: 20px 0 0 0;"  method="post" lay-filter="addEmployeeFilter">
                 <%--添加用户基本信息--%>
@@ -77,6 +70,7 @@
                         <input type="radio" name="sex" value="男" title="男">
                         <input type="radio" name="sex" value="女" title="女" checked>
                     </div>
+                </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label"><span style="color: red;">* </span>手机号码：</label>
                     <div class="layui-input-inline" style="width: 450px">
@@ -88,17 +82,19 @@
                         <input type="radio" name="role" value="客户" title="客户">
                         <input type="radio" name="role" value="司机" title="司机" checked>
                     </div>
-                    <div class="layui-form-item">
+                </div>
+                 <div class="layui-form-item">
                         <label class="layui-form-label">邮箱：</label>
                         <div class="layui-input-inline" style="width: 450px">
                             <input type="text" name="softwareName4" lay-verify="required" placeholder="请输入邮箱"  autocomplete="off" class="layui-input" >
-                </div>
+                    </div>
+                 </div>
                 <%--<button type="submit" style="display:none;" class="layui-btn" lay-submit="addEmployeeSubmit" lay-filter="addEmployeeBtn">立即提交</button>--%>
             </form>
-        </div>
-<%--查看用户信息弹框--%>
-<div class="layui-form layui-form-pane1" id="employeeDetailForm" style="display:none;padding: 20px 0 0 0;"lay-filter="EmployeeDetailFilter">
-    <div class="layui-form-item">
+    <%--查看用户信息弹框--%>
+    <%--<div class="layui-form layui-form-pane1" id="employeeDetailForm" style="display:none;padding: 20px 0 0 0;"lay-filter="EmployeeDetailFilter">--%>
+    <form class="layui-form layui-form-pane1" id="employeeDetailForm" style="display:none;padding: 20px 0 0 0;"  method="post" lay-filter="EmployeeDetailFilter">
+        <div class="layui-form-item">
         <label class="layui-form-label" style="width: 110px">用户账号：</label>
         <div class="layui-input-inline" style="width: 250px">
             <input type="text" name="employeeId" class="layui-input"readonly="readonly">
@@ -108,7 +104,7 @@
             <input type="text" name="employeeId" class="layui-input" readonly="readonly">
         </div>
     </div>
-    <div class="layui-form-item">
+        <div class="layui-form-item">
         <label class="layui-form-label" style="width: 110px">性别：</label>
         <div class="layui-input-inline" style="width: 250px">
             <input type="text" name="employeeId" class="layui-input" readonly="readonly">
@@ -118,7 +114,7 @@
             <input type="text" name="employeeId" class="layui-input" readonly="readonly">
         </div>
     </div>
-    <div class="layui-form-item">
+        <div class="layui-form-item">
         <label class="layui-form-label" style="width: 110px">手机号码：</label>
         <div class="layui-input-inline" style="width: 250px">
             <input type="text" name="employeeId" class="layui-input" readonly="readonly">
@@ -128,14 +124,11 @@
             <input type="text" name="employeeId" class="layui-input" readonly="readonly">
         </div>
     </div>
-</div>
-</form>
-
-</div>
+    </form>
+        </div>
 </div>
 
     <jsp:include page="/jsp/include/footer.jsp"/>
-
 </div>
 <script src="${ctx}/static/plugins/layui/layui.js"></script>
 <script src='https://code.jquery.com/jquery-3.2.1.min.js'></script>
@@ -354,7 +347,7 @@
 
         //用户信息弹窗
         function employeeDetail(data,obj ){
-            layer.open({
+            EmployeeDetailPopUp=layer.open({
                 type: 1,
                 title: '用户信息',
                 area:['60%','60%'],
