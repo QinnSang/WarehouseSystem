@@ -33,13 +33,14 @@
             </form>
             <%--使用弹窗添加用户信息--%>
             <div class="layui-input-block" style="padding-bottom: 10px;margin-left: 15px">
-                <button class="layui-btn" id="popemployeeForm" lay-filter="formDemo">添加用户</button>
+                <button class="layui-btn" id="popEmployeeForm" lay-filter="formDemo">添加用户</button>
                 <%--利用隐藏的数据表格导出--%>
                 <button class="layui-btn" id="exportLocation">导出用户信息</button>
             </div>
             <%--数据表格展示--%>
             <table id="employeeTable" lay-filter="employeeFilter"></table>
             <script type="text/html" id="barDemo">
+                <a class="layui-btn layui-btn-xs " lay-event="detail">查看</a>
                 <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="edit">编辑</a>
                 <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
             </script>
@@ -95,6 +96,43 @@
                 <%--<button type="submit" style="display:none;" class="layui-btn" lay-submit="addEmployeeSubmit" lay-filter="addEmployeeBtn">立即提交</button>--%>
             </form>
         </div>
+<%--查看用户信息弹框--%>
+<div class="layui-form layui-form-pane1" id="employeeDetailForm" style="display:none;padding: 20px 0 0 0;"lay-filter="EmployeeDetailFilter">
+    <div class="layui-form-item">
+        <label class="layui-form-label" style="width: 110px">用户账号：</label>
+        <div class="layui-input-inline" style="width: 250px">
+            <input type="text" name="employeeId" class="layui-input"readonly="readonly">
+        </div>
+        <label class="layui-form-label"style="width: 110px">用户姓名：</label>
+        <div class="layui-input-inline" style="width: 250px">
+            <input type="text" name="employeeId" class="layui-input" readonly="readonly">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label" style="width: 110px">性别：</label>
+        <div class="layui-input-inline" style="width: 250px">
+            <input type="text" name="employeeId" class="layui-input" readonly="readonly">
+        </div>
+        <label class="layui-form-label" style="width: 110px">角色：</label>
+        <div class="layui-input-inline" style="width: 250px">
+            <input type="text" name="employeeId" class="layui-input" readonly="readonly">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label" style="width: 110px">手机号码：</label>
+        <div class="layui-input-inline" style="width: 250px">
+            <input type="text" name="employeeId" class="layui-input" readonly="readonly">
+        </div>
+        <label class="layui-form-label" style="width: 110px">邮箱：</label>
+        <div class="layui-input-inline" style="width: 250px">
+            <input type="text" name="employeeId" class="layui-input" readonly="readonly">
+        </div>
+    </div>
+</div>
+</form>
+
+</div>
+</div>
 
     <jsp:include page="/jsp/include/footer.jsp"/>
 
@@ -179,6 +217,8 @@
             if(layEvent === 'edit'){
                 //使用弹出层进行修改
                 EidtUv(data,obj); //发送修改的Ajax请求
+            }else if(layEvent ==='detail'){
+              employeeDetail(data,obj);
             } else if(layEvent === 'del'){
                 delUv(data,obj);
             }
@@ -238,6 +278,8 @@
             }
         });
     });
+
+
         //修改用户信息
         function  EidtUv(data,obj) {
             updateEmployeePopUp=layer.open({
@@ -283,6 +325,28 @@
                     }
                 });
             });
+        }
+
+
+        //用户信息弹窗
+        function employeeDetail(data,obj ){
+            layer.open({
+                type: 1,
+                title: '用户信息',
+                area:['60%','60%'],
+                skin: 'layui-layer-molv',
+                shade: false, //禁止使用遮罩，否则操作不了界面
+                resize:false, //禁止窗体拉伸
+                content: $("#employeeDetailForm"),
+                success: function(layero, index){
+                    $('#employeeDetailForm')[0].reset();
+                    //表单初始赋值
+                    form.val('EmployeeDetailFilter',{
+                        "employeeId": "zhehdakhjadad",
+                        "title": data.title // "name": "value"
+                    })
+                }
+            })
         }
 
     //导出
