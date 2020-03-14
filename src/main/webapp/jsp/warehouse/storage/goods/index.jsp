@@ -49,61 +49,59 @@
                 <a class="layui-btn layui-btn-xs" lay-event="childEdit">编辑</a>
                 <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="childDel">删除</a>
             </script>
-
-            <%--货物类型数据弹框--%>
-            <form class="layui-form layui-form-pane1" id="goodsTypeForm" name="popUpdateForm" style="display:none;padding: 20px 0 0 0;"  method="post" lay-filter="updateGoodsTypeFilter">
-                <input type="hidden" name="id" >
-                <div class="layui-form-item">
-                    <label class="layui-form-label">货物类型：</label>
-                    <div class="layui-input-inline" style="width: 450px">
-                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入货物类型" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">类型编码：</label>
-                    <div class="layui-input-inline" style="width: 450px">
-                        <input type="text" name="softwareName1" lay-verify="required" placeholder="请输入货物类型编码"  autocomplete="off" class="layui-input" >
-                    </div>
-                </div>
-                <%--<button type="submit" style="display:none;" class="layui-btn" lay-submit="addGoodsTypeSubmit" lay-filter="addGoodsTypeBtn">立即提交</button>--%>
-            </form>
-
-            <%--货物名称数据弹框--%>
-            <form class="layui-form layui-form-pane1" id="locationForm" style="display:none;padding: 20px 0 0 0;"  method="post" lay-filter="updateGoodsNameFilter">
-                <input type="hidden" name="goodsTypeId" >
-                <div class="layui-form-item">
-                    <label class="layui-form-label">货物类型：</label>
-                    <div class="layui-input-inline" style="width:450px">
-                        <select name="goodsTypeNameInGoodsName" id="fixedGoodsType" lay-filter="warehouseNameInLocation" >
-                            <option value="">-请选择所属货物类型-</option>
-                            <option value="0" >货物类型1</option>
-                            <option value="1" >货物类型2</option>
-                            <%--后台传入所有货物类型，如果是修改和查看会传入货物类型id，根据货物类型进行选择--%>
-                            <%--<c:forEach items="${warehouse}" var="obj">--%>
-                            <%--<option value="${obj.valueId}"><c:if test="${obj.valueId eq warehouseId}">--%>
-                            <%--selected--%>
-                            <%--</c:if>${obj.valueName}</option>--%>
-                            <%--</c:forEach>--%>
-                        </select>
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">货物名称：</label>
-                    <div class="layui-input-inline" style="width: 450px">
-                        <input type="text" name="softwareName1" lay-verify="required" placeholder="请输入货物名称"  autocomplete="off" class="layui-input" >
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">货物编码：</label>
-                    <div class="layui-input-inline" style="width: 450px">
-                        <input type="text" name="softwareName4" lay-verify="required" placeholder="请输入货物编码"  autocomplete="off" class="layui-input" >
-                    </div>
-                </div>
-                <%--<button type="submit" style="display:none;" class="layui-btn" lay-submit="addGoodsTypeSubmit" lay-filter="addGoodsTypeBtn">立即提交</button>--%>
-            </form>
-
         </div>
     </div>
+    <%--货物类型数据弹框--%>
+    <form class="layui-form layui-form-pane1" id="goodsTypeForm" name="popUpdateForm" style="display:none;padding: 20px 0 0 0;"  method="post" lay-filter="updateGoodsTypeFilter">
+        <input type="hidden" name="id" >
+        <div class="layui-form-item">
+            <label class="layui-form-label">货物类型：</label>
+            <div class="layui-input-inline" style="width: 450px">
+                <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入货物类型" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">类型编码：</label>
+            <div class="layui-input-inline" style="width: 450px">
+                <input type="text" name="softwareName1" lay-verify="required" placeholder="请输入货物类型编码"  autocomplete="off" class="layui-input" >
+            </div>
+        </div>
+        <%--<button type="submit" style="display:none;" class="layui-btn" lay-submit="addGoodsTypeSubmit" lay-filter="addGoodsTypeBtn">立即提交</button>--%>
+    </form>
+
+    <%--货物名称数据弹框--%>
+    <form class="layui-form layui-form-pane1" id="locationForm" style="display:none;padding: 20px 0 0 0;"  method="post" lay-filter="updateGoodsNameFilter">
+        <input type="hidden" name="goodsTypeId" >
+        <div class="layui-form-item">
+            <label class="layui-form-label">货物类型：</label>
+            <div class="layui-input-inline" style="width:450px">
+                <select name="goodsTypeNameInGoodsName" id="fixedGoodsType" lay-filter="warehouseNameInLocation" >
+                    <option value="">-请选择所属货物类型-</option>
+                    <option value="0" >货物类型1</option>
+                    <option value="1" >货物类型2</option>
+                    <%--后台传入所有货物类型，如果是修改和查看会传入货物类型id，根据货物类型进行选择--%>
+                    <%--<c:forEach items="${warehouse}" var="obj">--%>
+                    <%--<option value="${obj.valueId}"><c:if test="${obj.valueId eq warehouseId}">--%>
+                    <%--selected--%>
+                    <%--</c:if>${obj.valueName}</option>--%>
+                    <%--</c:forEach>--%>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">货物名称：</label>
+            <div class="layui-input-inline" style="width: 450px">
+                <input type="text" name="softwareName1" lay-verify="required" placeholder="请输入货物名称"  autocomplete="off" class="layui-input" >
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">货物编码：</label>
+            <div class="layui-input-inline" style="width: 450px">
+                <input type="text" name="softwareName4" lay-verify="required" placeholder="请输入货物编码"  autocomplete="off" class="layui-input" >
+            </div>
+        </div>
+        <%--<button type="submit" style="display:none;" class="layui-btn" lay-submit="addGoodsTypeSubmit" lay-filter="addGoodsTypeBtn">立即提交</button>--%>
+    </form>
 
     <jsp:include page="/jsp/include/footer.jsp"/>
 
@@ -276,7 +274,7 @@
                     form.val('updateGoodsTypeFilter',{
                         "id": data.id,
                         "title": data.title // "name": "value"
-                    })
+                    });
                     //通过加上只读属性使输入框不可编辑
                     layero.find('.layui-input').attr({
                         'readonly' : 'true'

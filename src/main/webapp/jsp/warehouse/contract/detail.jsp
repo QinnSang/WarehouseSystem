@@ -41,29 +41,27 @@
                         <input type="tel" name="softwareName"  value="${receivingName}"class="layui-input" readonly="readonly">
                     </div>
                 </div>
-                 <div class="layui-form-item">
-                     <label class="layui-form-label "style = "left:15px">合同简介：</label>
-                     <div class="layui-input-inline">
-                         <input type="tel" name="softwareName"  value="${receivingName}"class="layui-input" readonly="readonly">
-                     </div>
-                     <label class="layui-form-label" style = "left:280px">备注</label>
-                     <div class="layui-input-inline">
-                         <input type="tel" name="softwareName"  value="${receivingName}"class="layui-input" readonly="readonly">
-                     </div>
-                 </div>
-                <div class="layui-form-item">
-                    <input type="hidden" name="fileUrl">
-                    <input type="hidden" name="filename">
-                    <label class="layui-form-label" style = "left:15px">合同附件：</label>
-                    <div class="layui-input-inline">
-                        <button type="button" class="layui-btn" id="chooseFile"><i class="layui-icon"></i>上传</button>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label "style = "left:15px">合同简介：</label>
+                        <div class="layui-input-inline">
+                            <textarea name="desc" style = "width:510px;"  class="layui-textarea" readonly="readonly"></textarea>
+                        </div>
+                        <label class="layui-form-label" style = "left:280px">备注</label>
+                        <div class="layui-input-inline">
+                            <textarea name="desc" style = "left:280px;width:250px;"  class="layui-textarea" readonly="readonly"></textarea>
+                        </div>
                     </div>
-                </div>
-
+                    <div class="layui-form-item">
+                        <input type="hidden" name="fileUrl">
+                        <input type="hidden" name="filename">
+                        <label class="layui-form-label" style = "left:15px">合同附件：</label>
+                        <div class="layui-input-inline">
+                            <button type="button" class="layui-btn" id="chooseFile"><i class="layui-icon layui-icon-download-circle"></i> 下载</button>
+                        </div>
+                    </div>
                 <div id="tableRes" class="table-overlay">
                     <table id="expenseTable" lay-filter="expenseTable" class="layui-hide"></table>
                 </div>
-
                 <div class="layui-form-item">
                     <div class="layui-input-block">
                         <input type="button" class="layui-btn" onclick="javascript:history.back(-1);" value="返回">
@@ -101,7 +99,7 @@
                 {field: 'price', title: '单价'}
             ]],
             done: function(res, curr, count){
-                layer.close(index);    //返回数据关闭loading
+                // layer.close(index);    //返回数据关闭loading
             }
         });
 

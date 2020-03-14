@@ -12,7 +12,6 @@
         <div style="padding: 15px;">
             <%--使用dto来接收参数--%>
             <form class="layui-form" action="${ctx}/contract/add" method="post">
-                <%--添加合同基本信息--%>
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width:100px">订单编码：</label>
                     <div class="layui-input-inline" style="width:200px">
@@ -53,17 +52,16 @@
                          <textarea name="remark" value="${remark}" style = "height:10px;width:200px;"  class="layui-textarea" readonly="readonly"></textarea>
                      </div>
                  </div>
-                    <%--数据表格--%>
-                <div id="tableRes" class="table-overlay">
-                    <table id="expenseTable" lay-filter="expenseTable" class="layui-hide"></table>
-                </div>
-
-                <div class="layui-form-item">
-                    <div class="layui-input-block" style="padding-top:15px;left:900px">
-                        <input type="button" class="layui-btn" onclick="javascript:history.back(-1);" value="返回">
-                    </div>
-                </div>
             </form>
+                <%--数据表格--%>
+             <div id="tableRes" class="table-overlay">
+                 <table id="expenseTable" lay-filter="expenseTable" class="layui-hide"></table>
+             </div>
+             <div class="layui-form-item">
+                 <div class="layui-input-block" style="padding-top:15px;left:900px">
+                     <input type="button" class="layui-btn" onclick="javascript:history.back(-1);" value="返回">
+                  </div>
+             </div>
         </div>
     </div>
 

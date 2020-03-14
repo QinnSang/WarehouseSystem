@@ -49,90 +49,88 @@
                     <a class="layui-btn layui-btn-xs" lay-event="childEdit">编辑</a>
                     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="childDel">删除</a>
                 </script>
-
-            <%--仓库数据弹框--%>
-            <form class="layui-form layui-form-pane1" id="warehouseForm" name="popUpdateForm" style="display:none;padding: 20px 0 0 0;"  method="post" lay-filter="updateWarehouseFilter">
-                <input type="hidden" name="id" >
-                <div class="layui-form-item">
-                    <label class="layui-form-label">仓库名称：</label>
-                    <div class="layui-input-inline" style="width: 450px">
-                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入仓库名称" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">仓库编号：</label>
-                    <div class="layui-input-inline" style="width: 450px">
-                        <input type="text" name="softwareName1" lay-verify="required" placeholder="请输入仓库编号"  autocomplete="off" class="layui-input" >
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">联系电话：</label>
-                    <div class="layui-input-inline" style="width: 450px">
-                        <input type="text" name="softwareName2" lay-verify="required" placeholder="请输入联系电话"  autocomplete="off" class="layui-input" >
-                    </div>
-                </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">仓库位置：</label>
-                        <div class="layui-input-inline" style="width: 450px">
-                            <input type="text" name="softwareName3" lay-verify="required" placeholder="请输入仓库位置"  autocomplete="off" class="layui-input" >
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">备注：</label>
-                        <div class="layui-input-inline" style="width: 450px">
-                            <input type="text" name="softwareName4" lay-verify="required" placeholder="请输入备注"  autocomplete="off" class="layui-input" >
-                        </div>
-                    </div>
-                    <%--<button type="submit" style="display:none;" class="layui-btn" lay-submit="addWarehouseSubmit" lay-filter="addWarehouseBtn">立即提交</button>--%>
-            </form>
-
-            <%--库位数据弹框--%>
-            <form class="layui-form layui-form-pane1" id="locationForm" style="display:none;padding: 20px 0 0 0;"  method="post" lay-filter="updateLocationFilter">
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">仓库：</label>
-                        <div class="layui-input-inline" style="width:450px">
-                            <select name="warehouseNameInLocation" id="fixedWarehouse" lay-filter="warehouseNameInLocation" >
-                                <option value="">-请选择所属仓库-</option>
-                                <option value="0" >仓库1</option>
-                                <option value="1" >仓库2</option>
-                                <%--后台传入所有仓库，如果是修改和查看会传入仓库id，根据仓库进行选择--%>
-                                <%--<c:forEach items="${warehouse}" var="obj">--%>
-                                    <%--<option value="${obj.valueId}"><c:if test="${obj.valueId eq warehouseId}">--%>
-                                        <%--selected--%>
-                                    <%--</c:if>${obj.valueName}</option>--%>
-                                <%--</c:forEach>--%>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">库位名称：</label>
-                        <div class="layui-input-inline" style="width: 450px">
-                            <input type="text" name="softwareName1" lay-verify="required" placeholder="请输入库位名称"  autocomplete="off" class="layui-input" >
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">库位面积(m²)：</label>
-                        <div class="layui-input-inline" style="width: 450px">
-                            <input type="text" name="softwareName2" lay-verify="required" placeholder="请输入库位面积"  autocomplete="off" class="layui-input" >
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">库位图片：</label>
-                        <div class="layui-input-inline">
-                            <button type="button" class="layui-btn" id="chooseFile"><i class="layui-icon"></i>上传</button>
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">备注：</label>
-                        <div class="layui-input-inline" style="width: 450px">
-                            <input type="text" name="softwareName4" lay-verify="required" placeholder="请输入备注"  autocomplete="off" class="layui-input" >
-                        </div>
-                    </div>
-                    <%--<button type="submit" style="display:none;" class="layui-btn" lay-submit="addWarehouseSubmit" lay-filter="addWarehouseBtn">立即提交</button>--%>
-                </form>
-
         </div>
     </div>
+    <%--仓库数据弹框--%>
+    <form class="layui-form layui-form-pane1" id="warehouseForm" name="popUpdateForm" style="display:none;padding: 20px 0 0 0;"  method="post" lay-filter="updateWarehouseFilter">
+        <input type="hidden" name="id" >
+        <div class="layui-form-item">
+            <label class="layui-form-label">仓库名称：</label>
+            <div class="layui-input-inline" style="width: 450px">
+                <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入仓库名称" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">仓库编号：</label>
+            <div class="layui-input-inline" style="width: 450px">
+                <input type="text" name="softwareName1" lay-verify="required" placeholder="请输入仓库编号"  autocomplete="off" class="layui-input" >
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">联系电话：</label>
+            <div class="layui-input-inline" style="width: 450px">
+                <input type="text" name="softwareName2" lay-verify="required" placeholder="请输入联系电话"  autocomplete="off" class="layui-input" >
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">仓库位置：</label>
+            <div class="layui-input-inline" style="width: 450px">
+                <input type="text" name="softwareName3" lay-verify="required" placeholder="请输入仓库位置"  autocomplete="off" class="layui-input" >
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">备注：</label>
+            <div class="layui-input-inline" style="width: 450px">
+                <input type="text" name="softwareName4" lay-verify="required" placeholder="请输入备注"  autocomplete="off" class="layui-input" >
+            </div>
+        </div>
+        <%--<button type="submit" style="display:none;" class="layui-btn" lay-submit="addWarehouseSubmit" lay-filter="addWarehouseBtn">立即提交</button>--%>
+    </form>
+
+    <%--库位数据弹框--%>
+    <form class="layui-form layui-form-pane1" id="locationForm" style="display:none;padding: 20px 0 0 0;"  method="post" lay-filter="updateLocationFilter">
+        <div class="layui-form-item">
+            <label class="layui-form-label">仓库：</label>
+            <div class="layui-input-inline" style="width:450px">
+                <select name="warehouseNameInLocation" id="fixedWarehouse" lay-filter="warehouseNameInLocation" >
+                    <option value="">-请选择所属仓库-</option>
+                    <option value="0" >仓库1</option>
+                    <option value="1" >仓库2</option>
+                    <%--后台传入所有仓库，如果是修改和查看会传入仓库id，根据仓库进行选择--%>
+                    <%--<c:forEach items="${warehouse}" var="obj">--%>
+                    <%--<option value="${obj.valueId}"><c:if test="${obj.valueId eq warehouseId}">--%>
+                    <%--selected--%>
+                    <%--</c:if>${obj.valueName}</option>--%>
+                    <%--</c:forEach>--%>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">库位名称：</label>
+            <div class="layui-input-inline" style="width: 450px">
+                <input type="text" name="softwareName1" lay-verify="required" placeholder="请输入库位名称"  autocomplete="off" class="layui-input" >
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">库位面积(m²)：</label>
+            <div class="layui-input-inline" style="width: 450px">
+                <input type="text" name="softwareName2" lay-verify="required" placeholder="请输入库位面积"  autocomplete="off" class="layui-input" >
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">库位图片：</label>
+            <div class="layui-input-inline">
+                <button type="button" class="layui-btn" id="chooseFile"><i class="layui-icon"></i>上传</button>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">备注：</label>
+            <div class="layui-input-inline" style="width: 450px">
+                <input type="text" name="softwareName4" lay-verify="required" placeholder="请输入备注"  autocomplete="off" class="layui-input" >
+            </div>
+        </div>
+        <%--<button type="submit" style="display:none;" class="layui-btn" lay-submit="addWarehouseSubmit" lay-filter="addWarehouseBtn">立即提交</button>--%>
+    </form>
 
     <jsp:include page="/jsp/include/footer.jsp"/>
 

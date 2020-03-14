@@ -37,7 +37,7 @@
 <!-- 侧边栏 -->
 <div class="layui-side layui-bg-black">
     <div class="layui-side-scroll">
-        <ul class="layui-nav layui-nav-tree arrow2" lay-accordion="true" lay-filter="admin-side-nav"
+        <ul class="layui-nav layui-nav-tree arrow2" id="navList" lay-accordion="true" lay-filter="admin-side-nav"
             style="margin-top: 15px;">
             <li class="layui-nav-item layui-nav-itemed">
                 <a class="" href="${ctx}/index/index">首页</a>
@@ -67,11 +67,42 @@
                     <dd><a href="${ctx}/client/index">客户管理</a></dd>
                 </dl>
             </li>
-            <li class="layui-nav-item">
-                <a href="javascript:;">操作日志</a>
-            </li>
+            <%--<li class="layui-nav-item">--%>
+                <%--<a href="javascript:;">操作日志</a>--%>
+            <%--</li>--%>
         </ul>
     </div>
 </div>
+<%--<script src="${ctx}/static/plugins/layui/layui.js"></script>--%>
+<%--<script type="text/javascript">--%>
+    <%--//JavaScript代码区域--%>
+    <%--layui.use('jquery', function() {--%>
+        <%--$ =layui.jquery;--%>
+        <%--$('li a').click(function(){--%>
+            <%--// $('.layui-this').removeClass('layui-this');--%>
+            <%--// $(this).addClass("layui-this");--%>
+            <%--if (!$(this).hasClass('layui-this')) {--%>
+                <%--$(this).addClass('layui-this').siblings().removeClass('layui-this');//点击判断没有layui-this就加，其他的去除--%>
+            <%--}--%>
+        <%--});--%>
+        <%--// $('.layui-nav-item').on('click',function(){--%>
+        <%--//     if (!$(this).hasClass('layui-this')) {--%>
+        <%--//         $(this).addClass('layui-this').siblings('.layui-nav-item').removeClass('layui-this');//点击判断没有layui-this就加，其他的去除--%>
+        <%--//     }--%>
+        <%--// })--%>
+    <%--})--%>
+<%--</script>--%>
+<%--设置所有界面样式--%>
+<style type="text/css">
+    /*侧边栏黑色区域宽度*/
+    .layui-side.layui-bg-black{
+        width:150px; //设置宽度
+    }
+    /*侧边栏文字位置*/
+    .layui-nav-tree{
+        width: 150px;
+    }
 
-
+    /*设置头部样式*/
+    .layui-header{}
+</style>

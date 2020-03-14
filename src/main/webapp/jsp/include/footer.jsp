@@ -12,21 +12,6 @@
         bottom:0px;
     }
 
-    /*侧边栏黑色区域宽度*/
-    .layui-side.layui-bg-black{
-          width:150px; //设置宽度
-    }
-    /*侧边栏文字位置*/
-    .layui-nav-tree{
-        width: 150px;
-    }
-
-
-    /*设置头部样式*/
-    .layui-header{
-
-    }
-
     /*主体样式*/
     .layui-body {
         position: absolute;

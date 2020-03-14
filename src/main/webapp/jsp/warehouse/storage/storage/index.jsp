@@ -4,7 +4,12 @@
     <title>仓储物流系统</title>
     <link rel="stylesheet" href="${ctx}/static/plugins/layui/css/layui.css">
     <link rel="stylesheet" href="${ctx}/static/layuiExtend/dropdown.css" media="all">
-
+    <%--设置表单样式--%>
+    <style type="text/css">
+        .layui-form-item{
+            margin-bottom: 30px;
+        }
+    </style>
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
@@ -14,7 +19,7 @@
         <div style="padding: 15px;">
             <form class="layui-form" method="post">
                 <%--查询条件--%>
-                <div class="layui-form-item">
+                <div class="layui-form-item" style="margin-bottom: 10px;">
                     <div class="layui-inline">
                         <label class="layui-form-label" style="width: 100px">仓储订单名称：</label>
                         <div class="layui-input-inline" style="width:180px">
@@ -42,7 +47,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="layui-form-item" >
+                <div class="layui-form-item"  style="margin-bottom: 10px;">
                     <div class="layui-input-inline" style="left:40px">
                         <button class="layui-btn " lay-submit  lay-filter="formDemo" >查 询</button>
                         <button type="reset" class="layui-btn ">重 置</button>
@@ -68,97 +73,97 @@
                 <%--<a class="layui-btn layui-btn-xs" lay-event="sub">驳回</a>--%>
                 <%--<a class="layui-btn layui-btn-xs" lay-event="sub">确认</a>--%>
             </script>
-
-            <%--新增仓储订单弹框--%>
-            <form class="layui-form layui-form-pane1" id="storageAddForm" style="display:none;padding: 20px 0 0 0;"  method="post" lay-filter="addStorageFilter" >
-                <%--添加仓储订单基本信息--%>
-                <div class="layui-form-item" >
-                    <label class="layui-form-label"style="width: 110px"><span style="color: red;">* </span>仓储订单名称：</label>
-                    <div class="layui-input-inline" style="width: 430px">
-                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入仓储订单名称" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label" style="width: 110px"><span style="color: red;">* </span>关联合同名称：</label>
-                    <div class="layui-input-inline" style="width: 430px">
-                        <select name="contractId" id="contractId" lay-filter="contractId" >
-                            <option value="0">-请选择关联合同-</option>
-                            <option value="1" >合同名称1</option>
-                            <option value="2" >合同名称2</option>
-                            <%--加载页面时就从后台传入所有合同，当选择某个合同后，自动填写合同编号和公司名称--%>
-                            <%--<c:forEach items="${warehouse}" var="obj">--%>
-                            <%--<option value="${obj.valueId}"><c:if test="${obj.valueId eq warehouseId}">--%>
-                            <%--selected--%>
-                            <%--</c:if>${obj.valueName}</option>--%>
-                            <%--</c:forEach>--%>
-                        </select>
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label" style="width: 110px">合同编号：</label>
-                    <div class="layui-input-inline" style="width: 430px">
-                        <input type="tel" name="contractCode" id="contractCode" lay-verify="title" placeholder="根据关联合同生成" autocomplete="off" class="layui-input" readonly="readonly">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label" style="width: 110px">公司名称：</label>
-                    <div class="layui-input-inline" style="width: 430px">
-                        <input type="tel" name="companyName" id="companyName" lay-verify="title" placeholder="根据关联合同生成" autocomplete="off" class="layui-input" readonly="readonly">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label" style="width: 110px">备注：</label>
-                    <div class="layui-input-inline" style="width: 430px">
-                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
-                    </div>
-                </div>
-            </form>
-            <%--查看仓储订单弹框--%>
-            <form class="layui-form layui-form-pane1" id="storageDetailForm" style="display:none;padding: 20px 0 0 0;"lay-filter="StorageDetailFilter">
-                <div class="layui-form-item">
-                    <label class="layui-form-label" style="width: 110px">仓储订单号：</label>
-                    <div class="layui-input-inline" style="width: 250px">
-                        <input type="text" name="storageId" class="layui-input"readonly="readonly">
-                    </div>
-                    <label class="layui-form-label"style="width: 110px">仓储订单名称：</label>
-                    <div class="layui-input-inline" style="width: 250px">
-                        <input type="text" name="storageId" class="layui-input" readonly="readonly">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label" style="width: 110px">合同编号：</label>
-                    <div class="layui-input-inline" style="width: 250px">
-                        <input type="text" name="storageId" class="layui-input" readonly="readonly">
-                    </div>
-                    <label class="layui-form-label" style="width: 110px">公司名称：</label>
-                    <div class="layui-input-inline" style="width: 250px">
-                        <input type="text" name="storageId" class="layui-input" readonly="readonly">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label" style="width: 110px">库存数量：</label>
-                    <div class="layui-input-inline" style="width: 250px">
-                        <input type="text" name="storageId" class="layui-input" readonly="readonly">
-                    </div>
-                    <label class="layui-form-label" style="width: 110px">备注：</label>
-                    <div class="layui-input-inline" style="width: 250px">
-                        <input type="text" name="storageId" class="layui-input" readonly="readonly">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label" style="width: 110px">创建人：</label>
-                    <div class="layui-input-inline" style="width: 250px">
-                        <input type="text" name="storageId" class="layui-input" readonly="readonly">
-                    </div>
-                    <label class="layui-form-label" style="width: 110px">创建时间：</label>
-                    <div class="layui-input-inline" style="width: 250px">
-                        <input type="text" name="storageId" class="layui-input" readonly="readonly">
-                    </div>
-                </div>
-            </form>
-
         </div>
     </div>
+
+    <%--新增仓储订单弹框--%>
+    <form class="layui-form layui-form-pane1" id="storageAddForm" style="display:none;padding: 20px 0 0 0;"  method="post" lay-filter="addStorageFilter" >
+        <%--添加仓储订单基本信息--%>
+        <div class="layui-form-item" >
+            <label class="layui-form-label"style="width: 110px"><span style="color: red;">* </span>仓储订单名称：</label>
+            <div class="layui-input-inline" style="width: 430px">
+                <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入仓储订单名称" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="width: 110px"><span style="color: red;">* </span>关联合同名称：</label>
+            <div class="layui-input-inline" style="width: 430px">
+                <select name="contractId" id="contractId" lay-filter="contractId" >
+                    <option value="0">-请选择关联合同-</option>
+                    <option value="1" >合同名称1</option>
+                    <option value="2" >合同名称2</option>
+                    <%--加载页面时就从后台传入所有合同，当选择某个合同后，自动填写合同编号和公司名称--%>
+                    <%--<c:forEach items="${warehouse}" var="obj">--%>
+                    <%--<option value="${obj.valueId}"><c:if test="${obj.valueId eq warehouseId}">--%>
+                    <%--selected--%>
+                    <%--</c:if>${obj.valueName}</option>--%>
+                    <%--</c:forEach>--%>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="width: 110px">合同编号：</label>
+            <div class="layui-input-inline" style="width: 430px">
+                <input type="tel" name="contractCode" id="contractCode" lay-verify="title" placeholder="根据关联合同生成" autocomplete="off" class="layui-input" readonly="readonly">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="width: 110px">公司名称：</label>
+            <div class="layui-input-inline" style="width: 430px">
+                <input type="tel" name="companyName" id="companyName" lay-verify="title" placeholder="根据关联合同生成" autocomplete="off" class="layui-input" readonly="readonly">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="width: 110px">备注：</label>
+            <div class="layui-input-inline" style="width: 430px">
+                <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+            </div>
+        </div>
+    </form>
+    <%--查看仓储订单弹框--%>
+    <form class="layui-form layui-form-pane1" id="storageDetailForm" style="display:none;padding: 20px 0 0 0;"lay-filter="StorageDetailFilter">
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="width: 110px">仓储订单号：</label>
+            <div class="layui-input-inline" style="width: 250px">
+                <input type="text" name="storageId" class="layui-input"readonly="readonly">
+            </div>
+            <label class="layui-form-label"style="width: 110px">仓储订单名称：</label>
+            <div class="layui-input-inline" style="width: 250px">
+                <input type="text" name="storageId" class="layui-input" readonly="readonly">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="width: 110px">合同编号：</label>
+            <div class="layui-input-inline" style="width: 250px">
+                <input type="text" name="storageId" class="layui-input" readonly="readonly">
+            </div>
+            <label class="layui-form-label" style="width: 110px">公司名称：</label>
+            <div class="layui-input-inline" style="width: 250px">
+                <input type="text" name="storageId" class="layui-input" readonly="readonly">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="width: 110px">库存数量：</label>
+            <div class="layui-input-inline" style="width: 250px">
+                <input type="text" name="storageId" class="layui-input" readonly="readonly">
+            </div>
+            <label class="layui-form-label" style="width: 110px">备注：</label>
+            <div class="layui-input-inline" style="width: 250px">
+                <input type="text" name="storageId" class="layui-input" readonly="readonly">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="width: 110px">创建人：</label>
+            <div class="layui-input-inline" style="width: 250px">
+                <input type="text" name="storageId" class="layui-input" readonly="readonly">
+            </div>
+            <label class="layui-form-label" style="width: 110px">创建时间：</label>
+            <div class="layui-input-inline" style="width: 250px">
+                <input type="text" name="storageId" class="layui-input" readonly="readonly">
+            </div>
+        </div>
+    </form>
+
 
     <jsp:include page="/jsp/include/footer.jsp"/>
 
@@ -529,9 +534,6 @@
         font-size:15px;
         /*设置表格行高*/
         line-height: 40px;
-    }
-    .layui-form-item{
-        margin-bottom: 25px;
     }
 </style>
 </body>
