@@ -91,49 +91,48 @@
                  </div>
                 <%--<button type="submit" style="display:none;" class="layui-btn" lay-submit="addEmployeeSubmit" lay-filter="addEmployeeBtn">立即提交</button>--%>
             </form>
+        </div>
+    </div>
     <%--查看用户信息弹框--%>
     <%--<div class="layui-form layui-form-pane1" id="employeeDetailForm" style="display:none;padding: 20px 0 0 0;"lay-filter="EmployeeDetailFilter">--%>
     <form class="layui-form layui-form-pane1" id="employeeDetailForm" style="display:none;padding: 20px 0 0 0;"  method="post" lay-filter="EmployeeDetailFilter">
         <div class="layui-form-item">
-        <label class="layui-form-label" style="width: 110px">用户账号：</label>
-        <div class="layui-input-inline" style="width: 250px">
-            <input type="text" name="employeeId" class="layui-input"readonly="readonly">
+            <label class="layui-form-label" style="width: 110px">用户账号：</label>
+            <div class="layui-input-inline" style="width: 250px">
+                <input type="text" name="employeeId" class="layui-input"readonly="readonly">
+            </div>
+            <label class="layui-form-label"style="width: 110px">用户姓名：</label>
+            <div class="layui-input-inline" style="width: 250px">
+                <input type="text" name="employeeId" class="layui-input" readonly="readonly">
+            </div>
         </div>
-        <label class="layui-form-label"style="width: 110px">用户姓名：</label>
-        <div class="layui-input-inline" style="width: 250px">
-            <input type="text" name="employeeId" class="layui-input" readonly="readonly">
-        </div>
-    </div>
         <div class="layui-form-item">
-        <label class="layui-form-label" style="width: 110px">性别：</label>
-        <div class="layui-input-inline" style="width: 250px">
-            <input type="text" name="employeeId" class="layui-input" readonly="readonly">
+            <label class="layui-form-label" style="width: 110px">性别：</label>
+            <div class="layui-input-inline" style="width: 250px">
+                <input type="text" name="employeeId" class="layui-input" readonly="readonly">
+            </div>
+            <label class="layui-form-label" style="width: 110px">角色：</label>
+            <div class="layui-input-inline" style="width: 250px">
+                <input type="text" name="employeeId" class="layui-input" readonly="readonly">
+            </div>
         </div>
-        <label class="layui-form-label" style="width: 110px">角色：</label>
-        <div class="layui-input-inline" style="width: 250px">
-            <input type="text" name="employeeId" class="layui-input" readonly="readonly">
-        </div>
-    </div>
         <div class="layui-form-item">
-        <label class="layui-form-label" style="width: 110px">手机号码：</label>
-        <div class="layui-input-inline" style="width: 250px">
-            <input type="text" name="employeeId" class="layui-input" readonly="readonly">
+            <label class="layui-form-label" style="width: 110px">手机号码：</label>
+            <div class="layui-input-inline" style="width: 250px">
+                <input type="text" name="employeeId" class="layui-input" readonly="readonly">
+            </div>
+            <label class="layui-form-label" style="width: 110px">邮箱：</label>
+            <div class="layui-input-inline" style="width: 250px">
+                <input type="text" name="employeeId" class="layui-input" readonly="readonly">
+            </div>
         </div>
-        <label class="layui-form-label" style="width: 110px">邮箱：</label>
-        <div class="layui-input-inline" style="width: 250px">
-            <input type="text" name="employeeId" class="layui-input" readonly="readonly">
-        </div>
-    </div>
     </form>
-        </div>
-</div>
-
     <jsp:include page="/jsp/include/footer.jsp"/>
 </div>
 <script src="${ctx}/static/plugins/layui/layui.js"></script>
+<jsp:include page="${ctx}/static/layuiExtend/layuiExtend.js.jsp"/>
 <script src='https://code.jquery.com/jquery-3.2.1.min.js'></script>
-<link rel="stylesheet" type="text/css" href="${ctx}/static/soulTable/soulTable.css"/>
-<%@include file="/jsp/include/in.js.jsp"%>
+<link rel="stylesheet" type="text/css" href="${ctx}/static/layuiExtend/soulTable/soulTable.css"/>
 <script>
 
     //JavaScript代码区域
@@ -163,16 +162,16 @@
             , even: true //隔行背景
             , autoSort: false  //禁用前端的排序方法
             , cols: [[ //表头
-                {field: 'title', title: '用户账号', fixed: 'left', width: 200, unresize: true},
-                {field: 'dynasty', title: '用户姓名', width: 140, unresize: true},
-                {field: 'sex', title: '性别', width: 200, unresize: true},
-                {field: 'role', title: '角色', width: 200, unresize: true},
-                {field: 'phone', title: '手机号码', width: 200, unresize: true},
-                {field: 'mail', title: '邮箱', width: 200, unresize: true},
+                {field: 'title', title: '用户账号', unresize: true},
+                {field: 'dynasty', title: '用户姓名',  unresize: true},
+                {field: 'sex', title: '性别',width: 80, unresize: true},
+                {field: 'role', title: '角色',  unresize: true},
+                {field: 'phone', title: '手机号码', width: 180, unresize: true},
+                {field: 'mail', title: '邮箱', width: 180, unresize: true},
                 // {field: 'content', title: '创建人', width: 100},
                 // {field: 'createTime', title: '创建时间', width: 165, filter: {type: 'date[yyyy-MM-dd HH:mm:ss]'}, sort:true},
-                {field: 'status', title: '状态', width: 120, unresize: true},
-                {fixed: 'right', title: '操作', width: 200, templet: '#barDemo', unresize: true}
+                {field: 'status', title: '状态', width: 80,unresize: true},
+                {fixed: 'right', title: '操作', width: 230, templet: '#barDemo', unresize: true}
             ]]
             , parseData: function (res) { //res 即为原始返回的数据
                 return {

@@ -3,7 +3,7 @@
 <head>
     <title>仓储物流系统</title>
     <link rel="stylesheet" href="${ctx}/static/plugins/layui/css/layui.css">
-    <link rel="stylesheet" href="${ctx}/static/layuiExtend/dropdown.css" media="all">
+    <link rel="stylesheet" href="${ctx}/static/layuiExtend/dropdown/dropdown.css" media="all">
     <%--设置表单样式--%>
     <style type="text/css">
         .layui-form-item{
@@ -164,14 +164,14 @@
         </div>
     </form>
 
-
     <jsp:include page="/jsp/include/footer.jsp"/>
 
 </div>
 <script src="${ctx}/static/plugins/layui/layui.js"></script>
+<jsp:include page="${ctx}/static/layuiExtend/layuiExtend.js.jsp"/>
 <script src='https://code.jquery.com/jquery-3.2.1.min.js'></script>
-<link rel="stylesheet" type="text/css" href="${ctx}/static/soulTable/soulTable.css"/>
-<%@include file="/jsp/include/in.js.jsp"%>
+<link rel="stylesheet" type="text/css" href="${ctx}/static/layuiExtend/soulTable/soulTable.css"/>
+<%@include file="/static/layuiExtend/layuiExtend.js.jsp"%>
 <script>
     //JavaScript代码区域
     layui.use(['element','jquery','form','table','layer','soulTable','dropdown'], function(){

@@ -136,14 +136,9 @@
 
 </div>
 <script src="${ctx}/static/plugins/layui/layui.js"></script>
+<jsp:include page="${ctx}/static/layuiExtend/layuiExtend.js.jsp"/>
+<link rel="stylesheet" type="text/css" href="${ctx}/static/layuiExtend/soulTable/soulTable.css"/>
 <script>
-    // 自定义模块
-    layui.config({
-        base: '${ctx}/static/soulTable/'   // 模块目录
-    }).extend({                         // 模块别名
-        soulTable: 'soulTable'
-    });
-
     //JavaScript代码区域
     layui.use(['element','jquery','form','table','layer','soulTable'], function(){
         var element = layui.element;

@@ -111,6 +111,7 @@
 
 </div>
 <script src="${ctx}/static/plugins/layui/layui.js"></script>
+<jsp:include page="${ctx}/static/layuiExtend/layuiExtend.js.jsp"/>
 <script>
     //JavaScript代码区域
     layui.use(['element','laydate','jquery', 'table'], function(){

@@ -94,8 +94,8 @@
 </div>
 <script src="${ctx}/static/plugins/layui/layui.js"></script>
 <script src='https://code.jquery.com/jquery-3.2.1.min.js'></script>
-<link rel="stylesheet" type="text/css" href="${ctx}/static/soulTable/soulTable.css"/>
-<%@include file="/jsp/include/in.js.jsp"%>
+<jsp:include page="${ctx}/static/layuiExtend/layuiExtend.js.jsp"/>
+<link rel="stylesheet" type="text/css" href="${ctx}/static/layuiExtend/soulTable/soulTable.css"/>
 <script>
     //JavaScript代码区域
     layui.use(['element','jquery','form','table','layer','soulTable'], function(){

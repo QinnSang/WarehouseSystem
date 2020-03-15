@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>仓储物流系统</title>
-    <link rel="stylesheet" href="${ctx}/static/layuiExtend/dropdown.css" media="all">
+    <link rel="stylesheet" href="${ctx}/static/layuiExtend/dropdown/dropdown.css" media="all">
     <link rel="stylesheet" href="${ctx}/static/plugins/layui/css/layui.css">
 </head>
 <body class="layui-layout-body">
@@ -30,57 +30,54 @@
                 <%--利用隐藏的数据表格导出--%>
                 <button class="layui-btn" id="exportLocation">导出客户信息</button>
             </div>
-        <%--数据表格展示--%>
-        <table id="clientTable" lay-filter="clientFilter"></table>
-        <script type="text/html" id="barDemo">
-            <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-        </script>
-            <%--客户信息弹框--%>
-            <form class="layui-form layui-form-pane1" id="clientForm" style="display:none;padding: 20px 0 0 0;"  method="post" lay-filter="addClientFilter">
-                <%--添加客户基本信息--%>
-                <div class="layui-form-item">
-                    <label class="layui-form-label"style="width: 110px"><span style="color: red;">* </span>客户名称：</label>
-                    <div class="layui-input-inline" style="width: 430px">
-                        <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入客户名称" class="layui-input">
-                    </div>
-                </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label" style="width: 110px">客户地址：</label>
-                        <div class="layui-input-inline" style="width: 430px">
-                            <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入客户地址" class="layui-input">
-                        </div>
-                    </div>
-                        <div class="layui-form-item">
-                            <label class="layui-form-label"style="width: 110px"><span style="color: red;">* </span>客户联系人：</label>
-                            <div class="layui-input-inline" style="width: 430px">
-                                <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入客户联系人" class="layui-input">
-                            </div>
-                        </div>
-                            <div class="layui-form-item">
-                                <label class="layui-form-label"style="width: 110px"><span style="color: red;">* </span>联系人电话：</label>
-                                <div class="layui-input-inline" style="width: 430px">
-                                    <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入联系人电话" class="layui-input">
-                                </div>
-                            </div>
-                        <div class="layui-form-item">
-                            <label class="layui-form-label" style="width: 110px">备注：</label>
-                            <div class="layui-input-inline" style="width: 430px">
-                                <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
+            <%--数据表格展示--%>
+            <table id="clientTable" lay-filter="clientFilter"></table>
+            <script type="text/html" id="barDemo">
+                <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+            </script>
     </div>
 </div>
-            <jsp:include page="/jsp/include/footer.jsp"/>
-
+    <%--客户信息弹框--%>
+    <form class="layui-form layui-form-pane1" id="clientForm" style="display:none;padding: 20px 0 0 0;"  method="post" lay-filter="addClientFilter">
+        <%--添加客户基本信息--%>
+        <div class="layui-form-item">
+            <label class="layui-form-label"style="width: 110px"><span style="color: red;">* </span>客户名称：</label>
+            <div class="layui-input-inline" style="width: 430px">
+                <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入客户名称" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="width: 110px">客户地址：</label>
+            <div class="layui-input-inline" style="width: 430px">
+                <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入客户地址" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"style="width: 110px"><span style="color: red;">* </span>客户联系人：</label>
+            <div class="layui-input-inline" style="width: 430px">
+                <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入客户联系人" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"style="width: 110px"><span style="color: red;">* </span>联系人电话：</label>
+            <div class="layui-input-inline" style="width: 430px">
+                <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入联系人电话" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="width: 110px">备注：</label>
+            <div class="layui-input-inline" style="width: 430px">
+                <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+            </div>
+        </div>
+    </form>
+     <jsp:include page="/jsp/include/footer.jsp"/>
 </div>
 <script src="${ctx}/static/plugins/layui/layui.js"></script>
 <script src='https://code.jquery.com/jquery-3.2.1.min.js'></script>
-<link rel="stylesheet" type="text/css" href="${ctx}/static/soulTable/soulTable.css"/>
-<%@include file="/jsp/include/in.js.jsp"%>
+<jsp:include page="${ctx}/static/layuiExtend/layuiExtend.js.jsp"/>
+<link rel="stylesheet" type="text/css" href="${ctx}/static/layuiExtend/soulTable/soulTable.css"/>
 <script>
 
             //JavaScript代码区域
@@ -110,14 +107,14 @@
                     , even: true //隔行背景
                     , autoSort: false  //禁用前端的排序方法
                     , cols: [[ //表头
-                        {field: 'title', title: '客户名称', fixed: 'left', width: 200, unresize: true},
-                        {field: 'dynasty', title: '客户地址', width: 140, unresize: true},
-                        {field: 'author', title: '客户联系人', width: 200, unresize: true},
+                        {field: 'title', title: '客户名称', fixed: 'left',unresize: true},
+                        {field: 'dynasty', title: '客户地址', width: 200, unresize: true},
+                        {field: 'author', title: '客户联系人',unresize: true},
                         {field: 'type', title: '联系人电话', width: 200, unresize: true},
                         // {field: 'content', title: '创建人', width: 100},
                         // {field: 'createTime', title: '创建时间', width: 165, filter: {type: 'date[yyyy-MM-dd HH:mm:ss]'}, sort:true},
                         {field: 'heat', title: '备注', width: 120, unresize: true},
-                        {fixed: 'right', title: '操作', width: 200, templet: '#barDemo', unresize: true}
+                        {fixed: 'right', title: '操作',templet: '#barDemo', unresize: true}
                     ]]
                     , parseData: function (res) { //res 即为原始返回的数据
                         return {

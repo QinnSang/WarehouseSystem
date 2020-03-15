@@ -62,8 +62,8 @@
             <li class="layui-nav-item">
                 <a href="javascript:;">系统管理</a>
                 <dl class="layui-nav-child">
-                    <dd><a href="${ctx}/employee/index">用户管理</a></dd>
                     <dd><a href="${ctx}/role/index">角色管理</a></dd>
+                    <dd><a href="${ctx}/employee/index">用户管理</a></dd>
                     <dd><a href="${ctx}/client/index">客户管理</a></dd>
                 </dl>
             </li>
