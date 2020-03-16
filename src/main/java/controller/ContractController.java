@@ -16,10 +16,6 @@ public class ContractController {
 
     @RequestMapping("/toAdd")
     public String toAdd(Model model){
-//        List<Expense> expense=new ArrayList<>();
-//        expense.add(new Expense(1,"收费1"));
-//        expense.add(new Expense(2,"收费2"));
-//        model.addAttribute("expense", expense);
         return "contract/add";
     }
 

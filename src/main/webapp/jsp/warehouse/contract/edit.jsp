@@ -154,7 +154,7 @@
                         return '<a lay-event="expense"></a><select name="expense" lay-filter="expense"><option value="">请选择收费项目</option>' + options + '</select>';
                     }},
                 {field: 'price', title: '单价', edit: 'text'},
-                {field: 'unit', title: '计价单位', edit: 'text'},
+                {field: 'remark', title: '备注', edit: 'text'},
                 {field: 'tempId', title: '操作', templet: function(d){
                         return '<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" lay-id="'+ d.tempId +'"><i class="layui-icon layui-icon-delete"></i>移除</a>';
                     }}

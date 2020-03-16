@@ -15,9 +15,9 @@
                 <%--查询条件--%>
                 <div class="layui-form-item">
                     <div class="layui-inline">
-                        <label class="layui-form-label">客户名称</label>
+                        <label class="layui-form-label">公司名称</label>
                         <div class="layui-input-inline" style="width:180px">
-                            <input type="tel" name="softwareName" lay-verify="title" autocomplete="off" placeholder="请输入客户名称" class="layui-input">
+                            <input type="tel" name="softwareName" lay-verify="title" autocomplete="off" placeholder="请输入公司名称" class="layui-input">
                         </div>
                         <button class="layui-btn " lay-submit  lay-filter="search" >查 询</button>
                         <button type="reset" class="layui-btn ">重 置</button>
@@ -26,37 +26,43 @@
             </form>
             <%--使用弹窗添加用户信息--%>
             <div class="layui-input-block" style="padding-top: 25px;margin-left: 15px">
-                <button class="layui-btn" id="popClientForm"lay-submit lay-filter="formDemo">添加客户</button>
+                <button class="layui-btn" id="popClientForm"lay-submit lay-filter="formDemo">添加公司</button>
                 <%--利用隐藏的数据表格导出--%>
-                <button class="layui-btn" id="exportLocation">导出客户信息</button>
+                <button class="layui-btn" id="exportLocation">导出公司信息</button>
             </div>
             <%--数据表格展示--%>
-            <table id="clientTable" lay-filter="clientFilter"></table>
+            <table id="companyTable" lay-filter="companyFilter"></table>
             <script type="text/html" id="barDemo">
                 <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
                 <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
             </script>
     </div>
 </div>
-    <%--客户信息弹框--%>
-    <form class="layui-form layui-form-pane1" id="clientForm" style="display:none;padding: 20px 0 0 0;"  method="post" lay-filter="addClientFilter">
-        <%--添加客户基本信息--%>
+    <%--公司信息弹框--%>
+    <form class="layui-form layui-form-pane1" id="companyForm" style="display:none;padding: 20px 0 0 0;"  method="post" lay-filter="addClientFilter">
+        <%--添加公司基本信息--%>
         <div class="layui-form-item">
-            <label class="layui-form-label"style="width: 110px"><span style="color: red;">* </span>客户名称：</label>
+            <label class="layui-form-label"style="width: 110px"><span style="color: red;">* </span>公司名称：</label>
             <div class="layui-input-inline" style="width: 430px">
-                <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入客户名称" class="layui-input">
+                <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入公司名称" class="layui-input">
+            </div>
+        </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label"style="width: 110px"><span style="color: red;">* </span>统一社会编码：</label>
+                <div class="layui-input-inline" style="width: 430px">
+                    <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入公司名称" class="layui-input">
+                </div>
+            </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="width: 110px"><span style="color: red;">* </span>公司地址：</label>
+            <div class="layui-input-inline" style="width: 430px">
+                <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入公司地址" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label" style="width: 110px">客户地址：</label>
+            <label class="layui-form-label"style="width: 110px"><span style="color: red;">* </span>公司联系人：</label>
             <div class="layui-input-inline" style="width: 430px">
-                <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入客户地址" class="layui-input">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label"style="width: 110px"><span style="color: red;">* </span>客户联系人：</label>
-            <div class="layui-input-inline" style="width: 430px">
-                <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入客户联系人" class="layui-input">
+                <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入公司联系人" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
@@ -92,9 +98,9 @@
 
                 //第一个实例
                 var myTable = table.render({
-                    elem: '#clientTable' //表格id
+                    elem: '#companyTable' //表格id
                     // ,height: 312
-                    <%--,url: '${ctx}/clientt/query' //数据接口--%>
+                    <%--,url: '${ctx}/companyt/query' //数据接口--%>
                     , data: [[1, 2, 3, 4, 5, 6]]
                     , method: 'post' //防止查询时中文乱码
                     , page: { //开启分页,需要配合后台PageInfo进行分页
@@ -107,14 +113,15 @@
                     , even: true //隔行背景
                     , autoSort: false  //禁用前端的排序方法
                     , cols: [[ //表头
-                        {field: 'title', title: '客户名称', fixed: 'left',unresize: true},
-                        {field: 'dynasty', title: '客户地址', width: 200, unresize: true},
-                        {field: 'author', title: '客户联系人',unresize: true},
-                        {field: 'type', title: '联系人电话', width: 200, unresize: true},
+                        {field: 'title', title: '公司名称',  width: 200,unresize: true},
+                        {field: 'title', title: '统一社会编码', width: 200,unresize: true},
+                        {field: 'dynasty', title: '公司地址', width: 200, unresize: true},
+                        {field: 'author', title: '公司联系人', width: 200,unresize: true},
+                        {field: 'type', title: '联系人电话', width:155, unresize: true},
                         // {field: 'content', title: '创建人', width: 100},
                         // {field: 'createTime', title: '创建时间', width: 165, filter: {type: 'date[yyyy-MM-dd HH:mm:ss]'}, sort:true},
-                        {field: 'heat', title: '备注', width: 120, unresize: true},
-                        {fixed: 'right', title: '操作',templet: '#barDemo', unresize: true}
+                        {field: 'heat', title: '备注', width: 100, unresize: true},
+                        {fixed: 'right', title: '操作',templet: '#barDemo',width: 120, unresize: true}
                     ]]
                     , parseData: function (res) { //res 即为原始返回的数据
                         return {
@@ -127,7 +134,7 @@
                     filter: {bottom: false},
                     excel: { // 导出excel配置, （以下值均为默认值）
                         on: true, //是否启用, 默认开启
-                        filename: '客户信息.xlsx', // 文件名
+                        filename: '公司信息.xlsx', // 文件名
                         head: { // 表头样式
                             family: 'Calibri', // 字体
                             size: 12, // 字号
@@ -145,9 +152,9 @@
                         soulTable.render(this)
                     }
                 });
-                //-----------------------客户信息维护------------------ start
+                //-----------------------公司信息维护------------------ start
                 //监听行工具事件
-                table.on('tool(clientFilter)', function(obj){ //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+                table.on('tool(companyFilter)', function(obj){ //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
                     var data = obj.data //获得当前行数据
                         ,layEvent = obj.event; //获得 lay-event 对应的值
                     if(layEvent === 'edit'){
@@ -158,11 +165,11 @@
                     }
                 });
 
-                //新增客户信息弹窗
+                //新增公司信息弹窗
                 $('#popClientForm').click(function(){
                     addClientPopUp=layer.open({
                         id:'addClientPopUp',
-                        title: '添加客户',
+                        title: '添加公司',
                         type: 1, //页面层
                         area: ['600px', '440px'],
                         shade: false, //禁止使用遮罩，否则操作不了界面
@@ -170,9 +177,9 @@
                         scrollbar: false,
                         skin: 'layui-layer-molv',
                         btn: ['添加', '取消'],
-                        content: $("#clientForm"),
+                        content: $("#companyForm"),
                         success : function(layero, index) { // 成功弹出后回调
-                            $('#clientForm')[0].reset(); //清空表单内容，防止修改查看公用一个表单时因赋值存在内容
+                            $('#companyForm')[0].reset(); //清空表单内容，防止修改查看公用一个表单时因赋值存在内容
                             // 将保存按钮改变成提交按钮
                             layero.find('.layui-layer-btn0').attr({
                                 'lay-filter' : 'addClientSubmit',
@@ -185,7 +192,7 @@
                             form.on('submit(addClientSubmit)', function(data){
                                 // console.log(data.field) //当前容器的全部表单字段，名值对形式：{name: value}
                                 $.ajax({
-                                    url: '${ctx}/client/add',
+                                    url: '${ctx}/company/add',
                                     type: 'POST',
                                     // contentType: "application/json; charset=utf-8",
                                     // data:  JSON.stringify(data.field),
@@ -196,7 +203,7 @@
                                             // layer.closeAll('loading');
                                             layer.msg("添加成功", {icon: 6});
                                             layer.close(updatePopUp) ,//执行关闭
-                                                table.reload('clientTable') //重载表格
+                                                table.reload('companyTable') //重载表格
                                         } else {
                                             layer.msg("添加失败", {icon: 5});
                                         }
@@ -213,17 +220,17 @@
                     });
                 });
 
-                //修改客户信息
+                //修改公司信息
                 function  EidtUv(data,obj) {
                     updateClientPopUp=layer.open({
-                        title: '修改客户信息',
+                        title: '修改公司信息',
                         type: 1, //页面层
                         area: ['600px', '440px'],
                         shade: false, //禁止使用遮罩，否则操作不了界面
                         resize:false, //禁止窗体拉伸
                         skin: 'layui-layer-molv',
                         btn: ['保存', '取消'],
-                        content: $("#clientForm"),
+                        content: $("#companyForm"),
                         success: function(layero, index){
                             //表单初始赋值
                             form.val('updateClientFilter',{
@@ -236,7 +243,7 @@
                     });
                 }
 
-                //删除客户信息
+                //删除公司信息
                 function  delUv(data,obj) {
                     layer.confirm('确认删除吗？', {
                         skin: 'layui-layer-molv',
@@ -260,7 +267,7 @@
                     });
                 }
 
-            //-----------------------客户信息维护------------------ end
+            //-----------------------公司信息维护------------------ end
 
                 //导出
                 $('#exportExcel').click(function(){

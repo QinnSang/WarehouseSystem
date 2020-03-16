@@ -1,14 +1,14 @@
-package controller.storage;
+package controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@Controller
-@RequestMapping("/location")
-public class LocationController {
 
+@Controller
+@RequestMapping("/index")
+public class IndexController {
     @RequestMapping("/index")
     public String index(){
-        return "storage/location/index";
+        return "index";
     }
 }

@@ -46,10 +46,15 @@
                 <a href="${ctx}/contract/index">合同管理</a>
             </li>
             <li class="layui-nav-item">
-                <a href="javascript:;">仓储管理</a>
+                <a href="javascript:;">基础信息管理</a>
                 <dl class="layui-nav-child">
                     <dd><a href="${ctx}/warehouse/index">仓库库位管理</a></dd>
                     <dd><a href="${ctx}/goods/index">货物配置</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item">
+                <a href="javascript:;">仓储管理</a>
+                <dl class="layui-nav-child">
                     <dd><a href="${ctx}/storage/index">仓储订单管理</a></dd>
                     <dd><a href="${ctx}/receiving/index">入库管理</a></dd>
                     <dd><a href="${ctx}/shipping/index">出库管理</a></dd>
@@ -64,7 +69,7 @@
                 <dl class="layui-nav-child">
                     <dd><a href="${ctx}/role/index">角色管理</a></dd>
                     <dd><a href="${ctx}/employee/index">用户管理</a></dd>
-                    <dd><a href="${ctx}/client/index">客户管理</a></dd>
+                    <dd><a href="${ctx}/company/index">公司管理</a></dd>
                 </dl>
             </li>
             <%--<li class="layui-nav-item">--%>

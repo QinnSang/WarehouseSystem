@@ -95,7 +95,8 @@
                 {title: '序号', type: 'numbers'},
                 {field: 'expense', title: '收费项目',width:800},
                 {field: 'price', title: '数量'},
-                {field: 'price', title: '单价'}
+                {field: 'price', title: '单价'},
+                {field: 'remark', title: '备注', edit: 'text'}
             ]],
             done: function(res, curr, count){
                 layer.close(index);    //返回数据关闭loading

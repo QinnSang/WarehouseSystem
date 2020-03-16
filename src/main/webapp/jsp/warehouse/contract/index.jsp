@@ -31,11 +31,11 @@
                         <label class="layui-form-label">状态：</label>
                         <div class="layui-input-inline" style="width:100px">
                             <select name="Level1Id" id="levelOne" lay-filter="levelOne" >
-                                <option value="">-请选择-</option>
-                                <option value="0" >草稿</option>
-                                <option value="1" >待审核</option>
-                                <option value="2" >已启用</option>
-                                <option value="3" >作废</option>
+                                <option value="-1">-请选择-</option>
+                                <option value="0" >待审核</option>
+                                <option value="1" >已启用</option>
+                                <option value="2" >作废</option>
+                                <option value="3" >归档</option>
                             </select>
                         </div>
                     </div>
@@ -159,7 +159,7 @@
             ,cols: [[ //表头
                 {field: 'softwareName', title: '合同编号',fixed: 'left',unresize: true}
                 ,{field: 'apkName', title: '合同名称'}
-                ,{field: 'softwareSize', title: '客户公司名称'}
+                ,{field: 'softwareSize', title: '公司公司名称'}
                 //使用templet模板获取级联属性
                 ,{field:'flatform',title: '创建人',unresize: true}
                 ,{field:'category',title: '创建日期'}
@@ -209,56 +209,6 @@
                                 }
                             },
                             {
-                                title: "提交",
-                                event: function() {
-                                    layer.confirm('确认提交吗？', {
-                                        skin: 'layui-layer-molv',
-                                        shade: .1
-                                    }, function(index){
-                                        //向服务端发送合同提交指令
-                                        $.ajax({
-                                            url: "${ctx}/app/delete",
-                                            type: "POST",
-                                            data:{"appId":data.id},
-                                            dataType: "json",
-                                            success: function(data){
-                                                // obj.del(); //删除对应行（tr）的DOM结构
-                                                layer.msg("合同已提交审核", {icon: 6});
-                                                table.reload('appTable');
-                                            },
-                                            error:function (data) {
-                                                layer.msg("提交审核失败，请重试！", {icon: 5});
-                                            }
-                                        });
-                                    });
-                                }
-                            },
-                            {
-                                title: "驳回",
-                                event: function() {
-                                    layer.confirm('确认驳回吗？', {
-                                        skin: 'layui-layer-molv',
-                                        shade: .1
-                                    }, function(index){
-                                        //向服务端发送审核驳回指令
-                                        $.ajax({
-                                            url: "${ctx}/app/delete",
-                                            type: "POST",
-                                            data:{"appId":data.id},
-                                            dataType: "json",
-                                            success: function(data){
-                                                // obj.del(); //删除对应行（tr）的DOM结构
-                                                layer.msg("驳回成功", {icon: 6});
-                                                table.reload('appTable');
-                                            },
-                                            error:function (data) {
-                                                layer.msg("驳回失败，请重试！", {icon: 5});
-                                            }
-                                        });
-                                    });
-                                }
-                            },
-                            {
                                 title: "确认",
                                 event: function() {
                                     layer.confirm('是否确认？', {
@@ -278,6 +228,31 @@
                                             },
                                             error:function (data) {
                                                 layer.msg("合同确认审核失败，请重试！", {icon: 5});
+                                            }
+                                        });
+                                    });
+                                }
+                            },
+                            {
+                                title: "归档",
+                                event: function() {
+                                    layer.confirm('确认归档吗？', {
+                                        skin: 'layui-layer-molv',
+                                        shade: .1
+                                    }, function(index){
+                                        //向服务端发送合同提交指令
+                                        $.ajax({
+                                            url: "${ctx}/app/delete",
+                                            type: "POST",
+                                            data:{"appId":data.id},
+                                            dataType: "json",
+                                            success: function(data){
+                                                // obj.del(); //删除对应行（tr）的DOM结构
+                                                layer.msg("合同已归档", {icon: 6});
+                                                table.reload('appTable');
+                                            },
+                                            error:function (data) {
+                                                layer.msg("归档失败，请重试！", {icon: 5});
                                             }
                                         });
                                     });
@@ -348,7 +323,8 @@
                         ,cols: [[
                             {title: '序号', type: 'numbers'},
                             {field: 'expense', title: '收费项目'},
-                            {field: 'price', title: '单价'}
+                            {field: 'price', title: '单价'},
+                            {field: 'remark', title: '备注', edit: 'text'}
                         ]],
                         done: function(res, curr, count){
                             // layer.close(index);    加上该语句不能弹出框

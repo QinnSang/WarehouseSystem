@@ -79,7 +79,7 @@
                     <label class="layui-form-label"><span style="color: red;">* </span>角色：</label>
                     <div class="layui-input-block">
                         <input type="radio" name="role" value="员工" title="员工">
-                        <input type="radio" name="role" value="客户" title="客户">
+                        <input type="radio" name="role" value="公司" title="公司">
                         <input type="radio" name="role" value="司机" title="司机" checked>
                     </div>
                 </div>
@@ -165,11 +165,9 @@
                 {field: 'title', title: '用户账号', unresize: true},
                 {field: 'dynasty', title: '用户姓名',  unresize: true},
                 {field: 'sex', title: '性别',width: 80, unresize: true},
-                {field: 'role', title: '角色',  unresize: true},
                 {field: 'phone', title: '手机号码', width: 180, unresize: true},
                 {field: 'mail', title: '邮箱', width: 180, unresize: true},
-                // {field: 'content', title: '创建人', width: 100},
-                // {field: 'createTime', title: '创建时间', width: 165, filter: {type: 'date[yyyy-MM-dd HH:mm:ss]'}, sort:true},
+                {field: 'role', title: '角色',  unresize: true},
                 {field: 'status', title: '状态', width: 80,unresize: true},
                 {fixed: 'right', title: '操作', width: 230, templet: '#barDemo', unresize: true}
             ]]

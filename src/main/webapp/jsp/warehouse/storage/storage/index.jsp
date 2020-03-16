@@ -36,13 +36,11 @@
                         <label class="layui-form-label">订单状态：</label>
                         <div class="layui-input-inline" style="width:100px">
                             <select name="Level1Id" id="status" lay-filter="contractId" >
-                                <option value="">-请选择-</option>
-                                <option value="0" >草稿</option>
-                                <option value="1" >待审核</option>
-                                <option value="2" >已审核</option>
-                                <option value="3" >已驳回</option>
-                                <option value="4" >作废</option>
-                                <option value="5" >归档</option>
+                                <option value="-1">-请选择-</option>
+                                <option value="0" >待审核</option>
+                                <option value="1" >已启用</option>
+                                <option value="2" >作废</option>
+                                <option value="3" >归档</option>
                             </select>
                         </div>
                     </div>
@@ -277,10 +275,6 @@
                             }
                         },
                         {
-                            title: "结算",
-                            url: "${ctx}/settle/settleAlone"+data.id //可直接跳转到该url
-                        },
-                        {
                             title: "归档",
                             event: function() {
                                 layer.confirm('确认归档？', {
@@ -317,6 +311,10 @@
                         {
                             title: "进出库日志明细",
                             url: "${ctx}/log/logAlone"+data.id //可直接跳转到该url
+                        },
+                        {
+                            title: "结算",
+                            url: "${ctx}/settle/settleAlone"+data.id //可直接跳转到该url
                         }
                     ];
                     return options;

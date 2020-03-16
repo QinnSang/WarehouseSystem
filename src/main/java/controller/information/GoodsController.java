@@ -1,4 +1,4 @@
-package controller.storage;
+package controller.information;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,6 +9,6 @@ public class GoodsController {
 
     @RequestMapping("/index")
     public String index(){
-        return "storage/goods/index";
+        return "information/goods/index";
     }
 }

@@ -1,14 +1,14 @@
-package controller.system;
+package controller.information;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/client")
-public class ClientController {
+@RequestMapping("/location")
+public class LocationController {
 
     @RequestMapping("/index")
     public String index(){
-        return "system/client/index";
+        return "information/location/index";
     }
 }

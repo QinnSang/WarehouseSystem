@@ -206,6 +206,7 @@
                     }},
                 {field: 'price', title: '数量'},
                 {field: 'price', title: '单价', edit: 'text'},
+                {field: 'remark', title: '备注', edit: 'text'},
                 {field: 'tempId', title: '操作',templet: function(d){
                      return '<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" lay-id="'+ d.tempId +'"><i class="layui-icon layui-icon-delete"></i>移除</a>';
                 }}

@@ -23,7 +23,7 @@
                         <div class="layui-input-inline">
                             <input type="tel" name="softwareName" lay-verify="title" autocomplete="off" class="layui-input">
                         </div>
-                        <label class="layui-form-label">客户公司名称</label>
+                        <label class="layui-form-label">公司公司名称</label>
                         <div class="layui-input-inline">
                             <input type="tel" name="softwareName" lay-verify="title" autocomplete="off" class="layui-input">
                         </div>
@@ -60,7 +60,7 @@
                 <tr>
                     <th>合同编号</th>
                     <th>合同名称</th>
-                    <th>客户公司名称</th>
+                    <th>公司公司名称</th>
                     <th>创建人</th>
                     <th>创建日期</th>
                     <th>状态</th>

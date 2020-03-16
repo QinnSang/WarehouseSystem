@@ -14,13 +14,13 @@
                 <%--查询条件--%>
                 <div class="layui-form-item">
                     <div class="layui-inline">
-                        <label class="layui-form-label">仓库名称</label>
+                        <label class="layui-form-label">货物类型</label>
                         <div class="layui-input-inline" style="width:180px">
-                            <input type="tel" name="softwareName" lay-verify="title" autocomplete="off" placeholder="请输入仓库名称" class="layui-input">
+                            <input type="tel" name="softwareName" lay-verify="title" autocomplete="off" placeholder="请输入货物类型" class="layui-input">
                         </div>
-                        <label class="layui-form-label">库位名称</label>
+                        <label class="layui-form-label">货物名称</label>
                         <div class="layui-input-inline" style="width:180px">
-                            <input type="tel" name="softwareName" lay-verify="title" autocomplete="off" placeholder="请输入库位名称" class="layui-input">
+                            <input type="tel" name="softwareName" lay-verify="title" autocomplete="off" placeholder="请输入货物名称" class="layui-input">
                         </div>
                         <button class="layui-btn " lay-submit  lay-filter="search" >查 询</button>
                         <button type="reset" class="layui-btn ">重 置</button>
@@ -28,75 +28,58 @@
                 </div>
             </form>
 
-        <%--使用弹窗增加仓库信息--%>
+            <%--使用弹窗增加货物类型信息--%>
             <div class="layui-input-block" style="padding-bottom: 10px;margin-left: 15px">
-                <button class="layui-btn" id="popWarehouseForm" lay-filter="formDemo">新增仓库</button>
-                <button class="layui-btn" id="popLocationForm" lay-filter="location">新增库位</button>
-                <button class="layui-btn" id="exportWarehouse">导出仓库信息</button>
+                <button class="layui-btn" id="popGoodsTypeForm" lay-filter="formDemo">新增货物类型</button>
+                <button class="layui-btn" id="popGoodsNameForm" lay-filter="location">新增货物名称</button>
+                <button class="layui-btn" id="exportGoodsType">导出货物类型</button>
                 <%--利用隐藏的数据表格导出--%>
-                <button class="layui-btn" id="exportLocation">导出库位信息</button>
+                <button class="layui-btn" id="exportGoodsName">导出货物名称</button>
             </div>
 
             <%--数据表格展示--%>
-            <table id="warehouseTable" lay-filter="warehouseFilter"></table>
-                <%--父表行工具--%>
+            <table id="goodsTypeTable" lay-filter="goodsTypeFilter"></table>
+            <%--父表行工具--%>
             <script type="text/html" id="barDemo">
                 <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
                 <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
             </script>
-                <%--子表行工具--%>
-                <script type="text/html" id="childBar">
-                    <a class="layui-btn layui-btn-xs" lay-event="childEdit">编辑</a>
-                    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="childDel">删除</a>
-                </script>
+            <%--子表行工具--%>
+            <script type="text/html" id="childBar">
+                <a class="layui-btn layui-btn-xs" lay-event="childEdit">编辑</a>
+                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="childDel">删除</a>
+            </script>
         </div>
     </div>
-    <%--仓库数据弹框--%>
-    <form class="layui-form layui-form-pane1" id="warehouseForm" name="popUpdateForm" style="display:none;padding: 20px 0 0 0;"  method="post" lay-filter="updateWarehouseFilter">
+    <%--货物类型数据弹框--%>
+    <form class="layui-form layui-form-pane1" id="goodsTypeForm" name="popUpdateForm" style="display:none;padding: 20px 0 0 0;"  method="post" lay-filter="updateGoodsTypeFilter">
         <input type="hidden" name="id" >
         <div class="layui-form-item">
-            <label class="layui-form-label">仓库名称：</label>
+            <label class="layui-form-label">货物类型：</label>
             <div class="layui-input-inline" style="width: 450px">
-                <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入仓库名称" class="layui-input">
+                <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入货物类型" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">仓库编号：</label>
+            <label class="layui-form-label">类型编码：</label>
             <div class="layui-input-inline" style="width: 450px">
-                <input type="text" name="softwareName1" lay-verify="required" placeholder="请输入仓库编号"  autocomplete="off" class="layui-input" >
+                <input type="text" name="softwareName1" lay-verify="required" placeholder="请输入货物类型编码"  autocomplete="off" class="layui-input" >
             </div>
         </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">联系电话：</label>
-            <div class="layui-input-inline" style="width: 450px">
-                <input type="text" name="softwareName2" lay-verify="required" placeholder="请输入联系电话"  autocomplete="off" class="layui-input" >
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">仓库位置：</label>
-            <div class="layui-input-inline" style="width: 450px">
-                <input type="text" name="softwareName3" lay-verify="required" placeholder="请输入仓库位置"  autocomplete="off" class="layui-input" >
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">备注：</label>
-            <div class="layui-input-inline" style="width: 450px">
-                <input type="text" name="softwareName4" lay-verify="required" placeholder="请输入备注"  autocomplete="off" class="layui-input" >
-            </div>
-        </div>
-        <%--<button type="submit" style="display:none;" class="layui-btn" lay-submit="addWarehouseSubmit" lay-filter="addWarehouseBtn">立即提交</button>--%>
+        <%--<button type="submit" style="display:none;" class="layui-btn" lay-submit="addGoodsTypeSubmit" lay-filter="addGoodsTypeBtn">立即提交</button>--%>
     </form>
 
-    <%--库位数据弹框--%>
-    <form class="layui-form layui-form-pane1" id="locationForm" style="display:none;padding: 20px 0 0 0;"  method="post" lay-filter="updateLocationFilter">
+    <%--货物名称数据弹框--%>
+    <form class="layui-form layui-form-pane1" id="locationForm" style="display:none;padding: 20px 0 0 0;"  method="post" lay-filter="updateGoodsNameFilter">
+        <input type="hidden" name="goodsTypeId" >
         <div class="layui-form-item">
-            <label class="layui-form-label">仓库：</label>
+            <label class="layui-form-label">货物类型：</label>
             <div class="layui-input-inline" style="width:450px">
-                <select name="warehouseNameInLocation" id="fixedWarehouse" lay-filter="warehouseNameInLocation" >
-                    <option value="">-请选择所属仓库-</option>
-                    <option value="0" >仓库1</option>
-                    <option value="1" >仓库2</option>
-                    <%--后台传入所有仓库，如果是修改和查看会传入仓库id，根据仓库进行选择--%>
+                <select name="goodsTypeNameInGoodsName" id="fixedGoodsType" lay-filter="warehouseNameInLocation" >
+                    <option value="">-请选择所属货物类型-</option>
+                    <option value="0" >货物类型1</option>
+                    <option value="1" >货物类型2</option>
+                    <%--后台传入所有货物类型，如果是修改和查看会传入货物类型id，根据货物类型进行选择--%>
                     <%--<c:forEach items="${warehouse}" var="obj">--%>
                     <%--<option value="${obj.valueId}"><c:if test="${obj.valueId eq warehouseId}">--%>
                     <%--selected--%>
@@ -106,30 +89,18 @@
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">库位名称：</label>
+            <label class="layui-form-label">货物名称：</label>
             <div class="layui-input-inline" style="width: 450px">
-                <input type="text" name="softwareName1" lay-verify="required" placeholder="请输入库位名称"  autocomplete="off" class="layui-input" >
+                <input type="text" name="softwareName1" lay-verify="required" placeholder="请输入货物名称"  autocomplete="off" class="layui-input" >
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">库位面积(m²)：</label>
+            <label class="layui-form-label">货物编码：</label>
             <div class="layui-input-inline" style="width: 450px">
-                <input type="text" name="softwareName2" lay-verify="required" placeholder="请输入库位面积"  autocomplete="off" class="layui-input" >
+                <input type="text" name="softwareName4" lay-verify="required" placeholder="请输入货物编码"  autocomplete="off" class="layui-input" >
             </div>
         </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">库位图片：</label>
-            <div class="layui-input-inline">
-                <button type="button" class="layui-btn" id="chooseFile"><i class="layui-icon"></i>上传</button>
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">备注：</label>
-            <div class="layui-input-inline" style="width: 450px">
-                <input type="text" name="softwareName4" lay-verify="required" placeholder="请输入备注"  autocomplete="off" class="layui-input" >
-            </div>
-        </div>
-        <%--<button type="submit" style="display:none;" class="layui-btn" lay-submit="addWarehouseSubmit" lay-filter="addWarehouseBtn">立即提交</button>--%>
+        <%--<button type="submit" style="display:none;" class="layui-btn" lay-submit="addGoodsTypeSubmit" lay-filter="addGoodsTypeBtn">立即提交</button>--%>
     </form>
 
     <jsp:include page="/jsp/include/footer.jsp"/>
@@ -150,29 +121,26 @@
         // var index = layer.load(); //添加laoding,0-2两种方式
 
         var myTable = table.render({
-            elem: '#warehouseTable'
-            ,url: '${ctx}/jsp/warehouse/storage/warehouse/data.json'
-            <%--,url: '${ctx}/warehouse/index'--%>
-            // ,height: $(document).height() - $('#warehouseTable').offset().top - 20  //该属性是高度固定的，所以需要取消
+            elem: '#goodsTypeTable'
+            ,url: '${ctx}/jsp/warehouse/information/warehouse/data.json'
+            <%--,url: '${ctx}/goodsType/index'--%>
+            // ,height: $(document).height() - $('#goodsTypeTable').offset().top - 20 //该属性是高度固定的，所以需要取消
             ,limit: 10
             ,page: true
             ,drag: false // 关闭拖拽列功能
             ,cols: [[
                 {title: '#', width: 50, fixed: 'left',unresize: true,childTitle: false, children:[ //isChild: function(row){return row.dynasty === '宋代'},
                         {
-                            url: '${ctx}/jsp/warehouse/storage/warehouse/data.json'
+                            url: '${ctx}/jsp/warehouse/information/warehouse/data.json'
                             <%--url: function(row){//row 为当前父行数据--%>
                             <%--return '${ctx}/location/index/'+row.id--%>
                             <%--},--%>
                             ,height: 300
                             ,drag: false // 关闭拖拽列功能
                             ,cols: [[
-                                {field: 'title', title: '库位名称', width: 300,unresize: true},
-                                {field: 'dynasty', title: '库位面积(m²)', width: 250,unresize: true},
-                                {field: 'author', title: '所属仓库', width: 300 ,unresize: true},
-                                // {field: 'type', title: '创建人', width: 152},
-                                // {field: 'createTime', title: '创建时间', width: 190, filter: {type: 'date[yyyy-MM-dd HH:mm:ss]'}, sort:true},
-                                {title: '操作', width: 156, templet: '#childBar',unresize: true}
+                                {field: 'dynasty', title: '货物名称', fixed: 'left',width: 440,unresize: true},
+                                {field: 'type', title: '货物编码', width: 450,unresize: true},
+                                {title: '操作', width: 180, templet: '#childBar',fixed: 'right',unresize: true}
                             ]],
                             filter: { bottom: false  }, //关闭底部编辑筛选按钮
                             //行事件监听
@@ -181,9 +149,9 @@
                                 // pobj 父表当前行对象
                                 var childId = this.id; // 通过 this 对象获取当前子表的id
                                 if (obj.event === 'childEdit') {
-                                    EidtLocation(obj.data)
+                                    EidtGoodsName(obj.data)
                                 } else if (obj.event === 'childDel') {
-                                    delLocation(obj.data)
+                                    delGoodsName(obj.data)
                                 }
                             }
                             ,done: function () {
@@ -191,30 +159,25 @@
                             }
                         }
                     ]},
-                {field: 'title', title: '仓库名称',fixed: 'left',width: 200,unresize: true},
-                {field: 'dynasty', title: '仓库编号', width: 140,unresize: true},
-                {field: 'author', title: '联系电话', width: 200 ,unresize: true},
-                {field: 'type', title: '仓库位置', width: 200,unresize: true},
-                // {field: 'content', title: '创建人', width: 100},
-                // {field: 'createTime', title: '创建时间', width: 165, filter: {type: 'date[yyyy-MM-dd HH:mm:ss]'}, sort:true},
-                {field: 'heat', title: '备注', width: 120,unresize: true},
+                {field: 'title', title: '货物类型', width: 400,unresize: true},
+                {field: 'dynasty', title: '货物类型编码', width: 450,unresize: true},
                 {fixed: 'right',title: '操作', width: 200, templet: '#barDemo',unresize: true}
             ]],
             filter: {bottom: false},
             excel:{ // 导出excel配置, （以下值均为默认值）
                 on: true, //是否启用, 默认开启
-                    filename: '仓库库位信息.xlsx', // 文件名
-                    head:{ // 表头样式
+                filename: '货物类型信息.xlsx', // 文件名
+                head:{ // 表头样式
                     family: 'Calibri', // 字体
-                        size: 12, // 字号
-                        color: '000000', // 字体颜色
-                        bgColor: 'C7C7C7' // 背景颜色
+                    size: 12, // 字号
+                    color: '000000', // 字体颜色
+                    bgColor: 'C7C7C7' // 背景颜色
                 },
                 font: { // 正文样式
                     family: 'Calibri', // 字体
-                        size: 12, // 字号
-                        color: '000000', // 字体颜色
-                        bgColor: 'FFFFFF' //背景颜色
+                    size: 12, // 字号
+                    color: '000000', // 字体颜色
+                    bgColor: 'FFFFFF' //背景颜色
                 }
             },
             done: function () {
@@ -222,9 +185,9 @@
             }
         });
 
-        //-----------------------仓库信息维护------------------ start
+        //-----------------------货物类型信息维护------------------ start
         //监听行工具事件
-        table.on('tool(warehouseFilter)', function(obj){ //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+        table.on('tool(goodsTypeFilter)', function(obj){ //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
             var data = obj.data //获得当前行数据
                 ,layEvent = obj.event; //获得 lay-event 对应的值
             if(layEvent === 'edit'){
@@ -235,34 +198,34 @@
             }
         });
 
-        //新增仓库信息弹窗
-        $('#popWarehouseForm').click(function(){
-            addWarehousePopUp=layer.open({
-                id:'addWarehousePopUp',
-                title: '添加仓库',
+        //新增货物类型信息弹窗
+        $('#popGoodsTypeForm').click(function(){
+            addGoodsTypePopUp=layer.open({
+                id:'addGoodsTypePopUp',
+                title: '添加货物类型',
                 type: 1, //页面层
-                area: ['600px', '440px'],
+                area: ['600px', '270px'],
                 shade: false, //禁止使用遮罩，否则操作不了界面
                 resize:false, //禁止窗体拉伸
                 scrollbar: false,
                 skin: 'layui-layer-molv',
                 btn: ['添加', '取消'],
-                content: $("#warehouseForm"),
+                content: $("#goodsTypeForm"),
                 success : function(layero, index) { // 成功弹出后回调
-                    $('#warehouseForm')[0].reset(); //清空表单内容，防止修改查看公用一个表单时因赋值存在内容
+                    $('#goodsTypeForm')[0].reset(); //清空表单内容，防止修改查看公用一个表单时因赋值存在内容
                     // 将保存按钮改变成提交按钮
                     layero.find('.layui-layer-btn0').attr({
-                        'lay-filter' : 'addWarehouseSubmit',
+                        'lay-filter' : 'addGoodsTypeSubmit',
                         'lay-submit' : ''
                     });
                     //通过删除只读属性使输入框可以编辑
                     layero.find('.layui-input').removeAttr('readonly');
                 },
-                yes: function(index, layero){  //添加仓库表单监听事件
-                    form.on('submit(addWarehouseSubmit)', function(data){
+                yes: function(index, layero){  //添加货物类型表单监听事件
+                    form.on('submit(addGoodsTypeSubmit)', function(data){
                         // console.log(data.field) //当前容器的全部表单字段，名值对形式：{name: value}
                         $.ajax({
-                            url: '${ctx}/warehouse/add',
+                            url: '${ctx}/goodsType/add',
                             type: 'POST',
                             // contentType: "application/json; charset=utf-8",
                             // data:  JSON.stringify(data.field),
@@ -273,7 +236,7 @@
                                     // layer.closeAll('loading');
                                     layer.msg("添加成功", {icon: 6});
                                     layer.close(updatePopUp) ,//执行关闭
-                                        table.reload('warehouseTable') //重载表格
+                                        table.reload('goodsTypeTable') //重载表格
                                 } else {
                                     layer.msg("添加失败", {icon: 5});
                                 }
@@ -290,45 +253,45 @@
             });
         });
 
-        //查看仓库信息
+        //查看货物类型信息
         function  detailUv(data,obj) {
-            detailWarehousePopUp=layer.open({
-                id:'WarehousePopUp',
-                title: '仓库信息',
+            detailGoodsTypePopUp=layer.open({
+                id:'GoodsTypePopUp',
+                title: '货物类型信息',
                 type: 1, //页面层
-                area: ['600px', '440px'],
+                area: ['600px', '270px'],
                 shade: false, //禁止使用遮罩，否则操作不了界面
                 resize:false, //禁止窗体拉伸
                 skin: 'layui-layer-molv',
-                content: $("#warehouseForm"),
+                content: $("#goodsTypeForm"),
                 success: function(layero, index){
                     //表单初始赋值
-                    form.val('updateWarehouseFilter',{
+                    form.val('updateGoodsTypeFilter',{
                         "id": data.id,
                         "title": data.title // "name": "value"
-                    })
+                    });
                     //通过加上只读属性使输入框不可编辑
                     layero.find('.layui-input').attr({
-                         'readonly' : 'true'
+                        'readonly' : 'true'
                     });
                 }
             });
         }
 
-        //修改仓库信息
+        //修改货物类型信息
         function  EidtUv(data,obj) {
-            updateWarehousePopUp=layer.open({
-                title: '修改仓库',
+            updateGoodsTypePopUp=layer.open({
+                title: '修改货物类型',
                 type: 1, //页面层
-                area: ['600px', '440px'],
+                area: ['600px', '270px'],
                 shade: false, //禁止使用遮罩，否则操作不了界面
                 resize:false, //禁止窗体拉伸
                 skin: 'layui-layer-molv',
                 btn: ['保存', '取消'],
-                content: $("#warehouseForm"),
+                content: $("#goodsTypeForm"),
                 success: function(layero, index){
                     //表单初始赋值
-                    form.val('updateWarehouseFilter',{
+                    form.val('updateGoodsTypeFilter',{
                         "id": data.id,
                         "title": data.title // "name": "value"
                     })
@@ -338,7 +301,7 @@
             });
         }
 
-        //删除仓库信息
+        //删除货物类型信息
         function  delUv(data,obj) {
             layer.confirm('确认删除吗？', {
                 skin: 'layui-layer-molv',
@@ -362,20 +325,20 @@
             });
         }
 
-        //-----------------------仓库信息维护------------------ end
+        //-----------------------货物类型信息维护------------------ end
 
-        //-----------------------库位信息维护------------------ start
+        //-----------------------货物名称信息维护------------------ start
 
-        //新增库位信息弹窗
-        $('#popLocationForm').click(function(){
+        //新增货物名称信息弹窗
+        $('#popGoodsNameForm').click(function(){
             addlocationPopUp=layer.open({
-                id:'addLocationPopUp',
-                title: '添加库位',
+                id:'addGoodsNamePopUp',
+                title: '添加货物名称',
                 type: 1, //页面层
-                area: ['600px', '460px'],
+                area: ['600px', '350px'],
                 shade: false, //禁止使用遮罩，否则操作不了界面
                 resize:false, //禁止窗体拉伸
-                offset: '70px',
+                scrollbar: false,
                 skin: 'layui-layer-molv',
                 btn: ['添加', '取消'],
                 content: $("#locationForm"),
@@ -389,7 +352,7 @@
                     //通过删除只读属性使输入框可以编辑
                     layero.find('.layui-input').removeAttr('readonly');
                 },
-                yes: function(index, layero){  //添加仓库表单监听事件
+                yes: function(index, layero){  //添加货物类型表单监听事件
                     form.on('submit(addlocationSubmit)', function(data){
                         // console.log(data.field) //当前容器的全部表单字段，名值对形式：{name: value}
                         $.ajax({
@@ -402,7 +365,7 @@
                                     // layer.closeAll('loading');
                                     layer.msg("添加成功", {icon: 6});
                                     layer.close(updatePopUp) ,//执行关闭
-                                        table.reload('warehouseTable') //重载父表格
+                                        table.reload('goodsTypeTable') //重载父表格
                                 } else {
                                     layer.msg("添加失败", {icon: 5});
                                 }
@@ -419,33 +382,32 @@
             });
         });
 
-        //修改库位信息
-        function  EidtLocation(data) {
+        //修改货物名称信息
+        function  EidtGoodsName(data) {
             updatelocationPopUp=layer.open({
-                title: '修改仓库',
+                title: '修改货物类型',
                 type: 1, //页面层
-                area: ['600px', '450px'],
+                area: ['600px', '480px'],
                 shade: false, //禁止使用遮罩，否则操作不了界面
                 resize:false, //禁止窗体拉伸
-                offset: '70px',
                 skin: 'layui-layer-molv',
                 btn: ['保存', '取消'],
                 content: $("#locationForm"),
                 success: function(layero, index){
-                    form.val('updateLocationFilter',{
-                    //表单初始赋值
-                        "warehouseNameInLocation": data.id // "name": "value"  //传入仓库id后就可直接定位到所选仓库
+                    form.val('updateGoodsNameFilter',{
+                        //表单初始赋值
+                        "warehouseNameInLocation": data.id // "name": "value"  //传入货物类型id后就可直接定位到所选货物类型
                     });
                     //通过删除只读属性使输入框可以编辑
                     layero.find('.layui-input').removeAttr('readonly');
-                    //直接获取仓库名称，所以无需编辑
-                    $('#fixedWarehouse').prop('readonly','readonly');
+                    //直接获取货物类型名称，所以无需编辑
+                    $('#fixedGoodsType').prop('readonly','readonly');
                 }
             });
         }
 
-        //删除库位信息
-        function  delLocation(data) {
+        //删除货物名称信息
+        function  delGoodsName(data) {
             layer.confirm('确认删除吗？', {
                 skin: 'layui-layer-molv',
                 shade: .1
@@ -468,11 +430,11 @@
             });
         }
 
-        //-----------------------库位信息维护------------------ end
+        //-----------------------货物名称信息维护------------------ end
 
 
         //导出
-        $('#exportWarehouse').click(function(){
+        $('#exportExcel').click(function(){
             soulTable.export(myTable);
         });
 
@@ -487,14 +449,13 @@
         /*设置表格行高*/
         line-height: 40px;
     }
-
     /*!*表格第一列居左*!*/
     /*.layui-table tr td:first-child{*/
         /*text-align: left;*/
     /*}*/
 
     .layui-form-item{
-        margin-bottom: 25px;
+        margin-bottom: 30px;
     }
 </style>
 </body>
