@@ -15,7 +15,7 @@
         </commentGenerator>
         <!--数据库配置-->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://localhost:3306/appinfodb"
+                        connectionURL="jdbc:mysql://localhost:3306/storagemanagement"
                         userId="root"
                         password="">
         </jdbcConnection>
@@ -36,7 +36,7 @@
             <!--<property name="enableSubPackages" value="true" />-->
         <!--</javaClientGenerator>-->
         <!--要转化成pojo的表-->
-        <table  tableName="newstudentinfo" domainObjectName="NewStudent" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+        <table  tableName="warehouse" domainObjectName="Warehouse" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
                 enableSelectByExample="false" selectByExampleQueryId="false">
         </table>
     </context>

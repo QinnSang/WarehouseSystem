@@ -34,12 +34,10 @@
             </li>
         </ul>
     </div>
->>>>>>> Stashed changes
-
 <!-- 侧边栏 -->
 <div class="layui-side layui-bg-black">
     <div class="layui-side-scroll">
-        <ul class="layui-nav layui-nav-tree arrow2" lay-accordion="true" lay-filter="admin-side-nav"
+        <ul class="layui-nav layui-nav-tree arrow2" id="navList" lay-accordion="true" lay-filter="admin-side-nav"
             style="margin-top: 15px;">
             <li class="layui-nav-item layui-nav-itemed">
                 <a class="" href="${ctx}/index/index">首页</a>
@@ -48,14 +46,19 @@
                 <a href="${ctx}/contract/index">合同管理</a>
             </li>
             <li class="layui-nav-item">
+                <a href="javascript:;">基础信息管理</a>
+                <dl class="layui-nav-child">
+                    <dd><a href="${ctx}/warehouse/index">仓库库位管理</a></dd>
+                    <dd><a href="${ctx}/goods/index">货物配置</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item">
                 <a href="javascript:;">仓储管理</a>
                 <dl class="layui-nav-child">
-                    <dd><a href="${ctx}/warehouse/index">仓库管理</a></dd>
-                    <dd><a href="${ctx}/location/index">库位管理</a></dd>
-                    <dd><a href="${ctx}/goods/index">货物配置</a></dd>
                     <dd><a href="${ctx}/storage/index">仓储订单管理</a></dd>
                     <dd><a href="${ctx}/receiving/index">入库管理</a></dd>
                     <dd><a href="${ctx}/shipping/index">出库管理</a></dd>
+                    <dd><a href="${ctx}/log/index">仓储订单日志</a></dd>
                 </dl>
             </li>
             <li class="layui-nav-item">
@@ -64,16 +67,47 @@
             <li class="layui-nav-item">
                 <a href="javascript:;">系统管理</a>
                 <dl class="layui-nav-child">
-                    <dd><a href="${ctx}/employee/index">用户管理</a></dd>
                     <dd><a href="${ctx}/role/index">角色管理</a></dd>
-                    <dd><a href="${ctx}/client/index">客户管理</a></dd>
+                    <dd><a href="${ctx}/employee/index">用户管理</a></dd>
+                    <dd><a href="${ctx}/company/index">公司管理</a></dd>
                 </dl>
             </li>
-            <li class="layui-nav-item">
-                <a href="javascript:;">操作日志</a>
-            </li>
+            <%--<li class="layui-nav-item">--%>
+                <%--<a href="javascript:;">操作日志</a>--%>
+            <%--</li>--%>
         </ul>
     </div>
 </div>
+<%--<script src="${ctx}/static/plugins/layui/layui.js"></script>--%>
+<%--<script type="text/javascript">--%>
+    <%--//JavaScript代码区域--%>
+    <%--layui.use('jquery', function() {--%>
+        <%--$ =layui.jquery;--%>
+        <%--$('li a').click(function(){--%>
+            <%--// $('.layui-this').removeClass('layui-this');--%>
+            <%--// $(this).addClass("layui-this");--%>
+            <%--if (!$(this).hasClass('layui-this')) {--%>
+                <%--$(this).addClass('layui-this').siblings().removeClass('layui-this');//点击判断没有layui-this就加，其他的去除--%>
+            <%--}--%>
+        <%--});--%>
+        <%--// $('.layui-nav-item').on('click',function(){--%>
+        <%--//     if (!$(this).hasClass('layui-this')) {--%>
+        <%--//         $(this).addClass('layui-this').siblings('.layui-nav-item').removeClass('layui-this');//点击判断没有layui-this就加，其他的去除--%>
+        <%--//     }--%>
+        <%--// })--%>
+    <%--})--%>
+<%--</script>--%>
+<%--设置所有界面样式--%>
+<style type="text/css">
+    /*侧边栏黑色区域宽度*/
+    .layui-side.layui-bg-black{
+        width:150px; //设置宽度
+    }
+    /*侧边栏文字位置*/
+    .layui-nav-tree{
+        width: 150px;
+    }
 
-
+    /*设置头部样式*/
+    .layui-header{}
+</style>
