@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.EmployeeMapper">
+
+    <select id="queryByNameAndPwd" parameterType="pojo.Employee" resultType="pojo.Employee">
+        select * from employee
+        <where>
+            <if test="loginCode!=null and loginCode!=''">
+                and login_code=#{loginCode}
+            </if>
+            <if test="password!=null and password!=''">
+                and password=#{password}
+            </if>
+        </where>
+    </select>
+</mapper>

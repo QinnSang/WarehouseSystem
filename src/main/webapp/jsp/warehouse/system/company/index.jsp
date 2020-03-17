@@ -100,8 +100,7 @@
                 var myTable = table.render({
                     elem: '#companyTable' //表格id
                     // ,height: 312
-                    <%--,url: '${ctx}/companyt/query' //数据接口--%>
-                    , data: [[1, 2, 3, 4, 5, 6]]
+                    ,url: '${ctx}/company/query' //数据接口
                     , method: 'post' //防止查询时中文乱码
                     , page: { //开启分页,需要配合后台PageInfo进行分页
                         first: '首页'
@@ -113,14 +112,14 @@
                     , even: true //隔行背景
                     , autoSort: false  //禁用前端的排序方法
                     , cols: [[ //表头
-                        {field: 'title', title: '公司名称',  width: 200,unresize: true},
-                        {field: 'title', title: '统一社会编码', width: 200,unresize: true},
-                        {field: 'dynasty', title: '公司地址', width: 200, unresize: true},
-                        {field: 'author', title: '公司联系人', width: 200,unresize: true},
-                        {field: 'type', title: '联系人电话', width:155, unresize: true},
+                        {field: 'companyName', title: '公司名称',  width: 200,unresize: true},
+                        {field: 'companyCode', title: '统一社会编码', width: 200,unresize: true},
+                        {field: 'companyAddress', title: '公司地址', width: 200, unresize: true},
+                        {field: 'companyUser', title: '公司联系人', width: 200,unresize: true},
+                        {field: 'companyPhone', title: '联系人电话', width:155, unresize: true},
                         // {field: 'content', title: '创建人', width: 100},
                         // {field: 'createTime', title: '创建时间', width: 165, filter: {type: 'date[yyyy-MM-dd HH:mm:ss]'}, sort:true},
-                        {field: 'heat', title: '备注', width: 100, unresize: true},
+                        {field: 'remark', title: '备注', width: 100, unresize: true},
                         {fixed: 'right', title: '操作',templet: '#barDemo',width: 120, unresize: true}
                     ]]
                     , parseData: function (res) { //res 即为原始返回的数据

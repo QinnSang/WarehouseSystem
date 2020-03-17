@@ -11,7 +11,7 @@
     <div class="layui-body">
         <!-- 内容主体区域 -->
         <div style="padding: 15px;">
-            欢迎你,这是首页！
+            欢迎你：${sessionScope.employee.realName} ，这是首页！
         </div>
     </div>
 
