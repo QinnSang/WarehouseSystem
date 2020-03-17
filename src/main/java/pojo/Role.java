@@ -6,6 +6,11 @@ public class Role {
     private String roleName;
 
     private String remark;
+    //table自带的分页、排序数据
+    private Integer page;
+    private Integer limit;
+    private String field;
+    private String order;
 
     public Integer getRoleId() {
         return roleId;
@@ -29,5 +34,14 @@ public class Role {
 
     public void setRemark(String remark) {
         this.remark = remark == null ? null : remark.trim();
+    }
+
+
+    public Integer getPage() {
+        return page;
+    }
+
+    public Integer getLimit() {
+        return limit;
     }
 }
