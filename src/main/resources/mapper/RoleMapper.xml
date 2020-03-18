@@ -2,33 +2,37 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mapper.RoleMapper">
 
+    <select id="query" parameterType="pojo.Role" resultType="pojo.Role">
+        select * from role
+    </select>
+
     <resultMap id="roleBase" type="pojo.Role">
-    <result property="roleId" column="role_id"/>
-    <result property="roleName" column="role_name"/>
-    <result property="roleRemark" column="remark"/>
+        <result property="roleId" column="role_id"/>
+        <result property="roleName" column="role_name"/>
+        <result property="roleRemark" column="remark"/>
     </resultMap>
 
     <select id="query" parameterType="pojo.Role" resultMap="roleBase">
-    <choose>
-        <when test="roleId!=null and roleId!=''">
-            <bind name="roleId" value="'%'+roleId+'%'"/>
-        </when>
-        <when test="roleName!=null and roleName!=''">
-            <bind name="roleName" value="'%'+roleName+'%'"/>
-        </when>
-    </choose>
-    select
-    role_id,
-    role_name,
-    remark,
-    from role
-    <where>
-        <if test="roleId!=null and roleId!=''">
-            and role_id like #{roleId}
-        </if>
-        <if test="roleName!=null and roleName!=''">
-            and role_name like #{roleName}
-        </if>
-    </where>
+        <choose>
+            <when test="roleId!=null and roleId!=''">
+                <bind name="roleid" value="'%'+roleId+'%'"/>
+            </when>
+            <when test="roleName!=null and roleName!=''">
+                <bind name="rolename" value="'%'+roleName+'%'"/>
+            </when>
+        </choose>
+        select
+        role_id,
+        role_name,
+        remark,
+        from role
+        <where>
+            <if test="roleId!=null and roleId!=''">
+                and role_id like #{roleid}
+            </if>
+            <if test="roleName!=null and roleName!=''">
+                and role_name like #{rolename}
+            </if>
+        </where>
     </select>
 </mapper>
