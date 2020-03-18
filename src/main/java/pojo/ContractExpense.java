@@ -11,7 +11,7 @@ public class ContractExpense {
 
     private Integer contractId;
 
-    private String createBy;
+    private Integer createBy;
 
     private Date createDate;
 
@@ -49,12 +49,12 @@ public class ContractExpense {
         this.contractId = contractId;
     }
 
-    public String getCreateBy() {
+    public Integer getCreateBy() {
         return createBy;
     }
 
-    public void setCreateBy(String createBy) {
-        this.createBy = createBy == null ? null : createBy.trim();
+    public void setCreateBy(Integer createBy) {
+        this.createBy = createBy;
     }
 
     public Date getCreateDate() {

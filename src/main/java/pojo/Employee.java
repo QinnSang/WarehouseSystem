@@ -1,7 +1,8 @@
 package pojo;
 
 public class Employee {
-    private Integer id;
+
+    private Integer employeeId;
 
     private String loginCode;
 
@@ -23,12 +24,12 @@ public class Employee {
 
     private String remark;
 
-    public Integer getId() {
-        return id;
+    public Integer getEmployeeId() {
+        return employeeId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setEmployeeId(Integer employeeId) {
+        this.employeeId = employeeId;
     }
 
     public String getLoginCode() {

@@ -25,7 +25,7 @@ public class Shipping {
 
     private String carno;
 
-    private String shippingByname;
+    private Integer shippingBy;
 
     private Date shippingTime;
 
@@ -121,12 +121,12 @@ public class Shipping {
         this.carno = carno == null ? null : carno.trim();
     }
 
-    public String getShippingByname() {
-        return shippingByname;
+    public Integer getShippingBy() {
+        return shippingBy;
     }
 
-    public void setShippingByname(String shippingByname) {
-        this.shippingByname = shippingByname == null ? null : shippingByname.trim();
+    public void setShippingBy(Integer shippingBy) {
+        this.shippingBy = shippingBy;
     }
 
     public Date getShippingTime() {

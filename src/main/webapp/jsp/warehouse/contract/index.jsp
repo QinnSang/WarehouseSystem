@@ -18,31 +18,31 @@
                     <div class="layui-inline">
                         <label class="layui-form-label">合同编号：</label>
                         <div class="layui-input-inline" style="width:180px">
-                            <input type="tel" name="softwareName" lay-verify="title" autocomplete="off" placeholder="请输入合同编号" class="layui-input">
+                            <input type="tel" name="contractCode" lay-verify="title" autocomplete="off" placeholder="请输入合同编号" class="layui-input">
                         </div>
                         <label class="layui-form-label">合同名称：</label>
                         <div class="layui-input-inline" style="width:180px">
-                            <input type="tel" name="softwareName" lay-verify="title" autocomplete="off" placeholder="请输入合同名称" class="layui-input">
+                            <input type="tel" name="contractName" lay-verify="title" autocomplete="off" placeholder="请输入合同名称" class="layui-input">
                         </div>
                         <label class="layui-form-label">公司名称：</label>
                         <div class="layui-input-inline" style="width:180px">
-                            <input type="tel" name="softwareName" lay-verify="title" autocomplete="off" placeholder="请输入公司名称" class="layui-input">
+                            <input type="tel" name="company.companyName" lay-verify="title" autocomplete="off" placeholder="请输入公司名称" class="layui-input">
                         </div>
                         <label class="layui-form-label">状态：</label>
                         <div class="layui-input-inline" style="width:100px">
-                            <select name="Level1Id" id="levelOne" lay-filter="levelOne" >
-                                <option value="-1">-请选择-</option>
-                                <option value="0" >待审核</option>
-                                <option value="1" >已启用</option>
-                                <option value="2" >作废</option>
-                                <option value="3" >归档</option>
+                            <select name="contractStatus.valueId" id="contractStatus.valueId" lay-filter="contractStatus.valueId" >
+                                <option value="0">-请选择-</option>
+                                <option value="1" >待审核</option>
+                                <option value="2" >已启用</option>
+                                <option value="3" >作废</option>
+                                <option value="4" >归档</option>
                             </select>
                         </div>
                     </div>
                 </div>
                     <div class="layui-form-item" >
                         <div class="layui-input-inline" style="left:40px">
-                            <button class="layui-btn " lay-submit  lay-filter="formDemo" >查 询</button>
+                            <button class="layui-btn " lay-submit  lay-filter="search" >查 询</button>
                             <button type="reset" class="layui-btn ">重 置</button>
                         </div>
                     </div>
@@ -139,31 +139,31 @@
         var layer = layui.layer;
         var soulTable = layui.soulTable; //使用soulTable导出数据
         var dropdown = layui.dropdown;
-        var index = layer.load(); //添加laoding,0-2两种方式
+        // var index = layer.load(); //添加laoding,0-2两种方式
 
         //第一个实例
         var myTable = table.render({
             elem: '#contractTable' //表格id
             // ,height: 312
-            <%--,url: '${ctx}/contract/query' //数据接口--%>
-            ,data:[[1,2,3,4,5,6]]
+            ,url: '${ctx}/contract/query' //数据接口
             ,method: 'post' //防止查询时中文乱码
             ,page: { //开启分页,需要配合后台PageInfo进行分页
                 first: '首页'
                 ,last: '尾页'
                 ,layout: ['count', 'prev', 'page', 'next', 'skip']
+                ,limit:5  //每页显示的条数
+                ,curr:1 //起始页
             }
             ,drag: false // 关闭拖拽列功能
-            ,limit: 5
             ,even: true //隔行背景
             ,cols: [[ //表头
-                {field: 'softwareName', title: '合同编号',fixed: 'left',unresize: true}
-                ,{field: 'apkName', title: '合同名称'}
-                ,{field: 'softwareSize', title: '公司公司名称'}
+                {field: 'contractCode', title: '合同编号',unresize: true}
+                ,{field: 'contractName', title: '合同名称'}
+                ,{field: 'companyName', title: '公司名称',templet:'<div>{{d.company.companyName}}</div>'}
                 //使用templet模板获取级联属性
-                ,{field:'flatform',title: '创建人',unresize: true}
-                ,{field:'category',title: '创建日期'}
-                ,{field:'appStatus', title: '状态',unresize: true}
+                ,{field:'createByEmployee',title: '创建人',templet:'<div>{{d.createByEmployee.realName}}</div>',width:100,unresize: true}
+                ,{field:'createDate',title: '创建日期'}
+                ,{field:'contractStatus', title: '状态',templet:'<div>{{d.contractStatus.valueName}}</div>',width:100,unresize: true}
                 ,{fixed: 'right', title: '操作',align:'center', toolbar: '#barDemo',width:210,unresize: true}
             ]]
             ,parseData: function(res){ //res 即为原始返回的数据
@@ -175,7 +175,7 @@
                 };
             },
             done: function (res, curr, count) { ////返回数据执行回调函数
-                layer.close(index);    //返回数据关闭loading
+                // layer.close(index);    //返回数据关闭loading
                 //操作中更多选项初始化，参考：https://github.com/hsiangleev/layuiExtend/blob/master/dropdown/index.html
               //https://fly.layui.com/jie/43644/
                 dropdown(res.data,function(data) {  //两个data都是代表当前行数据
@@ -348,8 +348,8 @@
          * where 中的数据对应搜索表单，为搜索的条件，后台使用这些条件进行筛选数据返回
          */
         form.on('submit(search)', function (data) {
-            table.reload('appTable', {
-                url: '${ctx}/app/query2',
+            table.reload('contractTable', {
+                url: '${ctx}/contract/query',
                 where: data.field //后台直接用实体接收，
                                   // 如果是单个属性，可以以这种方式获取和传输：softwareName=data.field.softwareName
             });

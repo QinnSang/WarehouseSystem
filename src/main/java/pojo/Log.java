@@ -17,7 +17,7 @@ public class Log {
 
     private Double goodsNumber;
 
-    private String createByname;
+    private Integer createBy;
 
     private Date createDate;
 
@@ -77,12 +77,12 @@ public class Log {
         this.goodsNumber = goodsNumber;
     }
 
-    public String getCreateByname() {
-        return createByname;
+    public Integer getCreateBy() {
+        return createBy;
     }
 
-    public void setCreateByname(String createByname) {
-        this.createByname = createByname == null ? null : createByname.trim();
+    public void setCreateBy(Integer createBy) {
+        this.createBy = createBy;
     }
 
     public Date getCreateDate() {

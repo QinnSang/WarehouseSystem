@@ -33,7 +33,7 @@ public class Recieving {
 
     private Integer status;
 
-    private String receivingByname;
+    private Integer receivingBy;
 
     private Date receivingDate;
 
@@ -159,12 +159,12 @@ public class Recieving {
         this.status = status;
     }
 
-    public String getReceivingByname() {
-        return receivingByname;
+    public Integer getReceivingBy() {
+        return receivingBy;
     }
 
-    public void setReceivingByname(String receivingByname) {
-        this.receivingByname = receivingByname == null ? null : receivingByname.trim();
+    public void setReceivingBy(Integer receivingBy) {
+        this.receivingBy = receivingBy;
     }
 
     public Date getReceivingDate() {
