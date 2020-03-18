@@ -35,13 +35,4 @@ public class Role {
     public void setRemark(String remark) {
         this.remark = remark == null ? null : remark.trim();
     }
-
-
-    public Integer getPage() {
-        return page;
-    }
-
-    public Integer getLimit() {
-        return limit;
-    }
 }

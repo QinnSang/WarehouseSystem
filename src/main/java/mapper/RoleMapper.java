@@ -9,15 +9,6 @@ import java.util.List;
 @Mapper
 public interface RoleMapper {
 
-    List<Role> queryRoles(Role role);
+    List<Role> query(Role role);
 
-    int add(Role role);
-
-    int delete(@Param("roleId") Long roleId);
-
-    Role queryByRoleId(Long roleId);
-
-    int updateSingleByRoleId(Role role);
-
-    Role queryRoleDetail(@Param("roleId") Long roleId);
 }
