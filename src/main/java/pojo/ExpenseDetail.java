@@ -23,11 +23,11 @@ public class ExpenseDetail {
 
     private String remark;
 
-    private String createByname;
+    private Integer createBy;
 
     private Date createDate;
 
-    private String checkByname;
+    private Integer checkBy;
 
     private Date checkDate;
 
@@ -111,12 +111,12 @@ public class ExpenseDetail {
         this.remark = remark == null ? null : remark.trim();
     }
 
-    public String getCreateByname() {
-        return createByname;
+    public Integer getCreateBy() {
+        return createBy;
     }
 
-    public void setCreateByname(String createByname) {
-        this.createByname = createByname == null ? null : createByname.trim();
+    public void setCreateBy(Integer createBy) {
+        this.createBy = createBy;
     }
 
     public Date getCreateDate() {
@@ -127,12 +127,12 @@ public class ExpenseDetail {
         this.createDate = createDate;
     }
 
-    public String getCheckByname() {
-        return checkByname;
+    public Integer getCheckBy() {
+        return checkBy;
     }
 
-    public void setCheckByname(String checkByname) {
-        this.checkByname = checkByname == null ? null : checkByname.trim();
+    public void setCheckBy(Integer checkBy) {
+        this.checkBy = checkBy;
     }
 
     public Date getCheckDate() {

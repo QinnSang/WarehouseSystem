@@ -13,7 +13,7 @@ public class Settle {
 
     private Double totalPrice;
 
-    private String checkByname;
+    private Integer checkBy;
 
     private Date checkStartDate;
 
@@ -61,12 +61,12 @@ public class Settle {
         this.totalPrice = totalPrice;
     }
 
-    public String getCheckByname() {
-        return checkByname;
+    public Integer getCheckBy() {
+        return checkBy;
     }
 
-    public void setCheckByname(String checkByname) {
-        this.checkByname = checkByname == null ? null : checkByname.trim();
+    public void setCheckBy(Integer checkBy) {
+        this.checkBy = checkBy;
     }
 
     public Date getCheckStartDate() {

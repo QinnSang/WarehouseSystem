@@ -1,5 +1,8 @@
 package pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 public class Contract {
@@ -11,6 +14,8 @@ public class Contract {
 
     private Integer companyId;
 
+    private Company company;
+
     private Date signDate;
 
     private Date startDate;
@@ -19,13 +24,21 @@ public class Contract {
 
     private String content;
 
-    private String createBy;
+    private Integer createBy;
 
+    private Employee createByEmployee;
+
+//    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+//    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createDate;
+
 
     private String annexid;
 
     private Integer status;
+
+    private DataDictionary contractStatus;
 
     public Integer getContractId() {
         return contractId;
@@ -91,12 +104,12 @@ public class Contract {
         this.content = content == null ? null : content.trim();
     }
 
-    public String getCreateBy() {
+    public Integer getCreateBy() {
         return createBy;
     }
 
-    public void setCreateBy(String createBy) {
-        this.createBy = createBy == null ? null : createBy.trim();
+    public void setCreateBy(Integer createBy) {
+        this.createBy = createBy;
     }
 
     public Date getCreateDate() {
@@ -122,4 +135,30 @@ public class Contract {
     public void setStatus(Integer status) {
         this.status = status;
     }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
+    public Employee getCreateByEmployee() {
+        return createByEmployee;
+    }
+
+    public void setCreateByEmployee(Employee createByEmployee) {
+        this.createByEmployee = createByEmployee;
+    }
+
+    public DataDictionary getContractStatus() {
+        return contractStatus;
+    }
+
+    public void setContractStatus(DataDictionary contractStatus) {
+        this.contractStatus = contractStatus;
+    }
+
+
 }

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.ContractMapper">
+
+    <resultMap id="contractBase" type="pojo.Contract">
+        <result property="contractId" column="contract_id"/>
+        <result property="contractName" column="contract_name"/>
+        <result property="contractCode" column="contract_code"/>
+        <result property="signDate" column="sign_date"/>
+        <result property="startDate" column="start_date"/>
+        <result property="endDate" column="end_date"/>
+        <result property="content" column="content"/>
+        <result property="createDate" column="create_date"/>
+        <association property="company" javaType="pojo.Company">
+            <id property="companyId" column="company_id"/>
+            <result property="companyName" column="company_name"/>
+        </association>
+        <association property="createByEmployee" javaType="pojo.Employee">
+            <id property="employeeId" column="employee_id"/>
+            <result property="realName" column="real_name"/>
+        </association>
+        <association property="contractStatus" javaType="pojo.DataDictionary">
+            <result property="valueId" column="statusId"/>
+            <result property="valueName" column="statusName"/>
+        </association>
+    </resultMap>
+
+
+    <select id="query" parameterType="pojo.Contract" resultMap="contractBase">
+        <choose>
+            <when test="contractName!=null and contractName!=''">
+                <bind name="contractname" value="'%'+contractName+'%'"/>
+            </when>
+            <when test="contractCode!=null and contractCode!=''">
+                <bind name="contractcode" value="'%'+contractCode+'%'"/>
+            </when>
+            <when test="company!=null and company.companyName!=null and company.companyName!=''">
+                <bind name="companyname" value="'%'+company.companyName+'%'"/>
+            </when>
+            <when test="contractStatus!=null and contractStatus.valueId!=null and contractStatus.valueId!=''">
+            <bind name="statusId" value="'%'+contractStatus.valueId+'%'"/>
+        </when>
+        </choose>
+        select
+            contract_id,
+            contract_name,
+            contract_code,
+            sign_date,
+            start_date,
+            end_date,
+            content,
+            create_by,
+            create_date,
+            t2.company_id ,
+            t2.company_name,
+            t3.employee_id,
+            t3.real_name,
+            t4.value_id as statusId,
+            t4.value_name as statusName
+        from contract t1
+            LEFT JOIN company t2 ON t1.company_id = t2.company_id
+            LEFT JOIN employee t3 ON t1.create_by = t3.employee_id
+            LEFT JOIN data_dictionary t4 ON t1.status= t4.value_id
+        <where>
+            t4.type_code='CS_STATUS'
+            <if test="contractName!=null and contractName!=''">
+                and contract_name like #{contractname}
+            </if>
+            <if test="contractCode!=null and contractCode!=''">
+                and contract_code like #{contractcode}
+            </if>
+            <if test="company!=null and company.companyName!=null and company.companyName!=''">
+                and company_name like #{companyname}
+            </if>
+            <if test="contractStatus!=null and contractStatus.valueId!=null and contractStatus.valueId!=''">
+                and t1.status = #{contractStatus.valueId}
+            </if>
+
+        </where>
+    </select>
+</mapper>

@@ -11,7 +11,7 @@ public class Storage {
 
     private Integer contractId;
 
-    private String companyName;
+    private Integer companyId;
 
     private Integer status;
 
@@ -55,12 +55,12 @@ public class Storage {
         this.contractId = contractId;
     }
 
-    public String getCompanyName() {
-        return companyName;
+    public Integer getCompanyId() {
+        return companyId;
     }
 
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName == null ? null : companyName.trim();
+    public void setCompanyId(Integer companyId) {
+        this.companyId = companyId;
     }
 
     public Integer getStatus() {

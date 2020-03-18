@@ -13,7 +13,7 @@ public class Warehouse {
 
     private String warehouseLocation;
 
-    private String createdByname;
+    private Integer createdBy;
 
     private Date createTime;
 
@@ -59,12 +59,12 @@ public class Warehouse {
         this.warehouseLocation = warehouseLocation == null ? null : warehouseLocation.trim();
     }
 
-    public String getCreatedByname() {
-        return createdByname;
+    public Integer getCreatedBy() {
+        return createdBy;
     }
 
-    public void setCreatedByname(String createdByname) {
-        this.createdByname = createdByname == null ? null : createdByname.trim();
+    public void setCreatedBy(Integer createdBy) {
+        this.createdBy = createdBy;
     }
 
     public Date getCreateTime() {
