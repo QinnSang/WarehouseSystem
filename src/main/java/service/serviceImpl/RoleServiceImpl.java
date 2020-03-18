@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import pojo.Company;
+import pojo.Contract;
 import pojo.Employee;
 import pojo.Role;
 import service.CompanyService;
@@ -28,40 +29,14 @@ public class RoleServiceImpl implements RoleService{
     RoleMapper roleMapper;
     
     @Override
-    public PageInfo<Role> queryRole(Role role) {
+    public PageInfo<Role> query(Role role, Integer page, Integer limit) {
         //防止导出功能没有分页的需求
-        if(role.getPage()!=null&&role.getLimit()!=null)
-            PageHelper.startPage(role.getPage(),role.getLimit());
-        List<Role> list=roleMapper.queryRoles(role);
+        if(page!=null&&limit!=null)
+            PageHelper.startPage(page,limit);
+        List<Role> list=roleMapper.query(role);
         PageInfo<Role> pageInfo=new PageInfo<>(list);
         return pageInfo;
     }
-
-    @Override
-    public boolean add(Role role) {
-        return false;
-    }
-
-    @Override
-    public boolean delete(Long roleId) {
-        return false;
-    }
-
-    @Override
-    public Role queryByRoleId(Long appId) {
-        return null;
-    }
-
-    @Override
-    public Boolean updateSingleByRoleId(Role role) {
-        return null;
-    }
-
-    @Override
-    public Role queryRoleDetail(Long roleId) {
-        return null;
-    }
-
 
 }
 
