@@ -108,11 +108,11 @@
                 first: '首页'
                 , last: '尾页'
                 , layout: ['count', 'prev', 'page', 'next', 'skip']
+                , limit: 5 //每页显示的条数
+                , curr:1 //起始页
             }
-            , limit: 5
             , drag: false // 关闭拖拽列功能
             , even: true //隔行背景
-            , autoSort: false  //禁用前端的排序方法
             , cols: [[ //表头
                 {field: 'roleId', title: '角色编码', unresize: true},
                 {field: 'roleName', title: '角色名称', unresize: true},
