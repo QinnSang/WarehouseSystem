@@ -4,7 +4,7 @@
 
     <select id="query" parameterType="pojo.Role" resultType="pojo.Role">
         <choose>
-            <when test="roleId!=null and roleId!=''">
+            <when test="roleId!=null">
                 <bind name="roleid" value="'%'+roleId+'%'"/>
             </when>
             <when test="roleName!=null and roleName!=''">
@@ -17,7 +17,7 @@
         remark
         from role
         <where>
-            <if test="roleId!=null and roleId!='' and roleId!=0">
+            <if test="roleId!=null">
                 and  role_id = #{roleid}
             </if>
             <if test="roleName!=null and roleName!=''">

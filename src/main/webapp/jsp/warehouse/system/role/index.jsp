@@ -16,13 +16,13 @@
                         <div class="layui-inline">
                             <label class="layui-form-label">角色编码</label>
                             <div class="layui-input-inline" style="width:180px">
-                                <input type="tel" name="softwareName" lay-verify="title" autocomplete="off" placeholder="请输入角色编码" class="layui-input">
+                                <input type="tel" name="roleId" lay-verify="title" autocomplete="off" placeholder="请输入角色编码" class="layui-input">
                             </div>
                         </div>
                         <div class="layui-inline">
                             <label class="layui-form-label">角色名称</label>
                             <div class="layui-input-inline" style="width:180px">
-                                <input type="tel" name="softwareName" lay-verify="title" autocomplete="off" placeholder="请输入角色名称" class="layui-input">
+                                <input type="tel" name="roleName" lay-verify="title" autocomplete="off" placeholder="请输入角色名称" class="layui-input">
                             </div>
                             <button class="layui-btn " lay-submit  lay-filter="search" >查 询</button>
                             <button type="reset" class="layui-btn ">重 置</button>
@@ -108,7 +108,7 @@
                 first: '首页'
                 , last: '尾页'
                 , layout: ['count', 'prev', 'page', 'next', 'skip']
-                , limit: 5 //每页显示的条数
+                , limit:5 //每页显示的条数
                 , curr:1 //起始页
             }
             , drag: false // 关闭拖拽列功能
@@ -119,7 +119,7 @@
                 {field: 'remark', title: '角色描述', unresize: true},
                 // {field: 'content', title: '创建人', width: 100},
                 // {field: 'createTime', title: '更新时间', width: 165, filter: {type: 'date[yyyy-MM-dd HH:mm:ss]'}, sort:true},
-                {fixed: 'right', title: '操作',templet: '#barDemo', unresize: true}
+                {fixed: 'right', title: '操作',align:'center',templet: '#barDemo', unresize: true}
             ]]
             , parseData: function (res) { //res 即为原始返回的数据
                 return {
@@ -457,7 +457,18 @@
         }
 
         //-------------------授权弹出框   end--------------------------------
-
+        $(document).on('click', '#cancel', function() {
+            layer.close(updatePopUp) //执行关闭
+        });
+        //-------------------查询功能--------------------------------
+        form.on('submit(search)', function (data) {
+            table.reload('roleTable', {
+                url: '${ctx}/role/query',
+                where: data.field //后台直接用实体接收，
+                                  // 如果是单个属性，可以以这种方式获取和传输：softwareName=data.field.softwareName
+            });
+            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可
+        });
         //导出
         $('#exportExcel').click(function(){
             soulTable.export(myTable);
