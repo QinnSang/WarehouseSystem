@@ -5,4 +5,7 @@
     <select id="query" parameterType="pojo.Company" resultType="pojo.Company">
         select * from company
     </select>
+    <select id="queryById" parameterType="integer" resultType="pojo.Company">
+        select * from company t1 where t1.company_id=#{companyId}
+    </select>
 </mapper>

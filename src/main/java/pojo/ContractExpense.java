@@ -5,15 +5,15 @@ import java.util.Date;
 public class ContractExpense {
     private Integer expenseId;
 
-    private String expenseName;
+    private Integer expenseDictionaryValueId;
+
+    private DataDictionary expenseDictionary;
 
     private Double price;
 
     private Integer contractId;
 
-    private Integer createBy;
-
-    private Date createDate;
+    private Contract contract;
 
     private String remark;
 
@@ -25,12 +25,12 @@ public class ContractExpense {
         this.expenseId = expenseId;
     }
 
-    public String getExpenseName() {
-        return expenseName;
+    public Integer getExpenseDictionaryValueId() {
+        return expenseDictionaryValueId;
     }
 
-    public void setExpenseName(String expenseName) {
-        this.expenseName = expenseName == null ? null : expenseName.trim();
+    public void setExpenseDictionaryValueId(Integer expenseDictionaryValueId) {
+        this.expenseDictionaryValueId = expenseDictionaryValueId;
     }
 
     public Double getPrice() {
@@ -49,22 +49,6 @@ public class ContractExpense {
         this.contractId = contractId;
     }
 
-    public Integer getCreateBy() {
-        return createBy;
-    }
-
-    public void setCreateBy(Integer createBy) {
-        this.createBy = createBy;
-    }
-
-    public Date getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
-
     public String getRemark() {
         return remark;
     }
@@ -72,4 +56,21 @@ public class ContractExpense {
     public void setRemark(String remark) {
         this.remark = remark == null ? null : remark.trim();
     }
+
+    public DataDictionary getExpenseDictionary() {
+        return expenseDictionary;
+    }
+
+    public void setExpenseDictionary(DataDictionary expenseDictionary) {
+        this.expenseDictionary = expenseDictionary;
+    }
+
+    public Contract getContract() {
+        return contract;
+    }
+
+    public void setContract(Contract contract) {
+        this.contract = contract;
+    }
+
 }

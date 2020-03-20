@@ -47,7 +47,7 @@
                         </div>
                     </div>
             </form>
-            <div class="layui-input-block" style="padding-top: 25px;margin-left: 15px">
+            <div class="layui-input-block" style="margin-left: 15px">
                 <a href="${ctx}/contract/toAdd">
                     <button class="layui-btn" lay-submit lay-filter="formDemo">新增合同</button>
                 </a>
@@ -74,41 +74,45 @@
         <div id="contractDetail" style="display:none;">
             <form class="layui-form layui-form-pane1" id="contractDetailForm" name="contractDetailForm"  style="padding: 20px 0 0 0;"  lay-filter="contractDetailFilter">
                 <div class="layui-form-item">
-                    <label class="layui-form-label">合同名称</label>
+                    <label class="layui-form-label">合同编号：</label>
                     <div class="layui-input-inline">
-                        <input type="tel" name="softwareName"  class="layui-input" readonly="readonly">
+                        <input type="tel" name="contractCode"  class="layui-input" readonly="readonly">
                     </div>
-                    <label class="layui-form-label">签订日期</label>
+                    <label class="layui-form-label">合同名称：</label>
                     <div class="layui-input-inline">
-                        <input type="tel" name="softwareName"  class="layui-input" readonly="readonly">
+                        <input type="tel" name="contractName"  class="layui-input" readonly="readonly">
                     </div>
-                    <label class="layui-form-label">起止日期</label>
+                    <label class="layui-form-label">起止日期：</label>
                     <div class="layui-input-inline">
-                        <input type="tel" name="softwareName"  class="layui-input" readonly="readonly">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">公司名称</label>
-                    <div class="layui-input-inline">
-                        <input type="tel" name="softwareName" class="layui-input" readonly="readonly">
-                    </div>
-                    <label class="layui-form-label">公司代表</label>
-                    <div class="layui-input-inline">
-                        <input type="tel" name="softwareName" class="layui-input" readonly="readonly">
-                    </div>
-                    <label class="layui-form-label">联系电话</label>
-                    <div class="layui-input-inline">
-                        <input type="tel" name="softwareName" class="layui-input" readonly="readonly">
+                        <input type="tel" name="startEndDate"  class="layui-input" readonly="readonly">
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label "style = "left:15px">合同简介：</label>
+                    <label class="layui-form-label">公司名称：</label>
                     <div class="layui-input-inline">
-                        <textarea name="desc" style = "width:510px;"  class="layui-textarea" readonly="readonly"></textarea>
+                        <input type="tel" name="companyName" class="layui-input" readonly="readonly">
                     </div>
-                    <label class="layui-form-label" style = "left:280px">备注</label>
+                    <label class="layui-form-label">公司代表：</label>
                     <div class="layui-input-inline">
-                        <textarea name="desc" style = "left:280px;width:250px;"  class="layui-textarea" readonly="readonly"></textarea>
+                        <input type="tel" name="companyUser" class="layui-input" readonly="readonly">
+                    </div>
+                    <label class="layui-form-label">联系电话：</label>
+                    <div class="layui-input-inline">
+                        <input type="tel" name="companyPhone" class="layui-input" readonly="readonly">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">签订日期：</label>
+                    <div class="layui-input-inline">
+                        <input type="tel" name="signDate"  class="layui-input" readonly="readonly">
+                    </div>
+                    <label class="layui-form-label ">合同简介：</label>
+                    <div class="layui-input-inline">
+                        <textarea name="content" style = "width:190px;"  class="layui-textarea" readonly="readonly"></textarea>
+                    </div>
+                    <label class="layui-form-label" >备注：</label>
+                    <div class="layui-input-inline">
+                        <textarea name="remark" style = "width:190px;"  class="layui-textarea" readonly="readonly"></textarea>
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -151,7 +155,7 @@
                 first: '首页'
                 ,last: '尾页'
                 ,layout: ['count', 'prev', 'page', 'next', 'skip']
-                ,limit:5  //每页显示的条数
+                ,limit:10  //每页显示的条数
                 ,curr:1 //起始页
             }
             ,drag: false // 关闭拖拽列功能
@@ -182,24 +186,21 @@
                         var options = [
                             {
                                 title: "作废",
-                                // icon: "layui-icon-release",
-                                // url: "http://baidu.com" //可直接跳转到该url
-                                // icon: "layui-icon-release",
                                 event: function() {
                                     layer.confirm('确认作废吗？', {
                                         skin: 'layui-layer-molv',
                                         shade: .1
                                     }, function(index){
-                                        //向服务端发送删除指令
                                         $.ajax({
-                                            url: "${ctx}/app/delete",
+                                            url: "${ctx}/contract/invalid/"+data.contractId,
                                             type: "POST",
-                                            data:{"appId":data.id},
-                                            dataType: "json",
-                                            success: function(data){
-                                                // obj.del(); //删除对应行（tr）的DOM结构
-                                                layer.msg("合同作废成功", {icon: 6});
-                                                table.reload('appTable');
+                                            success: function(StateType){
+                                                if(StateType == 'InvalidSuccess'){
+                                                    layer.msg('作废成功', {icon: 6});
+                                                    table.reload('contractTable') //重载表格
+                                                }else{
+                                                    layer.msg('合同已作废或归档，不可编辑、确认、作废或归档', {icon: 5});
+                                                }
                                             },
                                             error:function (data) {
                                                 layer.msg("合同作废失败，请重试！", {icon: 5});
@@ -215,19 +216,20 @@
                                         skin: 'layui-layer-molv',
                                         shade: .1
                                     }, function(index){
-                                        //向服务端发送确认合同审核通过指令
+                                        //向服务端发送确认合同确认指令
                                         $.ajax({
-                                            url: "${ctx}/app/delete",
+                                            url: "${ctx}/contract/confirm/"+data.contractId,
                                             type: "POST",
-                                            data:{"appId":data.id},
-                                            dataType: "json",
-                                            success: function(data){
-                                                // obj.del(); //删除对应行（tr）的DOM结构
-                                                layer.msg("合同确认审核成功", {icon: 6});
-                                                table.reload('appTable');
+                                            success: function(StateType){
+                                                if(StateType == 'ConfirmSuccess'){
+                                                    layer.msg('确认成功，合同已启用', {icon: 6});
+                                                    table.reload('contractTable') //重载表格
+                                                }else{
+                                                    layer.msg('合同已启用、作废或归档，不可确认', {icon: 5});
+                                                }
                                             },
                                             error:function (data) {
-                                                layer.msg("合同确认审核失败，请重试！", {icon: 5});
+                                                layer.msg("合同确认失败，请重试！", {icon: 5});
                                             }
                                         });
                                     });
@@ -240,16 +242,17 @@
                                         skin: 'layui-layer-molv',
                                         shade: .1
                                     }, function(index){
-                                        //向服务端发送合同提交指令
+                                        //向服务端发送合同归档指令
                                         $.ajax({
-                                            url: "${ctx}/app/delete",
+                                            url: "${ctx}/contract/archive/"+data.contractId,
                                             type: "POST",
-                                            data:{"appId":data.id},
-                                            dataType: "json",
-                                            success: function(data){
-                                                // obj.del(); //删除对应行（tr）的DOM结构
-                                                layer.msg("合同已归档", {icon: 6});
-                                                table.reload('appTable');
+                                            success: function(StateType){
+                                                if(StateType == 'ArchiveSuccess'){
+                                                    layer.msg('归档成功', {icon: 6});
+                                                    table.reload('contractTable') //重载表格
+                                                }else{
+                                                    layer.msg('合同已作废或归档，不可编辑、确认、作废或归档', {icon: 5});
+                                                }
                                             },
                                             error:function (data) {
                                                 layer.msg("归档失败，请重试！", {icon: 5});
@@ -292,16 +295,16 @@
                 <%--window.location.href = "${ctx}/contract/contractDetail/1"//+data.id;--%>
             } else if(layEvent === 'edit'){
                 //跳转到另一个界面进行修改
-                window.location.href = "${ctx}/contract/toEdit/"+data.id;
+                window.location.href = "${ctx}/contract/toEdit/"+data.contractId;
             }
         });
 
-        //入库单明细弹窗
+        //合同详情弹窗
         function detail(data,obj){
             index1=layer.open({
                 type: 1,
                 title: '详情',
-                area:['70%','98%'],
+                area:['70%','90%'],
                 shade: false, //禁止使用遮罩，否则操作不了界面
                 resize:false, //禁止窗体拉伸
                 skin: 'layui-layer-molv',
@@ -309,24 +312,38 @@
                 success: function(layero, index){
                     //表单赋值
                     form.val('contractDetailFilter',{
-                        "id": data.id,
-                        "title": data.title // "name": "value"
+                        "contractCode": data.contractCode,
+                        "contractName": data.contractName,
+                        "startEndDate": data.startDate +'至'+data.endDate,
+                        "companyName": data.company.companyName,
+                        "companyUser": data.company.companyUser,
+                        "companyPhone": data.company.companyPhone,
+                        "signDate": data.signDate,
+                        "content": data.content,
+                        "remark": data.remark
                     });
-                    //费用铭心
+                    //费用明细
                     var expense=table.render({
                         elem: '#expenseTable'
-                        ,data:[[1,2,3,4,5,6]]
+                        ,url:'${ctx}/contractExpense/queryByContractId/'+data.contractId
                         ,method: 'post' //防止查询时中文乱码
-                        ,limit: 5
                         ,drag: false // 关闭拖拽列功能
                         ,even: false //不隔行背景
                         ,cols: [[
                             {title: '序号', type: 'numbers'},
-                            {field: 'expense', title: '收费项目'},
+                            {field: 'expense', title: '收费项目',templet:'<div>{{d.expenseDictionary.valueName}}</div>'},
                             {field: 'price', title: '单价'},
-                            {field: 'remark', title: '备注', edit: 'text'}
-                        ]],
-                        done: function(res, curr, count){
+                            {field: 'remark', title: '备注'}
+                        ]]
+                        ,parseData: function(res){ //res 即为原始返回的数据
+                            return {
+                                "code": res.code, //解析接口状态
+                                "msg": res.msg, //解析提示文本
+                                "count": res.count, //解析数据长度
+                                "data": res.data //解析数据列表
+                            };
+                         }
+                        ,done: function(res, curr, count){
                             // layer.close(index);    加上该语句不能弹出框
                         }
                     });

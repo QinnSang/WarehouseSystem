@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -14,41 +15,46 @@
             <form class="layui-form" action="${ctx}/contract/add" method="post">
                 <%--添加合同基本信息--%>
                 <div class="layui-form-item">
-                    <label class="layui-form-label"><span style="color: red;">* </span>合同名称</label>
+                    <label class="layui-form-label"><span style="color: red;">* </span>合同名称：</label>
                     <div class="layui-input-inline">
-                        <input type="tel" name="softwareName" lay-verify="title" placeholder="请输入" autocomplete="off" class="layui-input layui-required">
+                        <input type="tel" name="contractName" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input ">
                     </div>
-                    <label class="layui-form-label"><span style="color: red;">* </span>签订日期</label>
+                    <label class="layui-form-label"><span style="color: red;">* </span>签订日期：</label>
                     <div class="layui-input-inline">
-                        <input type="text" class="layui-input" id="signDate" placeholder="请选择">
+                        <input type="text" name="signDate"  id="signDate" lay-verify="required" class="layui-input "  placeholder="请选择">
                     </div>
-                    <label class="layui-form-label"><span style="color: red;">* </span>起止日期</label>
+                    <label class="layui-form-label"><span style="color: red;">* </span>起止日期：</label>
                     <div class="layui-input-inline">
-                        <input type="text" class="layui-input" id="trueDate" placeholder="开始日期-结束日期">
+                        <input type="text" name="startEndDate" id="startEndDate" lay-verify="required" class="layui-input"  placeholder="开始日期-结束日期">
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label">公司名称</label>
+                    <label class="layui-form-label"><span style="color: red;">* </span>公司名称：</label>
                     <div class="layui-input-inline">
-                        <input type="tel" name="supportRom" lay-verify="title" placeholder="请输入" autocomplete="off" class="layui-input">
+                        <select name="companyId" id="companyId" lay-filter="companyId" lay-verify="required">
+                            <option value="">-请选择-</option>
+                            <c:forEach items="${companies}" var="obj">
+                                <option value="${obj.companyId}" >${obj.companyName}</option>
+                            </c:forEach>
+                        </select>
                     </div>
-                    <label class="layui-form-label">公司代表</label>
+                    <label class="layui-form-label">公司代表：</label>
                     <div class="layui-input-inline">
-                        <input type="tel" name="interfaceLanguage" lay-verify="title" placeholder="请输入" autocomplete="off" class="layui-input">
+                        <input type="tel" name="company.companyUser" id="companyUser" lay-verify="required" autocomplete="off" class="layui-input"  readonly="readonly">
                     </div>
-                    <label class="layui-form-label">联系电话</label>
+                    <label class="layui-form-label">联系电话：</label>
                     <div class="layui-input-inline">
-                        <input type="tel" name="softwareSize" lay-verify="title" placeholder="请输入" autocomplete="off" class="layui-input">
+                        <input type="tel" name="company.companyPhone" id="companyPhone" lay-verify="required" autocomplete="off" class="layui-input " readonly="readonly">
                     </div>
                 </div>
                  <div class="layui-form-item">
-                     <label class="layui-form-label "style = "left:15px">合同简介：</label>
+                     <label class="layui-form-label ">合同简介：</label>
                      <div class="layui-input-inline">
-                         <textarea name="desc" style = "width:510px;" placeholder="请输入"  class="layui-textarea"></textarea>
+                         <textarea name="content" style = "width:500px;" placeholder="请输入"  class="layui-textarea"></textarea>
                      </div>
-                     <label class="layui-form-label" style = "left:280px">备注</label>
+                     <label class="layui-form-label" style = "left:310px">备注：</label>
                      <div class="layui-input-inline">
-                         <textarea name="desc" style = "left:280px;width:250px;" placeholder="请输入"  class="layui-textarea"></textarea>
+                         <textarea name="remark" style = "left:310px;width:190px;" placeholder="请输入"  class="layui-textarea"></textarea>
                      </div>
                  </div>
                 <div class="layui-form-item">
@@ -75,7 +81,8 @@
 
                 <div class="layui-form-item">
                     <div class="layui-input-block" style="right:10px">
-                        <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">保存</button>
+                        <%--<button type="button" class="layui-btn" lay-submit="" data-type="save" lay-filter="submit">保存</button>--%>
+                        <button type="button" name="btnSave" class="layui-btn"  lay-submit="" lay-filter="formSubmit">保存</button>
                         <input type="button" class="layui-btn" onclick="javascript:history.back(-1);" value="返回">
                     </div>
                 </div>
@@ -91,17 +98,7 @@
 <script type="text/javascript">
     //准备视图对象
     window.viewObj = {
-        tbData: [{
-            tempId: new Date().valueOf(),
-            name: 2,
-            price: 1.2,
-        }],
-        expenseData: [
-            {expenseId: 1, expenseName: '收费1'},
-            {expenseId: 2, expenseName: '收费2'},
-            {expenseId: 3, expenseName: '收费3'},
-            {expenseId: 4, expenseName: '收费4'}
-        ],
+        expenseData: ${expenseList},
         renderSelectOptions: function(data, settings){
             settings =  settings || {};
             var valueField = settings.valueField || 'value',
@@ -133,45 +130,113 @@
         //执行一个laydate实例,用于渲染日期
         laydate.render({
             elem: '#signDate' //指定元素
+            ,max:0
         });
         laydate.render({
-            elem: '#trueDate'
+            elem: '#startEndDate'
             ,range: true
         });
 
-        //合同添加费用 数据表格实例化  https://demo.lanrenzhijia.com/demo/64/6480/demo/
+        //===================根据选择公司自动填充公司代表和联系电话 start===================
+        form.on('select(companyId)',function () {
+            //通过id获取公司的id
+            var companyId=$('#companyId').val();
+            if(companyId==0){
+                //清空公司信息
+                $("#companyUser").val("");
+                $("#companyPhone").val("");
+                return ;
+            }
+            $.ajax({
+                url:'${ctx}/company/queryById/'+companyId,
+                type: 'get',
+                success:function (data) {
+                    //根据data填写公司数据
+                    $("#companyUser").val(data.companyUser);
+                    $("#companyPhone").val(data.companyPhone);
+                    return ;
+                }
+            })
+        })
+        //===================根据选择公司自动填充公司代表和联系电话  end====================
+
+        //数据表格实例化
         var layTableId = "layTable";
         var tableIns = table.render({
             elem: '#expenseTable',
             id: layTableId,
-            data: viewObj.tbData,
-            // page: true,
+            data: [],
+            page: true,
             loading: true,
-            drag: false, // 关闭拖拽列功能
             even: false, //不开启隔行背景
             cols: [[
                 {title: '序号', type: 'numbers'},
-                {field: 'expense', title: '收费项目', templet: function(d){
-                        var options = viewObj.renderSelectOptions(viewObj.expenseData, {valueField: "expenseId", textField: "expenseName", selectedValue: d.type});
-                        return '<a lay-event="expense"></a><select name="expense" lay-filter="expense"><option value="">请选择收费项目</option>' + options + '</select>';
+                {field: 'expenseDictionaryValueId', width:400,title: '收费项目', templet: function(d){
+                        var options = viewObj.renderSelectOptions(viewObj.expenseData, {valueField: "valueId", textField: "valueName", selectedValue: d.expenseDictionaryValueId});
+                        return '<a lay-event="expenseDictionaryValueId"></a><select name="expenseDictionaryValueId" lay-filter="expenseDictionaryValueId"><option value="">请选择收费项目</option>' + options + '</select>';
                     }},
-                {field: 'price', title: '单价', edit: 'text'},
+                {field: 'price', title: '价格', edit: 'text'},
                 {field: 'remark', title: '备注', edit: 'text'},
-                {field: 'tempId', title: '操作',templet: function(d){
-                     return '<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" lay-id="'+ d.tempId +'"><i class="layui-icon layui-icon-delete"></i>移除</a>';
-                }}
+                {field: 'tempId', title: '操作', templet: function(d){
+                        return '<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" lay-id="'+ d.tempId +'"><i class="layui-icon layui-icon-delete"></i>移除</a>';
+                    }}
             ]],
             done: function(res, curr, count){
                 viewObj.tbData = res.data;
             }
         });
 
+        //保存表单和费用明细，数据一起传输保存
+        form.on('submit(formSubmit)', function formSubmit(data){
+            //循环取出表格指定field数据
+            var item_table = table.cache[layTableId];
+            var contractExpenseArray=[];
+            for (var index in item_table) {
+                contractExpenseArray[index] = {   //一定要为值取名，要不然后台接收不了，报400错误
+                    "expenseDictionaryValueId": item_table[index].expenseDictionaryValueId,
+                    "price":item_table[index].price,
+                    "remark":item_table[index].remark
+                };
+            }
+            // https://cnsyear.com/posts/ec71cea0.html
+            var param = {
+                contractName:data.field.contractName,
+                signDate:data.field.signDate,
+                startDate:data.field.startEndDate.substring(0,10),
+                endDate:data.field.startEndDate.substring(13,23),
+                companyId:data.field.companyId,
+                content:data.field.content,
+                remark:data.field.remark,
+                contractExpenseList:contractExpenseArray
+            };
+            $.ajax({
+                url: '${ctx}/contract/add',
+                type: 'POST',
+                dataType: "json",
+                contentType: "application/json",
+                // contentType: "application/json; charset=utf-8",
+                data:  JSON.stringify(param),  //如果有list一定要json，不然数据格式不对
+                success: function (StateType) {
+                    // var status = StateType.status;//取得返回数据（Sting类型的字符串）的信息进行取值判断
+                    if (StateType == 'AddSuccess') {
+                        // layer.closeAll('loading');
+                        layer.msg("添加成功", {icon: 6});
+                        window.location.href = "${ctx}/contract/index";
+                    } else {
+                        layer.msg("添加失败", {icon: 5});
+                    }
+                }
+            });
+            return false;//false：阻止表单跳转 true：表单跳转
+        });
+
+
         //定义事件集合
         var active = {
             addRow: function(){	//添加一行
                 var oldData = table.cache[layTableId];
                 console.log(oldData);
-                var newRow = {tempId: new Date().valueOf(), expense: null, price:null};
+                var newRow = {tempId: new Date().valueOf(), expenseDictionaryValueId: null, price:null,remark:null};
                 oldData.push(newRow);
                 tableIns.reload({
                     data : oldData
@@ -209,7 +274,7 @@
                 console.log(oldData);
                 for(var i=0, row; i < oldData.length; i++){
                     row = oldData[i];
-                    if(!row.expense){
+                    if(!row.expenseDictionaryValueId){
                         layer.msg("检查每一行，请选择收费项目！", { icon: 5 }); //提示
                         return;
                     }
@@ -234,9 +299,9 @@
         });
 
         //监听select下拉选中事件
-        form.on('select(type)', function(data){
+        form.on('select(expenseDictionaryValueId)', function(data){
             var elem = data.elem; //得到select原始DOM对象
-            $(elem).prev("a[lay-event='type']").trigger("click");
+            $(elem).prev("a[lay-event='expenseDictionaryValueId']").trigger("click");
         });
 
         //监听工具条
@@ -244,16 +309,16 @@
             var data = obj.data, event = obj.event, tr = obj.tr; //获得当前行 tr 的DOM对象;
             console.log(data);
             switch(event){
-                case "expense":
+                case "expenseDictionaryValueId":
                     //console.log(data);
-                    var select = tr.find("select[name='expense']");
+                    var select = tr.find("select[name='expenseDictionaryValueId']");
                     if(select){
                         var selectedVal = select.val();
                         if(!selectedVal){
-                            layer.tips("请选择一个分类", select.next('.layui-form-select'), { tips: [3, '#FF5722'] }); //吸附提示
+                            layer.tips("请选择收费项目", select.next('.layui-form-select'), { tips: [3, '#FF5722'] }); //吸附提示
                         }
                         console.log(selectedVal);
-                        $.extend(obj.data, {'expense': selectedVal});
+                        $.extend(obj.data, {'expenseDictionaryValueId': selectedVal});
                         activeByType('updateRow', obj.data);	//更新行记录对象
                     }
                     break;

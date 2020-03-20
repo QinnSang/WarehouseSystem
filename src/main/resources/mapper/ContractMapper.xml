@@ -11,9 +11,13 @@
         <result property="endDate" column="end_date"/>
         <result property="content" column="content"/>
         <result property="createDate" column="create_date"/>
+        <result property="remark" column="remark"/>
+        <result property="status" column="status"/>
         <association property="company" javaType="pojo.Company">
             <id property="companyId" column="company_id"/>
             <result property="companyName" column="company_name"/>
+            <result property="companyUser" column="company_user"/>
+            <result property="companyPhone" column="company_phone"/>
         </association>
         <association property="createByEmployee" javaType="pojo.Employee">
             <id property="employeeId" column="employee_id"/>
@@ -51,8 +55,12 @@
             content,
             create_by,
             create_date,
+            t1.status,
+            t1.remark,
             t2.company_id ,
             t2.company_name,
+            t2.company_user,
+            t2.company_phone,
             t3.employee_id,
             t3.real_name,
             t4.value_id as statusId,
@@ -63,6 +71,9 @@
             LEFT JOIN data_dictionary t4 ON t1.status= t4.value_id
         <where>
             t4.type_code='CS_STATUS'
+            <if test="contractId!=null">
+                and contract_id = #{contractId}
+            </if>
             <if test="contractName!=null and contractName!=''">
                 and contract_name like #{contractname}
             </if>
@@ -75,7 +86,126 @@
             <if test="contractStatus!=null and contractStatus.valueId!=null and contractStatus.valueId!=''">
                 and t1.status = #{contractStatus.valueId}
             </if>
-
         </where>
+        order by  create_date desc
     </select>
+
+    <select  id="generateContractCode" parameterType="java.util.Map"
+             resultType="java.util.Map" statementType="CALLABLE">
+        {CALL generate_ContractCode(#{orderNamePre,mode=IN}, #{contractCode, mode=OUT, jdbcType=VARCHAR})}
+--         存储过程的output参数，只能通过传入的map或实体类对象获取
+--        存储过程对应的数据类型为枚举类型，需要使用大写，如VARCHAR
+--        存储过程的参数和名称无关，只和参数的顺序有关系
+    </select>
+
+
+    <insert id="add" parameterType="pojo.Contract">
+        insert into contract
+        <trim prefix="(" suffix=")" prefixOverrides=",">
+            <if test="contractName!=null and contractName!=''">
+                ,contract_name
+            </if>
+            <if test="contractCode!=null and contractCode!=''">
+                ,contract_code
+            </if>
+            <if test="companyId!=null">
+                ,company_id
+            </if>
+            <if test="signDate!=null">
+                ,sign_date
+            </if>
+            <if test="startDate!=null">
+                ,start_date
+            </if>
+            <if test="endDate!=null">
+                ,end_date
+            </if>
+            <if test="content!=null and content!=''">
+                ,content
+            </if>
+            <if test="remark!=null and remark!=''">
+                ,remark
+            </if>
+            <if test="createBy!=null">
+                ,create_By
+            </if>
+            <if test="createDate!=null">
+                ,create_date
+            </if>
+                ,status
+        </trim>
+
+        <trim prefix="values(" suffix=")" prefixOverrides=",">
+            <if test="contractName!=null and contractName!=''">
+                ,#{contractName}
+            </if>
+            <if test="contractCode!=null and contractCode!=''">
+                ,#{contractCode}
+            </if>
+            <if test="companyId!=null">
+                ,#{companyId}
+            </if>
+            <if test="signDate!=null">
+                ,#{signDate}
+            </if>
+            <if test="startDate!=null">
+                ,#{startDate}
+            </if>
+            <if test="endDate!=null">
+                ,#{endDate}
+            </if>
+            <if test="content!=null and content!=''">
+                ,#{content}
+            </if>
+            <if test="remark!=null and remark!=''">
+                ,#{remark}
+            </if>
+            <if test="createBy!=null">
+                ,#{createBy}
+            </if>
+            <if test="createDate!=null">
+                ,#{createDate}
+            </if>
+            ,1
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="pojo.Contract">
+        update contract
+        <set>
+            <if test="contractName!=null and contractName!=''">
+                contract_name=#{contractName},
+            </if>
+            <if test="companyId!=null">
+                company_id=#{companyId},
+            </if>
+            <if test="signDate!=null">
+                sign_date=#{signDate},
+            </if>
+            <if test="startDate!=null">
+                start_date=#{startDate},
+            </if>
+            <if test="endDate!=null">
+                end_date=#{endDate},
+            </if>
+            <if test="content!=null and content!=''">
+                content=#{content},
+            </if>
+            <if test="remark!=null and remark!=''">
+                remark=#{remark},
+            </if>
+            <if test="status!=null and status!=''">
+                status=#{status},
+            </if>
+            <if test="createBy!=null">
+                create_by=#{createBy},
+            </if>
+            <if test="createDate!=null">
+                create_date=#{createDate},
+            </if>
+        </set>
+        <where>
+            contract_id=#{contractId}
+        </where>
+    </update>
 </mapper>
