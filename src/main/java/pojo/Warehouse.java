@@ -1,6 +1,7 @@
 package pojo;
 
 import java.util.Date;
+import java.util.List;
 
 public class Warehouse {
     private Integer warehouseId;
@@ -15,9 +16,13 @@ public class Warehouse {
 
     private Integer createdBy;
 
+    private Employee createdByUser;
+
     private Date createTime;
 
     private String remark;
+
+    private List<Location> locationList;
 
     public Integer getWarehouseId() {
         return warehouseId;
@@ -81,5 +86,21 @@ public class Warehouse {
 
     public void setRemark(String remark) {
         this.remark = remark == null ? null : remark.trim();
+    }
+
+    public Employee getCreatedByUser() {
+        return createdByUser;
+    }
+
+    public void setCreatedByUser(Employee createdByUser) {
+        this.createdByUser = createdByUser;
+    }
+
+    public List<Location> getLocationList() {
+        return locationList;
+    }
+
+    public void setLocationList(List<Location> locationList) {
+        this.locationList = locationList;
     }
 }

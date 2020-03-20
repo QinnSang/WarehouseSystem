@@ -4,6 +4,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import pojo.Contract;
 import pojo.ContractExpense;
+import pojo.DataDictionary;
 
 import java.util.List;
 
@@ -14,4 +15,6 @@ public interface ContractExpenseMapper {
     List<ContractExpense> queryByContractId(@Param("contractId") Integer contractId);
 
     void deleteByContractId(@Param("contractId")Integer contractId);
+
+    List<DataDictionary> queryAllExpense();
 }

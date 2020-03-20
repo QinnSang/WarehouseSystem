@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.WarehouseMapper">
+
+    <resultMap id="warehouseBase" type="pojo.Warehouse">
+        <result property="warehouseId" column="warehouse_id"/>
+        <result property="warehouseName" column="warehouse_name"/>
+        <result property="warehouseCode" column="warehouse_code"/>
+        <result property="warehousePhone" column="warehouse_phone"/>
+        <result property="warehouseLocation" column="warehouse_location"/>
+        <result property="remark" column="remark"/>
+        <collection property="locationList" ofType="pojo.Location">
+            <id property="locationId" column="location_id"/>
+            <result property="locationName" column="location_name"/>
+            <result property="locationArea" column="location_area"/>
+        </collection>
+    </resultMap>
+
+    <select id="queryWarehouse" parameterType="pojo.Warehouse" resultMap="warehouseBase">
+        select
+            t2.warehouse_id,
+            warehouse_name,
+            warehouse_code,
+            warehouse_phone,
+            warehouse_location,
+            t1.remark,
+            t2.location_id,
+            t2.location_name,
+            t2.location_area
+        from warehouse t1
+        LEFT JOIN location t2 ON t1.warehouse_id = t2.warehouse_id
+    </select>
+
+    <select id="queryLocationByWarehouseId" parameterType="pojo.Location" resultType="pojo.Location">
+        select * from location
+        <where>
+            <if test="warehouseId!=null">
+                and warehouse_id = #{warehouseId}
+            </if>
+            <if test="locationName!=null and locationName!=''">
+                and location_name like #{locationName}
+            </if>
+        </where>
+    </select>
+
+</mapper>

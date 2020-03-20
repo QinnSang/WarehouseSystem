@@ -10,9 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pojo.*;
 import service.CompanyService;
+import service.ContractExpenseService;
 import service.ContractService;
-import service.DataDictionaryService;
-
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
@@ -29,7 +28,7 @@ public class ContractController {
     CompanyService companyService;
 
     @Autowired
-    DataDictionaryService dataDictionaryService;
+    ContractExpenseService contractExpenseService;
 
     @RequestMapping("/index")
     public String index(){
@@ -56,7 +55,7 @@ public class ContractController {
         //获取公司
         List<Company> companies=companyService.query(new Company()).getList();
         //获取费用
-        List<DataDictionary> expenses=dataDictionaryService.queryExpense(new DataDictionary());
+        List<DataDictionary> expenses=contractExpenseService.queryAllExpense();
 //        JsonArray expenseList = JSONArray(JSON.toJSONString(expenses));
         //将费用转化为json格式以便js获取
         JSONArray expenseList= JSONArray.parseArray(JSON.toJSONString(expenses));

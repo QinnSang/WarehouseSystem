@@ -4,6 +4,7 @@ import mapper.ContractExpenseMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pojo.ContractExpense;
+import pojo.DataDictionary;
 import service.ContractExpenseService;
 
 import java.util.List;
@@ -17,5 +18,10 @@ public class ContractExpenseServiceImpl implements ContractExpenseService {
     public List<ContractExpense> queryByContractId(Integer contractId) {
 
         return contractExpenseMapper.queryByContractId(contractId);
+    }
+
+    @Override
+    public List<DataDictionary> queryAllExpense() {
+        return contractExpenseMapper.queryAllExpense();
     }
 }

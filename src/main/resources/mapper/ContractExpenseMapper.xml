@@ -43,4 +43,11 @@
         delete from contract_expense where contract_id=#{contractId}
     </delete>
 
+    <select id="queryAllExpense" resultType="pojo.DataDictionary">
+        select * from data_dictionary
+        <where>
+            type_code = 'EXPENSE'
+        </where>
+    </select>
+
 </mapper>

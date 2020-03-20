@@ -16,7 +16,7 @@
                     <div class="layui-inline">
                         <label class="layui-form-label">仓库名称</label>
                         <div class="layui-input-inline" style="width:180px">
-                            <input type="tel" name="softwareName" lay-verify="title" autocomplete="off" placeholder="请输入仓库名称" class="layui-input">
+                            <input type="tel" name="warehouseName" lay-verify="title" autocomplete="off" placeholder="请输入仓库名称" class="layui-input">
                         </div>
                         <label class="layui-form-label">库位名称</label>
                         <div class="layui-input-inline" style="width:180px">
@@ -151,28 +151,31 @@
 
         var myTable = table.render({
             elem: '#warehouseTable'
-            ,url: '${ctx}/jsp/warehouse/information/warehouse/data.json'
-            <%--,url: '${ctx}/warehouse/index'--%>
+            ,url: '${ctx}/warehouse/queryWarehouse'
             // ,height: $(document).height() - $('#warehouseTable').offset().top - 20  //该属性是高度固定的，所以需要取消
-            ,limit: 10
-            ,page: true
+            ,page: { //开启分页,需要配合后台PageInfo进行分页
+                first: '首页'
+                ,last: '尾页'
+                ,layout: ['count', 'prev', 'page', 'next', 'skip']
+                ,limit:10  //每页显示的条数
+                ,curr:1 //起始页
+            }
             ,drag: false // 关闭拖拽列功能
             ,cols: [[
                 {title: '#', width: 50, fixed: 'left',unresize: true,childTitle: false, children:[ //isChild: function(row){return row.dynasty === '宋代'},
                         {
-                            url: '${ctx}/jsp/warehouse/information/warehouse/data.json'
-                            <%--url: function(row){//row 为当前父行数据--%>
-                            <%--return '${ctx}/location/index/'+row.id--%>
-                            <%--},--%>
+                            url: function(row){//row 为当前父行数据
+                                return '${ctx}/warehouse/queryLocationByWarehouseId/'+row.warehouseId
+                            }
+                            // data: function(row){//row 为当前父行数据
+                            //     return row.locationList
+                            // }
                             ,height: 300
                             ,drag: false // 关闭拖拽列功能
                             ,cols: [[
-                                {field: 'title', title: '库位名称', width: 300,unresize: true},
-                                {field: 'dynasty', title: '库位面积(m²)', width: 250,unresize: true},
-                                {field: 'author', title: '所属仓库', width: 300 ,unresize: true},
-                                // {field: 'type', title: '创建人', width: 152},
-                                // {field: 'createTime', title: '创建时间', width: 190, filter: {type: 'date[yyyy-MM-dd HH:mm:ss]'}, sort:true},
-                                {title: '操作', width: 156, templet: '#childBar',unresize: true}
+                                {field: 'locationName', title: '库位名称', unresize: true},
+                                {field: 'locationArea', title: '库位面积(m²)', unresize: true},
+                                {title: '操作',templet: '#childBar',unresize: true}
                             ]],
                             filter: { bottom: false  }, //关闭底部编辑筛选按钮
                             //行事件监听
@@ -186,22 +189,38 @@
                                     delLocation(obj.data)
                                 }
                             }
+                            ,parseData: function(res){ //res 即为原始返回的数据
+                                return {
+                                    "code": res.code, //解析接口状态
+                                    "msg": res.msg, //解析提示文本
+                                    "data": res.data //解析数据列表
+                                };
+                            }
                             ,done: function () {
                                 soulTable.render(this);
                             }
                         }
                     ]},
-                {field: 'title', title: '仓库名称',fixed: 'left',width: 200,unresize: true},
-                {field: 'dynasty', title: '仓库编号', width: 140,unresize: true},
-                {field: 'author', title: '联系电话', width: 200 ,unresize: true},
-                {field: 'type', title: '仓库位置', width: 200,unresize: true},
-                // {field: 'content', title: '创建人', width: 100},
-                // {field: 'createTime', title: '创建时间', width: 165, filter: {type: 'date[yyyy-MM-dd HH:mm:ss]'}, sort:true},
-                {field: 'heat', title: '备注', width: 120,unresize: true},
+                {field: 'warehouseName', title: '仓库名称',width: 200,unresize: true},
+                {field: 'warehouseCode', title: '仓库编号', width: 140,unresize: true},
+                {field: 'warehousePhone', title: '联系电话', width: 200 ,unresize: true},
+                {field: 'warehouseLocation', title: '仓库位置', width: 200,unresize: true},
+                {field: 'remark', title: '备注', width: 120,unresize: true},
                 {fixed: 'right',title: '操作', width: 200, templet: '#barDemo',unresize: true}
-            ]],
-            filter: {bottom: false},
-            excel:{ // 导出excel配置, （以下值均为默认值）
+            ]]
+            ,parseData: function(res){ //res 即为原始返回的数据
+                return {
+                "code": res.code, //解析接口状态
+                "msg": res.msg, //解析提示文本
+                "count": res.count, //解析数据长度
+                "data": res.data.list //解析数据列表
+                };
+            }
+            ,done: function () {
+                soulTable.render(this)
+            }
+            ,filter: {bottom: false}
+            ,excel:{ // 导出excel配置, （以下值均为默认值）
                 on: true, //是否启用, 默认开启
                     filename: '仓库库位信息.xlsx', // 文件名
                     head:{ // 表头样式
@@ -216,9 +235,6 @@
                         color: '000000', // 字体颜色
                         bgColor: 'FFFFFF' //背景颜色
                 }
-            },
-            done: function () {
-                soulTable.render(this)
             }
         });
 
@@ -470,6 +486,15 @@
 
         //-----------------------库位信息维护------------------ end
 
+        //表单查询提交，分次加载
+        form.on('submit(search)', function (data) {
+            table.reload('contractTable', {
+                url: '${ctx}/contract/query',
+                where: data.field //后台直接用实体接收，
+                                  // 如果是单个属性，可以以这种方式获取和传输：softwareName=data.field.softwareName
+            });
+            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可
+        });
 
         //导出
         $('#exportWarehouse').click(function(){
