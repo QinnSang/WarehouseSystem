@@ -38,6 +38,16 @@ public class RoleServiceImpl implements RoleService{
         return pageInfo;
     }
 
+    @Override
+    public StateType add(Role role, Employee employee) {
+        return null;
+    }
+
+    @Override
+    public StateType update(Role role) {
+        return null;
+    }
+
 
 }
 

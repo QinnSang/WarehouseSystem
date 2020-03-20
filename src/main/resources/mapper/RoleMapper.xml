@@ -20,18 +20,49 @@
         </where>
     </select>
 
-    <insert id="toAdd" parameterType="pojo.Role">
+    <insert id="add" parameterType="pojo.Role">
         insert into role
         <trim prefix="(" suffix=")" prefixOverrides=",">
-        <if test="roleId!=null">
-            ,role_id
-        </if>
-        <if test="roleName!=null and roleName!=''">
-            ,role_name
-        </if>
-        <if test="remark!=null and remark!=''">
-            ,remark
-        </if>
+            <if test="roleId!=null">
+                ,role_id
+            </if>
+            <if test="roleName!=null and roleName!=''">
+                ,role_name
+            </if>
+            <if test="remark!=null and remark!=''">
+                ,remark
+            </if>
+        </trim>
+
+        <trim prefix="values(" suffix=")" prefixOverrides=",">
+            <if test="roleId!=null">
+                ,#{roleId}
+            </if>
+            <if test="roleName!=null and roleName!=''">
+                ,#{roleName}
+            </if>
+            <if test="remark!=null and remark!=''">
+                ,#{remark}
+            </if>
+            ,1
         </trim>
     </insert>
+
+    <update id="update" parameterType="pojo.Role">
+        update role
+        <set>
+            <if test="roleId!=null">
+                role_id=#{roleId},
+            </if>
+            <if test="roleName!=null and roleName!=''">
+                role_name=#{roleName},
+            </if>
+            <if test="remark!=null and remark!=''">
+                remark=#{remark},
+            </if>
+        </set>
+        <where>
+            role_id=#{roleId}
+        </where>
+    </update>
 </mapper>
