@@ -14,12 +14,6 @@
                 <form class="layui-form" method="post">
                     <div class="layui-form-item">
                         <div class="layui-inline">
-                            <label class="layui-form-label">角色编码</label>
-                            <div class="layui-input-inline" style="width:180px">
-                                <input type="tel" name="roleId" lay-verify="title" autocomplete="off" placeholder="请输入角色编码" class="layui-input">
-                            </div>
-                        </div>
-                        <div class="layui-inline">
                             <label class="layui-form-label">角色名称</label>
                             <div class="layui-input-inline" style="width:180px">
                                 <input type="tel" name="roleName" lay-verify="title" autocomplete="off" placeholder="请输入角色名称" class="layui-input">
@@ -183,7 +177,7 @@
                     $('#roleForm')[0].reset(); //清空表单内容，防止修改查看公用一个表单时因赋值存在内容
                     // 将保存按钮改变成提交按钮
                     layero.find('.layui-layer-btn0').attr({
-                        'lay-filter' : 'addClientSubmit',
+                        'lay-filter' : 'addRoleSubmit',
                         'lay-submit' : ''
                     });
                     //通过删除只读属性使输入框可以编辑
