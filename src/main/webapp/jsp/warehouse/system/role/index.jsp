@@ -14,6 +14,12 @@
                 <form class="layui-form" method="post">
                     <div class="layui-form-item">
                         <div class="layui-inline">
+                            <label class="layui-form-label">角色编码</label>
+                            <div class="layui-input-inline" style="width:180px">
+                                <input type="tel" name="softwareName" lay-verify="title" autocomplete="off" placeholder="请输入角色编码" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
                             <label class="layui-form-label">角色名称</label>
                             <div class="layui-input-inline" style="width:180px">
                                 <input type="tel" name="softwareName" lay-verify="title" autocomplete="off" placeholder="请输入角色名称" class="layui-input">
@@ -44,17 +50,17 @@
     <form class="layui-form layui-form-pane1" id="roleForm" style="display:none;padding: 20px 0 0 0;"  method="post" lay-filter="addRoleFilter">
         <%--添加角色基本信息--%>
         <div class="layui-form-item">
-            <label class="layui-form-label"style="width: 110px"><span style="color: red;">* </span>角色名称：</label>
-            <div class="layui-input-inline" style="width: 430px">
-                <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入角色名称" class="layui-input">
-            </div>
-        </div>
-        <div class="layui-form-item">
             <label class="layui-form-label" style="width: 110px"><span style="color: red;">* </span>角色编码：</label>
             <div class="layui-input-inline" style="width: 430px">
                 <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入角色编码" class="layui-input">
             </div>
         </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label"style="width: 110px"><span style="color: red;">* </span>角色名称：</label>
+                <div class="layui-input-inline" style="width: 430px">
+                    <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入角色名称" class="layui-input">
+                </div>
+            </div>
         <div class="layui-form-item">
             <label class="layui-form-label" style="width: 110px"><span style="color: red;">* </span>角色描述：</label>
             <div class="layui-input-inline" style="width: 430px">
@@ -96,8 +102,7 @@
         var myTable = table.render({
             elem: '#roleTable' //表格id
             // ,height: 312
-            <%--,url: '${ctx}/role/query' //数据接口--%>
-            , data: [[1, 2, 3, 4, 5,6]]
+            ,url: '${ctx}/role/query' //数据接口--%>
             , method: 'post' //防止查询时中文乱码
             , page: { //开启分页,需要配合后台PageInfo进行分页
                 first: '首页'
@@ -109,9 +114,9 @@
             , even: true //隔行背景
             , autoSort: false  //禁用前端的排序方法
             , cols: [[ //表头
-                {field: 'title', title: '角色名称', unresize: true},
-                {field: 'dynasty', title: '角色编码', unresize: true},
-                {field: 'author', title: '角色描述', unresize: true},
+                {field: 'roleId', title: '角色编码', unresize: true},
+                {field: 'roleName', title: '角色名称', unresize: true},
+                {field: 'remark', title: '角色描述', unresize: true},
                 // {field: 'content', title: '创建人', width: 100},
                 // {field: 'createTime', title: '更新时间', width: 165, filter: {type: 'date[yyyy-MM-dd HH:mm:ss]'}, sort:true},
                 {fixed: 'right', title: '操作',templet: '#barDemo', unresize: true}
