@@ -52,8 +52,31 @@ public enum StateType {
 
     UpdateSuccess(20,"修改成功"),
 
-    UpdateFailed(21,"修改成功"),
+    UpdateFailed(21,"修改失败"),
 
+    AddSuccess(22,"添加成功"),
+
+    AddFailed(23,"添加失败"),
+
+    DelSuccess(24,"删除成功"),
+
+    DelFailed(25,"删除失败"),
+
+    InvalidSuccess(26,"作废成功"),
+
+    InvalidFailed(27,"作废失败"),
+
+    ConfirmSuccess(28,"确认成功，合同已启用"),
+
+    ConfirmFailed(29,"确认失败"),
+
+    ConfirmAlready(30,"合同已作废、启用或归档，不可确认"),
+
+    ArchiveSuccess(31,"归档成功"),
+
+    ArchiveFailed(32,"归档失败"),
+
+    ArchiveAlready(33,"合同已作废或归档，不可编辑、确认、作废或归档"),
 
     /**
      * 请求格式错误

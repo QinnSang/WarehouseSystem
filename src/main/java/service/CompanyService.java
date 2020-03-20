@@ -6,4 +6,6 @@ import pojo.Company;
 public interface CompanyService {
 
     PageInfo<Company> query(Company company);
+
+    Company queryById(Integer companyId);
 }

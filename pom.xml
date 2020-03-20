@@ -121,6 +121,14 @@
       <version>1.9.13</version>
     </dependency>
 
+    <!-- 将后台list转化为json，以便前端使用 -->
+    <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>fastjson</artifactId>
+      <version>1.2.58</version>
+    </dependency>
+
+
     <!--添加文件上传-->
     <dependency>
       <groupId>commons-fileupload</groupId>

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
+import java.util.List;
 
 public class Contract {
     private Integer contractId;
@@ -16,10 +17,13 @@ public class Contract {
 
     private Company company;
 
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date signDate;
 
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date startDate;
 
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date endDate;
 
     private String content;
@@ -33,12 +37,15 @@ public class Contract {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createDate;
 
-
     private String annexid;
 
     private Integer status;
 
     private DataDictionary contractStatus;
+
+    private String remark;
+
+    private List<ContractExpense> contractExpenseList;
 
     public Integer getContractId() {
         return contractId;
@@ -136,6 +143,14 @@ public class Contract {
         this.status = status;
     }
 
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
     public Company getCompany() {
         return company;
     }
@@ -160,5 +175,11 @@ public class Contract {
         this.contractStatus = contractStatus;
     }
 
+    public List<ContractExpense> getContractExpenseList() {
+        return contractExpenseList;
+    }
 
+    public void setContractExpenseList(List<ContractExpense> contractExpenseList) {
+        this.contractExpenseList = contractExpenseList;
+    }
 }

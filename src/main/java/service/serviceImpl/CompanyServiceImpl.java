@@ -25,4 +25,9 @@ public class CompanyServiceImpl implements CompanyService {
         PageInfo<Company> pageInfo=new PageInfo<>(list);
         return pageInfo;
     }
+
+    @Override
+    public Company queryById(Integer companyId) {
+        return companyMapper.queryById(companyId);
+    }
 }

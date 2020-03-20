@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import pojo.Company;
@@ -44,5 +45,12 @@ public class CompanyController {
         //将分页后的数据返回（每页要显示的数据）
         tableData.put("data", pageInfo);
         return tableData;
+    }
+
+    @RequestMapping("/queryById/{companyId}")
+    @ResponseBody
+    public Company queryById(@PathVariable("companyId") Integer companyId, Model model){
+        Company company=companyService.queryById(companyId);
+        return company;
     }
 }
