@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -20,7 +21,7 @@
                         </div>
                         <label class="layui-form-label">库位名称</label>
                         <div class="layui-input-inline" style="width:180px">
-                            <input type="tel" name="softwareName" lay-verify="title" autocomplete="off" placeholder="请输入库位名称" class="layui-input">
+                            <input type="tel" name="locationName" lay-verify="title" autocomplete="off" placeholder="请输入库位名称" class="layui-input">
                         </div>
                         <button class="layui-btn " lay-submit  lay-filter="search" >查 询</button>
                         <button type="reset" class="layui-btn ">重 置</button>
@@ -30,10 +31,9 @@
 
         <%--使用弹窗增加仓库信息--%>
             <div class="layui-input-block" style="padding-bottom: 10px;margin-left: 15px">
-                <button class="layui-btn" id="popWarehouseForm" lay-filter="formDemo">新增仓库</button>
+                <button class="layui-btn" id="popWarehouseForm" lay-filter="warehouse">新增仓库</button>
                 <button class="layui-btn" id="popLocationForm" lay-filter="location">新增库位</button>
                 <button class="layui-btn" id="exportWarehouse">导出仓库信息</button>
-                <%--利用隐藏的数据表格导出--%>
                 <button class="layui-btn" id="exportLocation">导出库位信息</button>
             </div>
 
@@ -52,84 +52,79 @@
         </div>
     </div>
     <%--仓库数据弹框--%>
-    <form class="layui-form layui-form-pane1" id="warehouseForm" name="popUpdateForm" style="display:none;padding: 20px 0 0 0;"  method="post" lay-filter="updateWarehouseFilter">
-        <input type="hidden" name="id" >
+    <form class="layui-form layui-form-pane1" id="warehouseForm" name="popUpdateForm" style="display:none;padding: 20px 0 0 0;"  method="post" lay-filter="warehouseFilter">
+        <input type="hidden" name="warehouseId" >
         <div class="layui-form-item">
-            <label class="layui-form-label">仓库名称：</label>
+            <label class="layui-form-label"><span style="color: red;">* </span>仓库名称：</label>
             <div class="layui-input-inline" style="width: 450px">
-                <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入仓库名称" class="layui-input">
+                <input type="text" name="warehouseName" lay-verify="required" autocomplete="off" placeholder="请输入仓库名称" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">仓库编号：</label>
+            <label class="layui-form-label"><span style="color: red;">* </span>仓库编号：</label>
             <div class="layui-input-inline" style="width: 450px">
-                <input type="text" name="softwareName1" lay-verify="required" placeholder="请输入仓库编号"  autocomplete="off" class="layui-input" >
+                <input type="text" name="warehouseCode" lay-verify="required" placeholder="请输入仓库编号"  autocomplete="off" class="layui-input" >
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">联系电话：</label>
+            <label class="layui-form-label"><span style="color: red;">* </span>联系电话：</label>
             <div class="layui-input-inline" style="width: 450px">
-                <input type="text" name="softwareName2" lay-verify="required" placeholder="请输入联系电话"  autocomplete="off" class="layui-input" >
+                <input type="text" name="warehousePhone" lay-verify="required" placeholder="请输入联系电话"  autocomplete="off" class="layui-input" >
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">仓库位置：</label>
+            <label class="layui-form-label"><span style="color: red;">* </span>仓库位置：</label>
             <div class="layui-input-inline" style="width: 450px">
-                <input type="text" name="softwareName3" lay-verify="required" placeholder="请输入仓库位置"  autocomplete="off" class="layui-input" >
+                <input type="text" name="warehouseLocation" lay-verify="required" placeholder="请输入仓库位置"  autocomplete="off" class="layui-input" >
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">备注：</label>
             <div class="layui-input-inline" style="width: 450px">
-                <input type="text" name="softwareName4" lay-verify="required" placeholder="请输入备注"  autocomplete="off" class="layui-input" >
+                <input type="text" name="remark" lay-verify="title" placeholder="请输入备注"  autocomplete="off" class="layui-input" >
             </div>
         </div>
-        <%--<button type="submit" style="display:none;" class="layui-btn" lay-submit="addWarehouseSubmit" lay-filter="addWarehouseBtn">立即提交</button>--%>
+        <%--区分该表单是用于增加还是修改，增加或修改时分别对该属性赋值--%>
+        <input type="hidden" name="warehouseType" id="warehouseType">
+    <%--隐藏表单提交按钮--%>
+        <button type="submit" style="display:none;" class="layui-btn" lay-submit lay-filter="warehouseSubmit">立即提交</button>
     </form>
 
     <%--库位数据弹框--%>
-    <form class="layui-form layui-form-pane1" id="locationForm" style="display:none;padding: 20px 0 0 0;"  method="post" lay-filter="updateLocationFilter">
+    <form class="layui-form layui-form-pane1" id="locationForm" style="display:none;padding: 20px 0 0 0;"  method="post" lay-filter="locationFilter">
+        <input type="hidden" name="locationId" >
         <div class="layui-form-item">
-            <label class="layui-form-label">仓库：</label>
-            <div class="layui-input-inline" style="width:450px">
-                <select name="warehouseNameInLocation" id="fixedWarehouse" lay-filter="warehouseNameInLocation" >
+            <label class="layui-form-label" style="width:120px"><span style="color: red;">* </span>仓库：</label>
+            <div class="layui-input-inline" style="width:400px">
+                <select name="warehouseId" id="warehouseId" lay-filter="required" >
                     <option value="">-请选择所属仓库-</option>
-                    <option value="0" >仓库1</option>
-                    <option value="1" >仓库2</option>
-                    <%--后台传入所有仓库，如果是修改和查看会传入仓库id，根据仓库进行选择--%>
-                    <%--<c:forEach items="${warehouse}" var="obj">--%>
-                    <%--<option value="${obj.valueId}"><c:if test="${obj.valueId eq warehouseId}">--%>
-                    <%--selected--%>
-                    <%--</c:if>${obj.valueName}</option>--%>
-                    <%--</c:forEach>--%>
+                    <c:forEach items="${warehouseList}" var="obj">
+                    <option value="${obj.warehouseId}">${obj.warehouseName}</option>
+                    </c:forEach>
                 </select>
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">库位名称：</label>
-            <div class="layui-input-inline" style="width: 450px">
-                <input type="text" name="softwareName1" lay-verify="required" placeholder="请输入库位名称"  autocomplete="off" class="layui-input" >
+            <label class="layui-form-label" style="width:120px"><span style="color: red;">* </span>库位名称：</label>
+            <div class="layui-input-inline" style="width: 400px">
+                <input type="text" name="locationName" lay-verify="required" placeholder="请输入库位名称"  autocomplete="off" class="layui-input" >
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">库位面积(m²)：</label>
-            <div class="layui-input-inline" style="width: 450px">
-                <input type="text" name="softwareName2" lay-verify="required" placeholder="请输入库位面积"  autocomplete="off" class="layui-input" >
+            <label class="layui-form-label" style="width:120px"><span style="color: red;">* </span>库位面积(m²)：</label>
+            <div class="layui-input-inline" style="width: 400px">
+                <input type="text" name="locationArea" lay-verify="required" placeholder="请输入库位面积"  autocomplete="off" class="layui-input" >
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">库位图片：</label>
+            <label class="layui-form-label" style="width:120px">库位图片：</label>
             <div class="layui-input-inline">
                 <button type="button" class="layui-btn" id="chooseFile"><i class="layui-icon"></i>上传</button>
             </div>
         </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">备注：</label>
-            <div class="layui-input-inline" style="width: 450px">
-                <input type="text" name="softwareName4" lay-verify="required" placeholder="请输入备注"  autocomplete="off" class="layui-input" >
-            </div>
-        </div>
-        <%--<button type="submit" style="display:none;" class="layui-btn" lay-submit="addWarehouseSubmit" lay-filter="addWarehouseBtn">立即提交</button>--%>
+        <input type="hidden" name="locationType" id="locationType">
+        <%--隐藏表单提交按钮--%>
+        <button type="submit" style="display:none;" class="layui-btn" lay-submit lay-filter="locationSubmit">立即提交</button>
     </form>
 
     <jsp:include page="/jsp/include/footer.jsp"/>
@@ -151,26 +146,22 @@
 
         var myTable = table.render({
             elem: '#warehouseTable'
-            ,url: '${ctx}/warehouse/queryWarehouse'
+            ,url: '${ctx}/warehouse/queryWarehouseLocation'
             // ,height: $(document).height() - $('#warehouseTable').offset().top - 20  //该属性是高度固定的，所以需要取消
             ,page: { //开启分页,需要配合后台PageInfo进行分页
                 first: '首页'
                 ,last: '尾页'
-                ,layout: ['count', 'prev', 'page', 'next', 'skip']
+                ,layout: ['prev', 'page', 'next', 'skip']
                 ,limit:10  //每页显示的条数
                 ,curr:1 //起始页
             }
-            ,drag: false // 关闭拖拽列功能
+            ,drag: false // 关闭拖拽列功能 isChild: function(row){return row !== 'undefined'},
             ,cols: [[
-                {title: '#', width: 50, fixed: 'left',unresize: true,childTitle: false, children:[ //isChild: function(row){return row.dynasty === '宋代'},
+                {title: '#',childTitle: false, width: 50, fixed: 'left',unresize: true,children:[
                         {
-                            url: function(row){//row 为当前父行数据
-                                return '${ctx}/warehouse/queryLocationByWarehouseId/'+row.warehouseId
+                            data: function(row){//row 为当前父行数据
+                                return row.locationList
                             }
-                            // data: function(row){//row 为当前父行数据
-                            //     return row.locationList
-                            // }
-                            ,height: 300
                             ,drag: false // 关闭拖拽列功能
                             ,cols: [[
                                 {field: 'locationName', title: '库位名称', unresize: true},
@@ -204,9 +195,11 @@
                 {field: 'warehouseName', title: '仓库名称',width: 200,unresize: true},
                 {field: 'warehouseCode', title: '仓库编号', width: 140,unresize: true},
                 {field: 'warehousePhone', title: '联系电话', width: 200 ,unresize: true},
-                {field: 'warehouseLocation', title: '仓库位置', width: 200,unresize: true},
-                {field: 'remark', title: '备注', width: 120,unresize: true},
-                {fixed: 'right',title: '操作', width: 200, templet: '#barDemo',unresize: true}
+                {field: 'warehouseLocation', title: '仓库位置', width: 250,unresize: true},
+                {field: 'remark', title: '备注', width: 130,unresize: true},
+                {field: 'createBy', title: '创建人',hide:true,templet:'<div>{{d.createByUser.realName}}</div>'},
+                {field: 'createTime', title: '创建时间',hide:true},
+                {fixed: 'right',title: '操作', width: 180, templet: '#barDemo',unresize: true}
             ]]
             ,parseData: function(res){ //res 即为原始返回的数据
                 return {
@@ -222,7 +215,7 @@
             ,filter: {bottom: false}
             ,excel:{ // 导出excel配置, （以下值均为默认值）
                 on: true, //是否启用, 默认开启
-                    filename: '仓库库位信息.xlsx', // 文件名
+                    filename: '仓库信息.xlsx', // 文件名
                     head:{ // 表头样式
                     family: 'Calibri', // 字体
                         size: 12, // 字号
@@ -266,37 +259,12 @@
                 content: $("#warehouseForm"),
                 success : function(layero, index) { // 成功弹出后回调
                     $('#warehouseForm')[0].reset(); //清空表单内容，防止修改查看公用一个表单时因赋值存在内容
-                    // 将保存按钮改变成提交按钮
-                    layero.find('.layui-layer-btn0').attr({
-                        'lay-filter' : 'addWarehouseSubmit',
-                        'lay-submit' : ''
-                    });
                     //通过删除只读属性使输入框可以编辑
                     layero.find('.layui-input').removeAttr('readonly');
+                    $('#warehouseType').val("insert");
                 },
                 yes: function(index, layero){  //添加仓库表单监听事件
-                    form.on('submit(addWarehouseSubmit)', function(data){
-                        // console.log(data.field) //当前容器的全部表单字段，名值对形式：{name: value}
-                        $.ajax({
-                            url: '${ctx}/warehouse/add',
-                            type: 'POST',
-                            // contentType: "application/json; charset=utf-8",
-                            // data:  JSON.stringify(data.field),
-                            data:  data.field,
-                            success: function (StateType) {
-                                // var status = StateType.status;//取得返回数据（Sting类型的字符串）的信息进行取值判断
-                                if (StateType == 'addSuccess') {
-                                    // layer.closeAll('loading');
-                                    layer.msg("添加成功", {icon: 6});
-                                    layer.close(updatePopUp) ,//执行关闭
-                                        table.reload('warehouseTable') //重载表格
-                                } else {
-                                    layer.msg("添加失败", {icon: 5});
-                                }
-                            }
-                        });
-                        return false;//false：阻止表单跳转 true：表单跳转
-                    });
+                    layero.find('form').find('button[lay-submit]').click();//此处代码即为触发表单提交按钮
                     return false // 开启该代码可禁止点击该按钮关闭
                 },
                 btn2: function(index, layero){
@@ -305,31 +273,6 @@
                 }
             });
         });
-
-        //查看仓库信息
-        function  detailUv(data,obj) {
-            detailWarehousePopUp=layer.open({
-                id:'WarehousePopUp',
-                title: '仓库信息',
-                type: 1, //页面层
-                area: ['600px', '440px'],
-                shade: false, //禁止使用遮罩，否则操作不了界面
-                resize:false, //禁止窗体拉伸
-                skin: 'layui-layer-molv',
-                content: $("#warehouseForm"),
-                success: function(layero, index){
-                    //表单初始赋值
-                    form.val('updateWarehouseFilter',{
-                        "id": data.id,
-                        "title": data.title // "name": "value"
-                    })
-                    //通过加上只读属性使输入框不可编辑
-                    layero.find('.layui-input').attr({
-                         'readonly' : 'true'
-                    });
-                }
-            });
-        }
 
         //修改仓库信息
         function  EidtUv(data,obj) {
@@ -343,36 +286,89 @@
                 btn: ['保存', '取消'],
                 content: $("#warehouseForm"),
                 success: function(layero, index){
-                    //表单初始赋值
-                    form.val('updateWarehouseFilter',{
-                        "id": data.id,
-                        "title": data.title // "name": "value"
+                    //表单初始赋值 "name": "value"
+                    form.val('warehouseFilter',{
+                        "warehouseId": data.warehouseId,
+                        "warehouseName": data.warehouseName,
+                        "warehouseCode": data.warehouseCode,
+                        "warehousePhone": data.warehousePhone,
+                        "warehouseLocation": data.warehouseLocation,
+                        "remark": data.remark,
+                        "warehouseType":"update"
                     })
-                    //通过删除只读属性使输入框可以编辑
-                    layero.find('.layui-input').removeAttr('readonly');
-                }
+                },
+                yes: function(index, layero){  //添加仓库表单监听事件
+                    layero.find('form').find('button[lay-submit]').click();//此处代码即为触发表单提交按钮
+                    return false // 开启该代码可禁止点击该按钮关闭
+                },
+                btn2: function(index, layero){}
             });
         }
 
+        //新增、修改仓库信息提交
+        form.on('submit(warehouseSubmit)', function(data){
+            // console.log(data.field) //当前容器的全部表单字段，名值对形式：{name: value}
+
+            $.ajax({
+                url: '${ctx}/warehouse/warehouseInfo',
+                type: 'POST',
+                data: data.field,
+                success: function (StateType) {
+                    // var status = StateType.status;//取得返回数据（Sting类型的字符串）的信息进行取值判断
+                    if (StateType == 'AddSuccess') {
+                        layer.msg('添加成功', {
+                            icon: 1,
+                            time: 1000
+                        }, function(){
+                            layer.close(addWarehousePopUp) ;//执行关闭
+                            window.location.reload();  //因为需通过页面初始化获取所有仓库信息，所以要刷新页面
+                        });
+                    } else if (StateType == 'AddFailed') {
+                        layer.msg("添加失败", {icon: 2});
+                    }else if (StateType == 'UpdateSuccess') {
+                        layer.msg('修改成功', {
+                            icon: 1,
+                            time: 1000
+                        }, function(){
+                            layer.close(updateWarehousePopUp) ;//执行关闭
+                            window.location.reload();  //因为需通过页面初始化获取所有仓库信息，所以要刷新页面
+                        });
+                    } else if (StateType == 'UpdateFailed') {
+                        // layer.closeAll('loading');
+                        layer.msg("修改失败", {icon: 2});
+                    }else{
+                        layer.msg("出现错误", {icon: 2});
+                    }
+                }
+            });
+            return false;//false：阻止表单跳转 true：表单跳转
+        });
+
         //删除仓库信息
         function  delUv(data,obj) {
-            layer.confirm('确认删除吗？', {
+            layer.confirm('注意：该仓库下所有库位也将全部删除，确认删除吗？', {
                 skin: 'layui-layer-molv',
                 shade: .1
             }, function(index){
                 //向服务端发送删除指令
                 $.ajax({
-                    url: "${ctx}/app/delete",
+                    url: "${ctx}/warehouse/delWarehouse",
                     type: "POST",
-                    data:{"appId":data.id},
-                    dataType: "json",
-                    success: function(data){
-                        // obj.del(); //删除对应行（tr）的DOM结构
-                        layer.msg("删除成功", {icon: 6});
-                        table.reload('appTable');
+                    data:{"warehouseId":data.warehouseId},
+                    success: function(StateType){
+                        if (StateType == 'DelSuccess') {
+                            layer.msg('删除成功', {
+                                icon: 1,
+                                time: 1000 //2秒关闭（如果不配置，默认是3秒）
+                            }, function(){
+                                window.location.reload();  //因为需通过页面初始化获取所有仓库信息，所以要刷新页面
+                            });
+                        }else{
+                            layer.msg("删除失败", {icon: 2});
+                        }
                     },
                     error:function (data) {
-                        layer.msg("删除失败", {icon: 5});
+                        layer.msg("删除失败", {icon: 2});
                     }
                 });
             });
@@ -388,7 +384,7 @@
                 id:'addLocationPopUp',
                 title: '添加库位',
                 type: 1, //页面层
-                area: ['600px', '460px'],
+                area: ['600px', '380px'],
                 shade: false, //禁止使用遮罩，否则操作不了界面
                 resize:false, //禁止窗体拉伸
                 offset: '70px',
@@ -397,41 +393,13 @@
                 content: $("#locationForm"),
                 success : function(layero, index) { // 成功弹出后回调
                     $('#locationForm')[0].reset();
-                    // 将保存按钮改变成提交按钮
-                    layero.find('.layui-layer-btn0').attr({
-                        'lay-filter' : 'addlocationSubmit',
-                        'lay-submit' : ''
-                    });
-                    //通过删除只读属性使输入框可以编辑
-                    layero.find('.layui-input').removeAttr('readonly');
+                    $('#locationType').val("insert");
                 },
                 yes: function(index, layero){  //添加仓库表单监听事件
-                    form.on('submit(addlocationSubmit)', function(data){
-                        // console.log(data.field) //当前容器的全部表单字段，名值对形式：{name: value}
-                        $.ajax({
-                            url: '${ctx}/location/add',
-                            type: 'POST',
-                            data:  data.field,
-                            success: function (StateType) {
-                                // var status = StateType.status;//取得返回数据（Sting类型的字符串）的信息进行取值判断
-                                if (StateType == 'addSuccess') {
-                                    // layer.closeAll('loading');
-                                    layer.msg("添加成功", {icon: 6});
-                                    layer.close(updatePopUp) ,//执行关闭
-                                        table.reload('warehouseTable') //重载父表格
-                                } else {
-                                    layer.msg("添加失败", {icon: 5});
-                                }
-                            }
-                        });
-                        return false;//false：阻止表单跳转 true：表单跳转
-                    });
+                    layero.find('form').find('button[lay-submit]').click();//此处代码即为触发表单提交按钮
                     return false // 开启该代码可禁止点击该按钮关闭
                 },
-                btn2: function(index, layero){
-                    //按钮【按钮二】的回调
-                    //return false 开启该代码可禁止点击该按钮关闭
-                }
+                btn2: function(index, layero){}
             });
         });
 
@@ -440,7 +408,7 @@
             updatelocationPopUp=layer.open({
                 title: '修改仓库',
                 type: 1, //页面层
-                area: ['600px', '450px'],
+                area: ['600px', '380px'],
                 shade: false, //禁止使用遮罩，否则操作不了界面
                 resize:false, //禁止窗体拉伸
                 offset: '70px',
@@ -448,17 +416,58 @@
                 btn: ['保存', '取消'],
                 content: $("#locationForm"),
                 success: function(layero, index){
-                    form.val('updateLocationFilter',{
-                    //表单初始赋值
-                        "warehouseNameInLocation": data.id // "name": "value"  //传入仓库id后就可直接定位到所选仓库
+                    form.val('locationFilter',{
+                        //表单初始赋值 "name": "value"
+                        "locationId":data.locationId,
+                        "warehouseId":data.warehouseId,
+                        "locationName": data.locationName,
+                        "locationArea":data.locationArea,
+                        "locationType":"update"
                     });
-                    //通过删除只读属性使输入框可以编辑
-                    layero.find('.layui-input').removeAttr('readonly');
-                    //直接获取仓库名称，所以无需编辑
-                    $('#fixedWarehouse').prop('readonly','readonly');
-                }
+                },
+                yes: function(index, layero){  //添加仓库表单监听事件
+                    layero.find('form').find('button[lay-submit]').click();//此处代码即为触发表单提交按钮
+                    return false // 开启该代码可禁止点击该按钮关闭
+                },
+                btn2: function(index, layero){}
             });
         }
+
+        //新增、修改库位信息提交
+        form.on('submit(locationSubmit)', function(data){
+            $.ajax({
+                url: '${ctx}/warehouse/locationInfo',
+                type: 'POST',
+                data: data.field,
+                success: function (StateType) {
+                    if (StateType == 'AddSuccess') {
+                        layer.msg('添加成功', {
+                            icon: 1,
+                            time: 1000
+                        }, function(){
+                            layer.close(addlocationPopUp) ;//执行关闭
+                            window.location.reload();  //因为需通过页面初始化获取所有仓库信息，所以要刷新页面
+                        });
+                    } else if (StateType == 'AddFailed') {
+                        layer.msg("添加失败", {icon: 2});
+                    }else if (StateType == 'UpdateSuccess') {
+                        layer.msg('修改成功', {
+                            icon: 1,
+                            time: 1000
+                        }, function(){
+                            layer.close(updatelocationPopUp) ;//执行关闭
+                            window.location.reload();  //因为需通过页面初始化获取所有仓库信息，所以要刷新页面
+                        });
+                    } else if (StateType == 'UpdateFailed') {
+                        // layer.closeAll('loading');
+                        layer.msg("修改失败", {icon: 2});
+                    }else{
+                        layer.msg("出现错误", {icon: 2});
+                    }
+                }
+            });
+            return false;//false：阻止表单跳转 true：表单跳转
+        });
 
         //删除库位信息
         function  delLocation(data) {
@@ -468,17 +477,19 @@
             }, function(index){
                 //向服务端发送删除指令
                 $.ajax({
-                    url: "${ctx}/app/delete",
+                    url: "${ctx}/warehouse/delLocation",
                     type: "POST",
-                    data:{"appId":data.id},
-                    dataType: "json",
-                    success: function(data){
-                        // obj.del(); //删除对应行（tr）的DOM结构
-                        layer.msg("删除成功", {icon: 6});
-                        table.reload('appTable');
+                    data:{"locationId":data.locationId},
+                    success: function(StateType){
+                        if (StateType == 'DelSuccess') {
+                            layer.msg("删除成功", {icon: 1});
+                            table.reload('warehouseTable');
+                        }else{
+                            layer.msg("删除失败", {icon: 2});
+                        }
                     },
                     error:function (data) {
-                        layer.msg("删除失败", {icon: 5});
+                        layer.msg("删除失败", {icon: 2});
                     }
                 });
             });
@@ -486,21 +497,67 @@
 
         //-----------------------库位信息维护------------------ end
 
-        //表单查询提交，分次加载
+        //表单查询提交，后台用dto接收
         form.on('submit(search)', function (data) {
-            table.reload('contractTable', {
-                url: '${ctx}/contract/query',
+            table.reload('warehouseTable', {
+                url: '${ctx}/warehouse/queryWarehouseLocation',
                 where: data.field //后台直接用实体接收，
                                   // 如果是单个属性，可以以这种方式获取和传输：softwareName=data.field.softwareName
             });
             return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可
         });
 
-        //导出
+        //导出仓库信息
         $('#exportWarehouse').click(function(){
             soulTable.export(myTable);
+            layer.closeAll('loading');
         });
 
+        //要先加载数据表格，才能导出，不能放在click方法中
+        var locationTable = table.render({
+            elem:  '<table id="locationTable"></table>'
+            ,url: '${ctx}/warehouse/queryAllLocation'
+            ,page:true
+            ,cols: [[
+                {field: 'locationName', title: '库位名称', unresize: true},
+                {field: 'locationArea', title: '库位面积(m²)', unresize: true},
+                {field: 'warehouseName', title: '所属仓库',templet:'<div>{{d.warehouse.warehouseName}}</div>'},
+                {field: 'createBy', title: '创建人',templet:'<div>{{d.createByUser.realName}}</div>'},
+                {field: 'createTime', title: '创建时间'}
+            ]]
+            ,parseData: function(res){ //res 即为原始返回的数据
+                return {
+                    "code": res.code, //解析接口状态
+                    "msg": res.msg, //解析提示文本
+                    "data": res.data.list //解析数据列表
+                };
+            }
+            ,done: function () {
+                soulTable.render(this);
+            }
+            ,excel:{ // 导出excel配置, （以下值均为默认值）
+                on: true, //是否启用, 默认开启
+                filename: '库位信息.xlsx', // 文件名
+                head:{ // 表头样式
+                    family: 'Calibri', // 字体
+                    size: 12, // 字号
+                    color: '000000', // 字体颜色
+                    bgColor: 'C7C7C7' // 背景颜色
+                },
+                font: { // 正文样式
+                    family: 'Calibri', // 字体
+                    size: 12, // 字号
+                    color: '000000', // 字体颜色
+                    bgColor: 'FFFFFF' //背景颜色
+                }
+            }
+        });
+
+        //导出库位信息
+        $('#exportLocation').click(function(){
+            soulTable.export(locationTable);
+            layer.closeAll('loading');
+        });
     });
 </script>
 <%--设置表单样式--%>

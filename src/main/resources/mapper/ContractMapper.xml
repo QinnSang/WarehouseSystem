@@ -31,20 +31,18 @@
 
 
     <select id="query" parameterType="pojo.Contract" resultMap="contractBase">
-        <choose>
-            <when test="contractName!=null and contractName!=''">
-                <bind name="contractname" value="'%'+contractName+'%'"/>
-            </when>
-            <when test="contractCode!=null and contractCode!=''">
-                <bind name="contractcode" value="'%'+contractCode+'%'"/>
-            </when>
-            <when test="company!=null and company.companyName!=null and company.companyName!=''">
-                <bind name="companyname" value="'%'+company.companyName+'%'"/>
-            </when>
-            <when test="contractStatus!=null and contractStatus.valueId!=null and contractStatus.valueId!=''">
+        <if test="contractName!=null and contractName!=''">
+            <bind name="contractname" value="'%'+contractName+'%'"/>
+        </if>
+        <if test="contractCode!=null and contractCode!=''">
+            <bind name="contractcode" value="'%'+contractCode+'%'"/>
+        </if>
+        <if test="company!=null and company.companyName!=null and company.companyName!=''">
+            <bind name="companyname" value="'%'+company.companyName+'%'"/>
+        </if>
+        <if test="contractStatus!=null and contractStatus.valueId!=null and contractStatus.valueId!=''">
             <bind name="statusId" value="'%'+contractStatus.valueId+'%'"/>
-        </when>
-        </choose>
+        </if>
         select
             contract_id,
             contract_name,
@@ -194,7 +192,7 @@
             <if test="remark!=null and remark!=''">
                 remark=#{remark},
             </if>
-            <if test="status!=null and status!=''">
+            <if test="status!=null">
                 status=#{status},
             </if>
             <if test="createBy!=null">

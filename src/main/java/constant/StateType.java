@@ -78,6 +78,8 @@ public enum StateType {
 
     ArchiveAlready(33,"合同已作废或归档，不可编辑、确认、作废或归档"),
 
+    ErrorType(34,"请求类型发生错误"),
+
     /**
      * 请求格式错误
      */

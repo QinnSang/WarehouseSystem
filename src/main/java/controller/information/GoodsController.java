@@ -1,6 +1,7 @@
 package controller.information;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -9,6 +10,7 @@ public class GoodsController {
 
     @RequestMapping("/index")
     public String index(){
-        return "information/goods/index";
+        return "information/goods";
     }
+
 }

@@ -9,16 +9,27 @@
         <result property="warehousePhone" column="warehouse_phone"/>
         <result property="warehouseLocation" column="warehouse_location"/>
         <result property="remark" column="remark"/>
+        <association property="createByUser" javaType="pojo.Employee">
+            <id property="employeeId" column="employee_id"/>
+            <result property="realName" column="real_name"/>
+        </association>
         <collection property="locationList" ofType="pojo.Location">
             <id property="locationId" column="location_id"/>
             <result property="locationName" column="location_name"/>
             <result property="locationArea" column="location_area"/>
+            <result property="warehouseId" column="locaWarehousId"/>
         </collection>
     </resultMap>
 
-    <select id="queryWarehouse" parameterType="pojo.Warehouse" resultMap="warehouseBase">
+    <select id="queryWarehouseLocation" parameterType="pojo.Warehouse" resultMap="warehouseBase">
+        <if test="warehouseName!=null and warehouseName!=''">
+            <bind name="warehousename" value="'%'+warehouseName+'%'"/>
+        </if>
+        <if test="locationName!=null and locationName!=''">
+            <bind name="locationname" value="'%'+locationName+'%'"/>
+        </if>
         select
-            t2.warehouse_id,
+            t1.warehouse_id,
             warehouse_name,
             warehouse_code,
             warehouse_phone,
@@ -26,21 +37,205 @@
             t1.remark,
             t2.location_id,
             t2.location_name,
-            t2.location_area
+            t2.location_area,
+            t2.warehouse_id as locaWarehousId,
+            t3.employee_id,
+            t3.real_name
         from warehouse t1
         LEFT JOIN location t2 ON t1.warehouse_id = t2.warehouse_id
-    </select>
-
-    <select id="queryLocationByWarehouseId" parameterType="pojo.Location" resultType="pojo.Location">
-        select * from location
+        LEFT JOIN employee t3 ON t1.create_by = t3.employee_id
         <where>
-            <if test="warehouseId!=null">
-                and warehouse_id = #{warehouseId}
+            <if test="warehouseName!=null and warehouseName!=''">
+                and warehouse_name like #{warehousename}
             </if>
             <if test="locationName!=null and locationName!=''">
-                and location_name like #{locationName}
+                and location_name like #{locationname}
             </if>
         </where>
+        order by t1.create_time desc
     </select>
+
+    <select id="queryAllWarehouse" resultType="pojo.Warehouse">
+        select warehouse_id,warehouse_name from warehouse order by create_time desc
+    </select>
+
+    <insert id="addWarehouse" parameterType="pojo.Warehouse">
+          insert into warehouse
+        <trim prefix="(" suffix=")" prefixOverrides=",">
+            <if test="warehouseName!=null and warehouseName!=''">
+                ,warehouse_name
+            </if>
+            <if test="warehouseCode!=null and warehouseCode!=''">
+                ,warehouse_code
+            </if>
+            <if test="warehousePhone!=null and warehousePhone!=''">
+                ,warehouse_phone
+            </if>
+            <if test="warehouseLocation!=null and warehouseLocation!=''">
+                ,warehouse_location
+            </if>
+            <if test="remark!=null and remark!=''">
+                ,remark
+            </if>
+            <if test="createBy!=null">
+                ,create_By
+            </if>
+            <if test="createTime!=null">
+                ,create_time
+            </if>
+        </trim>
+        <trim prefix="values(" suffix=")" prefixOverrides=",">
+            <if test="warehouseName!=null and warehouseName!=''">
+                ,#{warehouseName}
+            </if>
+            <if test="warehouseCode!=null and warehouseCode!=''">
+                ,#{warehouseCode}
+            </if>
+            <if test="warehousePhone!=null and warehousePhone!=''">
+                ,#{warehousePhone}
+            </if>
+            <if test="warehouseLocation!=null and warehouseLocation!=''">
+                ,#{warehouseLocation}
+            </if>
+            <if test="remark!=null and remark!=''">
+                ,#{remark}
+            </if>
+            <if test="createBy!=null">
+                ,#{createBy}
+            </if>
+            <if test="createTime!=null">
+                ,#{createTime}
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateWarehouse" parameterType="pojo.Warehouse">
+        update warehouse
+        <set>
+            <if test="warehouseName!=null and warehouseName!=''">
+                warehouse_name=#{warehouseName},
+            </if>
+            <if test="warehouseCode!=null and warehouseCode!=''">
+                warehouse_code=#{warehouseCode},
+            </if>
+            <if test="warehousePhone!=null and warehousePhone!=''">
+                warehouse_phone=#{warehousePhone},
+            </if>
+            <if test="warehouseLocation!=null and warehouseLocation!=''">
+                warehouse_location=#{warehouseLocation},
+            </if>
+            <if test="createBy!=null">
+                create_by=#{createBy},
+            </if>
+            <if test="createTime!=null">
+                create_time=#{createTime},
+            </if>
+        </set>
+        <where>
+            warehouse_id=#{warehouseId}
+        </where>
+    </update>
+
+    <delete id="delWarehouse">
+        delete from warehouse where  warehouse_id=#{warehouseId}
+    </delete>
+
+    <resultMap id="locationBase" type="pojo.Location">
+        <result property="locationName" column="location_name"/>
+        <result property="locationArea" column="location_area"/>
+        <result property="createTime" column="create_time"/>
+        <association property="createByUser" javaType="pojo.Employee">
+            <id property="employeeId" column="employee_id"/>
+            <result property="realName" column="real_name"/>
+        </association>
+        <association property="warehouse" javaType="pojo.Warehouse">
+            <id property="warehouseId" column="warehouse_id"/>
+            <result property="warehouseName" column="warehouse_name"/>
+        </association>
+    </resultMap>
+
+    <select id="queryAllLocation" resultMap="locationBase">
+        select
+            location_name,
+            location_area,
+            t1.create_time,
+            t2.warehouse_id,
+            t2.warehouse_name,
+            t3.employee_id,
+            t3.real_name
+        from location t1
+        LEFT JOIN warehouse t2 ON t1.warehouse_id = t2.warehouse_id
+        LEFT JOIN employee t3 ON t1.create_by = t3.employee_id
+    </select>
+
+    <insert id="addLocation" parameterType="pojo.Location">
+        insert into location
+        <trim prefix="(" suffix=")" prefixOverrides=",">
+            <if test="locationName!=null and locationName!=''">
+                ,location_name
+            </if>
+            <if test="locationArea!=null and locationArea!=''">
+                ,location_area
+            </if>
+            <if test="warehouseId!=null">
+                ,warehouse_id
+            </if>
+            <if test="createBy!=null">
+                ,create_By
+            </if>
+            <if test="createTime!=null">
+                ,create_time
+            </if>
+        </trim>
+        <trim prefix="values(" suffix=")" prefixOverrides=",">
+            <if test="locationName!=null and locationName!=''">
+                ,#{locationName}
+            </if>
+            <if test="locationArea!=null and locationArea!=''">
+                ,#{locationArea}
+            </if>
+            <if test="warehouseId!=null">
+                ,#{warehouseId}
+            </if>
+            <if test="createBy!=null">
+                ,#{createBy}
+            </if>
+            <if test="createTime!=null">
+                ,#{createTime}
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateLocation" parameterType="pojo.Location">
+        update location
+        <set>
+            <if test="locationName!=null and locationName!=''">
+                location_name=#{locationName},
+            </if>
+            <if test="locationArea!=null and locationArea!=''">
+                location_area=#{locationArea},
+            </if>
+            <if test="warehouseId!=null">
+                warehouse_id=#{warehouseId},
+            </if>
+            <if test="createBy!=null">
+                create_by=#{createBy},
+            </if>
+            <if test="createTime!=null">
+                create_time=#{createTime},
+            </if>
+        </set>
+        <where>
+            location_id=#{locationId}
+        </where>
+    </update>
+
+    <delete id="delLocation">
+        delete from location where  location_id=#{locationId}
+    </delete>
+
+    <delete id="delLocationByWarehouseId">
+        delete from location where  warehouse_id=#{warehouseId}
+    </delete>
 
 </mapper>

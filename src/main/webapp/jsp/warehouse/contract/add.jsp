@@ -199,31 +199,36 @@
                 };
             }
             // https://cnsyear.com/posts/ec71cea0.html
-            var param = {
-                contractName:data.field.contractName,
-                signDate:data.field.signDate,
-                startDate:data.field.startEndDate.substring(0,10),
-                endDate:data.field.startEndDate.substring(13,23),
-                companyId:data.field.companyId,
-                content:data.field.content,
-                remark:data.field.remark,
-                contractExpenseList:contractExpenseArray
-            };
+            // var param = {
+            //     contractName:data.field.contractName,
+            //     signDate:data.field.signDate,
+            //     startDate:data.field.startEndDate.substring(0,10),
+            //     endDate:data.field.startEndDate.substring(13,23),
+            //     companyId:data.field.companyId,
+            //     content:data.field.content,
+            //     remark:data.field.remark,
+            //     contractExpenseList:contractExpenseArray
+            // };
+            //添加费用字段到data.field中，简化代码
+            data.field.contractExpenseList=contractExpenseArray;
             $.ajax({
                 url: '${ctx}/contract/add',
                 type: 'POST',
                 dataType: "json",
                 contentType: "application/json",
                 // contentType: "application/json; charset=utf-8",
-                data:  JSON.stringify(param),  //如果有list一定要json，不然数据格式不对
+                data:  JSON.stringify(data.field),  //如果有list一定要json，不然数据格式不对
                 success: function (StateType) {
                     // var status = StateType.status;//取得返回数据（Sting类型的字符串）的信息进行取值判断
                     if (StateType == 'AddSuccess') {
-                        // layer.closeAll('loading');
-                        layer.msg("添加成功", {icon: 6});
-                        window.location.href = "${ctx}/contract/index";
+                        layer.msg('添加成功', {
+                            icon: 1,
+                            time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                        }, function(){
+                            window.location.href = "${ctx}/contract/index";
+                        });
                     } else {
-                        layer.msg("添加失败", {icon: 5});
+                        layer.msg("添加失败", {icon: 2});
                     }
                 }
             });

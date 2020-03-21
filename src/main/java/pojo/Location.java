@@ -1,5 +1,7 @@
 package pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class Location {
@@ -9,10 +11,11 @@ public class Location {
 
     private Integer locationArea;
 
-    private Integer createdBy;
+    private Integer createBy;
 
     private Employee createByUser;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
 
     private Integer warehouseId;
@@ -43,12 +46,12 @@ public class Location {
         this.locationArea = locationArea;
     }
 
-    public Integer getCreatedBy() {
-        return createdBy;
+    public Integer getCreateBy() {
+        return createBy;
     }
 
-    public void setCreatedBy(Integer createdBy) {
-        this.createdBy = createdBy;
+    public void setCreateBy(Integer createBy) {
+        this.createBy = createBy;
     }
 
     public Date getCreateTime() {
