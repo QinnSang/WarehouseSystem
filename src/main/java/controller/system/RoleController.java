@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import pojo.Contract;
-import pojo.Employee;
-import pojo.Location;
-import pojo.Role;
+import pojo.*;
 import service.RoleService;
 
 import javax.servlet.http.HttpSession;
@@ -43,6 +40,14 @@ public class RoleController {
         tableData.put("data", pageInfo);
         return tableData;
     }
+
+    @RequestMapping("/queryById/{roleId}")
+    @ResponseBody
+    public Role queryById(@PathVariable("roleId") Integer roleId, Model model){
+        Role role=roleService.queryById(roleId);
+        return role;
+    }
+
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
     public StateType add(@RequestBody Role role){

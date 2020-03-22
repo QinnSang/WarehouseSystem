@@ -20,6 +20,10 @@
         </where>
     </select>
 
+    <select id="queryById" parameterType="integer" resultType="pojo.Role">
+        select * from role t1 where role_id=#{roleId}
+    </select>
+
     <insert id="add" parameterType="pojo.Role">
         insert into role
         <trim prefix="(" suffix=")" prefixOverrides=",">
