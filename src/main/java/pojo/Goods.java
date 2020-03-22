@@ -1,6 +1,9 @@
 package pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
+import java.util.List;
 
 public class Goods {
     private Integer goodsId;
@@ -13,8 +16,15 @@ public class Goods {
 
     private Integer parentId;
 
+    private Goods belongType;  //所属货物类型
+
+    private List<Goods> goodsNameList; //货物类型中拥有的货物名称
+
     private Integer createdBy;
 
+    private Employee createByUser;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
 
     public Integer getGoodsId() {
@@ -71,5 +81,29 @@ public class Goods {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public List<Goods> getGoodsNameList() {
+        return goodsNameList;
+    }
+
+    public void setGoodsNameList(List<Goods> goodsNameList) {
+        this.goodsNameList = goodsNameList;
+    }
+
+    public Employee getCreateByUser() {
+        return createByUser;
+    }
+
+    public void setCreateByUser(Employee createByUser) {
+        this.createByUser = createByUser;
+    }
+
+    public Goods getBelongType() {
+        return belongType;
+    }
+
+    public void setBelongType(Goods belongType) {
+        this.belongType = belongType;
     }
 }

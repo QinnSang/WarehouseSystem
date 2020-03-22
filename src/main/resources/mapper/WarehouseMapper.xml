@@ -21,7 +21,7 @@
         </collection>
     </resultMap>
 
-    <select id="queryWarehouseLocation" parameterType="pojo.Warehouse" resultMap="warehouseBase">
+    <select id="queryWarehouseLocation" parameterType="dto.WarehouseLocationDto" resultMap="warehouseBase">
         <if test="warehouseName!=null and warehouseName!=''">
             <bind name="warehousename" value="'%'+warehouseName+'%'"/>
         </if>
@@ -52,8 +52,8 @@
                 and location_name like #{locationname}
             </if>
         </where>
-        order by t1.create_time desc
-    </select>
+            order by t1.create_time desc,t2.create_time desc
+        </select>
 
     <select id="queryAllWarehouse" resultType="pojo.Warehouse">
         select warehouse_id,warehouse_name from warehouse order by create_time desc

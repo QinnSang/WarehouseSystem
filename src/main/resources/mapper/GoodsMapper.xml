@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.GoodsMapper">
+
+    <resultMap id="goodsTableBase" type="pojo.Goods">
+        <result property="goodsId" column="typeId"/>
+        <result property="goodsName" column="typeName"/>
+        <result property="goodsCode" column="typeCode"/>
+        <result property="createTime" column="typeCreateTime"/>
+        <association property="createByUser" javaType="pojo.Employee">
+            <result property="realName" column="typeCreateBy"/>
+        </association>
+        <collection property="goodsNameList" ofType="pojo.Goods">
+            <id property="goodsId" column="nameId"/>
+            <result property="goodsName" column="goodsName"/>
+            <result property="goodsCode" column="nameCode"/>
+            <result property="createTime" column="nameCreateTime"/>
+            <result property="parentId" column="nameTypeId"/>
+            <association property="createByUser" javaType="pojo.Employee">
+                <result property="realName" column="nameCreateBy"/>
+            </association>
+        </collection>
+    </resultMap>
+
+    <select id="queryGoodTypeName" parameterType="dto.GoodTypeNameDto" resultMap="goodsTableBase">
+        <if test="typeName!=null and typeName!=''">
+            <bind name="typename" value="'%'+typeName+'%'"/>
+        </if>
+        <if test="goodName!=null and goodName!=''">
+            <bind name="goodname" value="'%'+goodName+'%'"/>
+        </if>
+        select
+            t1.goods_id as typeId,
+            t1.goods_name as typeName,
+            t1.goods_code as typeCode,
+            t3.real_name as typeCreateBy,
+            t1.create_time as typeCreateTime,
+            t2.goods_id as nameId,
+            t2.goods_name as goodsName,
+            t2.goods_code as nameCode,
+            t2.parent_id as nameTypeId,
+            t4.real_name as nameCreateBy,
+            t2.create_time as nameCreateTime
+        from goods t1
+        LEFT JOIN goods t2 ON t2.parent_id = t1.goods_id
+        LEFT JOIN employee t3 ON t1.created_by = t3.employee_id
+        LEFT JOIN employee t4 ON t2.created_by = t4.employee_id
+        <where>
+            t1.classify = 1
+            <if test="typeName!=null and typeName!=''">
+                and t1.goods_name like #{typename}
+            </if>
+            <if test="goodName!=null and goodName!=''">
+                and t2.goods_name like #{goodname}
+            </if>
+        </where>
+            order by t1.create_time desc,t2.create_time desc
+        </select>
+
+    <select id="queryAllGoodsType" resultType="pojo.Goods">
+        select  goods_id,goods_name from goods where classify = 1
+    </select>
+
+    <resultMap id="goodsNameBase" type="pojo.Goods">
+        <result property="goodsName" column="goods_name"/>
+        <result property="goodsCode" column="goods_code"/>
+        <result property="createTime" column="create_time"/>
+        <association property="belongType" javaType="pojo.Goods">
+            <result property="goodsName" column="typeName"/>
+        </association>
+        <association property="createByUser" javaType="pojo.Employee">
+            <result property="realName" column="real_name"/>
+        </association>
+    </resultMap>
+
+    <select id="queryAllGoodsName" resultMap="goodsNameBase">
+        select
+            t1.goods_name,
+            t1.goods_code,
+            t1.create_time,
+            t2.goods_name as typeName,
+            t3.real_name
+        from goods t1
+        LEFT JOIN goods t2 ON t1.parent_id = t2.goods_id
+        LEFT JOIN employee t3 ON t1.created_by = t3.employee_id
+        where t1.classify = 2
+    </select>
+
+    <insert id="addGoodType" parameterType="pojo.Goods">
+        insert into goods
+        <trim prefix="(" suffix=")" prefixOverrides=",">
+            <if test="goodsName!=null and goodsName!=''">
+                ,goods_name
+            </if>
+            <if test="goodsCode!=null and goodsCode!=''">
+                ,goods_code
+            </if>
+            <if test="classify!=null and classify!=''">
+                ,classify
+            </if>
+            <if test="createdBy!=null">
+                ,created_By
+            </if>
+            <if test="createTime!=null">
+                ,create_time
+            </if>
+        </trim>
+        <trim prefix="values(" suffix=")" prefixOverrides=",">
+            <if test="goodsName!=null and goodsName!=''">
+                ,#{goodsName}
+            </if>
+            <if test="goodsCode!=null and goodsCode!=''">
+                ,#{goodsCode}
+            </if>
+            <if test="classify!=null and classify!=''">
+                ,#{classify}
+            </if>
+            <if test="createdBy!=null">
+                ,#{createdBy}
+            </if>
+            <if test="createTime!=null">
+                ,#{createTime}
+            </if>
+        </trim>
+    </insert>
+
+    <insert id="addGoodsName" parameterType="pojo.Goods">
+        insert into goods
+        <trim prefix="(" suffix=")" prefixOverrides=",">
+            <if test="goodsName!=null and goodsName!=''">
+                ,goods_name
+            </if>
+            <if test="goodsCode!=null and goodsCode!=''">
+                ,goods_code
+            </if>
+            <if test="classify!=null and classify!=''">
+                ,classify
+            </if>
+            <if test="parentId!=null">
+                ,parent_id
+            </if>
+            <if test="createdBy!=null">
+                ,created_By
+            </if>
+            <if test="createTime!=null">
+                ,create_time
+            </if>
+        </trim>
+        <trim prefix="values(" suffix=")" prefixOverrides=",">
+            <if test="goodsName!=null and goodsName!=''">
+                ,#{goodsName}
+            </if>
+            <if test="goodsCode!=null and goodsCode!=''">
+                ,#{goodsCode}
+            </if>
+            <if test="classify!=null and classify!=''">
+                ,#{classify}
+            </if>
+            <if test="parentId!=null">
+                ,#{parentId}
+            </if>
+            <if test="createdBy!=null">
+                ,#{createdBy}
+            </if>
+            <if test="createTime!=null">
+                ,#{createTime}
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateGoodType">
+        update goods
+        <set>
+            <if test="goodsName!=null and goodsName!=''">
+                goods_name=#{goodsName},
+            </if>
+            <if test="goodsCode!=null and goodsCode!=''">
+                goods_code=#{goodsCode},
+            </if>
+            <if test="createdBy!=null">
+                created_By=#{createdBy},
+            </if>
+            <if test="createTime!=null">
+                create_time=#{createTime},
+            </if>
+        </set>
+        <where>
+            goods_id=#{goodsId}
+        </where>
+    </update>
+
+    <update id="updateGoodsName">
+        update goods
+        <set>
+            <if test="goodsName!=null and goodsName!=''">
+                goods_name=#{goodsName},
+            </if>
+            <if test="goodsCode!=null and goodsCode!=''">
+                goods_code=#{goodsCode},
+            </if>
+            <if test="parentId!=null">
+                parent_id=#{parentId},
+            </if>
+            <if test="createdBy!=null">
+                created_By=#{createdBy},
+            </if>
+            <if test="createTime!=null">
+                create_time=#{createTime},
+            </if>
+        </set>
+        <where>
+            goods_id=#{goodsId}
+        </where>
+    </update>
+
+    <delete id="delGoodsNameByTypeId">
+        delete from goods where parent_id=#{goodsTypeId}
+    </delete>
+
+    <delete id="delGoodsType">
+        delete from goods where goods_id=#{goodsTypeId}
+    </delete>
+
+    <delete id="delGoodsName">
+        delete from goods where goods_id=#{goodsNameId}
+    </delete>
+
+</mapper>

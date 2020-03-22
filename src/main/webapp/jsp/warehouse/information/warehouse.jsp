@@ -142,7 +142,6 @@
         var form = layui.form;
         var layer = layui.layer;
         var soulTable = layui.soulTable; //使用soulTable子表
-        // var index = layer.load(); //添加laoding,0-2两种方式
 
         var myTable = table.render({
             elem: '#warehouseTable'
@@ -179,16 +178,6 @@
                                 } else if (obj.event === 'childDel') {
                                     delLocation(obj.data)
                                 }
-                            }
-                            ,parseData: function(res){ //res 即为原始返回的数据
-                                return {
-                                    "code": res.code, //解析接口状态
-                                    "msg": res.msg, //解析提示文本
-                                    "data": res.data //解析数据列表
-                                };
-                            }
-                            ,done: function () {
-                                soulTable.render(this);
                             }
                         }
                     ]},
@@ -308,7 +297,6 @@
         //新增、修改仓库信息提交
         form.on('submit(warehouseSubmit)', function(data){
             // console.log(data.field) //当前容器的全部表单字段，名值对形式：{name: value}
-
             $.ajax({
                 url: '${ctx}/warehouse/warehouseInfo',
                 type: 'POST',
@@ -446,7 +434,7 @@
                             time: 1000
                         }, function(){
                             layer.close(addlocationPopUp) ;//执行关闭
-                            window.location.reload();  //因为需通过页面初始化获取所有仓库信息，所以要刷新页面
+                            table.reload('warehouseTable');
                         });
                     } else if (StateType == 'AddFailed') {
                         layer.msg("添加失败", {icon: 2});
@@ -456,10 +444,9 @@
                             time: 1000
                         }, function(){
                             layer.close(updatelocationPopUp) ;//执行关闭
-                            window.location.reload();  //因为需通过页面初始化获取所有仓库信息，所以要刷新页面
+                            table.reload('warehouseTable');
                         });
                     } else if (StateType == 'UpdateFailed') {
-                        // layer.closeAll('loading');
                         layer.msg("修改失败", {icon: 2});
                     }else{
                         layer.msg("出现错误", {icon: 2});
@@ -519,11 +506,11 @@
             ,url: '${ctx}/warehouse/queryAllLocation'
             ,page:true
             ,cols: [[
-                {field: 'locationName', title: '库位名称', unresize: true},
-                {field: 'locationArea', title: '库位面积(m²)', unresize: true},
-                {field: 'warehouseName', title: '所属仓库',templet:'<div>{{d.warehouse.warehouseName}}</div>'},
-                {field: 'createBy', title: '创建人',templet:'<div>{{d.createByUser.realName}}</div>'},
-                {field: 'createTime', title: '创建时间'}
+                {field: 'locationName', title: '库位名称', width: 200},
+                {field: 'locationArea', title: '库位面积(m²)', width: 200},
+                {field: 'warehouseName', title: '所属仓库', width: 200,templet:'<div>{{d.warehouse.warehouseName}}</div>'},
+                {field: 'createBy', title: '创建人', width: 200,templet:'<div>{{d.createByUser.realName}}</div>'},
+                {field: 'createTime', title: '创建时间', width: 200}
             ]]
             ,parseData: function(res){ //res 即为原始返回的数据
                 return {

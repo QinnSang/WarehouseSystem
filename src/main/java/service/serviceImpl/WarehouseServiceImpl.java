@@ -35,17 +35,18 @@ public class WarehouseServiceImpl implements WarehouseService {
     }
 
     @Override
+    public List<Warehouse> queryAllWarehouse() {
+        return warehouseMapper.queryAllWarehouse();
+    }
+
+
+    @Override
     public PageInfo<Location> queryAllLocation() {
-        //防止导出功能没有分页的需求
         List<Location> list=warehouseMapper.queryAllLocation();
         PageInfo<Location> pageInfo=new PageInfo<>(list);
         return pageInfo;
     }
 
-    @Override
-    public List<Warehouse> queryAllWarehouse() {
-        return warehouseMapper.queryAllWarehouse();
-    }
 
     @Override
     public StateType addWarehouse(Warehouse warehouse, Employee employee) {
