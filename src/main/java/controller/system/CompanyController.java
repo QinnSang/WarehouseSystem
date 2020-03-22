@@ -1,7 +1,6 @@
 package controller.system;
 
 import com.github.pagehelper.PageInfo;
-import com.sun.deploy.ui.AppInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

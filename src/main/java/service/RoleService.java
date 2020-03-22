@@ -11,7 +11,9 @@ import java.util.Map;
 public interface RoleService {
 
     PageInfo<Role> query(Role role, Integer page, Integer limit);
-    StateType add(Role role,Employee employee);
+    StateType add(Role role);
 
     StateType update(Role role);
+
+    StateType delRole(int roleId);
 }

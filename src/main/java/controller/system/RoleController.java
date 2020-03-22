@@ -1,12 +1,14 @@
 package controller.system;
 
 import com.github.pagehelper.PageInfo;
+import constant.StateType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pojo.Contract;
 import pojo.Employee;
+import pojo.Location;
 import pojo.Role;
 import service.RoleService;
 
@@ -41,20 +43,38 @@ public class RoleController {
         tableData.put("data", pageInfo);
         return tableData;
     }
-
-    @RequestMapping("/toAdd")
-    public String toAdd(Model model){
-        return "system/role/index";
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @ResponseBody
+    public StateType add(@RequestBody Role role){
+        StateType stateType=roleService.add(role);
+        return stateType;
     }
 
-    @RequestMapping("/toEdit/{roleId}")
-    public String toEdit(){
-        return "system/role/index";
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    @ResponseBody
+    public StateType update(@RequestBody Role role){
+        StateType stateType=roleService.update(role);
+        return stateType;
     }
 
-    @RequestMapping("/roleDetail/{roleId}")
-    public String roleDetail(@PathVariable("roleId")int roleId){
-        return "system/role/index";
+    @RequestMapping("/roleInfo")
+    @ResponseBody
+    public StateType roleInfo(@ModelAttribute Role role, String roleType, HttpSession session){
+        if(roleType.equals("add")){
+            StateType stateType=roleService.add(role);
+            return stateType;
+        } else if(roleType.equals("update")){
+            StateType stateType=roleService.update(role);
+            return stateType;
+        }else
+            return StateType.getStateType(34);
+    }
+
+    @RequestMapping("/delRole")
+    @ResponseBody
+    public StateType delRole(@RequestParam int roleId){
+        StateType stateType=roleService.delRole(roleId);
+        return stateType;
     }
 
 

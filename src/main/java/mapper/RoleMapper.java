@@ -10,5 +10,10 @@ import java.util.List;
 public interface RoleMapper {
 
     List<Role> query(Role role);
+    int add(Role role);
+
+    int update(Role role);
+
+    int delRole(@Param("roleId") int roleId);
 
 }

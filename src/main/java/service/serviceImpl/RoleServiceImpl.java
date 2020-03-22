@@ -2,7 +2,6 @@ package service.serviceImpl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.sun.deploy.ui.AppInfo;
 import constant.StateType;
 import mapper.CompanyMapper;
 import mapper.EmployeeMapper;
@@ -39,13 +38,30 @@ public class RoleServiceImpl implements RoleService{
     }
 
     @Override
-    public StateType add(Role role, Employee employee) {
-        return null;
+    public StateType add(Role role) {
+        int addRow1=roleMapper.add(role);
+        //如果添加成功
+        if(addRow1==1)
+            return  StateType.getStateType(22);
+        return  StateType.getStateType(23);
     }
 
     @Override
     public StateType update(Role role) {
-        return null;
+
+        int updateRow1=roleMapper.update(role);
+        //如果修改角色信息成功
+        if(updateRow1==1)
+            return  StateType.getStateType(20);
+        return  StateType.getStateType(21);
+    }
+
+    @Override
+    public StateType delRole(int roleId) {
+        int delRow=roleMapper.delRole(roleId);
+        if(delRow==1)
+            return StateType.getStateType(24);
+        return StateType.getStateType(25);
     }
 
 
