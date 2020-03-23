@@ -50,6 +50,12 @@ public class ContractController {
         return tableData;
     }
 
+    @RequestMapping("/queryByContractId/{contractId}")
+    @ResponseBody
+    public Contract queryByContractId(@PathVariable int contractId){
+        return contractService.queryByContractId(contractId);
+    }
+
     //将重复查询的信息封装成方法
     public void containsInformation(Model model) {
         //获取公司

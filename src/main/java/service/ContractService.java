@@ -5,6 +5,8 @@ import constant.StateType;
 import pojo.Contract;
 import pojo.Employee;
 
+import java.util.List;
+
 public interface ContractService {
 
     PageInfo<Contract> query(Contract contract, Integer page, Integer limit);
@@ -18,4 +20,8 @@ public interface ContractService {
     StateType confirm(int contractId);
 
     StateType archive(int contractId);
+
+    Contract queryByContractId(int contractId);
+
+    List<Contract> queryAllContract();
 }

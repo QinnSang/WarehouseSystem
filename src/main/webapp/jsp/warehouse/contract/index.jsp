@@ -30,8 +30,8 @@
                         </div>
                         <label class="layui-form-label">状态：</label>
                         <div class="layui-input-inline" style="width:100px">
-                            <select name="contractStatus.valueId" id="contractStatus.valueId" lay-filter="contractStatus.valueId" >
-                                <option value="0">-请选择-</option>
+                            <select name="status" id="status" lay-filter="status" >
+                                <option value="">-请选择-</option>
                                 <option value="1" >待审核</option>
                                 <option value="2" >已启用</option>
                                 <option value="3" >作废</option>
@@ -143,7 +143,6 @@
         var layer = layui.layer;
         var soulTable = layui.soulTable; //使用soulTable导出数据
         var dropdown = layui.dropdown;
-        // var index = layer.load(); //添加laoding,0-2两种方式
 
         //第一个实例
         var myTable = table.render({
@@ -196,14 +195,14 @@
                                             type: "POST",
                                             success: function(StateType){
                                                 if(StateType == 'InvalidSuccess'){
-                                                    layer.msg('作废成功', {icon: 6});
+                                                    layer.msg('作废成功', {icon: 1});
                                                     table.reload('contractTable') //重载表格
                                                 }else{
                                                     layer.msg('合同已作废或归档，不可编辑、确认、作废或归档', {icon: 5});
                                                 }
                                             },
                                             error:function (data) {
-                                                layer.msg("合同作废失败，请重试！", {icon: 5});
+                                                layer.msg("合同作废失败，请重试！", {icon: 2});
                                             }
                                         });
                                     });
@@ -222,14 +221,14 @@
                                             type: "POST",
                                             success: function(StateType){
                                                 if(StateType == 'ConfirmSuccess'){
-                                                    layer.msg('确认成功，合同已启用', {icon: 6});
+                                                    layer.msg('确认成功，合同已启用', {icon: 1});
                                                     table.reload('contractTable') //重载表格
                                                 }else{
-                                                    layer.msg('合同已启用、作废或归档，不可确认', {icon: 5});
+                                                    layer.msg('合同已启用、作废或归档，不可确认', {icon: 2});
                                                 }
                                             },
                                             error:function (data) {
-                                                layer.msg("合同确认失败，请重试！", {icon: 5});
+                                                layer.msg("合同确认失败，请重试！", {icon: 2});
                                             }
                                         });
                                     });
@@ -248,14 +247,14 @@
                                             type: "POST",
                                             success: function(StateType){
                                                 if(StateType == 'ArchiveSuccess'){
-                                                    layer.msg('归档成功', {icon: 6});
+                                                    layer.msg('归档成功', {icon: 1});
                                                     table.reload('contractTable') //重载表格
                                                 }else{
-                                                    layer.msg('合同已作废或归档，不可编辑、确认、作废或归档', {icon: 5});
+                                                    layer.msg('合同已作废或归档，不可编辑、确认、作废或归档', {icon: 2});
                                                 }
                                             },
                                             error:function (data) {
-                                                layer.msg("归档失败，请重试！", {icon: 5});
+                                                layer.msg("归档失败，请重试！", {icon: 2});
                                             }
                                         });
                                     });

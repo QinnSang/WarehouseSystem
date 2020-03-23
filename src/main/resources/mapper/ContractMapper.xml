@@ -29,7 +29,6 @@
         </association>
     </resultMap>
 
-
     <select id="query" parameterType="pojo.Contract" resultMap="contractBase">
         <if test="contractName!=null and contractName!=''">
             <bind name="contractname" value="'%'+contractName+'%'"/>
@@ -39,9 +38,6 @@
         </if>
         <if test="company!=null and company.companyName!=null and company.companyName!=''">
             <bind name="companyname" value="'%'+company.companyName+'%'"/>
-        </if>
-        <if test="contractStatus!=null and contractStatus.valueId!=null and contractStatus.valueId!=''">
-            <bind name="statusId" value="'%'+contractStatus.valueId+'%'"/>
         </if>
         select
             contract_id,
@@ -81,8 +77,8 @@
             <if test="company!=null and company.companyName!=null and company.companyName!=''">
                 and company_name like #{companyname}
             </if>
-            <if test="contractStatus!=null and contractStatus.valueId!=null and contractStatus.valueId!=''">
-                and t1.status = #{contractStatus.valueId}
+            <if test="status!=null">
+                and t1.status = #{status}
             </if>
         </where>
         order by  create_date desc
@@ -90,12 +86,35 @@
 
     <select  id="generateContractCode" parameterType="java.util.Map"
              resultType="java.util.Map" statementType="CALLABLE">
-        {CALL generate_ContractCode(#{orderNamePre,mode=IN}, #{contractCode, mode=OUT, jdbcType=VARCHAR})}
+        {CALL generate_orderCode(#{orderNamePre,mode=IN}, #{contractCode, mode=OUT, jdbcType=VARCHAR})}
 --         存储过程的output参数，只能通过传入的map或实体类对象获取
 --        存储过程对应的数据类型为枚举类型，需要使用大写，如VARCHAR
 --        存储过程的参数和名称无关，只和参数的顺序有关系
     </select>
 
+    <select id="queryAllContract" resultType="pojo.Contract">
+        select contract_id,contract_name from contract
+    </select>
+
+    <resultMap id="contractAlone" type="pojo.Contract">
+        <result property="contractCode" column="contract_code"/>
+        <association property="company" javaType="pojo.Company">
+            <result property="companyName" column="company_name"/>
+        </association>
+    </resultMap>
+
+    <select id="queryByContractId" resultMap="contractAlone">
+        select
+            contract_code,
+            company_name
+        from contract
+        inner JOIN company c2 on contract.company_Id = c2.company_id
+        where contract_id=#{contractId}
+    </select>
+
+    <select id="queryStatusByContractId" parameterType="integer" resultType="pojo.Contract">
+        select contract_id,status from contract where contract_id =#{contractId}
+    </select>
 
     <insert id="add" parameterType="pojo.Contract">
         insert into contract
@@ -205,5 +224,9 @@
         <where>
             contract_id=#{contractId}
         </where>
+    </update>
+
+    <update id="updateStatus" parameterType="pojo.Contract">
+        update contract set status = #{status} where contract_id =#{contractId}
     </update>
 </mapper>

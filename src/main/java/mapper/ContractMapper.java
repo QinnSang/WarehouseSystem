@@ -17,4 +17,12 @@ public interface ContractMapper {
 
 
     int update(Contract contract);
+
+    Contract queryByContractId(@Param("contractId") int contractId);
+
+    List<Contract> queryAllContract();
+
+    Contract queryStatusByContractId(@Param("contractId") int contractId);
+
+    int updateStatus(Contract contract);
 }

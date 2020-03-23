@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.StorageMapper">
+
+    <resultMap id="storageBase" type="pojo.Storage">
+        <result property="storageId" column="storage_id"/>
+        <result property="storageName" column="storage_name"/>
+        <result property="storageCode" column="storage_code"/>
+        <result property="goodsNumber" column="goods_number"/>
+        <result property="createTime" column="create_time"/>
+        <result property="remark" column="remark"/>
+        <association property="contract" javaType="pojo.Contract">
+            <id property="contractId" column="contract_id"/>
+            <result property="contractName" column="contract_name"/>
+            <result property="contractCode" column="contract_code"/>
+            <association property="company" javaType="pojo.Company">
+                <result property="companyName" column="company_name"/>
+            </association>
+        </association>
+        <association property="createByUser" javaType="pojo.Employee">
+            <result property="realName" column="createByName"/>
+        </association>
+        <association property="storageStatus" javaType="pojo.DataDictionary">
+            <result property="valueName" column="statusName"/>
+        </association>
+    </resultMap>
+
+    <select id="query" parameterType="pojo.Storage" resultMap="storageBase">
+        <if test="storageCode!=null and storageCode!=''">
+            <bind name="storagecode" value="'%'+storageCode+'%'"/>
+        </if>
+        <if test="storageName!=null and storageName!=''">
+            <bind name="storagename" value="'%'+storageName+'%'"/>
+        </if>
+        <if test="contract !=null and contract.contractName!=null and contract.contractName!=''">
+            <bind name="contractname" value="'%'+contract.contractName+'%'"/>
+        </if>
+        <if test="contract !=null and contract.contractCode!=null and contract.contractCode!=''">
+            <bind name="contractcode" value="'%'+contract.contractCode+'%'"/>
+        </if>
+        <if test="contract!=null and contract.company.companyName!=null and contract.company.companyName!=''">
+            <bind name="companyname" value="'%'+contract.company.companyName+'%'"/>
+        </if>
+        select
+            storage_id,
+            storage_name,
+            storage_code,
+            goods_number,
+            t1.create_time,
+            t1.remark,
+            t2.contract_id,
+            t2.contract_name,
+            t2.contract_code,
+            t3.company_name,
+            t4.value_name as statusName,
+            t5.real_name as createByName
+        from storage t1
+        LEFT JOIN contract t2 on t1.contract_id = t2.contract_id
+        LEFT JOIN company t3 on t2.company_Id = t3.company_id
+        LEFT JOIN data_dictionary t4 on t1.status = t4.value_id
+        LEFT JOIN employee t5 on t5.employee_id = t1.create_by
+        <where>
+            t4.type_code='CS_STATUS'
+            <if test="storageId!=null">
+                and storage_id = #{storageId}
+            </if>
+            <if test="storageCode!=null and storageCode!=''">
+                and storage_code like #{storagecode}
+            </if>
+            <if test="storageName!=null and storageName!=''">
+                and storage_name like #{storagename}
+            </if>
+            <if test="contract !=null and contract.contractName!=null and contract.contractName!=''">
+                and contract_name like #{contractname}
+            </if>
+            <if test="contract !=null and contract.contractCode!=null and contract.contractCode!=''">
+                and contract_code like #{contractcode}
+            </if>
+            <if test="contract!=null and contract.company.companyName!=null and contract.company.companyName!=''">
+                and company_name like #{companyname}
+            </if>
+            <if test="status!=null">
+                and t1.status = #{status}
+            </if>
+        </where>
+        order by  t1.create_time desc
+    </select>
+
+    <select id="queryStatusByContractId" resultType="pojo.Storage" parameterType="integer">
+        select storage_id,status from storage where storage_id=#{storageId}
+    </select>
+
+    <select  id="generateStorageCode" parameterType="java.util.Map"
+             resultType="java.util.Map" statementType="CALLABLE">
+        {CALL generate_orderCode(#{orderNamePre,mode=IN}, #{storageCode, mode=OUT, jdbcType=VARCHAR})}
+    </select>
+
+    <insert id="add" parameterType="pojo.Storage">
+        insert into storage
+        <trim prefix="(" suffix=")" prefixOverrides=",">
+            <if test="storageName!=null and storageName!=''">
+                ,storage_name
+            </if>
+            <if test="storageCode!=null and storageCode!=''">
+                ,storage_code
+            </if>
+            <if test="goodsNumber!=null">
+                ,goods_number
+            </if>
+            <if test="contractId!=null">
+                ,contract_id
+            </if>
+            <if test="createTime!=null">
+                ,create_time
+            </if>
+            <if test="createBy!=null">
+                ,create_by
+            </if>
+            <if test="remark!=null and remark!=''">
+                ,remark
+            </if>
+            ,status
+        </trim>
+        <trim prefix="values(" suffix=")" prefixOverrides=",">
+            <if test="storageName!=null and storageName!=''">
+                ,#{storageName}
+            </if>
+            <if test="storageCode!=null and storageCode!=''">
+                ,#{storageCode}
+            </if>
+            <if test="goodsNumber!=null">
+                ,0
+            </if>
+            <if test="contractId!=null">
+                ,#{contractId}
+            </if>
+            <if test="createTime!=null">
+                ,#{createTime}
+            </if>
+            <if test="createBy!=null">
+                ,#{createBy}
+            </if>
+            <if test="remark!=null and remark!=''">
+                ,#{remark}
+            </if>
+            ,1
+        </trim>
+    </insert>
+
+    <update id="updateStatus" parameterType="pojo.Storage">
+        update storage set status = #{status} where storage_id= #{storageId}
+    </update>
+
+    <resultMap id="goodsNumberBase" type="pojo.StorageGoods">
+        <result property="goodsNumber" column="goods_number"/>
+        <association property="goodsType" javaType="pojo.Goods">
+            <result property="goodsName" column="goodsType"/>
+        </association>
+        <association property="goodsName" javaType="pojo.Goods">
+            <result property="goodsName" column="goodsName"/>
+        </association>
+        <association property="warehouse" javaType="pojo.Warehouse">
+            <result property="warehouseName" column="warehouseName"/>
+        </association>
+        <association property="location" javaType="pojo.Location">
+            <result property="locationName" column="locationName"/>
+        </association>
+    </resultMap>
+    <select id="queryGoodsNumberByStorageId" resultMap="goodsNumberBase">
+        select
+            t3.goods_name as goodsType,
+            t2.goods_name as goodsName,
+            w.warehouse_name as warehouseName,
+            l.location_name as locationName,
+            goods_number
+        from storage_goods t1
+        LEFT JOIN goods t2 on t1.goods_name_id = t2.goods_id
+        LEFT JOIN goods t3 on t1.goods_type_id =t3.goods_id
+        LEFT JOIN warehouse w on t1.warehouse_id = w.warehouse_id
+        LEFT JOIN location l on t1.location_id = l.location_id
+        where
+            l.warehouse_id = w.warehouse_id
+            and t2.parent_id = t3.goods_id
+            and t1.storage_id = #{storageId}
+    </select>
+
+
+</mapper>
