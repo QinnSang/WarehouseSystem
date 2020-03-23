@@ -1,14 +1,19 @@
 package controller.system;
 
+import com.github.pagehelper.PageInfo;
 import constant.StateType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import pojo.Employee;
+import pojo.Role;
 import service.EmployeeService;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.Map;
 
 @Controller
@@ -43,6 +48,41 @@ public class EmployeeController {
         model.addAttribute("stateType",stateType);
 //        return "redirect:/";  //因为登录错误而需要返回页面提示消息，所以不能使用redirect，否则取不到stateType
         return "system/employee/login";
+    }
+
+    @RequestMapping("/query")
+    @ResponseBody
+    public Map<String,Object> query(@ModelAttribute Employee employee, @RequestParam Integer page, @RequestParam Integer limit){
+        PageInfo<Employee> pageInfo=employeeService.query(employee,page,limit);
+        Map<String,Object> tableData =new HashMap<>();
+        //这是layui数据表格要求返回的json数据格式
+        tableData.put("code", 0);
+        tableData.put("msg", "");
+        //将全部数据的条数作为count传给前台（一共多少条）
+        tableData.put("count", pageInfo.getTotal());
+        //将分页后的数据返回（每页要显示的数据）
+        tableData.put("data", pageInfo);
+        return tableData;
+    }
+
+    @RequestMapping("/employeeInfo")
+    @ResponseBody
+    public StateType employeeInfo(@ModelAttribute Employee employee, String employeeType, HttpSession session){
+        if(employeeType.equals("insert")){
+            StateType stateType=employeeService.addEmployee(employee);
+            return stateType;
+        } else if(employeeType.equals("update")){
+            StateType stateType=employeeService.updateEmployee(employee);
+            return stateType;
+        }else
+            return StateType.getStateType(34);
+    }
+
+    @RequestMapping("/delEmployee")
+    @ResponseBody
+    public StateType delEmployee(@RequestParam int employeeId){
+        StateType stateType=employeeService.delEmployee(employeeId);
+        return stateType;
     }
 
 }

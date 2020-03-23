@@ -13,4 +13,119 @@
             </if>
         </where>
     </select>
+
+    <select id="query" parameterType="pojo.Employee" resultType="pojo.Employee">
+        <if test="loginCode!=null and loginCode!=''">
+            <bind name="logincode" value="'%'+loginCode+'%'"/>
+        </if>
+        <if test="realName!=null and realName!=''">
+            <bind name="realname" value="'%'+realName+'%'"/>
+        </if>
+        <if test="phone!=null and phone!=''">
+            <bind name="phone" value="'%'+phone+'%'"/>
+        </if>
+        select
+        login_code,
+        real_name,
+        sex,
+        phone,
+        email,
+        status
+        from employee
+        <where>
+            <if test="loginCode!=null and loginCode!=''">
+                and login_code like #{logincode}
+            </if>
+            <if test="realName!=null and realName!=''">
+                and real_name like #{realname}
+            </if>
+            <if test="phone!=null and phone!=''">
+                and phone like #{phone}
+            </if>
+        </where>
+    </select>
+
+    <insert id="addEmployee" parameterType="pojo.Employee">
+        insert into employee
+        <trim prefix="(" suffix=")" prefixOverrides=",">
+            <if test="loginCode!=null and loginCode!=''">
+                ,login_code
+            </if>
+            <if test="realName!=null and realName!=''">
+                ,real_name
+            </if>
+            <if test="phone!=null and phone!=''">
+                ,phone
+            </if>
+            <if test="password!=null and password!=''">
+                ,password
+            </if>
+            <if test="sex!=null and sex!=''">
+                ,sex
+            </if>
+            <if test="role!=null and role!=''">
+                ,role
+            </if>
+            <if test="email!=null and email!=''">
+                ,email
+            </if>
+        </trim>
+        <trim prefix="values(" suffix=")" prefixOverrides=",">
+            <if test="loginCode!=null and loginCode!=''">
+                ,#{loginCode}
+            </if>
+            <if test="realName!=null and realName!=''">
+                ,#{realName}
+            </if>
+            <if test="phone!=null and phone!=''">
+                ,#{phone}
+            </if>
+            <if test="password!=null and password!=''">
+                ,#{password}
+            </if>
+            <if test="sex!=null and sex!=''">
+               ,#{sex}
+            </if>
+            <if test="role!=null and role!=''">
+                ,#{role}
+            </if>
+            <if test="email!=null and email!=''">
+                ,#{email}
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateEmployee" parameterType="pojo.Employee">
+        update employee
+        <set>
+            <if test="loginCode!=null and loginCode!=''">
+                login_code=#{loginCode},
+            </if>
+            <if test="realName!=null and realName!=''">
+                real_name=#{realName},
+            </if>
+            <if test="phone!=null and phone!=''">
+                phone=#{phone},
+            </if>
+            <if test="password!=null and password!=''">
+                password=#{password},
+            </if>
+            <if test="sex!=null and sex!=''">
+                sex=#{sex},
+            </if>
+            <if test="role!=null and role!=''">
+                role=#{role},
+            </if>
+            <if test="email!=null and email!=''">
+                email=#{email},
+            </if>
+        </set>
+        <where>
+            employee_id=#{employeeId}
+        </where>
+    </update>
+
+    <delete id="delEmployee">
+        delete from employee where  employee_id=#{employeeId}
+    </delete>
 </mapper>

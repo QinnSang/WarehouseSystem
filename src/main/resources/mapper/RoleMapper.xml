@@ -40,19 +40,19 @@
     </insert>
 
     <update id="update" parameterType="pojo.Role">
-        update role
-        <set>
-            <if test="roleName!=null and roleName!=''">
-                role_name=#{roleName},
-            </if>
-            <if test="remark!=null and remark!=''">
-                remark=#{remark},
-            </if>
-        </set>
-        <where>
-            role_id=#{roleId}
-        </where>
-    </update>
+    update role
+    <set>
+        <if test="roleName!=null and roleName!=''">
+            role_name=#{roleName},
+        </if>
+        <if test="remark!=null and remark!=''">
+            remark=#{remark},
+        </if>
+    </set>
+    <where>
+        role_id=#{roleId}
+    </where>
+</update>
 
     <delete id="delRole">
         delete from role where role_id=#{roleId}
