@@ -17,6 +17,4 @@ public interface RoleMapper {
 
     int delRole(@Param("roleId") int roleId);
 
-    Role queryById(@Param("roleId") Integer roleId);
-
 }

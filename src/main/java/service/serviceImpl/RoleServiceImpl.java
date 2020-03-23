@@ -64,11 +64,5 @@ public class RoleServiceImpl implements RoleService{
         return StateType.getStateType(25);
     }
 
-    @Override
-    public Role queryById(Integer roleId) {
-        return roleMapper.queryById(roleId);
-    }
-
-
 }
 

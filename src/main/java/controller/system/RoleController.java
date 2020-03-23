@@ -41,27 +41,6 @@ public class RoleController {
         return tableData;
     }
 
-    @RequestMapping("/queryById/{roleId}")
-    @ResponseBody
-    public Role queryById(@PathVariable("roleId") Integer roleId, Model model){
-        Role role=roleService.queryById(roleId);
-        return role;
-    }
-
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
-    @ResponseBody
-    public StateType add(@RequestBody Role role){
-        StateType stateType=roleService.add(role);
-        return stateType;
-    }
-
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
-    @ResponseBody
-    public StateType update(@RequestBody Role role){
-        StateType stateType=roleService.update(role);
-        return stateType;
-    }
-
     @RequestMapping("/roleInfo")
     @ResponseBody
     public StateType roleInfo(@ModelAttribute Role role, String roleType, HttpSession session){

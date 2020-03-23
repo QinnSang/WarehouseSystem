@@ -16,6 +16,4 @@ public interface RoleService {
     StateType update(Role role);
 
     StateType delRole(int roleId);
-
-    Role queryById(Integer roleId);
 }
