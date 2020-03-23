@@ -1,5 +1,9 @@
 package pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.util.Date;
+
 public class Storage {
     private Integer storageId;
 
@@ -11,9 +15,20 @@ public class Storage {
 
     private Integer contractId;
 
-    private Integer companyId;
+    private Contract contract;
 
     private Integer status;
+
+    private DataDictionary storageStatus;
+
+    private Integer createBy;
+
+    private Employee createByUser;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date createTime;
+
+    private String remark;
 
     public Integer getStorageId() {
         return storageId;
@@ -55,19 +70,59 @@ public class Storage {
         this.contractId = contractId;
     }
 
-    public Integer getCompanyId() {
-        return companyId;
-    }
-
-    public void setCompanyId(Integer companyId) {
-        this.companyId = companyId;
-    }
-
     public Integer getStatus() {
         return status;
     }
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Integer getCreateBy() {
+        return createBy;
+    }
+
+    public void setCreateBy(Integer createBy) {
+        this.createBy = createBy;
+    }
+
+    public Employee getCreateByUser() {
+        return createByUser;
+    }
+
+    public void setCreateByUser(Employee createByUser) {
+        this.createByUser = createByUser;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public Contract getContract() {
+        return contract;
+    }
+
+    public void setContract(Contract contract) {
+        this.contract = contract;
+    }
+
+    public DataDictionary getStorageStatus() {
+        return storageStatus;
+    }
+
+    public void setStorageStatus(DataDictionary storageStatus) {
+        this.storageStatus = storageStatus;
     }
 }

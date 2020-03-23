@@ -97,14 +97,12 @@ public class ContractServiceImpl implements ContractService {
 
     @Override
     public StateType invalid(int contractId) {
-        Contract contract=new Contract();
-        contract.setContractId(contractId);
-        contract=contractMapper.query(contract).get(0);
+        Contract contract=contractMapper.queryStatusByContractId(contractId);
         //如果合同已作废或归档，则不可作废
         if(contract.getStatus()== 4 || contract.getStatus()== 3)
             return StateType.getStateType(33);
         contract.setStatus(3);
-        int updateRow=contractMapper.update(contract);
+        int updateRow=contractMapper.updateStatus(contract);
         //作废成功
         if(updateRow==1)
             return StateType.getStateType(26);
@@ -113,14 +111,12 @@ public class ContractServiceImpl implements ContractService {
 
     @Override
     public StateType confirm(int contractId) {
-        Contract contract=new Contract();
-        contract.setContractId(contractId);
-        contract=contractMapper.query(contract).get(0);
+        Contract contract=contractMapper.queryStatusByContractId(contractId);
         //合同仅在审核中状态才可确认
         if(contract.getStatus() != 1 )
             return StateType.getStateType(30);
         contract.setStatus(2);
-        int updateRow=contractMapper.update(contract);
+        int updateRow=contractMapper.updateStatus(contract);
         //确认成功
         if(updateRow==1)
             return StateType.getStateType(28);
@@ -129,18 +125,26 @@ public class ContractServiceImpl implements ContractService {
 
     @Override
     public StateType archive(int contractId) {
-        Contract contract=new Contract();
-        contract.setContractId(contractId);
-        contract=contractMapper.query(contract).get(0);
+        Contract contract=contractMapper.queryStatusByContractId(contractId);
         //合同仅在归档、作废状态才不可归档
         if(contract.getStatus()== 4 || contract.getStatus()== 3)
             return StateType.getStateType(33);
         contract.setStatus(4);
-        int updateRow=contractMapper.update(contract);
+        int updateRow=contractMapper.updateStatus(contract);
         //归档成功
         if(updateRow==1)
             return StateType.getStateType(31);
         return StateType.getStateType(32);
+    }
+
+    @Override
+    public Contract queryByContractId(int contractId) {
+        return contractMapper.queryByContractId(contractId);
+    }
+
+    @Override
+    public List<Contract> queryAllContract() {
+        return contractMapper.queryAllContract();
     }
 
 }

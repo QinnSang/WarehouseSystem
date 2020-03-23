@@ -327,6 +327,9 @@
                     }else{
                         layer.msg("出现错误", {icon: 2});
                     }
+                },
+                error:function (data) {
+                    layer.msg("出现错误", {icon: 2});
                 }
             });
             return false;//false：阻止表单跳转 true：表单跳转
@@ -451,6 +454,9 @@
                     }else{
                         layer.msg("出现错误", {icon: 2});
                     }
+                },
+                error:function (data) {
+                    layer.msg("出现错误", {icon: 2});
                 }
             });
             return false;//false：阻止表单跳转 true：表单跳转

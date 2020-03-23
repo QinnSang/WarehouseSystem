@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -19,36 +20,44 @@
         <div style="padding: 15px;">
             <form class="layui-form" method="post">
                 <%--查询条件--%>
-                <div class="layui-form-item" style="margin-bottom: 10px;">
+                <div class="layui-form-item" style="margin-bottom: 20px;">
                     <div class="layui-inline">
+                        <label class="layui-form-label" style="width: 100px">仓储订单号：</label>
+                        <div class="layui-input-inline" style="width:180px">
+                            <input type="tel" name="storageCode" lay-verify="title" autocomplete="off" placeholder="请输入仓储订单名称" class="layui-input">
+                        </div>
                         <label class="layui-form-label" style="width: 100px">仓储订单名称：</label>
                         <div class="layui-input-inline" style="width:180px">
-                            <input type="tel" name="softwareName" lay-verify="title" autocomplete="off" placeholder="请输入仓储订单名称" class="layui-input">
+                            <input type="tel" name="storageName" lay-verify="title" autocomplete="off" placeholder="请输入仓储订单名称" class="layui-input">
                         </div>
-                        <label class="layui-form-label">合同名称：</label>
+                        <label class="layui-form-label">公司名称：</label>
                         <div class="layui-input-inline" style="width:170px">
-                            <input type="tel" name="softwareName" lay-verify="title" autocomplete="off" placeholder="请输入合同名称" class="layui-input">
-                        </div>
-                        <label class="layui-form-label">合同编号：</label>
-                        <div class="layui-input-inline" style="width:170px">
-                            <input type="tel" name="softwareName" lay-verify="title" autocomplete="off" placeholder="请输入合同编号" class="layui-input">
+                            <input type="tel" name="contract.company.companyName" lay-verify="title" autocomplete="off" placeholder="请输入合同编号" class="layui-input">
                         </div>
                         <label class="layui-form-label">订单状态：</label>
                         <div class="layui-input-inline" style="width:100px">
-                            <select name="Level1Id" id="status" lay-filter="contractId" >
-                                <option value="-1">-请选择-</option>
-                                <option value="0" >待审核</option>
-                                <option value="1" >已启用</option>
-                                <option value="2" >作废</option>
-                                <option value="3" >归档</option>
+                            <select name="status" id="status" lay-filter="status" >
+                                <option value="">-请选择-</option>
+                                <option value="1" >待审核</option>
+                                <option value="2" >已启用</option>
+                                <option value="3" >作废</option>
+                                <option value="4" >归档</option>
                             </select>
                         </div>
                     </div>
-                </div>
-                <div class="layui-form-item"  style="margin-bottom: 10px;">
-                    <div class="layui-input-inline" style="left:40px">
-                        <button class="layui-btn " lay-submit  lay-filter="formDemo" >查 询</button>
-                        <button type="reset" class="layui-btn ">重 置</button>
+                    <div class="layui-form-item" style="margin-bottom: 10px;">
+                        <label class="layui-form-label" style="width: 100px">合同名称：</label>
+                        <div class="layui-input-inline" style="width:180px">
+                            <input type="tel" name="contract.contractName" lay-verify="title" autocomplete="off" placeholder="请输入合同名称" class="layui-input">
+                        </div>
+                        <label class="layui-form-label" style="width: 100px">合同编号：</label>
+                        <div class="layui-input-inline" style="width:180px">
+                            <input type="tel" name="contract.contractCode" lay-verify="title" autocomplete="off" placeholder="请输入合同编号" class="layui-input">
+                        </div>
+                        <div class="layui-input-inline" style="left:40px">
+                            <button class="layui-btn " lay-submit  lay-filter="search" >查 询</button>
+                            <button type="reset" class="layui-btn ">重 置</button>
+                        </div>
                     </div>
                 </div>
             </form>
@@ -66,10 +75,6 @@
                         更多<i class="layui-icon layui-icon-down"></i>
                     </button>
                 </div>
-                <%--<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del">作废</a>--%>
-                <%--<a class="layui-btn layui-btn-xs" lay-event="sub">提交</a>--%>
-                <%--<a class="layui-btn layui-btn-xs" lay-event="sub">驳回</a>--%>
-                <%--<a class="layui-btn layui-btn-xs" lay-event="sub">确认</a>--%>
             </script>
         </div>
     </div>
@@ -80,84 +85,86 @@
         <div class="layui-form-item" >
             <label class="layui-form-label"style="width: 110px"><span style="color: red;">* </span>仓储订单名称：</label>
             <div class="layui-input-inline" style="width: 430px">
-                <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入仓储订单名称" class="layui-input">
+                <input type="text" name="storageName" lay-verify="required" autocomplete="off" placeholder="请输入仓储订单名称" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label" style="width: 110px"><span style="color: red;">* </span>关联合同名称：</label>
             <div class="layui-input-inline" style="width: 430px">
-                <select name="contractId" id="contractId" lay-filter="contractId" >
+                <select name="contractId" id="contractId" lay-verify="required" lay-filter="contractId">
                     <option value="0">-请选择关联合同-</option>
-                    <option value="1" >合同名称1</option>
-                    <option value="2" >合同名称2</option>
-                    <%--加载页面时就从后台传入所有合同，当选择某个合同后，自动填写合同编号和公司名称--%>
-                    <%--<c:forEach items="${warehouse}" var="obj">--%>
-                    <%--<option value="${obj.valueId}"><c:if test="${obj.valueId eq warehouseId}">--%>
-                    <%--selected--%>
-                    <%--</c:if>${obj.valueName}</option>--%>
-                    <%--</c:forEach>--%>
+                    <c:forEach items="${contractList}" var="obj">
+                        <option value="${obj.contractId}">${obj.contractName}</option>
+                    </c:forEach>
                 </select>
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label" style="width: 110px">合同编号：</label>
+            <label class="layui-form-label" style="width: 110px"><span style="color: red;">* </span>合同编号：</label>
             <div class="layui-input-inline" style="width: 430px">
-                <input type="tel" name="contractCode" id="contractCode" lay-verify="title" placeholder="根据关联合同生成" autocomplete="off" class="layui-input" readonly="readonly">
+                <input type="tel" name="contractCode" id="contractCode" lay-verify="required" placeholder="根据关联合同生成" autocomplete="off" class="layui-input" readonly="readonly">
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label" style="width: 110px">公司名称：</label>
+            <label class="layui-form-label" style="width: 110px"><span style="color: red;">* </span>公司名称：</label>
             <div class="layui-input-inline" style="width: 430px">
-                <input type="tel" name="companyName" id="companyName" lay-verify="title" placeholder="根据关联合同生成" autocomplete="off" class="layui-input" readonly="readonly">
+                <input type="tel" name="companyName" id="companyName" lay-verify="required" placeholder="根据关联合同生成" autocomplete="off" class="layui-input" readonly="readonly">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label" style="width: 110px">备注：</label>
             <div class="layui-input-inline" style="width: 430px">
-                <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+                <input type="text" name="remark" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
             </div>
         </div>
+            <button type="submit" style="display:none;" class="layui-btn" lay-submit lay-filter="addStorageSubmit">立即提交</button>
     </form>
     <%--查看仓储订单弹框--%>
-    <form class="layui-form layui-form-pane1" id="storageDetailForm" style="display:none;padding: 20px 0 0 0;"lay-filter="StorageDetailFilter">
+    <form class="layui-form layui-form-pane1" id="storageDetailForm" style="display:none;padding: 20px 0 0 0;"lay-filter="storageDetailFilter">
         <div class="layui-form-item">
-            <label class="layui-form-label" style="width: 110px">仓储订单号：</label>
-            <div class="layui-input-inline" style="width: 250px">
-                <input type="text" name="storageId" class="layui-input"readonly="readonly">
+            <label class="layui-form-label" style="width: 100px">仓储订单号：</label>
+            <div class="layui-input-inline" style="width: 190px">
+                <input type="text" name="storageCode" class="layui-input"readonly="readonly">
             </div>
-            <label class="layui-form-label"style="width: 110px">仓储订单名称：</label>
-            <div class="layui-input-inline" style="width: 250px">
-                <input type="text" name="storageId" class="layui-input" readonly="readonly">
+            <label class="layui-form-label"style="width: 100px">仓储订单名称：</label>
+            <div class="layui-input-inline" style="width: 190px">
+                <input type="text" name="storageName" class="layui-input" readonly="readonly">
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label" style="width: 110px">合同编号：</label>
-            <div class="layui-input-inline" style="width: 250px">
-                <input type="text" name="storageId" class="layui-input" readonly="readonly">
+            <label class="layui-form-label" style="width: 100px">合同编号：</label>
+            <div class="layui-input-inline" style="width: 190px">
+                <input type="text" name="contractCode" class="layui-input" readonly="readonly">
             </div>
-            <label class="layui-form-label" style="width: 110px">公司名称：</label>
-            <div class="layui-input-inline" style="width: 250px">
-                <input type="text" name="storageId" class="layui-input" readonly="readonly">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label" style="width: 110px">库存数量：</label>
-            <div class="layui-input-inline" style="width: 250px">
-                <input type="text" name="storageId" class="layui-input" readonly="readonly">
-            </div>
-            <label class="layui-form-label" style="width: 110px">备注：</label>
-            <div class="layui-input-inline" style="width: 250px">
-                <input type="text" name="storageId" class="layui-input" readonly="readonly">
+            <label class="layui-form-label" style="width: 100px">合同名称：</label>
+            <div class="layui-input-inline" style="width: 190px">
+                <input type="text" name="contractName" class="layui-input" readonly="readonly">
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label" style="width: 110px">创建人：</label>
-            <div class="layui-input-inline" style="width: 250px">
-                <input type="text" name="storageId" class="layui-input" readonly="readonly">
+            <label class="layui-form-label" style="width: 100px">公司名称：</label>
+            <div class="layui-input-inline" style="width: 190px">
+                <input type="text" name="companyName" class="layui-input" readonly="readonly">
             </div>
-            <label class="layui-form-label" style="width: 110px">创建时间：</label>
-            <div class="layui-input-inline" style="width: 250px">
-                <input type="text" name="storageId" class="layui-input" readonly="readonly">
+            <label class="layui-form-label" style="width: 100px">库存数量：</label>
+            <div class="layui-input-inline" style="width: 190px">
+                <input type="text" name="goodsNumber" class="layui-input" readonly="readonly">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="width: 100px">创建人：</label>
+            <div class="layui-input-inline" style="width: 190px">
+                <input type="text" name="createBy" class="layui-input" readonly="readonly">
+            </div>
+            <label class="layui-form-label" style="width: 100px">创建时间：</label>
+            <div class="layui-input-inline" style="width: 190px">
+                <input type="text" name="createTime" class="layui-input" readonly="readonly">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="width: 100px">备注：</label>
+            <div class="layui-input-inline">
+                <textarea name="content" style = "width:520px;" class="layui-textarea"  readonly="readonly"></textarea>
             </div>
         </div>
     </form>
@@ -180,33 +187,31 @@
         var layer = layui.layer;
         var soulTable = layui.soulTable; //使用soulTable导出数据
         var dropdown = layui.dropdown;
-        var index = layer.load(); //添加laoding,0-2两种方式
 
         //第一个实例
         var myTable = table.render({
             elem: '#storageTable' //表格id
-            // ,height: 312
-            <%--,url: '${ctx}/storage/query' //数据接口--%>
-            ,data:[[1,2,3,4,5,6]]
+            ,url: '${ctx}/storage/query' //数据接口
             ,method: 'post' //防止查询时中文乱码
             ,page: { //开启分页,需要配合后台PageInfo进行分页
                 first: '首页'
                 ,last: '尾页'
-                ,layout: ['count', 'prev', 'page', 'next', 'skip']
+                ,layout: ['count','prev', 'page', 'next', 'skip']
+                ,limit:10  //每页显示的条数
+                ,curr:1 //起始页
             }
-            ,limit: 5
             ,drag: false // 关闭拖拽列功能
-            ,even: true //隔行背景
+            ,even: false //隔行背景
             ,autoSort: false  //禁用前端的排序方法
             ,cols: [[ //表头
-                {field: 'softwareName', title: '仓储订单号',width:200,fixed: 'left'}
-                ,{field: 'softwareName', title: '仓储订单名称',width:180,fixed: 'left'}
-                ,{field: 'apkName', title: '合同编号',width:200,}
-                ,{field: 'softwareSize', title: '公司名称',width:180,}
-                //使用templet模板获取级联属性
-                ,{field:'flatform',title: '库存数量',width:100,unresize: true}
-                ,{field:'appStatus', title: '订单状态',width:90,unresize: true}
-                ,{fixed: 'right', title: '操作',align:'center', toolbar: '#barDemo',width:200,unresize: true}
+                {field: 'storageCode', title: '仓储订单号',width:150,unresize: true}
+                ,{field: 'storageName', title: '仓储订单名称',width:180,unresize: true}
+                ,{field: 'contractName', title: '合同名称',width:200,templet:'<div>{{d.contract.contractName}}</div>',unresize: true}
+                ,{field: 'contractCode', title: '合同编号',width:160,templet:'<div>{{d.contract.contractCode}}</div>',unresize: true}
+                ,{field: 'softwareSize', title: '公司名称',width:180,templet:'<div>{{d.contract.company.companyName}}</div>',unresize: true}
+                ,{field:'goodsNumber',title: '库存数量',width:90,unresize: true}
+                ,{field:'storageStatus', title: '订单状态',templet:'<div>{{d.storageStatus.valueName}}</div>',width:90,unresize: true}
+                ,{ title: '操作',align:'center', toolbar: '#barDemo',width:200,unresize: true}
             ]]
             ,parseData: function(res){ //res 即为原始返回的数据
                 return {
@@ -217,15 +222,10 @@
                 };
             },
             done: function (res, curr, count) { ////返回数据执行回调函数
-                layer.close(index);    //返回数据关闭loading
-                //操作中更多选项初始化，参考：https://github.com/hsiangleev/layuiExtend/blob/master/dropdown/index.html
                 dropdown(res.data,function(data) {
                     var options = [
                         {
                             title: "作废",
-                            // icon: "layui-icon-release",
-                            // url: "http://baidu.com" //可直接跳转到该url
-                            // icon: "layui-icon-release",
                             event: function() {
                                 layer.confirm('确认作废吗？', {
                                     skin: 'layui-layer-molv',
@@ -233,17 +233,18 @@
                                 }, function(index){
                                     //向服务端发送删除指令
                                     $.ajax({
-                                        url: "${ctx}/app/delete",
+                                        url: "${ctx}/storage/invalid/"+data.storageId,
                                         type: "POST",
-                                        data:{"appId":data.id},
-                                        dataType: "json",
-                                        success: function(data){
-                                            // obj.del(); //删除对应行（tr）的DOM结构
-                                            layer.msg("合同作废成功", {icon: 6});
-                                            table.reload('appTable');
+                                        success: function(StateType){
+                                            if(StateType == 'InvalidSuccess'){
+                                                layer.msg('作废成功', {icon: 6});
+                                                table.reload('storageTable') //重载表格
+                                            }else{
+                                                layer.msg('该仓储订单已作废或归档，不可审核、作废或归档', {icon: 5});
+                                            }
                                         },
                                         error:function (data) {
-                                            layer.msg("合同作废失败，请重试！", {icon: 5});
+                                            layer.msg("仓储订单作废失败，请重试！", {icon: 5});
                                         }
                                     });
                                 });
@@ -258,17 +259,18 @@
                                 }, function(index){
                                     //向服务端发送确认审核通过指令
                                     $.ajax({
-                                        url: "${ctx}/app/delete",
+                                        url: "${ctx}/storage/confirm/"+data.storageId,
                                         type: "POST",
-                                        data:{"appId":data.id},
-                                        dataType: "json",
-                                        success: function(data){
-                                            // obj.del(); //删除对应行（tr）的DOM结构
-                                            layer.msg("合同确认审核成功", {icon: 6});
-                                            table.reload('appTable');
+                                        success: function(StateType){
+                                            if(StateType == 'ConfirmSuccess'){
+                                                layer.msg('仓储订单已审核通过', {icon: 1});
+                                                table.reload('storageTable') //重载表格
+                                            }else{
+                                                layer.msg('仓储订单已启用、作废或归档，不可审核', {icon: 2});
+                                            }
                                         },
                                         error:function (data) {
-                                            layer.msg("合同确认审核失败，请重试！", {icon: 5});
+                                            layer.msg("仓储订单审核失败，请重试！", {icon: 2});
                                         }
                                     });
                                 });
@@ -283,17 +285,18 @@
                                 }, function(index){
                                     //向服务端发送确认审核通过指令
                                     $.ajax({
-                                        url: "${ctx}/app/delete",
+                                        url: "${ctx}/storage/archive/"+data.storageId,
                                         type: "POST",
-                                        data:{"appId":data.id},
-                                        dataType: "json",
-                                        success: function(data){
-                                            // obj.del(); //删除对应行（tr）的DOM结构
-                                            layer.msg("归档成功", {icon: 6});
-                                            table.reload('appTable');
+                                        success: function(StateType){
+                                            if(StateType == 'ArchiveSuccess'){
+                                                layer.msg('归档成功', {icon: 1});
+                                                table.reload('storageTable') //重载表格
+                                            }else{
+                                                layer.msg('仓储订单已作废或归档，不可审核、作废或归档', {icon: 2});
+                                            }
                                         },
                                         error:function (data) {
-                                            layer.msg("归档失败，请重试！", {icon: 5});
+                                            layer.msg("归档失败，请重试！", {icon: 2});
                                         }
                                     });
                                 });
@@ -324,7 +327,7 @@
             }
             , excel:{ // 导出excel配置
                 on: true, //是否启用, 默认开启
-                filename: '仓储订单信息表.xlsx', // 文件名
+                filename: '仓储订单表.xlsx', // 文件名
                 head:{ // 表头样式
                     family: 'Calibri', // 字体
                     size: 12, // 字号
@@ -333,7 +336,7 @@
                 },
                 font: { // 正文样式
                     family: 'Calibri', // 字体
-                    size: 10, // 字号
+                    size: 12, // 字号
                     color: '000000', // 字体颜色
                     bgColor: 'ffffff' //背景颜色
                 }
@@ -356,65 +359,65 @@
                 btn: ['确认', '取消'],
                 content: $("#storageAddForm"),
                 success : function(layero, index) { // 成功弹出后回调
-                    $('#storageAddForm')[0].reset(); //清空表单内容，防止修改查看公用一个表单时因赋值存在内容
-                    // 将保存按钮改变成提交按钮
-                    layero.find('.layui-layer-btn0').attr({
-                        'lay-filter' : 'addGoodsTypeSubmit',
-                        'lay-submit' : ''
-                    });
+                    $('#storageAddForm')[0].reset(); //清空表单内容，防止查看共用一个表单时因赋值存在内容
+                    //通过删除只读属性使输入框可以编辑
+                    layero.find('.layui-input').removeAttr('readonly');
                 },
                 yes: function(index, layero){  //添加货物类型表单监听事件
-                    form.on('submit(addGoodsTypeSubmit)', function(data){
-                        // console.log(data.field) //当前容器的全部表单字段，名值对形式：{name: value}
-                        $.ajax({
-                            url: '${ctx}/goodsType/add',
-                            type: 'POST',
-                            // contentType: "application/json; charset=utf-8",
-                            // data:  JSON.stringify(data.field),
-                            data:  data.field,
-                            success: function (StateType) {
-                                // var status = StateType.status;//取得返回数据（Sting类型的字符串）的信息进行取值判断
-                                if (StateType == 'addSuccess') {
-                                    // layer.closeAll('loading');
-                                    layer.msg("添加成功", {icon: 6});
-                                    layer.close(updatePopUp) ,//执行关闭
-                                        table.reload('goodsTypeTable') //重载表格
-                                } else {
-                                    layer.msg("添加失败", {icon: 5});
-                                }
-                            }
-                        });
-                        return false;//false：阻止表单跳转 true：表单跳转
-                    });
+                    layero.find('form').find('button[lay-submit]').click();//此处代码即为触发表单提交按钮
                     return false // 开启该代码可禁止点击该按钮关闭
                 },
-                btn2: function(index, layero){
-                    //按钮【按钮二】的回调
-                    //return false 开启该代码可禁止点击该按钮关闭
-                }
+                btn2: function(index, layero){}
             });
         });
 
         //选择关联合同后自动填写合同不编号和公司名称
         form.on('select(contractId)',function () {
-            //通过selected的id获取合同名称和id
+            //通过selected的id获取合同名称和编号
             var contractId=$('#contractId').val();
-            if(contractId==0){
+            if(contractId == 0){
                 $("#contractCode").val("");
                 $("#companyName").val("");
                 return;
             }
-            $("#contractCode").val("赋值了");
-            <%--$.ajax({--%>
-                <%--url:'${ctx}/contract/queryContractALone/'+contractId,--%>
-                <%--type: 'get',--%>
-                <%--success:function (data) {--%>
+            $.ajax({
+                url:'${ctx}/contract/queryByContractId/'+contractId,
+                type: 'get',
+                success:function (data) {
                     <%--//根据data修改数据，重新渲染form即可--%>
                     $("#contractCode").val(data.contractCode);
-                    $("#companyName").val(data.companyName);
-            <%--}--%>
-            <%--})--%>
-        })
+                    $("#companyName").val(data.company.companyName);
+                    return ;
+                }
+            })
+        });
+
+        form.on('submit(addStorageSubmit)', function(data){
+            $.ajax({
+                url: '${ctx}/storage/add',
+                type: 'POST',
+                data:  data.field,
+                success: function (StateType) {
+                    if (StateType == 'AddSuccess') {
+                        layer.msg('添加成功', {
+                            icon: 1,
+                            time: 1000
+                        }, function(){
+                            layer.close(addStoragePopUp) ;//执行关闭
+                            table.reload('storageTable');
+                        });
+                    } else if (StateType == 'AddFailed') {
+                        layer.msg("添加失败", {icon: 2});
+                    } else {
+                        layer.msg("出现错误", {icon: 2});
+                    }
+                },
+                error:function (data) {
+                    layer.msg("出现错误", {icon: 2});
+                }
+            });
+            return false;//false：阻止表单跳转 true：表单跳转
+        });
         //========================新增仓储订单弹窗 end====================
 
 
@@ -434,7 +437,7 @@
             layer.open({
                 type: 1,
                 title: '仓储订单详情',
-                area:['60%','60%'],
+                area:['50%','80%'],
                 skin: 'layui-layer-molv',
                 shade: false, //禁止使用遮罩，否则操作不了界面
                 resize:false, //禁止窗体拉伸
@@ -442,9 +445,16 @@
                 success: function(layero, index){
                     $('#storageDetailForm')[0].reset();
                     //表单初始赋值
-                    form.val('StorageDetailFilter',{
-                        "storageId": "zhehdakhjadad",
-                        "title": data.title // "name": "value"
+                    form.val('storageDetailFilter',{
+                        "storageCode": data.storageCode,
+                        "storageName": data.storageName,
+                        "contractCode": data.contract.contractCode,
+                        "contractName": data.contract.contractName,
+                        "companyName": data.contract.company.companyName,
+                        "goodsNumber": data.goodsNumber,
+                        "createBy": data.createByUser.realName,
+                        "createTime": data.createTime,
+                        "remark": data.remark
                     })
                 }
             })
@@ -458,27 +468,37 @@
                 area:['80%','60%'],
                 content: '<div><table id="goodsNumberTable" class="layui-hide"></table></div>',
                 success: function(layero, index){
-                    table.render({
+                    var goodsNumberTable=table.render({
                         elem: '#goodsNumberTable'
-                        ,data:[[1,2,3,4,5,6]]
+                        ,url: '${ctx}/storage/queryGoodsNumberByStorageId/'+data.storageId //数据接口
                         ,method: 'post' //防止查询时中文乱码
                         ,page: { //开启分页,需要配合后台PageInfo进行分页
                             first: '首页'
                             ,last: '尾页'
-                            ,layout: ['count', 'prev', 'page', 'next', 'skip']
+                            ,layout: ['count','prev', 'page', 'next', 'skip']
+                            ,limit:5  //每页显示的条数
+                            ,curr:1 //起始页
                         }
-                        ,limit: 5
                         ,drag: false // 关闭拖拽列功能
-                        ,even: true //隔行背景
+                        ,even: false //不隔行背景
                         ,cols: [[ //表头
-                            {field: 'softwareName', title: '所属仓库',fixed: 'left'}
-                            ,{field: 'softwareName', title: '所属库位',fixed: 'left'}
-                            ,{field: 'apkName', title: '货物类型'}
-                            ,{field: 'apkName', title: '货物名称'}
-                            ,{field:'flatform',title: '库存数量',unresize: true}
+                            {field: 'warehouseName', title: '所属仓库',templet:'<div>{{d.warehouse.warehouseName}}</div>',unresize: true}
+                            ,{field: 'locationName', title: '所属库位',templet:'<div>{{d.location.locationName}}</div>',unresize: true}
+                            ,{field: 'goodsType', title: '货物类型',templet:'<div>{{d.goodsType.goodsName}}</div>',unresize: true}
+                            ,{field: 'goodsName', title: '货物名称',templet:'<div>{{d.goodsName.goodsName}}</div>',unresize: true}
+                            ,{field:'goodsNumber',title: '库存数量',unresize: true}
                         ]]
+                        ,parseData: function(res){ //res 即为原始返回的数据
+                            return {
+                                "code": res.code, //解析接口状态
+                                "msg": res.msg, //解析提示文本
+                                "count": res.count, //解析数据长度
+                                "data": res.data.list //解析数据列表
+                            };
+                        }
                         ,done: function (res, curr, count) { }////返回数据执行回调函数
                         })
+
                 }
             })
         }
@@ -498,21 +518,10 @@
             });
         });
 
-        $(document).on('click', '#cancel', function() {
-            layer.close(updatePopUp) //执行关闭
-        });
-
-        /** 监听表单提交，并重载table
-         * 注意下:
-         * 1. form必须有filter：lay-filter=""
-         * 2. 查询按钮必须在form中，并且携带2个属性：lay-submit="" lay-filter="search"
-         * where 中的数据对应搜索表单，为搜索的条件，后台使用这些条件进行筛选数据返回
-         */
         form.on('submit(search)', function (data) {
-            table.reload('appTable', {
-                url: '${ctx}/app/query2',
+            table.reload('storageTable', {
+                url: '${ctx}/storage/query',
                 where: data.field //后台直接用实体接收，
-                                  // 如果是单个属性，可以以这种方式获取和传输：softwareName=data.field.softwareName
             });
             return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可
         });
