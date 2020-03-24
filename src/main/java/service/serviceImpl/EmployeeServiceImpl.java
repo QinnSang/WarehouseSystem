@@ -56,7 +56,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public StateType updateEmployee(Employee employee) {
 
         int updateRow1=employeeMapper.updateEmployee(employee);
-        //如果修用户信息成功
+        //如果修改用户信息成功
         if(updateRow1==1)
             return  StateType.getStateType(20);
         return  StateType.getStateType(21);
@@ -69,5 +69,14 @@ public class EmployeeServiceImpl implements EmployeeService {
             return StateType.getStateType(24);
         return StateType.getStateType(25);
     }
+
+    @Override
+    public StateType freEmployee(int employeeId) {
+        int freRow=employeeMapper.freEmployee(employeeId);
+        if(freRow==1)
+            return StateType.getStateType(24);
+        return StateType.getStateType(25);
+    }
+
 
 }

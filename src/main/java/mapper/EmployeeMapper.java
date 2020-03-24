@@ -18,4 +18,6 @@ public interface EmployeeMapper {
     int updateEmployee(Employee employee);
 
     int delEmployee(@Param("employeeId") int employeeId);
+
+    int freEmployee(@Param("employeeId") int employeeId);
 }

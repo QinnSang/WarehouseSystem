@@ -45,100 +45,98 @@
                 <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
                 <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="freeze">冻结</a>
             </script>
-
-            <%--查看用户信息弹框--%>
-            <div id="employeeDetail" style="display:none;">
-                <form class="layui-form layui-form-pane1" id="employeeDetailForm" style="display:none;padding: 20px 0 0 0;" lay-filter="EmployeeDetailFilter">
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">用户账号：</label>
-                        <div class="layui-input-inline">
-                            <input type="text" name="loginCode" class="layui-input"readonly="readonly">
-                        </div>
-                        <label class="layui-form-label">用户姓名：</label>
-                        <div class="layui-input-inline">
-                            <input type="text" name="realName" class="layui-input" readonly="readonly">
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">性别：</label>
-                        <div class="layui-input-inline">
-                            <input type="text" name="sex" class="layui-input" readonly="readonly">
-                        </div>
-                        <label class="layui-form-label" style="width: 110px">角色：</label>
-                        <div class="layui-input-inline" style="width: 250px">
-                            <input type="text" name="role" class="layui-input" readonly="readonly">
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">手机号码：</label>
-                        <div class="layui-input-inline">
-                            <input type="text" name="ephone" class="layui-input" readonly="readonly">
-                        </div>
-                        <label class="layui-form-label">邮箱：</label>
-                        <div class="layui-input-inline">
-                            <input type="text" name="email" class="layui-input" readonly="readonly">
-                        </div>
-                        <label class="layui-form-label">工号：</label>
-                        <div class="layui-input-inline">
-                            <input type="text" name="workNo" class="layui-input" readonly="readonly">
-                        </div>
-                    </div>
-                </form>
-               <%-- <table id="employeeTable" lay-filter="employeeTable" class="layui-hide"></table>--%>
-            </div>
-
-            <%--用户数据弹框--%>
-            <form class="layui-form layui-form-pane1" id="employeeForm"  style="display:none;padding: 20px 0 0 0;" name="popUpdateForm" method="post" lay-filter="addEmployeeFilter">
-                <%--添加用户基本信息--%>
-                <input type="hidden" name="employeeId" >
-                <div class="layui-form-item">
-                    <label class="layui-form-label"><span style="color: red;">* </span>用户账号：</label>
-                    <div class="layui-input-inline" style="width: 450px">
-                        <input type="text" name="loginCode" lay-verify="title" autocomplete="off" placeholder="请输入用户账号" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label"><span style="color: red;">* </span>登录密码：</label>
-                    <div class="layui-input-inline" style="width: 450px">
-                        <input type="text" name="password" lay-verify="required" placeholder="请输入登录密码"  autocomplete="off" class="layui-input" >
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label"><span style="color: red;">* </span>用户姓名：</label>
-                    <div class="layui-input-inline" style="width: 450px">
-                        <input type="text" name="realName" lay-verify="required" placeholder="请输入用户姓名"  autocomplete="off" class="layui-input" >
-                    </div>
-                    <label class="layui-form-label">性别：</label>
-                    <div class="layui-input-block">
-                        <input type="radio" name="sex" value="男" title="男">
-                        <input type="radio" name="sex" value="女" title="女" checked>
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label"><span style="color: red;">* </span>手机号码：</label>
-                    <div class="layui-input-inline" style="width: 450px">
-                        <input type="text" name="phone" lay-verify="required" placeholder="请输入手机号码"  autocomplete="off" class="layui-input" >
-                    </div>
-                    <label class="layui-form-label"><span style="color: red;">* </span>角色：</label>
-                    <div class="layui-input-block">
-                        <input type="radio" name="role" value="员工" title="员工">
-                        <input type="radio" name="role" value="公司" title="公司">
-                        <input type="radio" name="role" value="司机" title="司机" checked>
-                    </div>
-                </div>
-                 <div class="layui-form-item">
-                        <label class="layui-form-label">邮箱：</label>
-                        <div class="layui-input-inline" style="width: 450px">
-                            <input type="text" name="email" lay-verify="required" placeholder="请输入邮箱"  autocomplete="off" class="layui-input" >
-                    </div>
-                 </div>
-                    <%--区分该表单是用于增加还是修改，增加或修改时分别对该属性赋值--%>
-                    <input type="hidden" name="employeeType" id="employeeType">
-                    <%--隐藏表单提交按钮--%>
-                    <button type="submit" style="display:none;" class="layui-btn" lay-submit lay-filter="employeeSubmit">立即提交</button>
-            </form>
         </div>
     </div>
+
+    <%--查看用户信息弹框--%>
+    <div id="employeeDetail" style="display:none;">
+        <form class="layui-form layui-form-pane1" id="employeeDetailForm" style="display:none;padding: 20px 0 0 0;" lay-filter="EmployeeDetailFilter">
+            <div class="layui-form-item">
+                <label class="layui-form-label">用户账号：</label>
+                <div class="layui-input-inline">
+                    <input type="tel" name="loginCode" class="layui-input"readonly="readonly">
+                </div>
+                <label class="layui-form-label">用户姓名：</label>
+                <div class="layui-input-inline">
+                    <input type="tel" name="realName" class="layui-input" readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">性别：</label>
+                <div class="layui-input-inline">
+                    <input type="tel" name="sex" class="layui-input" readonly="readonly">
+                </div>
+                <label class="layui-form-label" style="width: 110px">角色：</label>
+                <div class="layui-input-inline" style="width: 250px">
+                    <input type="tel" name="role" class="layui-input" readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">手机号码：</label>
+                <div class="layui-input-inline">
+                    <input type="tel" name="phone" class="layui-input" readonly="readonly">
+                </div>
+                <label class="layui-form-label">邮箱：</label>
+                <div class="layui-input-inline">
+                    <input type="tel" name="email" class="layui-input" readonly="readonly">
+                </div>
+                <label class="layui-form-label">工号：</label>
+                <div class="layui-input-inline">
+                    <input type="tel" name="workNo" class="layui-input" readonly="readonly">
+                </div>
+            </div>
+        </form>
+        <%-- <table id="employeeTable" lay-filter="employeeTable" class="layui-hide"></table>--%>
+    </div>
+
+    <%--用户数据弹框--%>
+    <form class="layui-form layui-form-pane1" id="employeeForm"  style="display:none;padding: 20px 0 0 0;" name="popUpdateForm" method="post" lay-filter="addEmployeeFilter">
+        <%--添加用户基本信息--%>
+        <input type="hidden" name="employeeId" >
+        <div class="layui-form-item">
+            <label class="layui-form-label"><span style="color: red;">* </span>用户账号：</label>
+            <div class="layui-input-inline" style="width: 450px">
+                <input type="text" name="loginCode" lay-verify="required" autocomplete="off" placeholder="请输入用户账号" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"><span style="color: red;">* </span>登录密码：</label>
+            <div class="layui-input-inline" style="width: 450px">
+                <input type="text" name="password" lay-verify="required" placeholder="请输入登录密码"  autocomplete="off" class="layui-input" >
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"><span style="color: red;">* </span>用户姓名：</label>
+            <div class="layui-input-inline" style="width: 450px">
+                <input type="text" name="realName" lay-verify="required" placeholder="请输入用户姓名"  autocomplete="off" class="layui-input" >
+            </div>
+        </div>
+            <div class="layui-form-item">
+            <label class="layui-form-label">性别：</label>
+            <div class="layui-input-block">
+                <input type="radio" name="sex" value="1" title="男">
+                <input type="radio" name="sex" value="2" title="女" checked>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"><span style="color: red;">* </span>手机号码：</label>
+            <div class="layui-input-inline" style="width: 450px">
+                <input type="text" name="phone" lay-verify="required" placeholder="请输入手机号码"  autocomplete="off" class="layui-input" >
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">邮箱：</label>
+            <div class="layui-input-inline" style="width: 450px">
+                <input type="text" name="email" lay-verify="title" placeholder="请输入邮箱"  autocomplete="off" class="layui-input" >
+            </div>
+        </div>
+        <%--区分该表单是用于增加还是修改，增加或修改时分别对该属性赋值--%>
+        <input type="hidden" name="employeeType" id="employeeType">
+        <%--隐藏表单提交按钮--%>
+        <button type="submit" style="display:none;" class="layui-btn" lay-submit lay-filter="employeeSubmit">立即提交</button>
+    </form>
+</div>
+</div>
 
     <jsp:include page="/jsp/include/footer.jsp"/>
 </div>
@@ -173,6 +171,7 @@
             , drag: false // 关闭拖拽列功能
             , even: true //隔行背景
             , cols: [[ //表头
+                {field: 'employeeId', title: '用户编号', unresize: true},
                 {field: 'loginCode', title: '用户账号', unresize: true},
                 {field: 'realName', title: '用户姓名',  unresize: true},
                 {field: 'sex', title: '性别',width: 80, unresize: true},
@@ -193,23 +192,8 @@
                 soulTable.render(this)
             }
             ,filter: {bottom: false}
-            ,excel: { // 导出excel配置, （以下值均为默认值）
-                on: true, //是否启用, 默认开启
-                filename: '用户信息.xlsx', // 文件名
-                head: { // 表头样式
-                    family: 'Calibri', // 字体
-                    size: 12, // 字号
-                    color: '000000', // 字体颜色
-                    bgColor: 'C7C7C7' // 背景颜色
-                },
-                font: { // 正文样式
-                    family: 'Calibri', // 字体
-                    size: 12, // 字号
-                    color: '000000', // 字体颜色
-                    bgColor: 'FFFFFF' //背景颜色
-                }
-            }
         });
+
         //监听行工具事件
         table.on('tool(employeeFilter)', function(obj){ //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
             var data = obj.data //获得当前行数据
@@ -276,12 +260,12 @@
                         "password":data.password,
                         "sex":data.sex,
                         "role":data.role,
-                        "sataus":data.status,
+                        "status":data.status,
                         "phone": data.phone,
                         "email":data.email,
                         "workNo": data.workNo,
                         "remark": data.remark,
-                        "warehouseType":"update"
+                        "employeeType":"update"
                     })
                 },
                 yes: function(index, layero){  //添加用户表单监听事件
@@ -373,12 +357,13 @@
             }, function(index){
                 //向服务端发送冻结指令
                 $.ajax({
-                    url: "${ctx}/employee/delete",
+                    url: "${ctx}/employee/freEmployee",
                     type: "POST",
                     data:{"employeeId":data.employeeId},
                     dataType: "json",
                     success: function(StateType){
-                        if (StateType == 'FreezeSuccess') {
+                        //FreSuccess有问题就用了delSuccess代替
+                        if (StateType === 'DelSuccess') {
                             layer.msg('冻结成功', {
                                 icon: 1,
                                 time: 1000 //2秒关闭（如果不配置，默认是3秒）
@@ -464,9 +449,50 @@
             return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可
         });
 
+        //要先加载数据表格，才能导出，不能放在click方法中
+        var eTable = table.render({
+            elem:  '<table id="eTable"></table>'
+            ,url: '${ctx}/employee/query'
+            ,page:false
+            ,cols: [[
+                {field: 'employeeId', title: '用户编号', unresize: true},
+                {field: 'loginCode', title: '用户账号', unresize: true},
+                {field: 'realName', title: '用户姓名',  unresize: true},
+                {field: 'sex', title: '性别',width: 80, unresize: true},
+                {field: 'phone', title: '手机号码', width: 180, unresize: true},
+                {field: 'email', title: '邮箱', width: 180, unresize: true},
+                //加一个角色
+            ]]
+            ,parseData: function(res){ //res 即为原始返回的数据
+                return {
+                    "code": res.code, //解析接口状态
+                    "msg": res.msg, //解析提示文本
+                    "data": res.data.list //解析数据列表
+                };
+            }
+            ,done: function () {
+                soulTable.render(this);
+            }
+            ,excel:{ // 导出excel配置, （以下值均为默认值）
+                on: true, //是否启用, 默认开启
+                filename: '用户信息表.xlsx', // 文件名
+                head:{ // 表头样式
+                    family: 'Calibri', // 字体
+                    size: 12, // 字号
+                    color: '000000', // 字体颜色
+                    bgColor: 'C7C7C7' // 背景颜色
+                },
+                font: { // 正文样式
+                    family: 'Calibri', // 字体
+                    size: 12, // 字号
+                    color: '000000', // 字体颜色
+                    bgColor: 'FFFFFF' //背景颜色
+                }
+            }
+        });
     //导出
     $('#exportEmployee').click(function(){
-        soulTable.export(employeeTable);
+        soulTable.export(eTable);
     });
     });
 

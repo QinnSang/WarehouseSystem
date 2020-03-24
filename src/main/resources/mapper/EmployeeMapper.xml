@@ -11,6 +11,7 @@
             <if test="password!=null and password!=''">
                 and password=#{password}
             </if>
+                and status!=2
         </where>
     </select>
 
@@ -25,6 +26,7 @@
             <bind name="phone" value="'%'+phone+'%'"/>
         </if>
         select
+        employee_id,
         login_code,
         real_name,
         sex,
@@ -60,11 +62,8 @@
             <if test="password!=null and password!=''">
                 ,password
             </if>
-            <if test="sex!=null and sex!=''">
+            <if test="sex!=null">
                 ,sex
-            </if>
-            <if test="role!=null and role!=''">
-                ,role
             </if>
             <if test="email!=null and email!=''">
                 ,email
@@ -83,11 +82,8 @@
             <if test="password!=null and password!=''">
                 ,#{password}
             </if>
-            <if test="sex!=null and sex!=''">
+            <if test="sex!=null">
                ,#{sex}
-            </if>
-            <if test="role!=null and role!=''">
-                ,#{role}
             </if>
             <if test="email!=null and email!=''">
                 ,#{email}
@@ -110,11 +106,8 @@
             <if test="password!=null and password!=''">
                 password=#{password},
             </if>
-            <if test="sex!=null and sex!=''">
+            <if test="sex!=null">
                 sex=#{sex},
-            </if>
-            <if test="role!=null and role!=''">
-                role=#{role},
             </if>
             <if test="email!=null and email!=''">
                 email=#{email},
@@ -126,6 +119,16 @@
     </update>
 
     <delete id="delEmployee">
-        delete from employee where  employee_id=#{employeeId}
+        delete from employee where employee_id=#{employeeId}
     </delete>
+
+    <update id="freEmployee">
+        update employee
+        <set>
+            status=2
+        </set>
+        <where>
+            employee_id=#{employeeId}
+        </where>
+    </update>
 </mapper>

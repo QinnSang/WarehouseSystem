@@ -118,22 +118,6 @@
                 soulTable.render(this)
                 }
             ,filter: {bottom: false}
-            ,excel: { // 导出excel配置, （以下值均为默认值）
-                on: true, //是否启用, 默认开启
-                filename: '角色信息.xlsx', // 文件名
-                head: { // 表头样式
-                    family: 'Calibri', // 字体
-                    size: 12, // 字号
-                    color: '000000', // 字体颜色
-                    bgColor: 'C7C7C7' // 背景颜色
-                },
-                font: { // 正文样式
-                    family: 'Calibri', // 字体
-                    size: 12, // 字号
-                    color: '000000', // 字体颜色
-                    bgColor: 'FFFFFF' //背景颜色
-                }
-            }
         });
 
 
@@ -477,9 +461,46 @@
             return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可
         });
 
+        //要先加载数据表格，才能导出，不能放在click方法中
+        var rTable = table.render({
+            elem:  '<table id="rTable"></table>'
+            ,url: '${ctx}/role/query'
+            ,page:false
+            ,cols: [[
+                {field: 'roleId', title: '角色编码', unresize: true},
+                {field: 'roleName', title: '角色名称', unresize: true},
+                {field: 'remark', title: '角色描述', unresize: true},
+            ]]
+            ,parseData: function(res){ //res 即为原始返回的数据
+                return {
+                    "code": res.code, //解析接口状态
+                    "msg": res.msg, //解析提示文本
+                    "data": res.data.list //解析数据列表
+                };
+            }
+            ,done: function () {
+                soulTable.render(this);
+            }
+            ,excel:{ // 导出excel配置, （以下值均为默认值）
+                on: true, //是否启用, 默认开启
+                filename: '角色信息表.xlsx', // 文件名
+                head:{ // 表头样式
+                    family: 'Calibri', // 字体
+                    size: 12, // 字号
+                    color: '000000', // 字体颜色
+                    bgColor: 'C7C7C7' // 背景颜色
+                },
+                font: { // 正文样式
+                    family: 'Calibri', // 字体
+                    size: 12, // 字号
+                    color: '000000', // 字体颜色
+                    bgColor: 'FFFFFF' //背景颜色
+                }
+            }
+        });
         //导出
         $('#exportRole').click(function(){
-            soulTable.export(roleTable);
+            soulTable.export(rTable);
             layer.closeAll('loading');
         });
     });

@@ -85,4 +85,11 @@ public class EmployeeController {
         return stateType;
     }
 
+    @RequestMapping("/freEmployee")
+    @ResponseBody
+    public StateType freEmployee(@RequestParam int employeeId){
+        StateType stateType=employeeService.freEmployee(employeeId);
+        return stateType;
+    }
+
 }

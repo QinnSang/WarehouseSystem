@@ -80,10 +80,6 @@ public enum StateType {
 
     ErrorType(34,"请求类型发生错误"),
 
-    FreezeSuccess(35,"冻结成功"),
-
-    FreezeFailed(36,"冻结失败"),
-
     /**
      * 请求格式错误
      */
