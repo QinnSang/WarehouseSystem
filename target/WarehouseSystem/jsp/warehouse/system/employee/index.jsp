@@ -179,7 +179,6 @@
             , drag: false // 关闭拖拽列功能
             , even: true //隔行背景
             , cols: [[ //表头
-                {field: 'employeeId', title: '用户编号', unresize: true},
                 {field: 'loginCode', title: '用户账号', unresize: true},
                 {field: 'realName', title: '用户姓名',  unresize: true},
                 {field: 'sex', title: '性别',templet:'<div>{{d.employeeSex.valueName}}</div>',width: 80, unresize: true},
@@ -267,7 +266,7 @@
                         "loginCode": data.loginCode,
                         "password":data.password,
                         "sex":data.employeeSex.valueName,
-                        "role":data.role,
+                        "role":data.roleList.role_name,
                         "status":data.employeeStatus.valueName,
                         "phone": data.phone,
                         "email":data.email,
@@ -408,7 +407,16 @@
                         "loginCode": data.loginCode,
                         "password":data.password,
                         "sex":data.employeeSex.valueName,
-                        "role":data.role,
+                        "role":function e(){
+                            var roleALl="";
+                            for(var i=0,item;i<data.roleList;i++){
+                                var item=data.roleList[i]
+                                // layer.msg(item.roleName);
+                                roleALl= roleALl +"、"+item.roleName;
+                            }
+                            // layer.msg(roleALl);
+                            return roleALl;
+                        },
                         "sataus":data.employeeStatus.valueName,
                         "phone": data.phone,
                         "email":data.email,

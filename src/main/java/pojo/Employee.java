@@ -1,5 +1,7 @@
 package pojo;
 
+import java.util.List;
+
 public class Employee {
 
     private Integer employeeId;
@@ -27,6 +29,8 @@ public class Employee {
     private DataDictionary employeeStatus;
 
     private String remark;
+
+    private List<Role> roleList;
 
     public Integer getEmployeeId() {
         return employeeId;
@@ -130,5 +134,13 @@ public class Employee {
 
     public void setEmployeeStatus(DataDictionary employeeStatus) {
         this.employeeStatus = employeeStatus;
+    }
+
+    public List<Role> getRoleList() {
+        return roleList;
+    }
+
+    public void setRoleList(List<Role> locationList) {
+        this.roleList = roleList;
     }
 }

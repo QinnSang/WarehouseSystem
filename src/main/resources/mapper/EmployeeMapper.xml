@@ -22,6 +22,10 @@
             <result property="valueId" column="statusId"/>
             <result property="valueName" column="statusName"/>
         </association>
+        <collection property="roleList" ofType="pojo.Role">
+            <id property="roleId" column="role_id"/>
+            <result property="roleName" column="role_name"/>
+        </collection>
     </resultMap>
 
     <select id="queryByNameAndPwd" parameterType="pojo.Employee" resultType="pojo.Employee">
@@ -49,7 +53,6 @@
         </if>
         select
         work_no,
-        remark,
         employee_id,
         login_code,
         real_name,
@@ -58,11 +61,15 @@
         t2.value_name as sexName,
         phone,
         email,
+        t3.role_id,
+        t3.role_name,
         t4.value_id as statusId,
         t4.value_name as statusName
         from employee t1
         LEFT JOIN data_dictionary t4 ON t1.status= t4.value_id
         LEFT JOIN data_dictionary t2 ON t1.sex= t2.value_id
+        LEFT JOIN employee_role t5 ON t1.employee_id = t5.emp_id
+        LEFT JOIN role t3 ON t5.role_id = t3.role_id
         <where>
             t4.type_code='EMP_STATUS' and
             t2.type_code='SEX'
@@ -80,12 +87,6 @@
 
     <select id="queryById" parameterType="pojo.Employee" resultType="pojo.Employee">
         select
-        employee_id,
-        login_code,
-        real_name,
-        sex,
-        phone,
-        email,
         status
         from employee
         <where>
