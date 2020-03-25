@@ -20,7 +20,11 @@ public class Employee {
 
     private Integer sex;
 
+    private DataDictionary employeeSex;
+
     private Integer status;
+
+    private DataDictionary employeeStatus;
 
     private String remark;
 
@@ -110,5 +114,21 @@ public class Employee {
 
     public void setRemark(String remark) {
         this.remark = remark == null ? null : remark.trim();
+    }
+
+    public DataDictionary getEmployeeSex() {
+        return employeeSex;
+    }
+
+    public void setEmployeeSex(DataDictionary employeeSex) {
+        this.employeeSex = employeeSex;
+    }
+
+    public DataDictionary getEmployeeStatus() {
+        return employeeStatus;
+    }
+
+    public void setEmployeeStatus(DataDictionary employeeStatus) {
+        this.employeeStatus = employeeStatus;
     }
 }

@@ -49,13 +49,15 @@
     </div>
 
     <%--查看用户信息弹框--%>
-    <div id="employeeDetail" style="display:none;">
-        <form class="layui-form layui-form-pane1" id="employeeDetailForm" style="display:none;padding: 20px 0 0 0;" lay-filter="EmployeeDetailFilter">
+    <div  id="employeeDetail" style="display:none;">
+        <form class="layui-form layui-form-pane1" id="employeeDetailForm" style="padding: 20px 0 0 0;" lay-filter="EmployeeDetailFilter">
             <div class="layui-form-item">
                 <label class="layui-form-label">用户账号：</label>
                 <div class="layui-input-inline">
                     <input type="tel" name="loginCode" class="layui-input"readonly="readonly">
                 </div>
+            </div>
+            <div class="layui-form-item">
                 <label class="layui-form-label">用户姓名：</label>
                 <div class="layui-input-inline">
                     <input type="tel" name="realName" class="layui-input" readonly="readonly">
@@ -66,8 +68,10 @@
                 <div class="layui-input-inline">
                     <input type="tel" name="sex" class="layui-input" readonly="readonly">
                 </div>
-                <label class="layui-form-label" style="width: 110px">角色：</label>
-                <div class="layui-input-inline" style="width: 250px">
+            </div>
+                <div class="layui-form-item">
+                <label class="layui-form-label" >角色：</label>
+                <div class="layui-input-inline">
                     <input type="tel" name="role" class="layui-input" readonly="readonly">
                 </div>
             </div>
@@ -76,10 +80,14 @@
                 <div class="layui-input-inline">
                     <input type="tel" name="phone" class="layui-input" readonly="readonly">
                 </div>
+            </div>
+            <div class="layui-form-item">
                 <label class="layui-form-label">邮箱：</label>
                 <div class="layui-input-inline">
                     <input type="tel" name="email" class="layui-input" readonly="readonly">
                 </div>
+            </div>
+            <div class="layui-form-item">
                 <label class="layui-form-label">工号：</label>
                 <div class="layui-input-inline">
                     <input type="tel" name="workNo" class="layui-input" readonly="readonly">
@@ -114,8 +122,8 @@
             <div class="layui-form-item">
             <label class="layui-form-label">性别：</label>
             <div class="layui-input-block">
-                <input type="radio" name="sex" value="1" title="男">
-                <input type="radio" name="sex" value="2" title="女" checked>
+                <input type="radio" name="sex" value="2" title="男">
+                <input type="radio" name="sex" value="3" title="女" checked>
             </div>
         </div>
         <div class="layui-form-item">
@@ -174,10 +182,10 @@
                 {field: 'employeeId', title: '用户编号', unresize: true},
                 {field: 'loginCode', title: '用户账号', unresize: true},
                 {field: 'realName', title: '用户姓名',  unresize: true},
-                {field: 'sex', title: '性别',width: 80, unresize: true},
+                {field: 'sex', title: '性别',templet:'<div>{{d.employeeSex.valueName}}</div>',width: 80, unresize: true},
                 {field: 'phone', title: '手机号码', width: 180, unresize: true},
                 {field: 'email', title: '邮箱', width: 180, unresize: true},
-                {field: 'status', title: '状态', width: 80,unresize: true},
+                {field: 'status', title: '状态',templet:'<div>{{d.employeeStatus.valueName}}</div>', width: 80,unresize: true},
                 {fixed: 'right', title: '操作', width: 230, templet: '#barDemo', unresize: true}
             ]]
             , parseData: function (res) { //res 即为原始返回的数据
@@ -253,14 +261,14 @@
                 content: $("#employeeForm"),
                 success: function(layero, index){
                     //表单初始赋值 "name": "value"
-                    form.val('employeeFilter',{
+                    form.val('addEmployeeFilter',{
                         "employeeId": data.employeeId,
                         "realName": data.realName,
                         "loginCode": data.loginCode,
                         "password":data.password,
-                        "sex":data.sex,
+                        "sex":data.employeeSex.valueName,
                         "role":data.role,
-                        "status":data.status,
+                        "status":data.employeeStatus.valueName,
                         "phone": data.phone,
                         "email":data.email,
                         "workNo": data.workNo,
@@ -371,7 +379,7 @@
                                 table.reload('employeeTable');  //刷新表格
                             });
                         }else{
-                            layer.msg("冻结失败", {icon: 2});
+                            layer.msg("该用户已被冻结，冻结失败", {icon: 2});
                         }
                     },
                     error:function (data) {
@@ -387,45 +395,26 @@
             EmployeeDetailPopUp=layer.open({
                 type: 1,
                 title: '详情',
-                area:['70%','90%'],
+                area:['50%','80%'],
                 skin: 'layui-layer-molv',
                 shade: false, //禁止使用遮罩，否则操作不了界面
                 resize:false, //禁止窗体拉伸
                 content: $("#employeeDetail"),
                 success: function(layero, index){
                     //表单赋值
-                    form.val('employeeFilter',{
+                    form.val('EmployeeDetailFilter',{
                         "employeeId": data.employeeId,
-                        "employeeName": data.employeeName,
+                        "realName": data.realName,
                         "loginCode": data.loginCode,
                         "password":data.password,
-                        "sex":data.sex,
+                        "sex":data.employeeSex.valueName,
                         "role":data.role,
-                        "sataus":data.status,
-                        "empPhone": data.empPhone,
+                        "sataus":data.employeeStatus.valueName,
+                        "phone": data.phone,
                         "email":data.email,
                         "workNo": data.workNo,
                         "remark": data.remark,
                     })
-                    //用户详情
-                    var employee=table.render({
-                        elem: '#employeeTable'
-                        ,url:'${ctx}/employee/queryById/'
-                        ,method: 'post' //防止查询时中文乱码
-                        ,drag: false // 关闭拖拽列功能
-                        ,even: false //不隔行背景
-                        ,parseData: function(res){ //res 即为原始返回的数据
-                            return {
-                                "code": res.code, //解析接口状态
-                                "msg": res.msg, //解析提示文本
-                                "count": res.count, //解析数据长度
-                                "data": res.data //解析数据列表
-                            };
-                        }
-                        ,done: function(res, curr, count){
-                            // layer.close(index);    加上该语句不能弹出框
-                        }
-                    });
                 }
             })
         }
