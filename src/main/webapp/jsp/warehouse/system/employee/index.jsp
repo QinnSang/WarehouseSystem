@@ -408,14 +408,12 @@
                         "password":data.password,
                         "sex":data.employeeSex.valueName,
                         "role":function e(){
-                            var roleALl="";
-                            for(var i=0,item;i<data.roleList;i++){
-                                var item=data.roleList[i]
-                                // layer.msg(item.roleName);
-                                roleALl= roleALl +"、"+item.roleName;
+                            var roleALl="",i=0;
+                            for(var item;i<data.roleList.length-1;i++){
+                                var item=data.roleList[i];
+                                roleALl +=item.roleName+"、";
                             }
-                            // layer.msg(roleALl);
-                            return roleALl;
+                            return roleALl+data.roleList[i].roleName;
                         },
                         "sataus":data.employeeStatus.valueName,
                         "phone": data.phone,
@@ -446,50 +444,9 @@
             return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可
         });
 
-        //要先加载数据表格，才能导出，不能放在click方法中
-        var eTable = table.render({
-            elem:  '<table id="eTable"></table>'
-            ,url: '${ctx}/employee/query'
-            ,page:false
-            ,cols: [[
-                {field: 'employeeId', title: '用户编号', unresize: true},
-                {field: 'loginCode', title: '用户账号', unresize: true},
-                {field: 'realName', title: '用户姓名',  unresize: true},
-                {field: 'sex', title: '性别',width: 80, unresize: true},
-                {field: 'phone', title: '手机号码', width: 180, unresize: true},
-                {field: 'email', title: '邮箱', width: 180, unresize: true},
-                //加一个角色
-            ]]
-            ,parseData: function(res){ //res 即为原始返回的数据
-                return {
-                    "code": res.code, //解析接口状态
-                    "msg": res.msg, //解析提示文本
-                    "data": res.data.list //解析数据列表
-                };
-            }
-            ,done: function () {
-                soulTable.render(this);
-            }
-            ,excel:{ // 导出excel配置, （以下值均为默认值）
-                on: true, //是否启用, 默认开启
-                filename: '用户信息表.xlsx', // 文件名
-                head:{ // 表头样式
-                    family: 'Calibri', // 字体
-                    size: 12, // 字号
-                    color: '000000', // 字体颜色
-                    bgColor: 'C7C7C7' // 背景颜色
-                },
-                font: { // 正文样式
-                    family: 'Calibri', // 字体
-                    size: 12, // 字号
-                    color: '000000', // 字体颜色
-                    bgColor: 'FFFFFF' //背景颜色
-                }
-            }
-        });
         //导出
         $('#exportEmployee').click(function(){
-            soulTable.export(eTable);
+            soulTable.export(myTable);
         });
     });
 

@@ -140,7 +140,7 @@ public class Employee {
         return roleList;
     }
 
-    public void setRoleList(List<Role> locationList) {
+    public void setRoleList(List<Role> roleList) {
         this.roleList = roleList;
     }
 }

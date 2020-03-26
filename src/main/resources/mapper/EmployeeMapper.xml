@@ -6,13 +6,11 @@
         <result property="employeeId" column="employee_id"/>
         <result property="realName" column="real_name"/>
         <result property="loginCode" column="login_code"/>
+        <result property="workNo" column="work_no"/>
         <result property="password" column="password"/>
         <result property="salt" column="salt"/>
-        <result property="workNo" column="work_no"/>
         <result property="email" column="email"/>
         <result property="phone" column="phone"/>
-        <result property="sex" column="sex"/>
-        <result property="status" column="status"/>
         <result property="remark" column="remark"/>
         <association property="employeeSex" javaType="pojo.DataDictionary">
             <result property="valueId" column="sexId"/>
@@ -53,7 +51,7 @@
         </if>
         select
         work_no,
-        employee_id,
+        t1.employee_id,
         login_code,
         real_name,
         password,
