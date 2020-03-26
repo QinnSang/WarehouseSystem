@@ -414,7 +414,7 @@
                                 // layer.msg(item.roleName);
                                 roleALl= roleALl +"、"+item.roleName;
                             }
-                            // layer.msg(roleALl);。。。
+                            // layer.msg(roleALl);
                             return roleALl;
                         },
                         "sataus":data.employeeStatus.valueName,
