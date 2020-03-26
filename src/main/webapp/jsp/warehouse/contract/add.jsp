@@ -80,7 +80,7 @@
                 </div>
 
                 <div class="layui-form-item">
-                    <div class="layui-input-block" style="right:10px">
+                    <div class="layui-input-block" style="padding-top:15px;left:900px">
                         <%--<button type="button" class="layui-btn" lay-submit="" data-type="save" lay-filter="submit">保存</button>--%>
                         <button type="button" name="btnSave" class="layui-btn"  lay-submit="" lay-filter="formSubmit">保存</button>
                         <input type="button" class="layui-btn" onclick="javascript:history.back(-1);" value="返回">
@@ -166,14 +166,13 @@
             elem: '#expenseTable',
             id: layTableId,
             data: [],
-            page: true,
-            loading: true,
+            page: false,
             even: false, //不开启隔行背景
             cols: [[
                 {title: '序号', type: 'numbers'},
-                {field: 'expenseDictionaryValueId', width:400,title: '收费项目', templet: function(d){
-                        var options = viewObj.renderSelectOptions(viewObj.expenseData, {valueField: "valueId", textField: "valueName", selectedValue: d.expenseDictionaryValueId});
-                        return '<a lay-event="expenseDictionaryValueId"></a><select name="expenseDictionaryValueId" lay-filter="expenseDictionaryValueId"><option value="">请选择收费项目</option>' + options + '</select>';
+                {field: 'expenseValueId', width:400,title: '收费项目', templet: function(d){
+                        var options = viewObj.renderSelectOptions(viewObj.expenseData, {valueField: "valueId", textField: "valueName", selectedValue: d.expenseValueId});
+                        return '<a lay-event="expenseValueId"></a><select name="expenseValueId" lay-filter="expenseValueId"><option value="">请选择收费项目</option>' + options + '</select>';
                     }},
                 {field: 'price', title: '价格', edit: 'text'},
                 {field: 'remark', title: '备注', edit: 'text'},
@@ -193,7 +192,7 @@
             var contractExpenseArray=[];
             for (var index in item_table) {
                 contractExpenseArray[index] = {   //一定要为值取名，要不然后台接收不了，报400错误
-                    "expenseDictionaryValueId": item_table[index].expenseDictionaryValueId,
+                    "expenseValueId": item_table[index].expenseValueId,
                     "price":item_table[index].price,
                     "remark":item_table[index].remark
                 };
@@ -211,6 +210,8 @@
             // };
             //添加费用字段到data.field中，简化代码
             data.field.contractExpenseList=contractExpenseArray;
+            data.field.startDate=data.field.startEndDate.substring(0,10);
+            data.field.endDate=data.field.startEndDate.substring(13,23);
             $.ajax({
                 url: '${ctx}/contract/add',
                 type: 'POST',
@@ -223,7 +224,7 @@
                     if (StateType == 'AddSuccess') {
                         layer.msg('添加成功', {
                             icon: 1,
-                            time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                            time: 1000 //2秒关闭（如果不配置，默认是3秒）
                         }, function(){
                             window.location.href = "${ctx}/contract/index";
                         });
@@ -241,7 +242,7 @@
             addRow: function(){	//添加一行
                 var oldData = table.cache[layTableId];
                 console.log(oldData);
-                var newRow = {tempId: new Date().valueOf(), expenseDictionaryValueId: null, price:null,remark:null};
+                var newRow = {tempId: new Date().valueOf(), expenseValueId: null, price:null,remark:null};
                 oldData.push(newRow);
                 tableIns.reload({
                     data : oldData
@@ -279,7 +280,7 @@
                 console.log(oldData);
                 for(var i=0, row; i < oldData.length; i++){
                     row = oldData[i];
-                    if(!row.expenseDictionaryValueId){
+                    if(!row.expenseValueId){
                         layer.msg("检查每一行，请选择收费项目！", { icon: 5 }); //提示
                         return;
                     }
@@ -304,9 +305,9 @@
         });
 
         //监听select下拉选中事件
-        form.on('select(expenseDictionaryValueId)', function(data){
+        form.on('select(expenseValueId)', function(data){
             var elem = data.elem; //得到select原始DOM对象
-            $(elem).prev("a[lay-event='expenseDictionaryValueId']").trigger("click");
+            $(elem).prev("a[lay-event='expenseValueId']").trigger("click");
         });
 
         //监听工具条
@@ -314,16 +315,16 @@
             var data = obj.data, event = obj.event, tr = obj.tr; //获得当前行 tr 的DOM对象;
             console.log(data);
             switch(event){
-                case "expenseDictionaryValueId":
+                case "expenseValueId":
                     //console.log(data);
-                    var select = tr.find("select[name='expenseDictionaryValueId']");
+                    var select = tr.find("select[name='expenseValueId']");
                     if(select){
                         var selectedVal = select.val();
                         if(!selectedVal){
                             layer.tips("请选择收费项目", select.next('.layui-form-select'), { tips: [3, '#FF5722'] }); //吸附提示
                         }
                         console.log(selectedVal);
-                        $.extend(obj.data, {'expenseDictionaryValueId': selectedVal});
+                        $.extend(obj.data, {'expenseValueId': selectedVal});
                         activeByType('updateRow', obj.data);	//更新行记录对象
                     }
                     break;

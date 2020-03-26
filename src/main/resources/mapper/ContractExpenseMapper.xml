@@ -3,37 +3,27 @@
 <mapper namespace="mapper.ContractExpenseMapper">
 
     <insert id="add" parameterType="pojo.Contract">
-        insert into contract_expense (expense_dictionary_value_id,price,contract_id,remark)
+        insert into contract_expense (expense_value_id,price,contract_id,remark)
         values
         <foreach collection="contractExpenseList" item="expense" separator=",">
             (
-                #{expense.expenseDictionaryValueId},
+                #{expense.expenseValueId},
                 #{expense.price},
                 #{expense.contractId}
-                ,#{expense.remark,jdbcType=VARCHAR}
+                ,#{expense.remark}
               )
         </foreach>
     </insert>
 
-    <resultMap id="ContractExpenseBase" type="pojo.ContractExpense">
-        <result property="expenseId" column="expense_id"/>
-        <result property="price" column="price"/>
-        <result property="remark" column="remark"/>
-        <result property="expenseDictionaryValueId" column="expenseDictionaryValueId"/>
-        <association property="expenseDictionary" javaType="pojo.DataDictionary">
-            <result property="valueName" column="expenseName"/>
-        </association>
-    </resultMap>
-
-    <select id="queryByContractId" resultMap="ContractExpenseBase" parameterType="integer">
+    <select id="queryByContractId" resultType="pojo.ContractExpense" parameterType="integer">
         select
             expense_id,
             price,
             remark,
-            t2.value_id as expenseDictionaryValueId,
-            t2.value_name as expenseName
+            t2.value_id as expense_value_id,
+            t2.value_name as expense_name
         from contract_expense t1
-        LEFT JOIN data_dictionary t2 ON t1.expense_dictionary_value_id= t2.value_id
+        LEFT JOIN data_dictionary t2 ON t1.expense_value_id= t2.value_id
         <where>
                 t1.contract_id=#{contractId} and t2.type_code='EXPENSE'
         </where>
@@ -50,4 +40,11 @@
         </where>
     </select>
 
+    <select id="queryListByStorageId" resultType="pojo.ContractExpense">
+        select expense_id, expense_value_id, d.value_name as expense_name,price from contract_expense t1
+        left JOIN contract c2 on t1.contract_id = c2.contract_id
+        left JOIN storage s on c2.contract_id = s.contract_id
+        left JOIN data_dictionary d on t1.expense_value_id = d.value_id
+        where s.storage_id =#{storageId} and d.type_code = 'EXPENSE' and s.status=2
+    </select>
 </mapper>

@@ -106,4 +106,9 @@ public class GoodsServiceImpl implements GoodsService {
         return StateType.getStateType(25);
     }
 
+    @Override
+    public List<Goods> queryNameByType(int goodsTypeId) {
+        return goodsMapper.queryNameByType(goodsTypeId);
+    }
+
 }

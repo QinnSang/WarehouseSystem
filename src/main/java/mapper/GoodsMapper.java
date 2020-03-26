@@ -15,6 +15,8 @@ public interface GoodsMapper {
 
     List<Goods> queryAllGoodsName();
 
+    List<Goods> queryNameByType(@Param("goodsTypeId") int goodsTypeId);
+
     int addGoodType(Goods goodsType);
 
     int updateGoodType(Goods goodsType);
@@ -28,4 +30,6 @@ public interface GoodsMapper {
     int delGoodsType(@Param("goodsTypeId")int goodsTypeId);
 
     int delGoodsName(@Param("goodsNameId")int goodsNameId);
+
+
 }

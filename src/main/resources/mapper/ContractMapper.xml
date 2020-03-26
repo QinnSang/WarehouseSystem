@@ -86,14 +86,14 @@
 
     <select  id="generateContractCode" parameterType="java.util.Map"
              resultType="java.util.Map" statementType="CALLABLE">
-        {CALL generate_orderCode(#{orderNamePre,mode=IN}, #{contractCode, mode=OUT, jdbcType=VARCHAR})}
+        {CALL generate_contractCode(#{orderNamePre,mode=IN}, #{contractCode, mode=OUT, jdbcType=VARCHAR})}
 --         存储过程的output参数，只能通过传入的map或实体类对象获取
 --        存储过程对应的数据类型为枚举类型，需要使用大写，如VARCHAR
 --        存储过程的参数和名称无关，只和参数的顺序有关系
     </select>
 
-    <select id="queryAllContract" resultType="pojo.Contract">
-        select contract_id,contract_name from contract
+    <select id="queryAllValidContract" resultType="pojo.Contract">
+        select contract_id,contract_name from contract where status = 2
     </select>
 
     <resultMap id="contractAlone" type="pojo.Contract">
@@ -114,6 +114,9 @@
 
     <select id="queryStatusByContractId" parameterType="integer" resultType="pojo.Contract">
         select contract_id,status from contract where contract_id =#{contractId}
+    </select>
+    <select id="queryByCode" resultType="pojo.Contract">
+        select contract_id from contract where contract_code =#{contractCode}
     </select>
 
     <insert id="add" parameterType="pojo.Contract">

@@ -50,6 +50,7 @@ public class ContractController {
         return tableData;
     }
 
+    //查询状态为已启用的合同
     @RequestMapping("/queryByContractId/{contractId}")
     @ResponseBody
     public Contract queryByContractId(@PathVariable int contractId){

@@ -13,39 +13,39 @@
         <div style="padding: 15px;">
             <%--使用dto来接收参数--%>
             <form class="layui-form">
-                <%--添加合同基本信息--%>
+                <%--合同基本信息--%>
                 <div class="layui-form-item">
+                    <input name="receivingId" class="layui-hide" value="${receiving.receivingId}">
                     <label class="layui-form-label" style="width:100px"><span style="color: red;">* </span>入库单名称：</label>
                     <div class="layui-input-inline" style="width:200px">
-                        <input type="tel" name="receivingName" lay-verify="required"  placeholder="请输入" autocomplete="off" class="layui-input layui-required">
+                        <input type="tel" name="receivingName" lay-verify="required" value="${receiving.receivingName}" placeholder="请输入" autocomplete="off" class="layui-input layui-required">
                     </div>
                     <label class="layui-form-label"><span style="color: red;">* </span>仓储订单：</label>
                     <div class="layui-input-inline" style="width:250px">
                         <select name="storageId" id="storageId" lay-filter="storageId" lay-verify="required" >
-                        <option value="0">-请选择-</option>
+                        <option value="">-请选择-</option>
                             <c:forEach items="${storageList}" var="obj">
                             <option value="${obj.storageId}"
-                                    <c:if test="${storageId eq obj.storageId}">selected</c:if>
-                            >${obj.storageName}</option>
+                                <c:if test="${receiving.storage.storageId eq obj.storageId}">selected</c:if>
+                                >${obj.storageName}</option>
                             </c:forEach>
                          </select>
                     </div>
-                    <label class="layui-form-label"><span style="color: red;">* </span>交货形式：</label>
-                    <div class="layui-input-inline" >
-                        <select name="takingType" id="takingType" lay-filter="takingType" lay-verify="required" >
-                                <option value="">-请选择-</option>
-                                <option value="1" >卸车入库</option>
-                                <option value="2" >车板交</option>
-                            </select>
-                   </div>
+                    <label class="layui-form-label" ><span style="color: red;">* </span>到达时间：</label>
+                    <div class="layui-input-inline" style = "width:190px">
+                        <input type="text" name="arriveTime"   class="layui-input" id="arriveTime" lay-verify="required"  placeholder="请选择">
+                    </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width:100px"><span style="color: red;">* </span>仓库：</label>
                     <div class="layui-input-inline" style="width:130px">
                         <select name="warehouseId" id="warehouseId" lay-filter="warehouseId" lay-verify="required" >
-                            <option value="0">-请选择-</option>
+                            <option value="">-请选择-</option>
                             <c:forEach items="${warehouseList}" var="obj">
-                                <option value="${obj.warehouseId}">${obj.warehouseName}</option>
+                                <option value="${obj.warehouseId}"
+                                    <c:if test="${receiving.warehouse.warehouseId eq obj.warehouseId}">
+                                        selected</c:if>
+                                    >${obj.warehouseName}</option>
                             </c:forEach>
                         </select>
                     </div>
@@ -59,15 +59,17 @@
                     <label class="layui-form-label"><span style="color: red;">* </span>货物类型：</label>
                     <div class="layui-input-inline" style="width:130px">
                         <select name="goodsTypeId" id="goodsTypeId" lay-filter="goodsTypeId" lay-verify="required" >
-                            <option value="0">-请选择-</option>
+                            <option value="">-请选择-</option>
                             <c:forEach items="${goodsTypeList}" var="obj">
-                                <option value="${obj.goodsId}">${obj.goodsName}</option>
+                                <option value="${obj.goodsId}"
+                                    <c:if test="${receiving.goodsType.goodsId eq obj.goodsId}">selected</c:if>
+                                    >${obj.goodsName}</option>
                             </c:forEach>
                         </select>
                     </div>
                     <label class="layui-form-label"><span style="color: red;">* </span>货物名称：</label>
                     <div class="layui-input-inline" style="width:130px">
-                        <select name="goodsNameId" id="goodsNameId" lay-filter="goodsNameId" lay-verify="required" >
+                        <select name="goodsNameId" id="goodsNameId"    lay-filter="goodsNameId" lay-verify="required" >
                             <option value="">-请选择-</option>
                             <%--根据所选货物类型加载货物名称，可参照一二级分类--%>
                         </select>
@@ -76,33 +78,37 @@
                  <div class="layui-form-item">
                      <label class="layui-form-label " style="width:100px"><span style="color: red;">* </span>入库数量：</label>
                      <div class="layui-input-inline" style = "width:130px">
-                         <input type="text" name="receivingNumber" class="layui-input" id="recevingNum" lay-verify="required"  placeholder="请输入">
+                         <input type="text" name="receivingNumber"value="${receiving.receivingNumber}"  class="layui-input" id="recevingNum" lay-verify="required"  placeholder="请输入">
                      </div>
                      <label class="layui-form-label">始发地：</label>
                      <div class="layui-input-inline" style = "width:130px">
-                         <input type="text" name="origin" class="layui-input" id="origin"  placeholder="请输入">
+                         <input type="text" name="origin" value="${receiving.origin}"  class="layui-input" id="origin"  placeholder="请输入">
                      </div>
                      <label class="layui-form-label" ><span style="color: red;">* </span>运输方式：</label>
                      <div class="layui-input-inline" style = "width:130px">
-                        <select name="transType" id="transType" lay-filter="transType" lay-verify="required" >
+                        <select name="transType" id="transType"   lay-filter="transType" lay-verify="required" >
                              <option value="">-请选择-</option>
                              <option value="1" >汽车货运</option>
                              <option value="2" >铁运车皮</option>
                         </select>
                      </div>
-                     <label class="layui-form-label" ><span style="color: red;">* </span>到达时间：</label>
-                     <div class="layui-input-inline" style = "width:130px">
-                         <input type="text" name="arriveTime" class="layui-input" id="arriveTime" lay-verify="required"  placeholder="请选择">
+                     <label class="layui-form-label"><span style="color: red;">* </span>交货形式：</label>
+                     <div class="layui-input-inline"  style = "width:130px">
+                         <select name="takingType" id="takingType"  lay-filter="takingType" lay-verify="required" >
+                             <option value="">-请选择-</option>
+                             <option value="1" >卸车入库</option>
+                             <option value="2" >车板交</option>
+                         </select>
                      </div>
                  </div>
                  <div class="layui-form-item">
                      <label class="layui-form-label "style = "width:100px"><span style="color: red;">* </span>车牌或车号：</label>
                      <div class="layui-input-inline" style = "width:130px">
-                         <input type="text" name="carNo" class="layui-input" id="carNo" lay-verify="required"  placeholder="请输入">
+                         <input type="text" name="carNo" value="${receiving.carNo}"  class="layui-input" id="carNo" lay-verify="required"  placeholder="请输入">
                      </div>
                      <label class="layui-form-label" >备注：</label>
                      <div class="layui-input-inline">
-                         <textarea name="remark" style = "height:10px;width:630px;" placeholder="请输入"  class="layui-textarea"></textarea>
+                         <textarea name="remark" style = "height:10px;width:630px;" value="${receiving.remark}"  placeholder="请输入"  class="layui-textarea"></textarea>
                      </div>
                  </div>
                 <%--添加费用明细--%>
@@ -119,7 +125,8 @@
                 </div>
 
                 <div class="layui-form-item">
-                    <div class="layui-input-block" style="padding-top:15px;left:900px">
+                    <%--style="padding-top:15px;left:900px"--%>
+                    <div class="layui-input-block" >
                         <button type="button" name="btnSave" class="layui-btn"  lay-submit lay-filter="formSubmit">保存</button>
                         <input type="button" class="layui-btn" onclick="javascript:history.back(-1);" value="返回">
                     </div>
@@ -159,9 +166,10 @@
     };
 
     //JavaScript代码区域
-    layui.use(['element','laydate','jquery', 'table', 'layer'], function(){
+    layui.use(['element','laydate','jquery', 'table', 'layer','util'], function(){
         var element = layui.element;
         var laydate = layui.laydate;
+        var util=layui.util;
         var $ = layui.$, table = layui.table, form = layui.form, layer = layui.layer;
 
         //执行一个laydate实例,用于渲染日期
@@ -170,7 +178,12 @@
             elem: '#arriveTime'
             ,type: 'datetime'
             ,max:0
+            //利用工具包转化后台的时间格式
+            ,value:util.toDateString('${receiving.arriveTime}', 'yyyy-MM-dd HH:mm:ss')
         });
+
+        $("#transType").val("${receiving.receivingTransType.valueId}");
+        $("#takingType").val("${receiving.receivingTakingType.valueId}");
 
         //根据选择的仓储订单加载相应的收费项目信息
         form.on('select(storageId)',function () {
@@ -205,10 +218,9 @@
         });
         //保留仓储订单选择 end============================
 
-
         //根据所选仓库加载相应的库位
         form.on('select(warehouseId)',function () {
-            //通过id获取level1的id
+            //通过id获取仓库的id
             var warehouseId=$('#warehouseId').val();
             if(warehouseId == 0){
                 //清空二级并渲染form表单
@@ -232,6 +244,36 @@
                 }
             })
         });
+
+        //保留库位选择 start ===========================
+        $(function () {
+            var warehouseId = $('#warehouseId').val();
+            if(warehouseId !=null && warehouseId !=''){
+                //说明选择过仓库
+                var locationId='${receiving.location.locationId}';
+                if(locationId!=null && locationId!=undefined && locationId!=''){
+                    $.ajax({
+                        url:'${ctx}/warehouse/queryLocationByWarehouseId/'+warehouseId,
+                        type: 'get',
+                        success:function (data) {
+                            //根据data修改数据，重新渲染form即可
+                            var html='<option value="">-请选择-</option>';
+                            var len=data.length;
+                            for(var i=0;i<len;i++){
+                                html += '<option value="'+data[i].locationId+'"';
+                                if(locationId!=null && locationId!=undefined && locationId!=''&&data[i].locationId==locationId){
+                                    html+='selected';
+                                }
+                                html += '>'+data[i].locationName+'</option>'
+                            }
+                            $('#locationId').html(html);
+                            form.render();
+                        }
+                    });
+                }
+            }
+        });
+        //保留库位选择 end============================
 
         //根据所选货物类型加载相应的货物名称
         form.on('select(goodsTypeId)',function () {
@@ -260,12 +302,43 @@
             })
         });
 
+        //保留货物名称选择 start ===========================
+        $(function () {
+            var goodsTypeId = $('#goodsTypeId').val();
+            if(goodsTypeId !=null && goodsTypeId !=''){
+                //说明选择过库位
+                var goodsNameId='${receiving.goodsName.goodsId}';
+                if(goodsNameId!=null && goodsNameId!=undefined && goodsNameId!=''){
+                    $.ajax({
+                        url:'${ctx}/goods/queryNameByType/'+goodsTypeId,
+                        type: 'get',
+                        success:function (data) {
+                            //根据data修改数据，重新渲染form即可
+                            var html='<option value="">-请选择-</option>';
+                            var len=data.length;
+                            for(var i=0;i<len;i++){
+                                html += '<option value="'+data[i].goodsId+'"';
+                                if(goodsNameId!=null && goodsNameId!=undefined && goodsNameId!=''&&data[i].goodsId==goodsNameId){
+                                    html+='selected';
+                                }
+                                html += '>'+data[i].goodsName+'</option>'
+
+                            }
+                            $('#goodsNameId').html(html);
+                            form.render();
+                        }
+                    });
+                }
+            }
+        });
+        //保留货物名称的选择 end============================
+
         //入库单添加费用 数据表格实例化  https://demo.lanrenzhijia.com/demo/64/6480/demo/
         var layTableId = "layTable";
         var tableIns = table.render({
             elem: '#expenseTable',
             id: layTableId,
-            data: [],
+            url:'${ctx}/expenseDetail/queryByOrderId/'+'${receiving.receivingId}',
             drag: false, // 关闭拖拽列功能
             even: false, //不开启隔行背景
             cols: [[
@@ -299,21 +372,21 @@
             //添加费用字段到data.field中，简化代码
             data.field.expenseDetailList=expenseDetailList;
             $.ajax({
-                url: '${ctx}/receiving/add',
+                url: '${ctx}/receiving/update',
                 type: 'POST',
                 dataType: "json",
                 contentType: "application/json",
                 data:  JSON.stringify(data.field),  //如果有list一定要json，不然数据格式不对
                 success: function (StateType) {
-                    if (StateType == 'AddSuccess') {
-                        layer.msg('添加成功', {
+                    if (StateType == 'UpdateSuccess') {
+                        layer.msg('修改成功', {
                             icon: 1,
-                            time: 1000 //2秒关闭（如果不配置，默认是3秒）
+                            time: 2000 //2秒关闭（如果不配置，默认是3秒）
                         }, function(){
                             window.location.href = "${ctx}/receiving/index";
                         });
                     } else {
-                        layer.msg("添加失败", {icon: 2});
+                        layer.msg("修改失败", {icon: 2});
                     }
                 }
             });

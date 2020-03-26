@@ -59,9 +59,7 @@ public class ContractServiceImpl implements ContractService {
         if(addRow1==1){
             //则添加合同费用明细
             //先根据合同流水号查询合同信息
-            Contract contract1=new Contract();
-            contract1.setContractCode(contractCode);
-            contract1=contractMapper.query(contract1).get(0);
+            Contract contract1=contractMapper.queryByCode(contractCode);
             //遍历设置合同费用中的关联合同id
             for (ContractExpense contractExpense:contract.getContractExpenseList()) {
                 contractExpense.setContractId(contract1.getContractId());
@@ -138,13 +136,13 @@ public class ContractServiceImpl implements ContractService {
     }
 
     @Override
-    public Contract queryByContractId(int contractId) {
-        return contractMapper.queryByContractId(contractId);
+    public List<Contract> queryAllValidContract() {
+        return contractMapper.queryAllValidContract();
     }
 
     @Override
-    public List<Contract> queryAllContract() {
-        return contractMapper.queryAllContract();
+    public Contract queryByContractId(int contractId) {
+        return contractMapper.queryByContractId(contractId);
     }
 
 }

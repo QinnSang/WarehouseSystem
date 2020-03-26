@@ -27,7 +27,7 @@ public class StorageController {
 
     @RequestMapping("/index")
     public String index(Model model){
-        List<Contract> contractList=contractService.queryAllContract();
+        List<Contract> contractList=contractService.queryAllValidContract();
         model.addAttribute("contractList",contractList);
         return "storage/storage/index";
     }

@@ -98,4 +98,9 @@ public class StorageServiceImpl implements StorageService {
             return StateType.getStateType(31);
         return StateType.getStateType(32);
     }
+
+    @Override
+    public List<Storage> queryAllValidStorage() {
+        return storageMapper.queryAllValidStorage();
+    }
 }

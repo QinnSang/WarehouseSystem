@@ -27,4 +27,6 @@ public interface WarehouseService {
     StateType delLocation(int locationId);
 
     PageInfo<Location> queryAllLocation();
+
+    List<Location> queryLocationByWarehouseId(int warehouseId);
 }

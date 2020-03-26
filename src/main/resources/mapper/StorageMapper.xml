@@ -21,6 +21,7 @@
             <result property="realName" column="createByName"/>
         </association>
         <association property="storageStatus" javaType="pojo.DataDictionary">
+            <result property="valueId" column="statusId"/>
             <result property="valueName" column="statusName"/>
         </association>
     </resultMap>
@@ -42,16 +43,17 @@
             <bind name="companyname" value="'%'+contract.company.companyName+'%'"/>
         </if>
         select
-            storage_id,
+            t1.storage_id,
             storage_name,
             storage_code,
-            goods_number,
+            IFNULL(sum(sg.goods_number),0)as goods_number,
             t1.create_time,
             t1.remark,
             t2.contract_id,
             t2.contract_name,
             t2.contract_code,
             t3.company_name,
+            t4.value_id as statusId,
             t4.value_name as statusName,
             t5.real_name as createByName
         from storage t1
@@ -59,6 +61,7 @@
         LEFT JOIN company t3 on t2.company_Id = t3.company_id
         LEFT JOIN data_dictionary t4 on t1.status = t4.value_id
         LEFT JOIN employee t5 on t5.employee_id = t1.create_by
+        LEFT JOIN storage_goods sg on t1.storage_id = sg.storage_id
         <where>
             t4.type_code='CS_STATUS'
             <if test="storageId!=null">
@@ -83,6 +86,7 @@
                 and t1.status = #{status}
             </if>
         </where>
+        group by t1.storage_id
         order by  t1.create_time desc
     </select>
 
@@ -92,7 +96,11 @@
 
     <select  id="generateStorageCode" parameterType="java.util.Map"
              resultType="java.util.Map" statementType="CALLABLE">
-        {CALL generate_orderCode(#{orderNamePre,mode=IN}, #{storageCode, mode=OUT, jdbcType=VARCHAR})}
+        {CALL generate_storageCode(#{orderNamePre,mode=IN}, #{storageCode, mode=OUT, jdbcType=VARCHAR})}
+    </select>
+
+    <select id="queryAllValidStorage" resultType="pojo.Storage">
+        select storage_id,storage_name from storage where status = 2
     </select>
 
     <insert id="add" parameterType="pojo.Storage">
@@ -103,9 +111,6 @@
             </if>
             <if test="storageCode!=null and storageCode!=''">
                 ,storage_code
-            </if>
-            <if test="goodsNumber!=null">
-                ,goods_number
             </if>
             <if test="contractId!=null">
                 ,contract_id
@@ -127,9 +132,6 @@
             </if>
             <if test="storageCode!=null and storageCode!=''">
                 ,#{storageCode}
-            </if>
-            <if test="goodsNumber!=null">
-                ,0
             </if>
             <if test="contractId!=null">
                 ,#{contractId}

@@ -21,7 +21,7 @@ public class ContractExpenseController {
 
     @RequestMapping("/queryByContractId/{contractId}")
     @ResponseBody
-    public Map<String,Object> query(@PathVariable Integer contractId){
+    public Map<String,Object> queryByContractId(@PathVariable Integer contractId){
         List<ContractExpense> contractExpenseList=contractExpenseService.queryByContractId(contractId);
         Map<String,Object> tableData =new HashMap<>();
         //这是layui数据表格要求返回的json数据格式
@@ -32,4 +32,9 @@ public class ContractExpenseController {
         return tableData;
     }
 
+    @RequestMapping("/queryListByStorageId/{storageId}")
+    @ResponseBody
+    public  List<ContractExpense> queryListByStorageId(@PathVariable Integer storageId){
+        return contractExpenseService.queryListByStorageId(storageId);
+    }
 }

@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.ReceivingMapper">
+
+    <resultMap id="receivingBase" type="pojo.Receiving">
+        <result property="receivingId" column="receiving_id"/>
+        <result property="receivingName" column="receiving_name"/>
+        <result property="receivingCode" column="receiving_code"/>
+        <result property="receivingNumber" column="receiving_number"/>
+        <result property="carNo" column="car_no"/>
+        <result property="origin" column="origin"/>
+        <result property="arriveTime" column="arrive_time"/>
+        <result property="remark" column="remark"/>
+        <result property="receivingDate" column="receiving_date"/>
+        <association property="storage" javaType="pojo.Storage">
+            <id property="storageId" column="storage_id"/>
+            <result property="storageName" column="storage_name"/>
+            <result property="storageCode" column="storage_code"/>
+        </association>
+        <association property="warehouse" javaType="pojo.Warehouse">
+            <id property="warehouseId" column="warehouse_id"/>
+            <result property="warehouseName" column="warehouse_name"/>
+        </association>
+        <association property="location" javaType="pojo.Location">
+            <id property="locationId" column="location_id"/>
+            <result property="locationName" column="location_name"/>
+        </association>
+        <association property="goodsType" javaType="pojo.Goods">
+            <id property="goodsId" column="goods_type_id"/>
+            <result property="goodsName" column="goods_type_name"/>
+        </association>
+        <association property="goodsName" javaType="pojo.Goods">
+            <id property="goodsId" column="goods_name_id"/>
+            <result property="goodsName" column="goods_name"/>
+        </association>
+        <association property="receivingTransType" javaType="pojo.DataDictionary">
+            <result property="valueId" column="trans_type_id"/>
+            <result property="valueName" column="trans_type"/>
+        </association>
+        <association property="receivingTakingType" javaType="pojo.DataDictionary">
+            <result property="valueId" column="taking_type_id"/>
+            <result property="valueName" column="taking_type"/>
+        </association>
+        <association property="receivingStatus" javaType="pojo.DataDictionary">
+            <result property="valueId" column="statusId"/>
+            <result property="valueName" column="statusName"/>
+        </association>
+        <association property="receivingByUser" javaType="pojo.Employee">
+            <id property="employeeId" column="employee_id"/>
+            <result property="realName" column="real_name"/>
+        </association>
+    </resultMap>
+
+    <select id="query" parameterType="pojo.Receiving" resultMap="receivingBase">
+        <if test="receivingName !=null and receivingName!=''">
+            <bind name="receivingname" value="'%'+receivingName+'%'"/>
+        </if>
+        <if test="receivingCode !=null and receivingCode!=''">
+            <bind name="receivingcode" value="'%'+receivingCode+'%'"/>
+        </if>
+        <if test="storage!=null and storage.storageCode!=null and storage.storageCode!=''">
+            <bind name="storagecode" value="'%'+storage.storageCode+'%'"/>
+        </if>
+        <if test="storage!=null and storage.storageName!=null and storage.storageName!=''">
+            <bind name="storagename" value="'%'+storage.storageName+'%'"/>
+        </if>
+
+        select
+            receiving_id,
+            receiving_name,
+            receiving_code,
+            car_no,
+            origin,
+            receiving_date,
+            t1.remark,
+            arrive_time,
+            receiving_number,
+            s.storage_id,
+            s.storage_name,
+            s.storage_code,
+            w.warehouse_id,
+            w.warehouse_name,
+            l.location_id,
+            l.location_name,
+            g.goods_id as goods_type_id,
+            g.goods_name as goods_type_name,
+            t2.goods_id as goods_name_id,
+            t2.goods_name,
+            d1.value_id as trans_type_id,
+            d1.value_name as trans_type,
+            d2.value_id as taking_type_id,
+            d2.value_name as taking_type,
+            d3.value_id as statusId,
+            d3.value_name as statusName,
+            e.employee_id,
+            e.real_name
+        from receiving t1
+        LEFT JOIN storage s on t1.storage_id = s.storage_id
+        LEFT JOIN warehouse w on t1.warehouse_id = w.warehouse_id
+        LEFT JOIN location l on t1.location_id = l.location_id
+        LEFT JOIN goods g on t1.goods_type_id = g.goods_id
+        LEFT JOIN goods t2 on t2.goods_id=t1.goods_name_id
+        LEFT JOIN employee e on e.employee_id=t1.receiving_by
+        LEFT JOIN data_dictionary d1 on t1.trans_type = d1.value_id
+        LEFT JOIN data_dictionary d2 on t1.taking_type = d2.value_id
+        LEFT JOIN data_dictionary d3 on t1.status = d3.value_id
+        <where>
+            l.warehouse_id = w.warehouse_id
+            and t2.parent_id = g.goods_id
+            and t2.classify = 2
+            and g.classify = 1
+            and d1.type_code = 'TRANS_TYPE'
+            and d2.type_code = 'TAKING_TYPE'
+            and d3.type_code = 'RE_STATUS'
+            <if test="receivingId !=null">
+                and receiving_id = #{receivingId}
+            </if>
+            <if test="receivingName !=null and receivingName!=''">
+                and receiving_name like #{receivingname}
+            </if>
+            <if test="receivingCode !=null and receivingCode!=''">
+                and receiving_code like #{receivingcode}
+            </if>
+            <if test="storage!=null and storage.storageCode!=null and storage.storageCode!=''">
+                and s.storage_code like #{storagecode}
+            </if>
+            <if test="storage!=null and storage.storageName!=null and storage.storageName!=''">
+                and s.storage_name like #{storagename}
+            </if>
+        </where>
+        order by receiving_date desc, t1.arrive_time desc
+    </select>
+
+    <select  id="generateReceivingCode" parameterType="java.util.Map"
+             resultType="java.util.Map" statementType="CALLABLE">
+        {CALL generate_receivingCode(#{orderNamePre,mode=IN}, #{receivingCode, mode=OUT, jdbcType=VARCHAR})}
+    </select>
+
+    <select id="queryByCode" resultType="pojo.Receiving">
+        select receiving_id from receiving where receiving_code =#{receivingCode}
+    </select>
+
+    <insert id="add">
+          insert into receiving
+        <trim prefix="(" suffix=")" prefixOverrides=",">
+            <if test="receivingName !=null and receivingName!=''">
+                ,receiving_name
+            </if>
+            <if test="receivingCode!=null and receivingCode!=''">
+                ,receiving_code
+            </if>
+            <if test="storageId!=null">
+                ,storage_id
+            </if>
+            <if test="warehouseId!=null">
+                ,warehouse_id
+            </if>
+            <if test="locationId!=null">
+                ,location_id
+            </if>
+            <if test="goodsTypeId!=null">
+                ,goods_type_id
+            </if>
+            <if test="goodsNameId!=null">
+                ,goods_name_id
+            </if>
+            <if test="receivingNumber!=null">
+                ,receiving_number
+            </if>
+            <if test="transType!=null">
+                ,trans_type
+            </if>
+            <if test="takingType!=null">
+                ,taking_type
+            </if>
+            <if test="carNo!=null and carNo!=''">
+                ,car_no
+            </if>
+            <if test="origin!=null and origin!=''">
+                ,origin
+            </if>
+            <if test="arriveTime!=null">
+                ,arrive_time
+            </if>
+            <if test="remark!=null and remark!=''">
+                ,remark
+            </if>
+            <if test="receivingBy!=null">
+                ,receiving_by
+            </if>
+            <if test="receivingDate!=null">
+                ,receiving_date
+            </if>
+            ,status
+        </trim>
+
+        <trim prefix="values(" suffix=")" prefixOverrides=",">
+            <if test="receivingName !=null and receivingName!=''">
+                ,#{receivingName}
+            </if>
+            <if test="receivingCode!=null and receivingCode!=''">
+                ,#{receivingCode}
+            </if>
+            <if test="storageId!=null">
+                ,#{storageId}
+            </if>
+            <if test="warehouseId!=null">
+                ,#{warehouseId}
+            </if>
+            <if test="locationId!=null">
+                ,#{locationId}
+            </if>
+            <if test="goodsTypeId!=null">
+                ,#{goodsTypeId}
+            </if>
+            <if test="goodsNameId!=null">
+                ,#{goodsNameId}
+            </if>
+            <if test="receivingNumber!=null">
+                ,#{receivingNumber}
+            </if>
+            <if test="transType!=null">
+                ,#{transType}
+            </if>
+            <if test="takingType!=null">
+                ,#{takingType}
+            </if>
+            <if test="carNo!=null and carNo!=''">
+                ,#{carNo}
+            </if>
+            <if test="origin!=null and origin!=''">
+                ,#{origin}
+            </if>
+            <if test="arriveTime!=null">
+                ,#{arriveTime}
+            </if>
+            <if test="remark!=null and remark!=''">
+                ,#{remark}
+            </if>
+            <if test="receivingBy!=null">
+                ,#{receivingBy}
+            </if>
+            <if test="receivingDate!=null">
+                ,#{receivingDate}
+            </if>
+            ,1
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="pojo.Receiving">
+        update receiving
+        <set>
+            <if test="receivingName !=null and receivingName!=''">
+                receiving_name = #{receivingName},
+            </if>
+            <if test="storageId!=null">
+                storage_id = #{storageId},
+            </if>
+            <if test="warehouseId!=null">
+                warehouse_id= #{warehouseId},
+            </if>
+            <if test="locationId!=null">
+                location_id=#{locationId},
+            </if>
+            <if test="goodsTypeId!=null">
+                goods_type_id = #{goodsTypeId},
+            </if>
+            <if test="goodsNameId!=null">
+                goods_name_id = #{goodsNameId},
+            </if>
+            <if test="receivingNumber!=null">
+                receiving_number = #{receivingNumber},
+            </if>
+            <if test="transType!=null">
+                trans_type = #{transType},
+            </if>
+            <if test="takingType!=null">
+                taking_type = #{takingType},
+            </if>
+            <if test="carNo!=null and carNo!=''">
+                car_no = #{carNo},
+            </if>
+            <if test="origin!=null and origin!=''">
+                origin = #{origin},
+            </if>
+            <if test="arriveTime!=null">
+                arrive_time = #{arriveTime},
+            </if>
+            <if test="remark!=null and remark!=''">
+                remark = #{remark},
+            </if>
+            <if test="receivingBy!=null">
+                receiving_by = #{receivingBy},
+            </if>
+            <if test="receivingDate!=null">
+                receiving_date = #{receivingDate},
+            </if>
+        </set>
+        <where>
+            receiving_id =#{receivingId}
+        </where>
+    </update>
+
+    <update id="updateStatus" parameterType="pojo.Receiving">
+        update receiving set status = 2 where receiving_id = #{receivingId}
+    </update>
+
+    <delete id="delByReceivingId" parameterType="integer">
+        delete from receiving where receiving_id = #{receivingId}
+    </delete>
+
+</mapper>

@@ -6,10 +6,7 @@ import dto.GoodTypeNameDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import pojo.Employee;
 import pojo.Goods;
 import pojo.Location;
@@ -63,6 +60,14 @@ public class GoodsController {
         //将分页后的数据返回（每页要显示的数据）
         tableData.put("data", pageInfo);
         return tableData;
+    }
+
+    //根据类型查找货物名称
+    @RequestMapping("/queryNameByType/{goodsTypeId}")
+    @ResponseBody
+    public List<Goods> queryNameByType(@PathVariable int goodsTypeId){
+        List<Goods> goodsList=goodsService.queryNameByType(goodsTypeId);
+        return goodsList;
     }
 
     //货物类型维护

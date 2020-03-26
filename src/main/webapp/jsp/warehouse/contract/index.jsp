@@ -330,7 +330,7 @@
                         ,even: false //不隔行背景
                         ,cols: [[
                             {title: '序号', type: 'numbers'},
-                            {field: 'expense', title: '收费项目',templet:'<div>{{d.expenseDictionary.valueName}}</div>'},
+                            {field: 'expenseName', title: '收费项目'},
                             {field: 'price', title: '单价'},
                             {field: 'remark', title: '备注'}
                         ]]

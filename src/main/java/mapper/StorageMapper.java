@@ -13,7 +13,7 @@ import java.util.Map;
 public interface StorageMapper {
     List<Storage> query(Storage storage);
 
-    void generateStorageCode(Map<String, String> params);
+    Map generateStorageCode(Map<String, String> params);
 
     int add(Storage storage);
 
@@ -22,4 +22,6 @@ public interface StorageMapper {
     Storage queryStatusByContractId(@Param("storageId")int storageId);
 
     int updateStatus(Storage storage);
+
+    List<Storage> queryAllValidStorage();
 }

@@ -17,4 +17,6 @@ public interface ContractExpenseMapper {
     void deleteByContractId(@Param("contractId")Integer contractId);
 
     List<DataDictionary> queryAllExpense();
+
+    List<ContractExpense> queryListByStorageId(@Param("storageId") Integer storageId);
 }

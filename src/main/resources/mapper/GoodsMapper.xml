@@ -86,6 +86,9 @@
         where t1.classify = 2
     </select>
 
+    <select id="queryNameByType" resultType="pojo.Goods">
+        select goods_id,goods_name from goods where parent_id =#{goodsTypeId}
+    </select>
     <insert id="addGoodType" parameterType="pojo.Goods">
         insert into goods
         <trim prefix="(" suffix=")" prefixOverrides=",">

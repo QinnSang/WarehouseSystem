@@ -186,9 +186,9 @@
             even: false, //不开启隔行背景
             cols: [[
                 {title: '序号', type: 'numbers'},
-                {field: 'expenseDictionaryValueId', width:400,title: '收费项目', templet: function(d){
-                        var options = viewObj.renderSelectOptions(viewObj.expenseData, {valueField: "valueId", textField: "valueName", selectedValue: d.expenseDictionaryValueId});
-                        return '<a lay-event="expenseDictionaryValueId"></a><select name="expenseDictionaryValueId" lay-filter="expenseDictionaryValueId"><option value="">请选择收费项目</option>' + options + '</select>';
+                {field: 'expenseValueId', width:400,title: '收费项目', templet: function(d){
+                        var options = viewObj.renderSelectOptions(viewObj.expenseData, {valueField: "valueId", textField: "valueName", selectedValue: d.expenseValueId});
+                        return '<a lay-event="expenseValueId"></a><select name="expenseValueId" lay-filter="expenseValueId"><option value="">请选择收费项目</option>' + options + '</select>';
                     }},
                 {field: 'price', title: '价格', edit: 'text'},
                 {field: 'remark', title: '备注', edit: 'text'},
@@ -205,7 +205,7 @@
             var contractExpenseArray=[];
             for (var index in item_table) {
                 contractExpenseArray[index] = {   //一定要为值取名，要不然后台接收不了，报400错误
-                    "expenseDictionaryValueId": item_table[index].expenseDictionaryValueId,
+                    "expenseValueId": item_table[index].expenseValueId,
                     "price":item_table[index].price,
                     "remark":item_table[index].remark
                 };
@@ -241,7 +241,7 @@
             addRow: function(){	//添加一行
                 var oldData = table.cache[layTableId];
                 console.log(oldData);
-                var newRow = {expenseId: new Date().valueOf(), expenseDictionaryValueId: null, price:null,remark:null};
+                var newRow = {expenseId: new Date().valueOf(), expenseValueId: null, price:null,remark:null};
                 oldData.push(newRow);
                 tableIns.reload({
                     url:'',
@@ -282,7 +282,7 @@
                 console.log(oldData);
                 for(var i=0, row; i < oldData.length; i++){
                     row = oldData[i];
-                    if(!row.expenseDictionaryValueId){
+                    if(!row.expenseValueId){
                         layer.msg("检查每一行，请选择收费项目！", { icon: 5 }); //提示
                         return;
                     }
@@ -307,9 +307,9 @@
         });
 
         //监听select下拉选中事件
-        form.on('select(expenseDictionaryValueId)', function(data){
+        form.on('select(expenseValueId)', function(data){
             var elem = data.elem; //得到select原始DOM对象
-            $(elem).prev("a[lay-event='expenseDictionaryValueId']").trigger("click");
+            $(elem).prev("a[lay-event='expenseValueId']").trigger("click");
         });
 
         //监听工具条
@@ -317,7 +317,7 @@
             var data = obj.data, event = obj.event, tr = obj.tr; //获得当前行 tr 的DOM对象;
             console.log(data);
             switch(event){
-                case "expenseDictionaryValueId":
+                case "expenseValueId":
                     //console.log(data);
                     var select = tr.find("select[name='expenseDictionaryValueId']");
                     if(select){

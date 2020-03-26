@@ -16,31 +16,28 @@
                 <%--查询条件--%>
                 <div class="layui-form-item" style="margin-bottom: 10px;">
                     <div class="layui-inline">
+                        <label class="layui-form-label">入库单号：</label>
+                        <div class="layui-input-inline" style="width:150px">
+                            <input type="tel" name="receivingCode" lay-verify="title" autocomplete="off" placeholder="请输入入库单号" class="layui-input">
+                        </div>
+                        <label class="layui-form-label" style="width: 100px">入库单名称：</label>
+                        <div class="layui-input-inline" style="width:150px">
+                            <input type="tel" name="receivingName" lay-verify="title" autocomplete="off" placeholder="请输入入库单名称" class="layui-input">
+                        </div>
                         <label class="layui-form-label" style="width: 100px">仓储订单号：</label>
-                        <div class="layui-input-inline" style="width:180px">
-                            <input type="tel" name="softwareName" lay-verify="title" autocomplete="off" placeholder="请输入仓储订单号" class="layui-input">
+                        <div class="layui-input-inline" style="width:150px">
+                            <input type="tel" name="storage.storageCode" lay-verify="title" autocomplete="off" placeholder="请输入仓储订单号" class="layui-input">
                         </div>
                         <label class="layui-form-label" style="width:120px">仓储订单名称：</label>
-                        <div class="layui-input-inline" style="width:170px">
-                            <input type="tel" name="softwareName" lay-verify="title" autocomplete="off" placeholder="请输入仓储订单名称" class="layui-input">
-                        </div>
-                        <label class="layui-form-label">入库单号：</label>
-                        <div class="layui-input-inline" style="width:180px">
-                            <input type="tel" name="softwareName" lay-verify="title" autocomplete="off" placeholder="请输入入库单号" class="layui-input">
-                        </div>
-                        <label class="layui-form-label">交货形式：</label>
-                        <div class="layui-input-inline" style="width:100px">
-                            <select name="Level1Id" id="status" lay-filter="contractId" >
-                                <option value="0">-请选择-</option>
-                                <option value="1" >卸车入库</option>
-                                <option value="2" >车板交</option>
-                            </select>
+                        <div class="layui-input-inline" style="width:150px">
+                            <input type="tel" name="storage.storageName" lay-verify="title" autocomplete="off" placeholder="请输入仓储订单名称" class="layui-input">
                         </div>
                     </div>
                 </div>
                 <div class="layui-form-item" style="margin-bottom: 10px;" >
+
                     <div class="layui-input-inline" style="left:40px">
-                        <button class="layui-btn " lay-submit  lay-filter="formDemo" >查 询</button>
+                        <button class="layui-btn " lay-submit  lay-filter="search" >查 询</button>
                         <button type="reset" class="layui-btn ">重 置</button>
                     </div>
                 </div>
@@ -54,7 +51,11 @@
             <%--仓储订单数据表格展示--%>
             <table id="receivingTable" lay-filter="receivingFilter"></table>
             <script type="text/html" id="barDemo">
-                <a class="layui-btn  layui-btn-xs" lay-event="detail">查看</a>
+                <a class="layui-btn  layui-btn-xs" lay-event="detail">详情</a>
+                <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="edit">编辑</a>
+                <a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="confirm">审核</a>
+                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+
             </script>
         </div>
     </div>
@@ -63,63 +64,88 @@
     <div id="receivingDetail" style="display:none;">
         <form class="layui-form layui-form-pane1" id="receivingDetailForm" name="receivingDetailForm"  style="padding: 20px 0 0 0;"  lay-filter="receivingDetailFilter">
             <div class="layui-form-item">
-                <label class="layui-form-label" style="width:100px">入库单名称：</label>
-                <div class="layui-input-inline" style="width:200px">
-                    <input type="tel" name="softwareName"class="layui-input" readonly="readonly">
+                <label class="layui-form-label" style="width:120px">入库单号：</label>
+                <div class="layui-input-inline" style="width:140px">
+                    <input type="tel" name="receivingCode"class="layui-input" readonly="readonly">
                 </div>
-                <label class="layui-form-label">仓储订单：</label>
-                <div class="layui-input-inline" style="width:250px">
-                    <input type="tel" name="softwareName" class="layui-input" readonly="readonly">
+                <label class="layui-form-label" style="width:120px">入库单名称：</label>
+                <div class="layui-input-inline" style="width:180px">
+                    <input type="tel" name="receivingName"class="layui-input" readonly="readonly">
+                </div>
+                <label class="layui-form-label" >入库时间：</label>
+                <div class="layui-input-inline" style = "width:140px">
+                    <input type="text" class="layui-input" name="receivingDate"readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label" style="width:120px">仓储订单编号：</label>
+                <div class="layui-input-inline" style="width:140px">
+                    <input type="tel" name="storageCode" class="layui-input" readonly="readonly">
+                </div>
+                <label class="layui-form-label" style="width:120px">仓储订单名称：</label>
+                <div class="layui-input-inline" style="width:180px">
+                    <input type="tel" name="storageName" class="layui-input" readonly="readonly">
                 </div>
                 <label class="layui-form-label">交货形式：</label>
-                <div class="layui-input-inline" >
-                    <input type="tel" name="softwareName"class="layui-input" readonly="readonly">
+                <div class="layui-input-inline" style = "width:140px">
+                    <input type="tel" name="takingType" class="layui-input" readonly="readonly">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label" style="width:100px">仓库：</label>
-                <div class="layui-input-inline" style="width:130px">
-                    <input type="tel" name="softwareName" class="layui-input" readonly="readonly">
+                <div class="layui-input-inline" style="width:100px">
+                    <input type="tel" name="warehouseName" class="layui-input" readonly="readonly">
                 </div>
                 <label class="layui-form-label" >库位：</label>
-                <div class="layui-input-inline" style="width:130px">
-                    <input type="tel" name="softwareName" class="layui-input" readonly="readonly">
+                <div class="layui-input-inline" style="width:100px">
+                    <input type="tel" name="locationName" class="layui-input" readonly="readonly">
                 </div>
                 <label class="layui-form-label">货物类型：</label>
-                <div class="layui-input-inline" style="width:130px">
-                    <input type="tel" name="softwareName"class="layui-input" readonly="readonly">
+                <div class="layui-input-inline" style="width:100px">
+                    <input type="tel" name="goodsType" class="layui-input" readonly="readonly">
                 </div>
                 <label class="layui-form-label">货物名称：</label>
-                <div class="layui-input-inline" style="width:130px">
-                    <input type="tel" name="softwareName"class="layui-input" readonly="readonly">
+                <div class="layui-input-inline" style="width:100px">
+                    <input type="tel" name="goodsName" class="layui-input" readonly="readonly">
                 </div>
+
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label " style="width:100px">入库数量：</label>
-                <div class="layui-input-inline" style = "width:130px">
-                    <input type="text" class="layui-input" id="recevingNum" readonly="readonly">
+                <div class="layui-input-inline" style ="width:100px">
+                    <input type="text" class="layui-input" name="receivingNumber" readonly="readonly">
+                </div>
+                <label class="layui-form-label ">入库员：</label>
+                <div class="layui-input-inline" style = "width:100px">
+                    <input type="text" class="layui-input" name="receivingBy" readonly="readonly">
                 </div>
                 <label class="layui-form-label">始发地：</label>
-                <div class="layui-input-inline" style = "width:130px">
-                    <input type="text" class="layui-input" id="startPlace"  readonly="readonly">
+                <div class="layui-input-inline" style = "width:100px">
+                    <input type="text" class="layui-input" name="origin"  readonly="readonly">
                 </div>
                 <label class="layui-form-label" >运输方式：</label>
-                <div class="layui-input-inline" style = "width:130px">
-                    <input type="text" class="layui-input" id="transformType" readonly="readonly">
-                </div>
-                <label class="layui-form-label" >到达时间：</label>
-                <div class="layui-input-inline" style = "width:130px">
-                    <input type="text" class="layui-input" id="arriveTime"readonly="readonly">
+                <div class="layui-input-inline" style = "width:100px">
+                    <input type="text" class="layui-input" name="transType" readonly="readonly">
                 </div>
             </div>
             <div class="layui-form-item">
-                <label class="layui-form-label "style = "width:100px">车牌或车号：</label>
-                <div class="layui-input-inline" style = "width:130px">
-                    <input type="text" class="layui-input" id="carNo" readonly="readonly">
+                <label class="layui-form-label " style="width:100px">车牌号：</label>
+                <div class="layui-input-inline" style = "width:100px">
+                    <input type="text" class="layui-input" name="carNo" readonly="readonly">
                 </div>
+                <label class="layui-form-label ">状态：</label>
+                <div class="layui-input-inline" style = "width:100px">
+                    <input type="text" class="layui-input" name="status" readonly="readonly">
+                </div>
+                <label class="layui-form-label" >到达时间：</label>
+                <div class="layui-input-inline" style = "width:150px">
+                    <input type="text" class="layui-input" name="arriveTime"readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-form-item">
                 <label class="layui-form-label" >备注：</label>
                 <div class="layui-input-inline">
-                    <textarea name="remark" style = "height:10px;width:630px;"  class="layui-textarea" readonly="readonly"></textarea>
+                    <textarea name="remark" style = "height:3px;width:400px;"  class="layui-textarea" readonly="readonly"></textarea>
                 </div>
             </div>
         </form>
@@ -143,36 +169,34 @@
         var form = layui.form;
         var layer = layui.layer;
         var soulTable = layui.soulTable; //使用soulTable导出数据
-        var index = layer.load(); //添加laoding,0-2两种方式
 
         //第一个实例
         var myTable = table.render({
             elem: '#receivingTable' //表格id
-            // ,height: 312
-            <%--,url: '${ctx}/receiving/query' //数据接口--%>
-            ,data:[[1,2,3,4,5,6,7,8,9]]
+            ,url: '${ctx}/receiving/query' //数据接口
             ,method: 'post' //防止查询时中文乱码
             ,page: { //开启分页,需要配合后台PageInfo进行分页
                 first: '首页'
                 ,last: '尾页'
                 ,layout: ['count', 'prev', 'page', 'next', 'skip']
+                ,limit:10  //每页显示的条数
+                ,curr:1 //起始页
             }
-            ,limit: 10
             ,drag: false // 关闭拖拽列功能
-            ,even: true //隔行背景
+            ,even: false //隔行背景
             ,autoSort: false  //禁用前端的排序方法
             ,cols: [[ //表头
-                {field: 'softwareName', title: '入库单号',width:200,unresize: true}
-                ,{field: 'softwareName', title: '入库单名称',width:180,unresize: true}
-                ,{field: 'apkName', title: '仓储订单号',width:200,unresize: true}
-                // ,{field: 'softwareSize', title: '仓储订单名称',width:180,}
-                //使用templet模板获取级联属性
-                ,{field:'flatform',title: '货物',width:100,unresize: true}
-                ,{field:'appStatus', title: '入库数量',width:90,unresize: true}
-                ,{field:'appStatus', title: '库位',width:90,unresize: true}
-                ,{field:'appStatus', title: '入库员',width:90,unresize: true}
-                ,{field: 'createTime', title: '入库时间', width: 160,  sort:true,unresize: true},
-                ,{ title: '操作', toolbar: '#barDemo',width:60,unresize: true}
+                {field: 'receivingCode', title: '入库单号',width:160,unresize: true}
+                ,{field: 'receivingName', title: '入库单名称',width:180,unresize: true}
+                // ,{field: 'storage.storageCode', title: '仓储订单号',templet:'<div>{{d.storage.storageCode}}</div>',width:150,unresize: true}
+                ,{field: 'storageName', title: '仓储订单名称',templet:'<div>{{d.storage.storageName}}</div>',width:180,unresize: true}
+                ,{field:'goodsName.goodsName',title: '货物',templet:'<div>{{d.goodsName.goodsName}}</div>',width:100,unresize: true}
+                ,{field:'receivingNumber', title: '入库数量',width:90,unresize: true}
+                ,{field:'location.locationName', title: '库位',templet:'<div>{{d.location.locationName}}</div>',width:90,unresize: true}
+                ,{field:'receivingByUser.realName', title: '入库员',templet:'<div>{{d.receivingByUser.realName}}</div>',width:80,unresize: true}
+                ,{field: 'receivingDate', title: '入库时间', width: 110,  sort:true,unresize: true},
+                ,{field: 'receivingStatus', title: '状态',templet:'<div>{{d.receivingStatus.valueName}}</div>', width: 100,unresize: true},
+                ,{ title: '操作', toolbar: '#barDemo',width:220,unresize: true}
             ]]
             ,parseData: function(res){ //res 即为原始返回的数据
                 return {
@@ -183,7 +207,6 @@
                 };
             },
             done: function (res, curr, count) { ////返回数据执行回调函数
-                layer.close(index);    //返回数据关闭loading
                 // 如果有使用到导出、下拉筛选，这句话必须要
                 soulTable.render(this);
             }
@@ -212,16 +235,79 @@
                 ,layEvent = obj.event; //获得 lay-event 对应的值
             if (layEvent === 'detail'){
                 detail(data,obj );
-                <%--window.location.href = "${ctx}/receiving/receivingDetail/1"//+data.id;--%>
+            }else if(layEvent === 'edit'){
+                window.location.href = "${ctx}/receiving/toEdit/"+data.receivingId;
+            }else if(layEvent === 'confirm'){
+                confirm(data);
+            }else if(layEvent === 'del'){
+                del(data);
             }
         });
+
+        function confirm(data) {
+            layer.confirm('是否确认入库？', {
+                skin: 'layui-layer-molv',
+                shade: .1
+            }, function(index){
+                //向服务端发送确认指令
+                $.ajax({
+                    url: "${ctx}/receiving/confirm",
+                    data: {
+                        "receivingId":data.receivingId,
+                        "storageId":data.storage.storageId,
+                        "warehouseId":data.warehouse.warehouseId,
+                        "locationId":data.location.locationId,
+                        "goodsTypeId":data.goodsType.goodsId,
+                        "goodsNameId":data.goodsName.goodsId,
+                        "receivingNumber":data.receivingNumber,
+                        "status":data.receivingStatus.valueId
+                    },
+                    type: "POST",
+                    success: function(StateType){
+                        if(StateType == 'ConfirmSuccess'){
+                            layer.msg('确认入库成功', {icon: 1});
+                            table.reload('receivingTable') //重载表格
+                        }else{
+                            layer.msg('确认失败,请重试!', {icon: 2});
+                        }
+                    },
+                    error:function (data) {
+                        layer.msg('入库审核失败', {icon: 2});
+                    }
+                });
+            });
+        }
+
+        function del(data) {
+            layer.confirm('是否删除该入库单？', {
+                skin: 'layui-layer-molv',
+                shade: .1
+            }, function(index){
+                //向服务端发送确认指令
+                $.ajax({
+                    url: "${ctx}/receiving/del/"+data.receivingId,
+                    type: "get",
+                    success: function(StateType){
+                        if(StateType == 'DelSuccess'){
+                            layer.msg('删除成功', {icon: 1});
+                            table.reload('receivingTable') //重载表格
+                        }else{
+                            layer.msg('删除失败', {icon: 2});
+                        }
+                    },
+                    error:function (data) {
+                        layer.msg('删除失败', {icon: 2});
+                    }
+                });
+            });
+        }
 
         //入库单明细弹窗
         function detail(data,obj ){
             index1=layer.open({
                 type: 1,
                 title: '详情',
-                area:['75%','98%'],
+                area:['70%','98%'],
                 shade: false, //禁止使用遮罩，否则操作不了界面
                 resize:false, //禁止窗体拉伸
                 skin: 'layui-layer-molv',
@@ -229,25 +315,49 @@
                 success: function(layero, index){
                     //表单赋值
                     form.val('receivingDetailFilter',{
-                        "id": data.id,
-                        "title": data.title // "name": "value"
+                        "receivingName": data.receivingName,
+                        "receivingCode": data.receivingCode,
+                        "storageName": data.storage.storageName,
+                        "storageCode": data.storage.storageCode,
+                        "warehouseName": data.warehouse.warehouseName,
+                        "locationName": data.location.locationName,
+                        "goodsType": data.goodsType.goodsName,
+                        "goodsName": data.goodsName.goodsName,
+                        "receivingNumber": data.receivingNumber,
+                        "transType": data.receivingTransType.valueName,
+                        "carNo": data.carNo,
+                        "origin": data.origin,
+                        "status": data.receivingStatus.valueName,
+                        "takingType": data.receivingTakingType.valueName,
+                        "arriveTime": data.arriveTime,
+                        "receivingDate": data.receivingDate,
+                        "receivingBy":data.receivingByUser.realName,
+                        "remark": data.remark
                     });
-                    //费用铭心
+                    //费用明细
                     var expense=table.render({
                         elem: '#expenseTable'
-                        ,data:[[1,2,3,4,5,6]]
+                        ,url:'${ctx}/expenseDetail/queryByOrderId/'+data.receivingId
                         ,method: 'post' //防止查询时中文乱码
-                        ,limit: 5
                         ,drag: false // 关闭拖拽列功能
                         ,even: false //不隔行背景
                         ,cols: [[
                             {title: '序号', type: 'numbers'},
-                            {field: 'expense', title: '收费项目'},
-                            {field: 'price', title: '数量'},
-                            {field: 'price', title: '单价'},
-                            {field: 'remark', title: '备注', edit: 'text'}
-                        ]],
-                        done: function(res, curr, count){
+                            {field: 'expenseName', title: '收费项目',width:320,unresize: true},
+                            {field: 'price', title: '单价',width:110,unresize: true},
+                            {field: 'amount', title: '数量',width:130,unresize: true},
+                            {field: 'checkStatus', title: '结算状态',templet:'<div>{{d.receivingCheckStatus.valueName}}</div>',unresize: true,width:140},
+                            {field: 'remark', title: '备注',width:200,unresize: true}
+                        ]]
+                        ,parseData: function(res){ //res 即为原始返回的数据
+                            return {
+                                "code": res.code, //解析接口状态
+                                "msg": res.msg, //解析提示文本
+                                "count": res.count, //解析数据长度
+                                "data": res.data //解析数据列表
+                            };
+                        }
+                        ,done: function(res, curr, count){
                             // layer.close(index);    加上该语句不能弹出框
                         }
                     });
@@ -273,17 +383,10 @@
             layer.close(updatePopUp) //执行关闭
         });
 
-        /** 监听表单提交，并重载table
-         * 注意下:
-         * 1. form必须有filter：lay-filter=""
-         * 2. 查询按钮必须在form中，并且携带2个属性：lay-submit="" lay-filter="search"
-         * where 中的数据对应搜索表单，为搜索的条件，后台使用这些条件进行筛选数据返回
-         */
         form.on('submit(search)', function (data) {
-            table.reload('appTable', {
-                url: '${ctx}/app/query2',
-                where: data.field //后台直接用实体接收，
-                                  // 如果是单个属性，可以以这种方式获取和传输：softwareName=data.field.softwareName
+            table.reload('receivingTable', {
+                url:'${ctx}/receiving/query',
+                where: data.field //后台直接用实体接收
             });
             return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可
         });

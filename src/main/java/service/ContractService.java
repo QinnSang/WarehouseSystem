@@ -21,7 +21,8 @@ public interface ContractService {
 
     StateType archive(int contractId);
 
-    Contract queryByContractId(int contractId);
 
-    List<Contract> queryAllContract();
+    List<Contract> queryAllValidContract();
+
+    Contract queryByContractId(int contractId);
 }

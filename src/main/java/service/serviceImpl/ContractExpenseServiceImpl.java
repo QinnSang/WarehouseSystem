@@ -24,4 +24,9 @@ public class ContractExpenseServiceImpl implements ContractExpenseService {
     public List<DataDictionary> queryAllExpense() {
         return contractExpenseMapper.queryAllExpense();
     }
+
+    @Override
+    public List<ContractExpense> queryListByStorageId(Integer storageId) {
+        return contractExpenseMapper.queryListByStorageId(storageId);
+    }
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pojo.Employee;
+import pojo.Goods;
 import pojo.Location;
 import pojo.Warehouse;
 import service.WarehouseService;
@@ -59,6 +60,14 @@ public class WarehouseController {
         //将分页后的数据返回（每页要显示的数据）
         tableData.put("data", pageInfo);
         return tableData;
+    }
+
+    //根据仓库查找所属库位名称
+    @RequestMapping("/queryLocationByWarehouseId/{warehouseId}")
+    @ResponseBody
+    public List<Location> queryLocationByWarehouseId(@PathVariable int warehouseId){
+        List<Location> locationList=warehouseService.queryLocationByWarehouseId(warehouseId);
+        return locationList;
     }
 
 

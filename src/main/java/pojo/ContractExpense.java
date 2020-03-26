@@ -1,13 +1,11 @@
 package pojo;
 
-import java.util.Date;
-
 public class ContractExpense {
     private Integer expenseId;
 
-    private Integer expenseDictionaryValueId;
+    private Integer expenseValueId;
 
-    private DataDictionary expenseDictionary;
+    private String expenseName;
 
     private Double price;
 
@@ -25,12 +23,12 @@ public class ContractExpense {
         this.expenseId = expenseId;
     }
 
-    public Integer getExpenseDictionaryValueId() {
-        return expenseDictionaryValueId;
+    public Integer getExpenseValueId() {
+        return expenseValueId;
     }
 
-    public void setExpenseDictionaryValueId(Integer expenseDictionaryValueId) {
-        this.expenseDictionaryValueId = expenseDictionaryValueId;
+    public void setExpenseValueId(Integer expenseValueId) {
+        this.expenseValueId = expenseValueId;
     }
 
     public Double getPrice() {
@@ -57,12 +55,12 @@ public class ContractExpense {
         this.remark = remark == null ? null : remark.trim();
     }
 
-    public DataDictionary getExpenseDictionary() {
-        return expenseDictionary;
+    public String getExpenseName() {
+        return expenseName;
     }
 
-    public void setExpenseDictionary(DataDictionary expenseDictionary) {
-        this.expenseDictionary = expenseDictionary;
+    public void setExpenseName(String expenseName) {
+        this.expenseName = expenseName;
     }
 
     public Contract getContract() {

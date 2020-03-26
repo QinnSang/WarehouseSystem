@@ -12,6 +12,8 @@ public interface WarehouseMapper {
 
     List<Warehouse> queryAllWarehouse();
 
+    List<Location> queryLocationByWarehouseId(@Param("warehouseId") int warehouseId);
+
     int addWarehouse(Warehouse warehouse);
 
     int updateWarehouse(Warehouse warehouse);
@@ -27,4 +29,6 @@ public interface WarehouseMapper {
     int delLocationByWarehouseId(@Param("warehouseId") int warehouseId);
 
     List<Location> queryAllLocation();
+
+
 }

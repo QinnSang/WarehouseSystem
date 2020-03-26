@@ -9,25 +9,25 @@ public class ExpenseDetail {
 
     private Integer orderType;
 
+    private Integer expenseId;
+
     private String expenseName;
 
     private Integer amount;
 
     private Double price;
 
-    private Integer contractId;
-
     private Integer storageId;
 
     private Integer checkStatus;
 
+    private DataDictionary receivingCheckStatus;
+
     private String remark;
 
-    private Integer createBy;
-
-    private Date createDate;
-
     private Integer checkBy;
+
+    private Employee checkByUser;
 
     private Date checkDate;
 
@@ -55,12 +55,20 @@ public class ExpenseDetail {
         this.orderType = orderType;
     }
 
+    public Integer getExpenseId() {
+        return expenseId;
+    }
+
+    public void setExpenseId(Integer expenseId) {
+        this.expenseId = expenseId;
+    }
+
     public String getExpenseName() {
         return expenseName;
     }
 
     public void setExpenseName(String expenseName) {
-        this.expenseName = expenseName == null ? null : expenseName.trim();
+        this.expenseName = expenseName;
     }
 
     public Integer getAmount() {
@@ -77,14 +85,6 @@ public class ExpenseDetail {
 
     public void setPrice(Double price) {
         this.price = price;
-    }
-
-    public Integer getContractId() {
-        return contractId;
-    }
-
-    public void setContractId(Integer contractId) {
-        this.contractId = contractId;
     }
 
     public Integer getStorageId() {
@@ -111,22 +111,6 @@ public class ExpenseDetail {
         this.remark = remark == null ? null : remark.trim();
     }
 
-    public Integer getCreateBy() {
-        return createBy;
-    }
-
-    public void setCreateBy(Integer createBy) {
-        this.createBy = createBy;
-    }
-
-    public Date getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
-
     public Integer getCheckBy() {
         return checkBy;
     }
@@ -141,5 +125,21 @@ public class ExpenseDetail {
 
     public void setCheckDate(Date checkDate) {
         this.checkDate = checkDate;
+    }
+
+    public DataDictionary getReceivingCheckStatus() {
+        return receivingCheckStatus;
+    }
+
+    public void setReceivingCheckStatus(DataDictionary receivingCheckStatus) {
+        this.receivingCheckStatus = receivingCheckStatus;
+    }
+
+    public Employee getCheckByUser() {
+        return checkByUser;
+    }
+
+    public void setCheckByUser(Employee checkByUser) {
+        this.checkByUser = checkByUser;
     }
 }

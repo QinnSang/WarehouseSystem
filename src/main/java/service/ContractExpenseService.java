@@ -9,4 +9,6 @@ public interface ContractExpenseService {
     List<ContractExpense> queryByContractId(Integer contractId);
 
     List<DataDictionary> queryAllExpense();
+
+    List<ContractExpense> queryListByStorageId(Integer storageId);
 }

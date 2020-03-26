@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.StorageGoodsMappper">
+
+    <select id="queryGoods" parameterType="pojo.StorageGoods" resultType="pojo.StorageGoods">
+          select * from storage_goods
+          where warehouse_id = #{warehouseId}
+                and location_id = #{locationId}
+                and goods_type_id = #{goodsTypeId}
+                and goods_name_id = #{goodsNameId}
+                and storage_id = #{storageId}
+    </select>
+
+    <insert id="add" parameterType="pojo.StorageGoods">
+        insert into storage_goods
+              (storage_id, goods_type_id, goods_name_id, warehouse_id, location_id, goods_number)
+        values
+               (#{storageId}, #{goodsTypeId}, #{goodsNameId}, #{warehouseId}, #{locationId}, #{goodsNumber})
+    </insert>
+
+    <update id="update" parameterType="pojo.StorageGoods">
+        update storage_goods set goods_number = #{goodsNumber}
+        where  storage_goods_id =#{storageGoodsId}
+    </update>
+
+
+</mapper>

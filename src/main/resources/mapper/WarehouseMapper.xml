@@ -59,6 +59,10 @@
         select warehouse_id,warehouse_name from warehouse order by create_time desc
     </select>
 
+    <select id="queryLocationByWarehouseId" resultType="pojo.Location">
+        select location_id,location_name from location where warehouse_id=#{warehouseId}
+    </select>
+
     <insert id="addWarehouse" parameterType="pojo.Warehouse">
           insert into warehouse
         <trim prefix="(" suffix=")" prefixOverrides=",">

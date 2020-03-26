@@ -7,6 +7,8 @@ import pojo.Employee;
 import pojo.Storage;
 import pojo.StorageGoods;
 
+import java.util.List;
+
 public interface StorageService {
     PageInfo<Storage> query(Storage storage, Integer page, Integer limit);
 
@@ -19,4 +21,6 @@ public interface StorageService {
     StateType confirm(int storageId);
 
     StateType archive(int storageId);
+
+    List<Storage> queryAllValidStorage();
 }

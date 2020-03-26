@@ -47,6 +47,11 @@ public class WarehouseServiceImpl implements WarehouseService {
         return pageInfo;
     }
 
+    @Override
+    public List<Location> queryLocationByWarehouseId(int warehouseId) {
+        return warehouseMapper.queryLocationByWarehouseId(warehouseId);
+    }
+
 
     @Override
     public StateType addWarehouse(Warehouse warehouse, Employee employee) {

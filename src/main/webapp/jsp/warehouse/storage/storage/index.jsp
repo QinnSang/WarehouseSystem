@@ -303,12 +303,17 @@
                             }
                         },
                         {
-                            title: "出库",
-                            url:"${ctx}/receiving/toAdd/"+data.id
-                            <%--window.location.href = "${ctx}/receiving/toAdd/"+data.id;--%>
+                            title: "入库",
+                            event: function() {
+                                if(data.storageStatus.valueId == 2){
+                                    window.location.href = "${ctx}/receiving/toAdd/"+data.storageId;
+                                }else{
+                                    layer.msg('仓储订单未启用，不可入库', {icon: 2});
+                                }
+                            }
                         },
                         {
-                            title: "入库",
+                            title: "出库",
                             url: "${ctx}/shipping/toAdd/"+data.id //可直接跳转到该url
                         },
                         {
