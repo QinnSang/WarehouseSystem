@@ -92,4 +92,14 @@ public class EmployeeController {
         return stateType;
     }
 
+    @RequestMapping("/employeeRole")
+    @ResponseBody
+    public StateType employeeRole(@ModelAttribute Employee employee, String employeeType, HttpSession session){
+        if(employeeType.equals("role")){
+            StateType stateType=employeeService.employeeRole(employee);
+            return stateType;
+        }else
+            return StateType.getStateType(34);
+    }
+
 }

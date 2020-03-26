@@ -21,5 +21,5 @@ public interface EmployeeMapper {
 
     int freEmployee(@Param("employeeId") int employeeId);
 
-    int queryStatus(@Param("employeeId") int employeeId);
+    int employeeRole(Employee employee);
 }

@@ -42,7 +42,7 @@
             <script type="text/html" id="barDemo">
                 <a class="layui-btn layui-btn-xs " lay-event="detail">查看</a>
                 <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="edit">编辑</a>
-                <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="edit">角色</a>
+                <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="role">角色</a>
                 <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
                 <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="freeze">冻结</a>
             </script>
@@ -142,6 +142,25 @@
         <%--隐藏表单提交按钮--%>
         <button type="submit" style="display:none;" class="layui-btn" lay-submit lay-filter="employeeSubmit">立即提交</button>
     </form>
+
+    <%--选择角色弹框--%>
+    <form class="layui-form layui-form-pane1" id="roleForm" style="display:none;padding: 20px 0 0 0;" name="popRoleForm" method="post" lay-filter="employeeFilter">
+        <input type="hidden" name="employeeId" >
+        <div class="layui-form-item" style="display: none" id="role">
+            <label class="layui-form-label">请选择：</label>
+            <div class="layui-input-block" id="menu">
+                <input v-for="roleList in obj" type="checkbox" name="roleId" v-bind:title="roleList.roleName" v-bind:value="roleList.roleId">
+<%--            <input type="checkbox" name="role" title="角色1" value="1">--%>
+<%--            <input type="checkbox" name="role" title="角色2" value="2">--%>
+<%--            <input type="checkbox" name="role" title="角色3" value="3">--%>
+            </div>
+        </div>
+        <%--区分该表单是用于增加还是修改，增加或修改时分别对该属性赋值--%>
+        <input type="hidden" name="employeeType" id="employeeType">
+        <%--隐藏表单提交按钮--%>
+        <button type="submit" style="display:none;" class="layui-btn" lay-submit lay-filter="roleSubmit">立即提交</button>
+    </form>
+
 </div>
 </div>
 
@@ -211,6 +230,8 @@
                 delUv(data,obj);
             }else if(layEvent === 'freeze') {
                 freezeUv(data, obj);
+            }else if(layEvent === 'role') {
+                roleUv(data, obj);
             }else if(layEvent === 'detail') {
                 employeeDetail(data, obj);
             }
@@ -323,7 +344,77 @@
             return false;//false：阻止表单跳转 true：表单跳转
         });
 
+//为用户添加角色信息
+        function  roleUv(data,obj) {
+            rolePopUp=layer.open({
+                title: '选择角色',
+                type: 1, //页面层
+                area: ['500px', '300px'],
+                shade: false, //禁止使用遮罩，否则操作不了界面
+                resize:false, //禁止窗体拉伸
+                skin: 'layui-layer-molv',
+                btn: ['保存', '取消'],
+                content: $("#roleForm"),
+                success: function(layero, index) {
+                    //表单初始赋值
+                    form.val('employeeFilter', {
+                        "employeeId": data.employeeId,
+                        "realName": data.realName,
+                        "loginCode": data.loginCode,
+                        "password": data.password,
+                        "sex": data.employeeSex.valueName,
+                        "role": data.roleList.role_name,
+                        "roleId":data.roleList.role_id,
+                        "status": data.employeeStatus.valueName,
+                        "phone": data.phone,
+                        "email": data.email,
+                        "workNo": data.workNo,
+                        "remark": data.remark,
+                        "employeeType":"role"
+                    })
+                    //通过删除只读属性使输入框可以编辑
+                    layero.find('.layui-input').removeAttr('readonly');
+                },
+                yes: function(index, layero){  //添加用户表单监听事件
+                    form.on('submit(roleSubmit)', function(data){
+                        // console.log(data.field) //当前容器的全部表单字段，名值对形式：{name: value}
+                        if ($("input:checkbox[name='roleId']:checked").length == 0) {
+                            return null;
+                        }
+                        //获取checkbox[name='roleId']的值，获取所有选中的复选框，并将其值放入数组中
+                        var arr = new Array();
+                        $("input:checkbox[name='roleId']:checked").each(function(i){
+                            arr[i] = $(this).val();
+                        });
+                        //  替换 data.field.roleId的数据为拼接后的字符串
+                        data.field.roleId = arr.join(",");//将数组合并成字符串
 
+                        $.ajax({
+                            url: '${ctx}/employee/employeeRole',
+                            type: 'POST',
+                            // contentType: "application/json; charset=utf-8",
+                            // data:  JSON.stringify(data.field),
+                            data:  data.field,
+                            success: function (StateType) {
+                                // var status = StateType.status;//取得返回数据（Sting类型的字符串）的信息进行取值判断
+                                if (StateType == 'addSuccess') {
+                                    // layer.closeAll('loading');
+                                    layer.msg("保存成功", {icon: 6});
+                                    layer.close(rolePopUp) ,//执行关闭
+                                        table.reload('employeeTable') //重载表格
+                                } else {
+                                    layer.msg("保存失败", {icon: 5});
+                                }
+                            }
+                        });
+                        return false;//false：阻止表单跳转 true：表单跳转
+                    });
+                    return false // 开启该代码可禁止点击该按钮关闭
+                },
+                btn2: function(index, layero){
+                }
+            });
+        }
         //删除用户信息
         function  delUv(data,obj) {
             layer.confirm('确认删除吗？', {

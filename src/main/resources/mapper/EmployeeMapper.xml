@@ -176,4 +176,22 @@
             employee_id=#{employeeId}
         </where>
     </update>
+
+    <insert id="employeeRole">
+        insert into employee_role
+        <trim prefix="(" suffix=")" prefixOverrides=",">
+            <if test="role!=null">
+                role_id,
+            </if>
+        </trim>
+        <trim prefix="values(" suffix=")" prefixOverrides=",">
+            <if test="role!=null">
+                #{role}
+            </if>
+            #{emp_id}
+        </trim>
+        <where>
+            emp_id=#{employeeId}
+        </where>
+    </insert>
 </mapper>
