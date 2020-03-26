@@ -42,6 +42,7 @@
             <script type="text/html" id="barDemo">
                 <a class="layui-btn layui-btn-xs " lay-event="detail">查看</a>
                 <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="edit">编辑</a>
+                <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="edit">角色</a>
                 <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
                 <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="freeze">冻结</a>
             </script>
@@ -56,8 +57,6 @@
                 <div class="layui-input-inline">
                     <input type="tel" name="loginCode" class="layui-input"readonly="readonly">
                 </div>
-            </div>
-            <div class="layui-form-item">
                 <label class="layui-form-label">用户姓名：</label>
                 <div class="layui-input-inline">
                     <input type="tel" name="realName" class="layui-input" readonly="readonly">
@@ -68,8 +67,6 @@
                 <div class="layui-input-inline">
                     <input type="tel" name="sex" class="layui-input" readonly="readonly">
                 </div>
-            </div>
-                <div class="layui-form-item">
                 <label class="layui-form-label" >角色：</label>
                 <div class="layui-input-inline">
                     <input type="tel" name="role" class="layui-input" readonly="readonly">
@@ -80,8 +77,6 @@
                 <div class="layui-input-inline">
                     <input type="tel" name="phone" class="layui-input" readonly="readonly">
                 </div>
-            </div>
-            <div class="layui-form-item">
                 <label class="layui-form-label">邮箱：</label>
                 <div class="layui-input-inline">
                     <input type="tel" name="email" class="layui-input" readonly="readonly">
@@ -92,6 +87,10 @@
                 <div class="layui-input-inline">
                     <input type="tel" name="workNo" class="layui-input" readonly="readonly">
                 </div>
+                <label class="layui-form-label">状态：</label>
+                <div class="layui-input-inline">
+                    <input type="tel" name="status" class="layui-input" readonly="readonly">
+            </div>
             </div>
         </form>
         <%-- <table id="employeeTable" lay-filter="employeeTable" class="layui-hide"></table>--%>
@@ -119,7 +118,7 @@
                 <input type="text" name="realName" lay-verify="required" placeholder="请输入用户姓名"  autocomplete="off" class="layui-input" >
             </div>
         </div>
-            <div class="layui-form-item">
+        <div class="layui-form-item">
             <label class="layui-form-label">性别：</label>
             <div class="layui-input-block">
                 <input type="radio" name="sex" value="2" title="男">
@@ -146,7 +145,7 @@
 </div>
 </div>
 
-    <jsp:include page="/jsp/include/footer.jsp"/>
+<jsp:include page="/jsp/include/footer.jsp"/>
 </div>
 <script src="${ctx}/static/plugins/layui/layui.js"></script>
 <jsp:include page="${ctx}/static/layuiExtend/layuiExtend.js.jsp"/>
@@ -179,13 +178,13 @@
             , drag: false // 关闭拖拽列功能
             , even: true //隔行背景
             , cols: [[ //表头
-                {field: 'loginCode', title: '用户账号', unresize: true},
-                {field: 'realName', title: '用户姓名',  unresize: true},
+                {field: 'loginCode', title: '用户账号',  width: 180, unresize: true},
+                {field: 'realName', title: '用户姓名',   width: 180, unresize: true},
                 {field: 'sex', title: '性别',templet:'<div>{{d.employeeSex.valueName}}</div>',width: 80, unresize: true},
                 {field: 'phone', title: '手机号码', width: 180, unresize: true},
                 {field: 'email', title: '邮箱', width: 180, unresize: true},
                 {field: 'status', title: '状态',templet:'<div>{{d.employeeStatus.valueName}}</div>', width: 80,unresize: true},
-                {fixed: 'right', title: '操作', width: 230, templet: '#barDemo', unresize: true}
+                {fixed: 'right', title: '操作', templet: '#barDemo', unresize: true}
             ]]
             , parseData: function (res) { //res 即为原始返回的数据
                 return {
@@ -218,34 +217,34 @@
         });
 
         //新增用户信息弹窗
-    $('#popEmployeeForm').click(function(){
-        addEmployeePopUp=layer.open({
-            id:'addEmployeePopUp',
-            title: '添加用户',
-            type: 1, //页面层
-            area: ['600px', '440px'],
-            shade: false, //禁止使用遮罩，否则操作不了界面
-            resize:false, //禁止窗体拉伸
-            scrollbar: false,
-            skin: 'layui-layer-molv',
-            btn: ['添加', '取消'],
-            content: $("#employeeForm"),
-            success : function(layero, index) { // 成功弹出后回调
-                $('#employeeForm')[0].reset(); //清空表单内容，防止修改查看公用一个表单时因赋值存在内容
-                //通过删除只读属性使输入框可以编辑
-                layero.find('.layui-input').removeAttr('readonly');
-                $('#employeeType').val("insert");
-            },
-            yes: function(index, layero){  //添加用户表单监听事件
-                layero.find('form').find('button[lay-submit]').click();//此处代码即为触发表单提交按钮
-                return false // 开启该代码可禁止点击该按钮关闭
-            },
-            btn2: function(index, layero){
-                //按钮【按钮二】的回调
-                //return false 开启该代码可禁止点击该按钮关闭
-            }
+        $('#popEmployeeForm').click(function(){
+            addEmployeePopUp=layer.open({
+                id:'addEmployeePopUp',
+                title: '添加用户',
+                type: 1, //页面层
+                area: ['600px', '440px'],
+                shade: false, //禁止使用遮罩，否则操作不了界面
+                resize:false, //禁止窗体拉伸
+                scrollbar: false,
+                skin: 'layui-layer-molv',
+                btn: ['添加', '取消'],
+                content: $("#employeeForm"),
+                success : function(layero, index) { // 成功弹出后回调
+                    $('#employeeForm')[0].reset(); //清空表单内容，防止修改查看公用一个表单时因赋值存在内容
+                    //通过删除只读属性使输入框可以编辑
+                    layero.find('.layui-input').removeAttr('readonly');
+                    $('#employeeType').val("insert");
+                },
+                yes: function(index, layero){  //添加用户表单监听事件
+                    layero.find('form').find('button[lay-submit]').click();//此处代码即为触发表单提交按钮
+                    return false // 开启该代码可禁止点击该按钮关闭
+                },
+                btn2: function(index, layero){
+                    //按钮【按钮二】的回调
+                    //return false 开启该代码可禁止点击该按钮关闭
+                }
+            });
         });
-    });
 
         //修改用户信息
         function  EidtUv(data,obj) {
@@ -407,17 +406,19 @@
                         "loginCode": data.loginCode,
                         "password":data.password,
                         "sex":data.employeeSex.valueName,
-                        "role":function e(){
-                            var roleALl="";
-                            for(var i=0,item;i<data.roleList;i++){
-                                var item=data.roleList[i]
-                                // layer.msg(item.roleName);
-                                roleALl= roleALl +"、"+item.roleName;
+                        "role":function e() {
+                            var roleALl = "", i = 0;
+                            if (data.roleList==null || data.roleList==undefined) {
+                                return roleALl;
+                            } else {
+                                for (var item; i < data.roleList.length - 1; i++) {
+                                    var item = data.roleList[i];
+                                    roleALl += item.roleName + "、";
+                                }
+                                return roleALl + data.roleList[i].roleName;
                             }
-                            // layer.msg(roleALl);
-                            return roleALl;
                         },
-                        "sataus":data.employeeStatus.valueName,
+                    "status":data.employeeStatus.valueName,
                         "phone": data.phone,
                         "email":data.email,
                         "workNo": data.workNo,
@@ -446,51 +447,10 @@
             return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可
         });
 
-        //要先加载数据表格，才能导出，不能放在click方法中
-        var eTable = table.render({
-            elem:  '<table id="eTable"></table>'
-            ,url: '${ctx}/employee/query'
-            ,page:false
-            ,cols: [[
-                {field: 'employeeId', title: '用户编号', unresize: true},
-                {field: 'loginCode', title: '用户账号', unresize: true},
-                {field: 'realName', title: '用户姓名',  unresize: true},
-                {field: 'sex', title: '性别',width: 80, unresize: true},
-                {field: 'phone', title: '手机号码', width: 180, unresize: true},
-                {field: 'email', title: '邮箱', width: 180, unresize: true},
-                //加一个角色
-            ]]
-            ,parseData: function(res){ //res 即为原始返回的数据
-                return {
-                    "code": res.code, //解析接口状态
-                    "msg": res.msg, //解析提示文本
-                    "data": res.data.list //解析数据列表
-                };
-            }
-            ,done: function () {
-                soulTable.render(this);
-            }
-            ,excel:{ // 导出excel配置, （以下值均为默认值）
-                on: true, //是否启用, 默认开启
-                filename: '用户信息表.xlsx', // 文件名
-                head:{ // 表头样式
-                    family: 'Calibri', // 字体
-                    size: 12, // 字号
-                    color: '000000', // 字体颜色
-                    bgColor: 'C7C7C7' // 背景颜色
-                },
-                font: { // 正文样式
-                    family: 'Calibri', // 字体
-                    size: 12, // 字号
-                    color: '000000', // 字体颜色
-                    bgColor: 'FFFFFF' //背景颜色
-                }
-            }
+        //导出
+        $('#exportEmployee').click(function(){
+            soulTable.export(myTable);
         });
-    //导出
-    $('#exportEmployee').click(function(){
-        soulTable.export(eTable);
-    });
     });
 
 </script>

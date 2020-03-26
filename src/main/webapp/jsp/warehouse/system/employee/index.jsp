@@ -56,8 +56,6 @@
                 <div class="layui-input-inline">
                     <input type="tel" name="loginCode" class="layui-input"readonly="readonly">
                 </div>
-            </div>
-            <div class="layui-form-item">
                 <label class="layui-form-label">用户姓名：</label>
                 <div class="layui-input-inline">
                     <input type="tel" name="realName" class="layui-input" readonly="readonly">

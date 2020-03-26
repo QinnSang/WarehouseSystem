@@ -11,60 +11,60 @@
         <!-- 内容主体区域 -->
         <div style="padding: 15px;">
             <%--查询条件--%>
-                <form class="layui-form" method="post">
-                        <div class="layui-inline">
-                            <label class="layui-form-label">角色名称</label>
-                            <div class="layui-input-inline" style="width:180px">
-                                <input type="tel" name="roleName" lay-verify="title" autocomplete="off" placeholder="请输入角色名称" class="layui-input">
-                            </div>
-                            <button class="layui-btn " lay-submit  lay-filter="search" >查 询</button>
-                            <button type="reset" class="layui-btn ">重 置</button>
-                        </div>
-                </form>
-        </div>
-                <%--使用弹窗添加角色信息--%>
-                <div class="layui-input-block" style="margin-left: 15px">
-                    <button class="layui-btn" id="popRoleForm"lay-submit lay-filter="role">添加角色</button>
-                    <%--利用隐藏的数据表格导出--%>
-                    <button class="layui-btn" id="exportRole">导出角色</button>
+            <form class="layui-form" method="post">
+                <div class="layui-inline">
+                    <label class="layui-form-label">角色名称</label>
+                    <div class="layui-input-inline" style="width:180px">
+                        <input type="tel" name="roleName" lay-verify="title" autocomplete="off" placeholder="请输入角色名称" class="layui-input">
+                    </div>
+                    <button class="layui-btn " lay-submit  lay-filter="search" >查 询</button>
+                    <button type="reset" class="layui-btn ">重 置</button>
                 </div>
-
-                <%--数据表格展示--%>
-                <table id="roleTable" lay-filter="roleFilter"></table>
-                <script type="text/html" id="barDemo">
-                    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-                    <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="control">授权</a>
-                    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-                </script>
-    </div>
-    </div>
-    <%--角色信息弹框--%>
-    <form class="layui-form layui-form-pane1" id="roleForm" style="display:none;padding: 20px 0 0 0;" name="popUpdateForm"  method="post" lay-filter="RoleFilter">
-        <input type="hidden" name="roleId" >
-            <div class="layui-form-item">
-                <label class="layui-form-label"style="width: 110px"><span style="color: red;">* </span>角色名称：</label>
-                <div class="layui-input-inline" style="width: 430px">
-                    <input type="text" name="roleName" lay-verify="title" autocomplete="off" placeholder="请输入角色名称" class="layui-input">
-                </div>
-            </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label" style="width: 110px"><span style="color: red;">* </span>角色描述：</label>
-            <div class="layui-input-inline" style="width: 430px">
-                <input type="text" name="remark" lay-verify="title" autocomplete="off" placeholder="请输入角色描述" class="layui-input">
-            </div>
+            </form>
         </div>
-        <%--区分该表单是用于增加还是修改，增加或修改时分别对该属性赋值--%>
-        <input type="hidden" name="roleType" id="roleType">
-        <%--隐藏表单提交按钮--%>
-        <button type="submit" style="display:none;" class="layui-btn" lay-submit lay-filter="roleSubmit">立即提交</button>
-    </form>
+        <%--使用弹窗添加角色信息--%>
+        <div class="layui-input-block" style="margin-left: 15px">
+            <button class="layui-btn" id="popRoleForm"lay-submit lay-filter="role">添加角色</button>
+            <%--利用隐藏的数据表格导出--%>
+            <button class="layui-btn" id="exportRole">导出角色</button>
+        </div>
 
-    <%--角色授权弹窗--%>
-        <%--<div id="logDetail" style="display:none;">--%>
-             <div id="roleControl" class="demo-tree-more" style="display:none;"></div>
-        <%--</div>--%>
+        <%--数据表格展示--%>
+        <table id="roleTable" lay-filter="roleFilter"></table>
+        <script type="text/html" id="barDemo">
+            <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+            <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="control">授权</a>
+            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+        </script>
+    </div>
+</div>
+<%--角色信息弹框--%>
+<form class="layui-form layui-form-pane1" id="roleForm" style="display:none;padding: 20px 0 0 0;" name="popUpdateForm"  method="post" lay-filter="RoleFilter">
+    <input type="hidden" name="roleId" >
+    <div class="layui-form-item">
+        <label class="layui-form-label"style="width: 110px"><span style="color: red;">* </span>角色名称：</label>
+        <div class="layui-input-inline" style="width: 430px">
+            <input type="text" name="roleName" lay-verify="title" autocomplete="off" placeholder="请输入角色名称" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label" style="width: 110px"><span style="color: red;">* </span>角色描述：</label>
+        <div class="layui-input-inline" style="width: 430px">
+            <input type="text" name="remark" lay-verify="title" autocomplete="off" placeholder="请输入角色描述" class="layui-input">
+        </div>
+    </div>
+    <%--区分该表单是用于增加还是修改，增加或修改时分别对该属性赋值--%>
+    <input type="hidden" name="roleType" id="roleType">
+    <%--隐藏表单提交按钮--%>
+    <button type="submit" style="display:none;" class="layui-btn" lay-submit lay-filter="roleSubmit">立即提交</button>
+</form>
 
-    <jsp:include page="/jsp/include/footer.jsp"/>
+<%--角色授权弹窗--%>
+<%--<div id="logDetail" style="display:none;">--%>
+<div id="roleControl" class="demo-tree-more" style="display:none;"></div>
+<%--</div>--%>
+
+<jsp:include page="/jsp/include/footer.jsp"/>
 </div>
 <script src="${ctx}/static/plugins/layui/layui.js"></script>
 <script src='https://code.jquery.com/jquery-3.2.1.min.js'></script>
@@ -116,7 +116,7 @@
             }
             ,done: function () {
                 soulTable.render(this)
-                }
+            }
             ,filter: {bottom: false}
         });
 
@@ -186,12 +186,12 @@
                         "roleType": "update"
                     })
                 },
-                    yes: function(index, layero){  //添加角色表单监听事件
-                        layero.find('form').find('button[lay-submit]').click();//此处代码即为触发表单提交按钮
-                        return false // 开启该代码可禁止点击该按钮关闭
-                    },
-                    btn2: function(index, layero){}
-                });
+                yes: function(index, layero){  //添加角色表单监听事件
+                    layero.find('form').find('button[lay-submit]').click();//此处代码即为触发表单提交按钮
+                    return false // 开启该代码可禁止点击该按钮关闭
+                },
+                btn2: function(index, layero){}
+            });
         }
 
         //新增、修改角色信息提交
@@ -267,7 +267,7 @@
 
         //-------------------授权弹出框   start--------------------------------
         //模拟数据
-         var dataDemo = [{
+        var dataDemo = [{
             title: '一级1'
             ,id: 1
             ,field: 'name1'
