@@ -6,6 +6,7 @@ import pojo.Employee;
 import pojo.Role;
 import pojo.Warehouse;
 
+import java.util.List;
 import java.util.Map;
 
 public interface EmployeeService {
@@ -19,4 +20,5 @@ public interface EmployeeService {
     StateType freEmployee(int employeeId);
 
     StateType employeeRole(Employee employee);
+
 }

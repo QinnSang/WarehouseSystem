@@ -149,10 +149,10 @@
         <div class="layui-form-item" style="display: none" id="role">
             <label class="layui-form-label">请选择：</label>
             <div class="layui-input-block" id="menu">
-                <input v-for="roleList in obj" type="checkbox" name="roleId" v-bind:title="roleList.roleName" v-bind:value="roleList.roleId">
-                <%--            <input type="checkbox" name="role" title="角色1" value="1">--%>
-                <%--            <input type="checkbox" name="role" title="角色2" value="2">--%>
-                <%--            <input type="checkbox" name="role" title="角色3" value="3">--%>
+<%--                <input v-for="roleList in obj" type="checkbox" name="roleId" v-bind:title="roleList.roleName" v-bind:value="roleList.roleId">--%>
+                            <input type="checkbox" name="role" title="角色1" value="1">
+                            <input type="checkbox" name="role" title="角色2" value="2">
+                            <input type="checkbox" name="role" title="角色3" value="3">
             </div>
         </div>
         <%--区分该表单是用于增加还是修改，增加或修改时分别对该属性赋值--%>
@@ -498,16 +498,14 @@
                         "password":data.password,
                         "sex":data.employeeSex.valueName,
                         "role":function e() {
+                            if (data.roleList.length==0)
+                            return "";
                             var roleALl = "", i = 0;
-                            if (data.roleList==null || data.roleList==undefined) {
-                                return roleALl;
-                            } else {
                                 for (var item; i < data.roleList.length - 1; i++) {
                                     var item = data.roleList[i];
                                     roleALl += item.roleName + "、";
                                 }
                                 return roleALl + data.roleList[i].roleName;
-                            }
                         },
                         "status":data.employeeStatus.valueName,
                         "phone": data.phone,
