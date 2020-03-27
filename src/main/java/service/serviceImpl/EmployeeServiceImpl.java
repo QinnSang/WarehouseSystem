@@ -78,5 +78,14 @@ public class EmployeeServiceImpl implements EmployeeService {
         return StateType.getStateType(25);
     }
 
+    @Override
+    public StateType employeeRole(Employee employee) {
+        int roleRow1=employeeMapper.employeeRole(employee);
+        //如果修改用户信息成功
+        if(roleRow1==1)
+            return  StateType.getStateType(20);
+        return  StateType.getStateType(21);
+    }
+
 
 }

@@ -17,4 +17,6 @@ public interface EmployeeService {
     StateType delEmployee(int employeeId);
 
     StateType freEmployee(int employeeId);
+
+    StateType employeeRole(Employee employee);
 }
