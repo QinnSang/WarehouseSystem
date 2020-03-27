@@ -24,13 +24,17 @@
                         <div class="layui-input-inline" style="width:150px">
                             <input type="tel" name="receivingName" lay-verify="title" autocomplete="off" placeholder="请输入入库单名称" class="layui-input">
                         </div>
-                        <label class="layui-form-label" style="width: 100px">仓储订单号：</label>
-                        <div class="layui-input-inline" style="width:150px">
-                            <input type="tel" name="storage.storageCode" lay-verify="title" autocomplete="off" placeholder="请输入仓储订单号" class="layui-input">
-                        </div>
                         <label class="layui-form-label" style="width:120px">仓储订单名称：</label>
                         <div class="layui-input-inline" style="width:150px">
                             <input type="tel" name="storage.storageName" lay-verify="title" autocomplete="off" placeholder="请输入仓储订单名称" class="layui-input">
+                        </div>
+                        <label class="layui-form-label">状态：</label>
+                        <div class="layui-input-inline" style="width:100px">
+                            <select name="status" id="status" lay-filter="status" >
+                                <option value="">-请选择-</option>
+                                <option value="1" >待入库</option>
+                                <option value="2" >已入库</option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -55,7 +59,6 @@
                 <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="edit">编辑</a>
                 <a class="layui-btn layui-btn-xs layui-btn-warm" lay-event="confirm">审核</a>
                 <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-
             </script>
         </div>
     </div>
@@ -195,7 +198,7 @@
                 ,{field:'location.locationName', title: '库位',templet:'<div>{{d.location.locationName}}</div>',width:90,unresize: true}
                 ,{field:'receivingByUser.realName', title: '入库员',templet:'<div>{{d.receivingByUser.realName}}</div>',width:80,unresize: true}
                 ,{field: 'receivingDate', title: '入库时间', width: 110,  sort:true,unresize: true},
-                ,{field: 'receivingStatus', title: '状态',templet:'<div>{{d.receivingStatus.valueName}}</div>', width: 100,unresize: true},
+                ,{field: 'receivingStatus', title: '状态',templet:'<div>{{d.receivingStatus.valueName}}</div>', width: 74.5,unresize: true},
                 ,{ title: '操作', toolbar: '#barDemo',width:220,unresize: true}
             ]]
             ,parseData: function(res){ //res 即为原始返回的数据
@@ -236,8 +239,16 @@
             if (layEvent === 'detail'){
                 detail(data,obj );
             }else if(layEvent === 'edit'){
+                if(data.receivingStatus.valueId == 2){
+                    layer.msg('该入库单已确认，无法编辑', {icon: 2});
+                    return ;
+                }
                 window.location.href = "${ctx}/receiving/toEdit/"+data.receivingId;
             }else if(layEvent === 'confirm'){
+                if(data.receivingStatus.valueId == 2){
+                    layer.msg('该入库单已确认，无法再次审核', {icon: 2});
+                    return ;
+                }
                 confirm(data);
             }else if(layEvent === 'del'){
                 del(data);
@@ -285,12 +296,18 @@
             }, function(index){
                 //向服务端发送确认指令
                 $.ajax({
-                    url: "${ctx}/receiving/del/"+data.receivingId,
-                    type: "get",
+                    url: "${ctx}/receiving/del",
+                    data:{
+                      "receivingId"  :data.receivingId,
+                       "status"  :data.receivingStatus.valueName
+                    },
+                    type: "post",
                     success: function(StateType){
                         if(StateType == 'DelSuccess'){
                             layer.msg('删除成功', {icon: 1});
                             table.reload('receivingTable') //重载表格
+                        }else if(StateType == 'AlreadyConfirm'){
+                            layer.msg('入库单已确认入库，无法删除', {icon: 2});
                         }else{
                             layer.msg('删除失败', {icon: 2});
                         }
@@ -346,7 +363,7 @@
                             {field: 'expenseName', title: '收费项目',width:320,unresize: true},
                             {field: 'price', title: '单价',width:110,unresize: true},
                             {field: 'amount', title: '数量',width:130,unresize: true},
-                            {field: 'checkStatus', title: '结算状态',templet:'<div>{{d.receivingCheckStatus.valueName}}</div>',unresize: true,width:140},
+                            {field: 'checkStatus', title: '结算状态',templet:'<div>{{d.checkStatusData.valueName}}</div>',unresize: true,width:140},
                             {field: 'remark', title: '备注',width:200,unresize: true}
                         ]]
                         ,parseData: function(res){ //res 即为原始返回的数据
@@ -377,10 +394,6 @@
                     ,order: obj.type //排序方式 desc（降序）、asc（升序）、null（空对象，默认排序）
                 }
             });
-        });
-
-        $(document).on('click', '#cancel', function() {
-            layer.close(updatePopUp) //执行关闭
         });
 
         form.on('submit(search)', function (data) {

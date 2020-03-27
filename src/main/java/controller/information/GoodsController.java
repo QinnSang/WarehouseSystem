@@ -65,10 +65,10 @@ public class GoodsController {
     //根据类型查找货物名称
     @RequestMapping("/queryNameByType/{goodsTypeId}")
     @ResponseBody
-    public List<Goods> queryNameByType(@PathVariable int goodsTypeId){
-        List<Goods> goodsList=goodsService.queryNameByType(goodsTypeId);
-        return goodsList;
+    public List<Goods> queryNameByType(@PathVariable("goodsTypeId") int goodsTypeId){
+        return goodsService.queryNameByType(goodsTypeId);
     }
+
 
     //货物类型维护
     @RequestMapping("/goodsTypeInfo")

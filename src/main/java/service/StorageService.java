@@ -14,8 +14,6 @@ public interface StorageService {
 
     StateType add(Storage storage, Employee employee);
 
-    PageInfo<StorageGoods> queryGoodsNumberByStorageId(int storageId, Integer page, Integer limit);
-
     StateType invalid(int storageId);
 
     StateType confirm(int storageId);

@@ -314,7 +314,13 @@
                         },
                         {
                             title: "出库",
-                            url: "${ctx}/shipping/toAdd/"+data.id //可直接跳转到该url
+                            event: function() {
+                                if(data.storageStatus.valueId == 2){
+                                    window.location.href = "${ctx}/shipping/toAdd/"+data.storageId;
+                                }else{
+                                    layer.msg('仓储订单未启用，不可出库', {icon: 2});
+                                }
+                            }
                         },
                         {
                             title: "进出库日志明细",
@@ -475,7 +481,7 @@
                 success: function(layero, index){
                     var goodsNumberTable=table.render({
                         elem: '#goodsNumberTable'
-                        ,url: '${ctx}/storage/queryGoodsNumberByStorageId/'+data.storageId //数据接口
+                        ,url: '${ctx}/storageGoods/queryGoodsNumberByStorageId/'+data.storageId //数据接口
                         ,method: 'post' //防止查询时中文乱码
                         ,page: { //开启分页,需要配合后台PageInfo进行分页
                             first: '首页'

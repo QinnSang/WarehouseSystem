@@ -11,6 +11,83 @@
                 and storage_id = #{storageId}
     </select>
 
+    <resultMap id="goodsNumberBase" type="pojo.StorageGoods">
+        <result property="goodsNumber" column="goods_number"/>
+        <association property="goodsType" javaType="pojo.Goods">
+            <result property="goodsName" column="goodsType"/>
+        </association>
+        <association property="goodsName" javaType="pojo.Goods">
+            <result property="goodsName" column="goodsName"/>
+        </association>
+        <association property="warehouse" javaType="pojo.Warehouse">
+            <result property="warehouseName" column="warehouseName"/>
+        </association>
+        <association property="location" javaType="pojo.Location">
+            <result property="locationName" column="locationName"/>
+        </association>
+    </resultMap>
+    <select id="queryGoodsNumberByStorageId" resultMap="goodsNumberBase">
+        select
+            t3.goods_name as goodsType,
+            t2.goods_name as goodsName,
+            w.warehouse_name as warehouseName,
+            l.location_name as locationName,
+            goods_number
+        from storage_goods t1
+        LEFT JOIN goods t2 on t1.goods_name_id = t2.goods_id
+        LEFT JOIN goods t3 on t1.goods_type_id =t3.goods_id
+        LEFT JOIN warehouse w on t1.warehouse_id = w.warehouse_id
+        LEFT JOIN location l on t1.location_id = l.location_id
+        where
+            l.warehouse_id = w.warehouse_id
+            and t2.parent_id = t3.goods_id
+            and t1.storage_id = #{storageId}
+    </select>
+
+    <select id="queryGoodsTypeByStorage" resultType="pojo.Goods">
+          select
+              g.goods_id,
+              g.goods_name
+          from storage_goods t1
+          LEFT JOIN goods g on t1.goods_type_id = g.goods_id
+          where storage_id = #{storageId}
+    </select>
+
+    <select id="queryNameByTypeStorage" parameterType="pojo.StorageGoods" resultType="pojo.Goods">
+          select
+              g.goods_id,
+              g.goods_name
+          from storage_goods t1
+          LEFT JOIN goods g on t1.goods_name_id = g.goods_id
+          where t1.goods_type_id = #{goodsTypeId}
+                and t1.storage_id = #{storageId}
+    </select>
+
+    <select id="queryWarehouseByGoods" resultType="pojo.Warehouse" parameterType="pojo.StorageGoods">
+        select
+            w.warehouse_id,
+            w.warehouse_name
+        from storage_goods t1
+        LEFT JOIN warehouse w on t1.warehouse_id = w.warehouse_id
+        where storage_id = #{storageId}
+              and goods_type_id = #{goodsTypeId}
+              and goods_name_id = #{goodsNameId}
+    </select>
+
+    <select id="queryLocationByGoods" resultType="pojo.Location" parameterType="pojo.StorageGoods">
+        select
+            l.location_id,
+            l.location_name
+        from storage_goods t1
+        LEFT JOIN location l on t1.location_id = l.location_id
+        where storage_id = #{storageId}
+              and goods_type_id = #{goodsTypeId}
+              and goods_name_id = #{goodsNameId}
+              and l.warehouse_id = #{warehouseId}
+    </select>
+
+
+
     <insert id="add" parameterType="pojo.StorageGoods">
         insert into storage_goods
               (storage_id, goods_type_id, goods_name_id, warehouse_id, location_id, goods_number)

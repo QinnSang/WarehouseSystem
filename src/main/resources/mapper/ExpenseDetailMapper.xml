@@ -2,8 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mapper.ExpenseDetailMapper">
 
-
-    <insert id="add">
+    <insert id="addReceiving">
         insert into expense_detail (order_id, order_type, expense_id, amount, price, storage_id, check_status, remark)
         values
         <foreach collection="expenseDetailList" item="expense" separator=",">
@@ -26,7 +25,7 @@
         <result property="remark" column="remark"/>
         <result property="amount" column="amount"/>
         <result property="price" column="price"/>
-        <association property="receivingCheckStatus" javaType="pojo.DataDictionary">
+        <association property="checkStatusData" javaType="pojo.DataDictionary">
             <result property="valueName" column="check_status"/>
         </association>
 
@@ -52,5 +51,23 @@
     <delete id="deleteByOrderId" parameterType="integer">
         delete from expense_detail where order_id = #{orderId}
     </delete>
+
+    <insert id="addShipping">
+        insert into expense_detail (order_id, order_type, expense_id, amount, price, storage_id, check_status, remark)
+        values
+        <foreach collection="expenseDetailList" item="expense" separator=",">
+            (
+            #{expense.orderId},
+            #{expense.orderType},
+            #{expense.expenseId},
+            #{expense.amount},
+            #{expense.price},
+            #{expense.storageId},
+            #{expense.checkStatus},
+            #{expense.remark}
+            )
+        </foreach>
+    </insert>
+
 
 </mapper>

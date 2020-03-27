@@ -51,13 +51,6 @@ public class StorageServiceImpl implements StorageService {
     }
 
     @Override
-    public PageInfo<StorageGoods> queryGoodsNumberByStorageId(int storageId,Integer page, Integer limit) {
-        List<StorageGoods> list=storageMapper.queryGoodsNumberByStorageId(storageId);
-        PageInfo<StorageGoods> pageInfo=new PageInfo<>(list);
-        return pageInfo;
-    }
-
-    @Override
     public StateType invalid(int storageId) {
         Storage storage=storageMapper.queryStatusByContractId(storageId);
         //如果合同已作废或归档，则不可作废

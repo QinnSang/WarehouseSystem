@@ -28,4 +28,5 @@ public interface GoodsService {
     StateType delGoodsName(int goodsNameId);
 
     List<Goods> queryNameByType(int goodsTypeId);
+
 }

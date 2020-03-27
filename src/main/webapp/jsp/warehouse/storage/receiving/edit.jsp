@@ -388,6 +388,9 @@
                     } else {
                         layer.msg("修改失败", {icon: 2});
                     }
+                },
+                error:function (data) {
+                    layer.msg("修改失败,请重试！", {icon: 2});
                 }
             });
             return false;//false：阻止表单跳转 true：表单跳转
@@ -401,6 +404,7 @@
                 var newRow = {tempId: new Date().valueOf(), expenseId: null, amount:null,price:null,remark:null};
                 oldData.push(newRow);
                 tableIns.reload({
+                    url:'',
                     data : oldData
                 });
             },
@@ -415,6 +419,7 @@
                     }
                 }
                 tableIns.reload({
+                    url:'',
                     data : oldData
                 });
             },
@@ -428,6 +433,7 @@
                     continue;
                 }
                 tableIns.reload({
+                    url:'',
                     data : oldData
                 });
             },

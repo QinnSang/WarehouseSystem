@@ -113,10 +113,10 @@ public class ReceivingController {
         return stateType;
     }
 
-    @RequestMapping("/del/{receivingId}")
+    @RequestMapping("/del")
     @ResponseBody
-    public StateType del( @PathVariable("receivingId") int receivingId){
-        StateType stateType=receivingService.del(receivingId);
+    public StateType del( @ModelAttribute Receiving receiving){
+        StateType stateType=receivingService.del(receiving);
         return stateType;
     }
 
