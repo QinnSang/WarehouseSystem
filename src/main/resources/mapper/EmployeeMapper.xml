@@ -194,4 +194,23 @@
             emp_id=#{employeeId}
         </where>
     </insert>
+
+    <resultMap id="roleBase" type="pojo.Role">
+        <result property="roleName" column="role_name"/>
+        <result property="roleId" column="role_id"/>
+        <association property="employee" javaType="pojo.Employee">
+            <id property="employeeId" column="employee_id"/>
+        </association>
+    </resultMap>
+
+    <select id="queryRole" resultMap="roleBase">
+        select
+        t1.employee_id,
+        t3.role_id,
+        t3.role_name
+        from role t3
+        LEFT JOIN employee_role t5 ON t3.role_id = t5.role_id
+        LEFT JOIN employee t1 ON t1.employee_id=t5.emp_id
+    </select>
+
 </mapper>

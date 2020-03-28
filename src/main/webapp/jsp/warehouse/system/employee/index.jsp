@@ -143,23 +143,15 @@
         <button type="submit" style="display:none;" class="layui-btn" lay-submit lay-filter="employeeSubmit">立即提交</button>
     </form>
 
-    <%--选择角色弹框--%>
-    <form class="layui-form layui-form-pane1" id="roleForm" style="display:none;padding: 20px 0 0 0;" name="popRoleForm" method="post" lay-filter="employeeFilter">
-        <input type="hidden" name="employeeId" >
-        <div class="layui-form-item" style="display: none" id="role">
-            <label class="layui-form-label">请选择：</label>
-            <div class="layui-input-block" id="menu">
-<%--                <input v-for="roleList in obj" type="checkbox" name="roleId" v-bind:title="roleList.roleName" v-bind:value="roleList.roleId">--%>
-                            <input type="checkbox" name="role" title="角色1" value="1">
-                            <input type="checkbox" name="role" title="角色2" value="2">
-                            <input type="checkbox" name="role" title="角色3" value="3">
-            </div>
-        </div>
-        <%--区分该表单是用于增加还是修改，增加或修改时分别对该属性赋值--%>
-        <input type="hidden" name="employeeType" id="employeeType">
-        <%--隐藏表单提交按钮--%>
-        <button type="submit" style="display:none;" class="layui-btn" lay-submit lay-filter="roleSubmit">立即提交</button>
-    </form>
+    <%--选择角色弹窗--%>
+    <%--<div id="logDetail" style="display:none;">--%>
+    <div id="employeeRole" style="display:none;">
+        <form class="layui-form layui-form-pane1" id="roleForm" style="position:relative;" lay-filter="roleFilter">
+            <table id="roleTable" lay-filter="roleFilter"></table>
+            <button type="submit" style="display:none;" class="layui-btn" lay-submit lay-filter="roleSubmit">立即提交</button>
+        </form>
+    </div>
+
 
 </div>
 </div>
@@ -204,6 +196,32 @@
                 {field: 'email', title: '邮箱', width: 180, unresize: true},
                 {field: 'status', title: '状态',templet:'<div>{{d.employeeStatus.valueName}}</div>', width: 80,unresize: true},
                 {fixed: 'right', title: '操作', templet: '#barDemo', unresize: true}
+            ]]
+            , parseData: function (res) { //res 即为原始返回的数据
+                return {
+                    "code": res.code, //解析接口状态
+                    "msg": res.msg, //解析提示文本
+                    "count": res.count, //解析数据长度
+                    "data": res.data.list //解析数据列表
+                };
+            }
+            ,done: function () {
+                soulTable.render(this)
+            }
+            ,filter: {bottom: false}
+        });
+
+        //用户角色弹窗
+        var roleTable =  table.render({
+            elem: '#roleTable'
+            ,height: 220
+            ,url: '${ctx}/employee/queryRole' //数据接口
+            ,title: '角色表'
+            , page: false
+            ,cols: [[ //表头
+                {type: 'checkbox', fixed: 'left'}
+                ,{field: 'roleId', title: '角色编号', width:137}
+                ,{field: 'roleName', title: '角色名称', width:220}
             ]]
             , parseData: function (res) { //res 即为原始返回的数据
                 return {
@@ -344,77 +362,6 @@
             return false;//false：阻止表单跳转 true：表单跳转
         });
 
-//为用户添加角色信息
-        function  roleUv(data,obj) {
-            rolePopUp=layer.open({
-                title: '选择角色',
-                type: 1, //页面层
-                area: ['500px', '300px'],
-                shade: false, //禁止使用遮罩，否则操作不了界面
-                resize:false, //禁止窗体拉伸
-                skin: 'layui-layer-molv',
-                btn: ['保存', '取消'],
-                content: $("#roleForm"),
-                success: function(layero, index) {
-                    //表单初始赋值
-                    form.val('employeeFilter', {
-                        "employeeId": data.employeeId,
-                        "realName": data.realName,
-                        "loginCode": data.loginCode,
-                        "password": data.password,
-                        "sex": data.employeeSex.valueName,
-                        "role": data.roleList.role_name,
-                        "roleId":data.roleList.role_id,
-                        "status": data.employeeStatus.valueName,
-                        "phone": data.phone,
-                        "email": data.email,
-                        "workNo": data.workNo,
-                        "remark": data.remark,
-                        "employeeType":"role"
-                    })
-                    //通过删除只读属性使输入框可以编辑
-                    layero.find('.layui-input').removeAttr('readonly');
-                },
-                yes: function(index, layero){  //添加用户表单监听事件
-                    form.on('submit(roleSubmit)', function(data){
-                        // console.log(data.field) //当前容器的全部表单字段，名值对形式：{name: value}
-                        if ($("input:checkbox[name='roleId']:checked").length == 0) {
-                            return null;
-                        }
-                        //获取checkbox[name='roleId']的值，获取所有选中的复选框，并将其值放入数组中
-                        var arr = new Array();
-                        $("input:checkbox[name='roleId']:checked").each(function(i){
-                            arr[i] = $(this).val();
-                        });
-                        //  替换 data.field.roleId的数据为拼接后的字符串
-                        data.field.roleId = arr.join(",");//将数组合并成字符串
-
-                        $.ajax({
-                            url: '${ctx}/employee/employeeRole',
-                            type: 'POST',
-                            // contentType: "application/json; charset=utf-8",
-                            // data:  JSON.stringify(data.field),
-                            data:  data.field,
-                            success: function (StateType) {
-                                // var status = StateType.status;//取得返回数据（Sting类型的字符串）的信息进行取值判断
-                                if (StateType == 'addSuccess') {
-                                    // layer.closeAll('loading');
-                                    layer.msg("保存成功", {icon: 6});
-                                    layer.close(rolePopUp) ,//执行关闭
-                                        table.reload('employeeTable') //重载表格
-                                } else {
-                                    layer.msg("保存失败", {icon: 5});
-                                }
-                            }
-                        });
-                        return false;//false：阻止表单跳转 true：表单跳转
-                    });
-                    return false // 开启该代码可禁止点击该按钮关闭
-                },
-                btn2: function(index, layero){
-                }
-            });
-        }
         //删除用户信息
         function  delUv(data,obj) {
             layer.confirm('确认删除吗？', {
@@ -499,13 +446,13 @@
                         "sex":data.employeeSex.valueName,
                         "role":function e() {
                             if (data.roleList.length==0)
-                            return "";
+                                return "";
                             var roleALl = "", i = 0;
-                                for (var item; i < data.roleList.length - 1; i++) {
-                                    var item = data.roleList[i];
-                                    roleALl += item.roleName + "、";
-                                }
-                                return roleALl + data.roleList[i].roleName;
+                            for (var item; i < data.roleList.length - 1; i++) {
+                                var item = data.roleList[i];
+                                roleALl += item.roleName + "、";
+                            }
+                            return roleALl + data.roleList[i].roleName;
                         },
                         "status":data.employeeStatus.valueName,
                         "phone": data.phone,
@@ -515,6 +462,71 @@
                     })
                 }
             })
+        }
+
+        //角色弹窗
+        function roleUv(data,obj ){
+            rolePopUp=layer.open({
+                type: 1,
+                title: '选择角色',
+                area:['30%','80%'],
+                skin: 'layui-layer-molv',
+                shade: false, //禁止使用遮罩，否则操作不了界面
+                resize:false, //禁止窗体拉伸
+                content: $("#employeeRole"),
+                btn: ['保存', '取消'],
+                success: function(layero, index){
+                    //表单赋值
+                    form.val('roleFilter',{
+                        "employeeId": data.employeeId,
+                        "roleId":data.roleId,
+                        "roleName":data.roleName,
+                    })
+                },
+                yes: function(index, layero){  //添加用户表单监听事件
+                    layero.find('form').find('button[lay-submit]').click();//此处代码即为触发表单提交按钮
+                    return false // 开启该代码可禁止点击该按钮关闭
+                },
+                btn2: function(index, layero){}
+            })
+
+        }
+
+        function  roleUv1() {
+            rolePopUp=layer.open({
+                title: '选择角色',
+                type: 1, //页面层
+                area: ['20%', '60%'],
+                offset: 'r',
+                shade: false, //禁止使用遮罩，否则操作不了界面
+                resize:false, //禁止窗体拉伸
+                skin: 'layui-layer-molv',
+                btn: ['保存', '取消'],
+                content: $("#employeeRole"),
+                success: function(layero, index){
+                    //渲染树结构
+                    tree.render({
+                        elem: '#employeeRole'
+                        ,data: employeeRole
+                        ,showCheckbox: true  //是否显示复选框
+                        ,id: 'demoId1'
+                        ,isJump: false //是否允许点击节点时弹出新窗口跳转
+                        ,click: function(obj){
+                            var data = obj.data;  //获取当前点击的节点数据
+                            layer.msg('状态：'+ obj.state + '<br>节点数据：' + JSON.stringify(data));
+                        }
+                    });
+                },
+                //layui树形菜单怎么和java后台交互数据   https://fly.layui.com/jie/43920/
+                yes: function(index, layero){
+                    //将授权结点保存
+                    return false // 开启该代码可禁止点击该按钮关闭
+                },
+                btn2: function(index, layero){
+                    //按钮【按钮二】的回调
+                    //return false 开启该代码可禁止点击该按钮关闭
+                }
+            });
         }
 
         $(document).on('click', '#cancel', function() {

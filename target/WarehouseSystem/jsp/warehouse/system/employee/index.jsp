@@ -143,7 +143,7 @@
         <button type="submit" style="display:none;" class="layui-btn" lay-submit lay-filter="employeeSubmit">立即提交</button>
     </form>
 
-<%--选择角色弹窗--%>
+    <%--选择角色弹窗--%>
     <%--<div id="logDetail" style="display:none;">--%>
     <div id="employeeRole" style="display:none;">
         <form class="layui-form layui-form-pane1" id="roleForm" style="position:relative;" lay-filter="roleFilter">
@@ -152,8 +152,6 @@
         </form>
     </div>
 
-<%--    <div id="employeeRole" class="demo-tree-more" style="display:none;"></div>--%>
-    <%--</div>--%>
 
 </div>
 </div>
@@ -167,13 +165,12 @@
 <script>
 
     //JavaScript代码区域
-    layui.use(['element','jquery','form','table','layer','tree','soulTable'], function(){
+    layui.use(['element','jquery','form','table','layer','soulTable'], function(){
         var element = layui.element;
         $ =layui.jquery;
         var table = layui.table;
         var form = layui.form;
         var layer = layui.layer;
-        var tree = layui.tree,util = layui.util;
         var soulTable = layui.soulTable; //使用soulTable子表
         // var index = layer.load(); //添加laoding,0-2两种方式
 
@@ -218,7 +215,7 @@
         var roleTable =  table.render({
             elem: '#roleTable'
             ,height: 220
-            ,url: '${ctx}/employee/query' //数据接口
+            ,url: '${ctx}/employee/queryRole' //数据接口
             ,title: '角色表'
             , page: false
             ,cols: [[ //表头
@@ -240,24 +237,23 @@
             ,filter: {bottom: false}
         });
 
-
         //监听行工具事件
-        table.on('tool(employeeFilter)', function(obj) { //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+        table.on('tool(employeeFilter)', function(obj){ //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
             var data = obj.data //获得当前行数据
-                , layEvent = obj.event; //获得 lay-event 对应的值
-            if (layEvent === 'edit') {
+                ,layEvent = obj.event; //获得 lay-event 对应的值
+            if(layEvent === 'edit'){
                 //使用弹出层进行修改
-                EidtUv(data, obj); //发送修改的Ajax请求
-            } else if (layEvent === 'del') {
-                delUv(data, obj);
-            } else if (layEvent === 'freeze') {
+                EidtUv(data,obj); //发送修改的Ajax请求
+            } else if(layEvent === 'del'){
+                delUv(data,obj);
+            }else if(layEvent === 'freeze') {
                 freezeUv(data, obj);
-            } else if (layEvent === 'detail') {
+            }else if(layEvent === 'role') {
+                roleUv(data, obj);
+            }else if(layEvent === 'detail') {
                 employeeDetail(data, obj);
-            } else if (layEvent === 'role') {
-                roleUv();
             }
-        })
+        });
 
         //新增用户信息弹窗
         $('#popEmployeeForm').click(function(){
@@ -429,6 +425,7 @@
             });
         }
 
+
         //用户信息弹窗
         function employeeDetail(data,obj ){
             EmployeeDetailPopUp=layer.open({
@@ -467,36 +464,7 @@
             })
         }
 
-
-
-
-        //-------------------角色弹出框   start--------------------------------
-
-
-        //模拟数据
-        var employeeRole = [{
-            title: '角色1'
-            ,id: 1
-            ,field: 'name1'
-            ,checked: true
-            ,spread: true
-        },{
-            title: '角色2'
-            ,id: 2
-            ,field: ''
-            ,spread: true
-        },{
-            title: '角色3'
-            ,id: 16
-            ,field: ''
-        },{
-            title: '角色4'
-            ,id: 16
-            ,field: ''
-
-        }]
-
-//角色弹窗
+        //角色弹窗
         function roleUv(data,obj ){
             rolePopUp=layer.open({
                 type: 1,
@@ -510,26 +478,9 @@
                 success: function(layero, index){
                     //表单赋值
                     form.val('roleFilter',{
-                        "employeeId": data.employeeId,
-                        "realName": data.realName,
-                        "loginCode": data.loginCode,
-                        "password":data.password,
-                        "sex":data.employeeSex.valueName,
-                        "roleName":function e() {
-                            if (data.roleList.length==0)
-                                return "";
-                            var roleALl = "", i = 0;
-                            for (var item; i < data.roleList.length - 1; i++) {
-                                var item = data.roleList[i];
-                                roleALl += item.roleName + "、";
-                            }
-                            return roleALl + data.roleList[i].roleName;
-                        },
-                        "status":data.employeeStatus.valueName,
-                        "phone": data.phone,
-                        "email":data.email,
-                        "workNo": data.workNo,
-                        "remark": data.remark,
+                        // "employeeId": data.employeeId,
+                        "roleId":data.roleId,
+                        "roleName":data.roleName,
                     })
                 },
                 yes: function(index, layero){  //添加用户表单监听事件
@@ -578,9 +529,6 @@
             });
         }
 
-        //-------------------授权弹出框   end--------------------------------
-
-
         $(document).on('click', '#cancel', function() {
             layer.close(updatePopUp) //执行关闭
         });
@@ -599,7 +547,6 @@
             });
             return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可
         });
-
 
         //导出
         $('#exportEmployee').click(function(){

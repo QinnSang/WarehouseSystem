@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pojo.Employee;
+import pojo.Location;
 import pojo.Role;
 import service.EmployeeService;
 import javax.servlet.http.HttpSession;
@@ -92,13 +93,26 @@ public class EmployeeController {
 
     @RequestMapping("/employeeRole")
     @ResponseBody
-    public StateType employeeRole(@ModelAttribute Employee employee, String employeeType, HttpSession session){
-        if(employeeType.equals("role")){
-            StateType stateType=employeeService.employeeRole(employee);
+    public StateType employeeRole(@ModelAttribute Employee employee, String employeeType, HttpSession session) {
+        if (employeeType.equals("role")) {
+            StateType stateType = employeeService.employeeRole(employee);
             return stateType;
-        }else
+        } else {
             return StateType.getStateType(34);
+        }
     }
 
-
+    //查询所有角色信息
+    @RequestMapping("/queryRole")
+    @ResponseBody
+    public Map<String, Object> queryRole () {
+        PageInfo<Role> pageInfo = employeeService.queryRole();
+        Map<String, Object> tableData = new HashMap<>();
+        //这是layui数据表格要求返回的json数据格式
+        tableData.put("code", 0);
+        tableData.put("msg", "");
+        //将分页后的数据返回（每页要显示的数据）
+        tableData.put("data", pageInfo);
+        return tableData;
+    }
 }

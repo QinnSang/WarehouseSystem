@@ -3,6 +3,7 @@ package mapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import pojo.Employee;
+import pojo.Role;
 import pojo.Warehouse;
 
 import java.util.List;
@@ -22,4 +23,6 @@ public interface EmployeeMapper {
     int freEmployee(@Param("employeeId") int employeeId);
 
     int employeeRole(Employee employee);
+
+    List<Role> queryRole();
 }

@@ -21,4 +21,5 @@ public interface EmployeeService {
 
     StateType employeeRole(Employee employee);
 
+    PageInfo<Role> queryRole();
 }

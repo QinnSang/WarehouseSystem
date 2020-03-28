@@ -7,6 +7,9 @@ public class Role {
 
     private String remark;
 
+    private Employee employee;
+
+
     public Integer getRoleId() {
         return roleId;
     }
@@ -29,5 +32,13 @@ public class Role {
 
     public void setRemark(String remark) {
         this.remark = remark == null ? null : remark.trim();
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
+    public Employee getEmployee() {
+        return employee;
     }
 }
