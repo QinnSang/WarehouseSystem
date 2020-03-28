@@ -11,6 +11,7 @@ import pojo.Location;
 import pojo.Role;
 import service.EmployeeService;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -91,16 +92,6 @@ public class EmployeeController {
         return stateType;
     }
 
-    @RequestMapping("/employeeRole")
-    @ResponseBody
-    public StateType employeeRole(@ModelAttribute Employee employee, String employeeType, HttpSession session) {
-        if (employeeType.equals("role")) {
-            StateType stateType = employeeService.employeeRole(employee);
-            return stateType;
-        } else {
-            return StateType.getStateType(34);
-        }
-    }
 
     //查询所有角色信息
     @RequestMapping("/queryRole")
@@ -114,5 +105,12 @@ public class EmployeeController {
         //将分页后的数据返回（每页要显示的数据）
         tableData.put("data", pageInfo);
         return tableData;
+    }
+
+    @RequestMapping("/roleInfo")
+    @ResponseBody
+    public StateType roleInfo(@ModelAttribute int employeeId){
+            StateType stateType=employeeService.employeeRole(employeeId);
+            return stateType;
     }
 }

@@ -22,7 +22,7 @@ public interface EmployeeMapper {
 
     int freEmployee(@Param("employeeId") int employeeId);
 
-    int employeeRole(Employee employee);
+    int employeeRole(int employee);
 
     List<Role> queryRole();
 }
