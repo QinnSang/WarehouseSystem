@@ -36,7 +36,7 @@
             <!--<property name="enableSubPackages" value="true" />-->
         <!--</javaClientGenerator>-->
         <!--要转化成pojo的表-->
-        <table  tableName="warehouse" domainObjectName="Warehouse" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+        <table  tableName="log" domainObjectName="Log" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
                 enableSelectByExample="false" selectByExampleQueryId="false">
         </table>
     </context>

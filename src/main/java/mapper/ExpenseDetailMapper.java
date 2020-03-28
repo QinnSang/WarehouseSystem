@@ -12,9 +12,11 @@ import java.util.List;
 public interface ExpenseDetailMapper {
     int addReceiving(Receiving receiving);
 
-    List<ExpenseDetail> queryByOrderId(@Param("orderId") Integer orderId);
+    List<ExpenseDetail> queryByOrderId(ExpenseDetail expenseDetail);
 
     int deleteByOrderId(@Param("orderId")Integer orderId);
 
     int addShipping(Shipping shipping);
+
+
 }

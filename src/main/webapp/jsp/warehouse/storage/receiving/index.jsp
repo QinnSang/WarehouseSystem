@@ -192,13 +192,13 @@
                 {field: 'receivingCode', title: '入库单号',width:160,unresize: true}
                 ,{field: 'receivingName', title: '入库单名称',width:180,unresize: true}
                 // ,{field: 'storage.storageCode', title: '仓储订单号',templet:'<div>{{d.storage.storageCode}}</div>',width:150,unresize: true}
-                ,{field: 'storageName', title: '仓储订单名称',templet:'<div>{{d.storage.storageName}}</div>',width:180,unresize: true}
+                ,{field: 'storageName', title: '仓储订单名称',templet:'<div>{{d.storage.storageName}}</div>',width:170,unresize: true}
                 ,{field:'goodsName.goodsName',title: '货物',templet:'<div>{{d.goodsName.goodsName}}</div>',width:100,unresize: true}
                 ,{field:'receivingNumber', title: '入库数量',width:90,unresize: true}
                 ,{field:'location.locationName', title: '库位',templet:'<div>{{d.location.locationName}}</div>',width:90,unresize: true}
                 ,{field:'receivingByUser.realName', title: '入库员',templet:'<div>{{d.receivingByUser.realName}}</div>',width:80,unresize: true}
                 ,{field: 'receivingDate', title: '入库时间', width: 110,  sort:true,unresize: true},
-                ,{field: 'receivingStatus', title: '状态',templet:'<div>{{d.receivingStatus.valueName}}</div>', width: 74.5,unresize: true},
+                ,{field: 'receivingStatus', title: '状态',templet:'<div>{{d.receivingStatus.valueName}}</div>', width: 76,unresize: true},
                 ,{ title: '操作', toolbar: '#barDemo',width:220,unresize: true}
             ]]
             ,parseData: function(res){ //res 即为原始返回的数据
@@ -354,7 +354,11 @@
                     //费用明细
                     var expense=table.render({
                         elem: '#expenseTable'
-                        ,url:'${ctx}/expenseDetail/queryByOrderId/'+data.receivingId
+                        ,url:'${ctx}/expenseDetail/queryByOrderId'
+                        ,where:{
+                            "orderId":data.receivingId,
+                            "orderType":1
+                        }
                         ,method: 'post' //防止查询时中文乱码
                         ,drag: false // 关闭拖拽列功能
                         ,even: false //不隔行背景

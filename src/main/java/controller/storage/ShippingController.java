@@ -33,6 +33,9 @@ public class ShippingController {
     @Autowired
     ContractExpenseService contractExpenseService;
 
+    @Autowired
+    LogService logService;
+
     @RequestMapping("/index")
     public String index(){
         return "storage/shipping/index";
@@ -103,6 +106,10 @@ public class ShippingController {
     @ResponseBody
     public StateType confirm(@ModelAttribute Shipping shipping){
         StateType stateType=shippingService.confirm(shipping);
+        if(stateType == StateType.getStateType(28)){
+            //只有审核通过才可增加出库日志记录
+            logService.addShippingLog(shipping.getStorageId(),shipping.getShippingId());
+        }
         return stateType;
     }
 

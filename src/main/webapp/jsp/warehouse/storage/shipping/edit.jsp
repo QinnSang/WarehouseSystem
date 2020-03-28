@@ -496,7 +496,11 @@
         var tableIns = table.render({
             elem: '#expenseTable',
             id: layTableId,
-            url:'${ctx}/expenseDetail/queryByOrderId/'+'${shipping.shippingId}',
+            url:'${ctx}/expenseDetail/queryByOrderId',
+            where:{
+                "orderId":'${shipping.shippingId}',
+                "orderType":1
+            },
             drag: false, // 关闭拖拽列功能
             even: false, //不开启隔行背景
             cols: [[

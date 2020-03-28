@@ -65,7 +65,7 @@
         <where>
             t4.type_code='CS_STATUS'
             <if test="storageId!=null">
-                and storage_id = #{storageId}
+                and t1.storage_id = #{storageId}
             </if>
             <if test="storageCode!=null and storageCode!=''">
                 and storage_code like #{storagecode}

@@ -174,13 +174,13 @@
                 {field: 'shippingCode', title: '出库单号',width:160,unresize: true}
                 ,{field: 'shippingName', title: '出库单名称',width:180,unresize: true}
                 // ,{field: 'storage.storageCode', title: '仓储订单号',templet:'<div>{{d.storage.storageCode}}</div>',width:150,unresize: true}
-                ,{field: 'storageName', title: '仓储订单名称',templet:'<div>{{d.storage.storageName}}</div>',width:180,unresize: true}
+                ,{field: 'storageName', title: '仓储订单名称',templet:'<div>{{d.storage.storageName}}</div>',width:170,unresize: true}
                 //使用templet模板获取级联属性
                 ,{field:'goodsName.goodsName',title: '货物',templet:'<div>{{d.goodsName.goodsName}}</div>',width:100,unresize: true}
                 ,{field:'shippingNumber', title: '出库数量',width:90,unresize: true}
-                ,{field:'shippingByUser.realName', title: '入库员',templet:'<div>{{d.shippingByUser.realName}}</div>',width:80,unresize: true}
+                ,{field:'shippingByUser.realName', title: '出库员',templet:'<div>{{d.shippingByUser.realName}}</div>',width:80,unresize: true}
                 ,{field: 'shippingTime', title: '出库时间', width: 110,  sort:true,unresize: true},
-                ,{field: 'shippingStatus', title: '状态',templet:'<div>{{d.shippingStatus.valueName}}</div>', width: 74.5,unresize: true},
+                ,{field: 'shippingStatus', title: '状态',templet:'<div>{{d.shippingStatus.valueName}}</div>', width: 76,unresize: true},
                 ,{ title: '操作', toolbar: '#barDemo',width:220,unresize: true}
             ]]
             ,parseData: function(res){ //res 即为原始返回的数据
@@ -211,7 +211,6 @@
                     bgColor: 'ffffff' //背景颜色
                 }
             }
-
         });
 
         //==========================监听行工具事件 start==============
@@ -272,7 +271,11 @@
                     //费用明细
                     var expense=table.render({
                         elem: '#expenseTable'
-                        ,url:'${ctx}/expenseDetail/queryByOrderId/'+data.shippingId
+                        ,url:'${ctx}/expenseDetail/queryByOrderId'
+                        ,where:{
+                            "orderId":data.shippingId,
+                            "orderType":2
+                        }
                         ,method: 'post' //防止查询时中文乱码
                         ,drag: false // 关闭拖拽列功能
                         ,even: false //不隔行背景
@@ -301,7 +304,7 @@
         }
 
         function confirm(data) {
-            layer.confirm('是否确认入库？', {
+            layer.confirm('是否确认出库？', {
                 skin: 'layui-layer-molv',
                 shade: .1
             }, function(index){
@@ -321,7 +324,7 @@
                     type: "POST",
                     success: function(StateType){
                         if(StateType == 'ConfirmSuccess'){
-                            layer.msg('确认入库成功', {icon: 1});
+                            layer.msg('确认出库成功', {icon: 1});
                             table.reload('shippingTable') //重载表格
                         }else if(StateType == 'LackGoodsNumber'){
                             layer.msg('库存不足，无法确认出库!', {icon: 2});
@@ -330,14 +333,14 @@
                         }
                     },
                     error:function (data) {
-                        layer.msg('入库审核失败', {icon: 2});
+                        layer.msg('出库审核失败', {icon: 2});
                     }
                 });
             });
         }
 
         function del(data) {
-            layer.confirm('是否删除该入库单？', {
+            layer.confirm('是否删除该出库单？', {
                 skin: 'layui-layer-molv',
                 shade: .1
             }, function(index){
@@ -354,7 +357,7 @@
                             layer.msg('删除成功', {icon: 1});
                             table.reload('shippingTable') //重载表格
                         }else if(StateType == 'AlreadyConfirm'){
-                            layer.msg('入库单已确认入库，无法删除', {icon: 2});
+                            layer.msg('出库单已确认出库，无法删除', {icon: 2});
                         }else{
                             layer.msg('删除失败', {icon: 2});
                         }

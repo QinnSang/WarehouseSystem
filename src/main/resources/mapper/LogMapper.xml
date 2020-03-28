@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.LogMapper">
+
+    <resultMap id="logBase" type="pojo.Log">
+        <result property="logId" column="log_id"/>
+        <result property="storageCode" column="storage_code"/>
+        <result property="orderType" column="order_type"/>
+        <result property="orderId" column="order_id"/>
+        <result property="orderCode" column="order_code"/>
+        <result property="orderName" column="order_name"/>
+        <result property="orderDate" column="order_date"/>
+        <result property="orderAmount" column="order_amount"/>
+        <result property="goodsName" column="goods_name"/>
+        <result property="goodsNumber" column="goods_number"/>
+        <result property="orderBy" column="order_by"/>
+        <result property="createDate" column="create_date"/>
+        <association property="logOrderType" javaType="pojo.DataDictionary">
+            <result property="valueId" column="typeId"/>
+            <result property="valueName" column="typeName"/>
+        </association>
+    </resultMap>
+
+    <select id="query" parameterType="dto.LogDto" resultMap="logBase" >
+        <if test="storageCode!=null and storageCode!=''">
+            <bind name="storagecode" value="'%'+storageCode+'%'"/>
+        </if>
+        <if test="orderCode!=null and orderCode!=''">
+            <bind name="ordercode" value="'%'+orderCode+'%'"/>
+        </if>
+        select
+            t1.log_id,
+            t1.storage_code,
+            t1.order_id,
+            t1.order_name,
+            t1.order_code,
+            t1.order_date,
+            d.value_id as typeId,
+            d.value_name as typeName,
+            t1.goods_name,
+            t1.order_amount,
+            t1.goods_number,
+            t1.create_date,
+            t1.order_by
+        from log t1
+        LEFT JOIN data_dictionary d on t1.order_type = d.value_id
+        <where>
+            d.type_code = 'ORDER_TYPE'
+            <if test="storageCode!=null and storageCode!=''">
+                and t1.storage_code like #{storagecode}
+            </if>
+            <if test="orderCode!=null and orderCode!=''">
+                and t1.order_code like #{ordercode}
+            </if>
+            <if test="orderType!=null">
+                and t1.order_type = #{orderType}
+            </if>
+            <if test="startDate!=null">
+                and t1.order_date &gt;= #{startDate}
+            </if>
+            <if test="endDate!=null">
+                and t1.order_date &lt;= #{endDate}
+            </if>
+        </where>
+        order by t1.order_date desc
+    </select>
+
+    <insert id="add" parameterType="pojo.Log">
+        insert into log
+         (storage_code, order_type, order_id, order_name, order_code, order_date, goods_name, order_amount, goods_number, order_by, create_date )
+        values
+        (#{storageCode}, #{orderType}, #{orderId}, #{orderName},#{orderCode}, #{orderDate}, #{goodsName}, #{orderAmount},#{goodsNumber}, #{orderBy}, #{createDate} )
+    </insert>
+</mapper>

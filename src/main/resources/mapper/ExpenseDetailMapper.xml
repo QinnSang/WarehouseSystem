@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mapper.ExpenseDetailMapper">
 
-    <insert id="addReceiving">
+    <insert id="addReceiving" parameterType="pojo.Receiving">
         insert into expense_detail (order_id, order_type, expense_id, amount, price, storage_id, check_status, remark)
         values
         <foreach collection="expenseDetailList" item="expense" separator=",">
@@ -30,7 +30,7 @@
         </association>
 
     </resultMap>
-    <select id="queryByOrderId" resultMap="expenseDetailBase">
+    <select id="queryByOrderId" resultMap="expenseDetailBase" parameterType="pojo.ExpenseDetail">
         select
             t1.expense_id,
             t4.value_name as expense_name,
@@ -44,6 +44,7 @@
          LEFT JOIN data_dictionary t5 on t1.check_status =t5.value_id
          where
 				order_id = #{orderId}
+				and  order_type = #{orderType}
 				and t4.type_code = "EXPENSE"
 				and t5.type_code = "check_status"
     </select>
@@ -52,7 +53,7 @@
         delete from expense_detail where order_id = #{orderId}
     </delete>
 
-    <insert id="addShipping">
+    <insert id="addShipping" parameterType="pojo.Shipping">
         insert into expense_detail (order_id, order_type, expense_id, amount, price, storage_id, check_status, remark)
         values
         <foreach collection="expenseDetailList" item="expense" separator=",">

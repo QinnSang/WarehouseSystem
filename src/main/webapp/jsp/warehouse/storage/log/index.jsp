@@ -16,31 +16,31 @@
                     <div class="layui-inline">
                         <label class="layui-form-label">操作类型：</label>
                         <div class="layui-input-inline" style="width:100px">
-                            <select name="Level1Id" id="status" lay-filter="contractId" >
-                                <option value="-1">-请选择-</option>
-                                <option value="0" >入库</option>
-                                <option value="1" >出库</option>
-                                <option value="2" >结算</option>
+                            <select name="orderType" id="orderType" lay-filter="orderType" >
+                                <option value="">-请选择-</option>
+                                <option value="1" >入库</option>
+                                <option value="2" >出库</option>
+                                <option value="3" >结算</option>
                             </select>
                         </div>
                         <label class="layui-form-label" style="width: 100px">仓储订单号：</label>
                         <div class="layui-input-inline" style="width:180px">
-                            <input type="tel" name="softwareName" lay-verify="title" autocomplete="off" placeholder="请输入仓储订单号" class="layui-input">
+                            <input type="tel" name="storageCode" lay-verify="title" value="${storageCode}" autocomplete="off" placeholder="请输入仓储订单号" class="layui-input">
                         </div>
                         <label class="layui-form-label">订单编码：</label>
                         <div class="layui-input-inline" style="width:170px">
-                            <input type="tel" name="softwareName" lay-verify="title" autocomplete="off" placeholder="请输入仓储订单名称" class="layui-input">
+                            <input type="tel" name="orderCode" lay-verify="title" autocomplete="off" placeholder="请输入仓储订单名称" class="layui-input">
                         </div>
                         <label class="layui-form-label">操作日期</label>
                         <div class="layui-input-inline">
-                            <input type="text" class="layui-input" id="trueDate" placeholder="开始日期-结束日期">
+                            <input type="text" class="layui-input" name="orderSEDate" id="orderSEDate" autocomplete="off"  placeholder="开始日期-结束日期">
                         </div>
 
                     </div>
                 </div>
                 <div class="layui-form-item" style="margin-bottom: 10px;" >
                     <div class="layui-input-inline" style="left:40px">
-                        <button class="layui-btn " lay-submit  lay-filter="formDemo" >查 询</button>
+                        <button class="layui-btn " lay-submit  lay-filter="search" >查 询</button>
                         <button type="reset" class="layui-btn ">重 置</button>
                     </div>
                 </div>
@@ -61,44 +61,50 @@
             <form class="layui-form layui-form-pane1" id="logDetailForm" name="logDetailForm"  style="padding: 20px 0 0 0;"  lay-filter="logDetailFilter">
             <div class="layui-form-item">
                 <label class="layui-form-label" style="width:100px">订单编码：</label>
-                <div class="layui-input-inline" style="width:220px">
-                    <input type="tel" name="softwareName"  class="layui-input" readonly="readonly">
+                <div class="layui-input-inline" style="width:150px">
+                    <input type="tel" name="orderCode"  class="layui-input" readonly="readonly">
                 </div>
-                <label class="layui-form-label" style = "width:100px">订单名称：</label>
+                <label class="layui-form-label"  style = "width:220px">订单名称：</label>
                 <div class="layui-input-inline" style="width:220px">
-                    <input type="tel" name="softwareName" class="layui-input" readonly="readonly">
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label" style="width:100px">创建人：</label>
-                <div class="layui-input-inline" style="width:220px">
-                    <input type="tel" name="softwareName" class="layui-input" readonly="readonly">
-                </div>
-                <label class="layui-form-label" style="width:100px">创建时间：</label>
-                <div class="layui-input-inline" style = "width:220px">
-                    <input type="text" class="layui-input" id="arriveTime"readonly="readonly">
+                    <input type="tel" name="orderName" class="layui-input" readonly="readonly">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label" style = "width:100px">操作类型：</label>
-                <div class="layui-input-inline" style="width:220px">
-                    <input type="tel" name="softwareName" class="layui-input" readonly="readonly">
+                <div class="layui-input-inline" style="width:100px">
+                    <input type="tel" name="orderType" class="layui-input" readonly="readonly">
                 </div>
-                <label class="layui-form-label " style="width:100px">操作数量：</label>
-                <div class="layui-input-inline" style = "width:220px">
-                    <input type="text" class="layui-input" id="recevingNum" readonly="readonly">
+                <label class="layui-form-label "  style = "width:100px">操作数量：</label>
+                <div class="layui-input-inline" style = "width:100px">
+                    <input type="text" class="layui-input" name="orderAmount" readonly="readonly">
                 </div>
+                <label class="layui-form-label" style = "width:100px">操作货物：</label>
+                <div class="layui-input-inline" style="width:150px">
+                    <input type="tel" name="goodsName" class="layui-input" readonly="readonly">
+                </div>
+
             </div>
             <div class="layui-form-item">
-                <label class="layui-form-label" style="width:100px" >库存：</label>
-                <div class="layui-input-inline" style = "width:220px">
-                    <input type="text" class="layui-input" id="transformType" readonly="readonly">
+                <label class="layui-form-label" style="width:100px">库存：</label>
+                <div class="layui-input-inline" style = "width:100px">
+                    <input type="text" class="layui-input" name="goodsNumber" readonly="readonly">
                 </div>
-                <label class="layui-form-label" style="width:100px">备注：</label>
-                <div class="layui-input-inline" style="width:130px">
-                    <textarea name="remark" style = "height:10px;width:220px;"  class="layui-textarea" readonly="readonly"></textarea>
+                <label class="layui-form-label" style = "width:100px">创建人：</label>
+                <div class="layui-input-inline" style="width:100px">
+                    <input type="tel" name="createBy" class="layui-input" readonly="readonly">
                 </div>
+                <label class="layui-form-label" style = "width:100px">创建时间：</label>
+                <div class="layui-input-inline" style = "width:150px">
+                    <input type="text" class="layui-input" name="createDate"readonly="readonly">
+                </div>
+
             </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label" style="width:100px">备注：</label>
+                    <div class="layui-input-inline" style="width:130px">
+                        <textarea name="remark" style = "height:1px;width:400px;"  class="layui-textarea" readonly="readonly"></textarea>
+                    </div>
+                </div>
         </form>
        </div>
         <%--数据表格--%>
@@ -114,39 +120,76 @@
 <jsp:include page="${ctx}/static/layuiExtend/layuiExtend.js.jsp"/>
 <script>
     //JavaScript代码区域
-    layui.use(['element','laydate','jquery', 'table'], function(){
+    layui.use(['element','laydate','jquery', 'table', 'layer','soulTable','form'], function(){
         var element = layui.element;
         var laydate = layui.laydate;
-        var $ = layui.$, table = layui.table, form = layui.form
+        var $ = layui.$, table = layui.table, form = layui.form, layer = layui.layer;
+        var soulTable = layui.soulTable; //使用soulTable导出数据
+
 
         //执行一个laydate实例,用于渲染日期
+        //日期时间选择器
         laydate.render({
-            elem: '#trueDate'
+            elem: '#orderSEDate'
+            ,type: 'datetime'
+            ,max:0
             ,range: true
         });
 
-        var layTableId = "layTable";
-        var tableIns = table.render({
+        var myTable = table.render({
             elem: '#logTable',
-            id: layTableId,
-            <%--url:'#{ctx}/receiving/expenseDetail'+data.id,--%>
-            data:[[1,2,3,4,5,6,7]],
-            page: true,
-            loading: true,
+            url:'${ctx}/log/query',
+            where:{
+              "storageCode":'${storageCode}'
+            },
+            method: 'POST',
+            page: { //开启分页,需要配合后台PageInfo进行分页
+                first: '首页'
+                ,last: '尾页'
+                ,layout: ['count','prev', 'page', 'next', 'skip']
+                ,limit:10  //每页显示的条数
+                ,curr:1 //起始页
+            },
             drag: false, // 关闭拖拽列功能
             even: false, //不开启隔行背景
             cols: [[
-                ,{field: 'apkName', title: '仓储订单号',width:200,unresize: true}
-                ,{field: 'softwareSize', title: '操作类型',unresize: true}
-                ,{field:'flatform',title: '订单编码',width:200,unresize: true}
-                ,{field: 'createTime', title: '操作日期',sort:true,unresize: true}
-                ,{field:'appStatus', title: '操作数量',unresize: true}
-                ,{field:'appStatus', title: '库存数',unresize: true}
-                ,{field: 'createTime', title: '创建人', unresize: true}
-                ,{ fixed: 'right', title: '操作', toolbar: '#barDemo',width:60,unresize: true}
-            ]],
+                ,{field: 'storageCode', title: '仓储订单号',width:142,unresize: true}
+                ,{field: 'logOrderType', title: '操作类型',templet:'<div>{{d.logOrderType.valueName}}</div>',unresize: true}
+                ,{field:'orderCode',title: '订单编码',width:160,unresize: true}
+                ,{field: 'orderDate', title: '操作日期',width:200,sort:true,unresize: true}
+                ,{field:'orderAmount', title: '操作数量',unresize: true}
+                ,{field:'goodsNumber', title: '库存数',unresize: true}
+                ,{field: 'orderBy', title: '操作人', unresize: true}
+                ,{field:'createDate', title: '创建时间',width:200,unresize: true}
+                ,{ fixed: 'right', title: '操作', toolbar: '#barDemo',width:80,unresize: true}
+            ]]
+            ,parseData: function(res){ //res 即为原始返回的数据
+                return {
+                    "code": res.code, //解析接口状态
+                    "msg": res.msg, //解析提示文本
+                    "count": res.count, //解析数据长度
+                    "data": res.data.list //解析数据列表
+                };
+            },
             done: function(res, curr, count){
-                // layer.close(index);    //返回数据关闭loading
+                // 如果有使用到导出、下拉筛选，这句话必须要
+                soulTable.render(this);
+            }
+            , excel:{ // 导出excel配置
+                on: true, //是否启用, 默认开启
+                filename: '仓储日志表.xlsx', // 文件名
+                head:{ // 表头样式
+                    family: 'Calibri', // 字体
+                    size: 12, // 字号
+                    color: '000000', // 字体颜色
+                    bgColor: 'C7C7C7' // 背景颜色
+                },
+                font: { // 正文样式
+                    family: 'Calibri', // 字体
+                    size: 10, // 字号
+                    color: '000000', // 字体颜色
+                    bgColor: 'ffffff' //背景颜色
+                }
             }
         });
 
@@ -173,33 +216,58 @@
                 success: function(layero, index){
                     //表单赋值
                     form.val('logDetailFilter',{
-                        "id": data.id,
-                        "title": data.title // "name": "value"
+                        "orderCode": data.orderCode,
+                        "orderName": data.orderName,
+                        "orderType": data.logOrderType.valueName,
+                        "goodsName": data.goodsName,
+                        "orderAmount": data.orderAmount,
+                        "orderBy": data.orderBy,
+                        "createDate": data.createDate,
+                        "goodsNumber": data.goodsNumber,
+                        "remark": data.remark
                     });
-                    //费用铭心
+                    //费用名词
                     var expense=table.render({
                         elem: '#expenseTable'
-                        ,data:[[1,2,3,4,5,6]]
+                        ,url:'${ctx}/expenseDetail/queryByOrderId'
+                        ,where:{
+                            "orderId":data.orderId,
+                            "orderType":data.logOrderType.valueId
+                        }
                         ,method: 'post' //防止查询时中文乱码
-                        ,limit: 5
                         ,drag: false // 关闭拖拽列功能
                         ,even: false //不隔行背景
                         ,cols: [[
                             {title: '序号', type: 'numbers'},
-                            {field: 'expense', title: '收费项目'},
-                            {field: 'price', title: '数量'},
-                            {field: 'price', title: '单价'},
-                            {field: 'remark', title: '备注', edit: 'text'}
-                        ]],
-                        done: function(res, curr, count){
-                            // layer.close(index);    加上该语句不能弹出框
+                            {field: 'expenseName', title: '收费项目',width:200,unresize: true},
+                            {field: 'price', title: '单价',width:100,unresize: true},
+                            {field: 'amount', title: '数量',width:130,unresize: true},
+                            {field: 'checkStatus', title: '结算状态',templet:'<div>{{d.checkStatusData.valueName}}</div>',unresize: true,width:140},
+                            {field: 'remark', title: '备注',width:190,unresize: true}
+                        ]]
+                        ,parseData: function(res){ //res 即为原始返回的数据
+                            return {
+                                "code": res.code, //解析接口状态
+                                "msg": res.msg, //解析提示文本
+                                "count": res.count, //解析数据长度
+                                "data": res.data //解析数据列表
+                            };
                         }
+                        ,done: function(res, curr, count){}
                     });
                 }
             })
         }
-
         //==========================监听行工具事件 end==============
+
+        form.on('submit(search)', function (data) {
+            table.reload('logTable', {
+                url: '${ctx}/log/query',
+                method: 'POST',
+                where: data.field//后台直接用实体接收，
+            });
+            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可
+        });
 
         //导出
         $('#exportLog').click(function(){

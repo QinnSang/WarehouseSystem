@@ -324,7 +324,13 @@
                         },
                         {
                             title: "进出库日志明细",
-                            url: "${ctx}/log/logAlone"+data.id //可直接跳转到该url
+                            event: function() {
+                                if(data.storageStatus.valueId == 2){
+                                    window.location.href = "${ctx}/log/toIndex/"+data.storageCode;
+                                }else{
+                                    layer.msg('仓储订单未启用，不可出库', {icon: 2});
+                                }
+                            }
                         },
                         {
                             title: "结算",
