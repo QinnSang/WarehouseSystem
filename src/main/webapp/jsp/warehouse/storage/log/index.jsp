@@ -156,11 +156,11 @@
                 ,{field: 'storageCode', title: '仓储订单号',width:142,unresize: true}
                 ,{field: 'logOrderType', title: '操作类型',templet:'<div>{{d.logOrderType.valueName}}</div>',unresize: true}
                 ,{field:'orderCode',title: '订单编码',width:160,unresize: true}
-                ,{field: 'orderDate', title: '操作日期',width:200,sort:true,unresize: true}
+                ,{field:'goodsName', title: '操作货物',unresize: true}
                 ,{field:'orderAmount', title: '操作数量',unresize: true}
                 ,{field:'goodsNumber', title: '库存数',unresize: true}
                 ,{field: 'orderBy', title: '操作人', unresize: true}
-                ,{field:'createDate', title: '创建时间',width:200,unresize: true}
+                ,{field: 'orderDate', title: '操作日期',width:200,sort:true,unresize: true}
                 ,{ fixed: 'right', title: '操作', toolbar: '#barDemo',width:80,unresize: true}
             ]]
             ,parseData: function(res){ //res 即为原始返回的数据

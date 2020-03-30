@@ -64,6 +64,8 @@ public class ShippingServiceImpl implements ShippingService {
                 expenseDetail.setStorageId(shipping.getStorageId());
                 expenseDetail.setOrderType(2); //设置费用明细关联单位出库单类型
                 expenseDetail.setCheckStatus(1); //设置费用状态为未结算
+                expenseDetail.setCreateDate(shipping.getCreateDate());
+                expenseDetail.setIsConfirm(1); //设置费用状态为未确认，不可用于结算
             }
             //增加入库单费用明细
             int addRow2=expenseDetailMapper.addShipping(shipping);
@@ -89,6 +91,8 @@ public class ShippingServiceImpl implements ShippingService {
                 expenseDetail.setStorageId(shipping.getStorageId());
                 expenseDetail.setOrderType(2); //设置费用明细关联单位出库单类型
                 expenseDetail.setCheckStatus(1); //设置费用状态为未结算
+                expenseDetail.setCreateDate(shipping.getCreateDate());
+                expenseDetail.setIsConfirm(1); //设置费用状态为未确认，不可用于结算
             }
             //增加入库单费用明细
             int addRow2=expenseDetailMapper.addShipping(shipping);
@@ -124,6 +128,8 @@ public class ShippingServiceImpl implements ShippingService {
                 storageGoods.setStorageGoodsId(result.getStorageGoodsId());
                 storageGoods.setGoodsNumber(result.getGoodsNumber()-shipping.getShippingNumber());
                 int updateRow1 = storageGoodsMappper.update(storageGoods);
+                //更新费用明细 确认状态为已确认
+                expenseDetailMapper.updateStatusConfirm(shipping.getShippingId());
                 if (updateRow1 == 1)
                     return StateType.getStateType(28);
                 return StateType.getStateType(29);

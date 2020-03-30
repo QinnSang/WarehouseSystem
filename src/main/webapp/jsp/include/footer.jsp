@@ -37,4 +37,17 @@
         text-align: center;
         font-size:30px;
     }
+
+    /*设置表格内容过长时自动分行显示*/
+    .layui-table-view .layui-table .layui-table-cell {
+        height: auto;
+    }
+    .layui-table-cell {
+        white-space: normal;
+        height: auto;
+        /*设置字体大小*/
+        font-size:15px;
+        /*设置表格行高*/
+        line-height: 28px;
+    }
 </style>

@@ -380,16 +380,5 @@
     });
 
 </script>
-<%--设置表单样式--%>
-<style type="text/css">
-    .layui-table-cell {
-        height: auto;
-        /*设置字体大小*/
-        font-size:15px;
-        /*设置表格行高*/
-        /*line-height: 60px;*/
-    }
-
-</style>
 </body>
 </html>

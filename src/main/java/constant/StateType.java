@@ -84,6 +84,13 @@ public enum StateType {
 
     LackGoodsNumber(36,"库存不足，无法出库"),
 
+    SettleSuccess(37,"结算成功"),
+
+    AlreadySettle(38,"该对账单已结算，无法再次结算"),
+
+    SettleFailed(39,"结算失败"),
+
+    LackExpenseDetail(40,"无需结算的费用明细，对账单无法生成"),
 
     /**
      * 请求格式错误

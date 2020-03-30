@@ -76,11 +76,11 @@
                  <div class="layui-form-item">
                      <label class="layui-form-label " style="width:100px"><span style="color: red;">* </span>入库数量：</label>
                      <div class="layui-input-inline" style = "width:130px">
-                         <input type="text" name="receivingNumber" class="layui-input" id="recevingNum" lay-verify="required"  placeholder="请输入">
+                         <input type="text" name="receivingNumber" class="layui-input" id="recevingNum" lay-verify="required" autocomplete="off" placeholder="请输入">
                      </div>
                      <label class="layui-form-label">始发地：</label>
                      <div class="layui-input-inline" style = "width:130px">
-                         <input type="text" name="origin" class="layui-input" id="origin"  placeholder="请输入">
+                         <input type="text" name="origin" class="layui-input" id="origin"  placeholder="请输入" autocomplete="off">
                      </div>
                      <label class="layui-form-label" ><span style="color: red;">* </span>运输方式：</label>
                      <div class="layui-input-inline" style = "width:130px">
@@ -92,17 +92,17 @@
                      </div>
                      <label class="layui-form-label" ><span style="color: red;">* </span>到达时间：</label>
                      <div class="layui-input-inline" style = "width:130px">
-                         <input type="text" name="arriveTime" class="layui-input" id="arriveTime" lay-verify="required"  placeholder="请选择">
+                         <input type="text" name="arriveTime" class="layui-input" id="arriveTime" lay-verify="required" autocomplete="off" placeholder="请选择">
                      </div>
                  </div>
                  <div class="layui-form-item">
                      <label class="layui-form-label "style = "width:100px"><span style="color: red;">* </span>车牌或车号：</label>
                      <div class="layui-input-inline" style = "width:130px">
-                         <input type="text" name="carNo" class="layui-input" id="carNo" lay-verify="required"  placeholder="请输入">
+                         <input type="text" name="carNo" class="layui-input" id="carNo" lay-verify="required"  autocomplete="off" placeholder="请输入">
                      </div>
                      <label class="layui-form-label" >备注：</label>
                      <div class="layui-input-inline">
-                         <textarea name="remark" style = "height:10px;width:630px;" placeholder="请输入"  class="layui-textarea"></textarea>
+                         <textarea name="remark" style = "height:10px;width:630px;" placeholder="请输入" autocomplete="off" class="layui-textarea"></textarea>
                      </div>
                  </div>
                 <%--添加费用明细--%>

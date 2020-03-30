@@ -179,9 +179,9 @@
                 ,{field:'goodsName.goodsName',title: '货物',templet:'<div>{{d.goodsName.goodsName}}</div>',width:100,unresize: true}
                 ,{field:'shippingNumber', title: '出库数量',width:90,unresize: true}
                 ,{field:'shippingByUser.realName', title: '出库员',templet:'<div>{{d.shippingByUser.realName}}</div>',width:80,unresize: true}
-                ,{field: 'shippingTime', title: '出库时间', width: 110,  sort:true,unresize: true},
-                ,{field: 'shippingStatus', title: '状态',templet:'<div>{{d.shippingStatus.valueName}}</div>', width: 76,unresize: true},
-                ,{ title: '操作', toolbar: '#barDemo',width:220,unresize: true}
+                ,{field: 'shippingTime', title: '出库时间', width: 110,  sort:true,unresize: true}
+                ,{field: 'shippingStatus', title: '状态',templet:'<div>{{d.shippingStatus.valueName}}</div>', width: 76,unresize: true}
+                ,{ title: '操作', toolbar: '#barDemo',width:210,unresize: true}
             ]]
             ,parseData: function(res){ //res 即为原始返回的数据
                 return {
@@ -407,15 +407,5 @@
 
     });
 </script>
-<%--设置表单样式--%>
-<style type="text/css">
-    .layui-table-cell {
-        height: auto;
-        /*设置字体大小*/
-        font-size:15px;
-        /*设置表格行高*/
-        line-height: 40px;
-    }
-</style>
 </body>
 </html>
