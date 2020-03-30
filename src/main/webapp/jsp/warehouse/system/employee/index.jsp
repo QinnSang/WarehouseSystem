@@ -170,6 +170,7 @@
         $ =layui.jquery;
         var table = layui.table;
         var form = layui.form;
+        var checkStatus = table.checkStatus('empRoleId');
         var layer = layui.layer;
         var soulTable = layui.soulTable; //使用soulTable子表
         // var index = layer.load(); //添加laoding,0-2两种方式
@@ -492,42 +493,36 @@
 
         }
 
-        function  roleUv1() {
-            rolePopUp=layer.open({
-                title: '选择角色',
-                type: 1, //页面层
-                area: ['20%', '60%'],
-                offset: 'r',
-                shade: false, //禁止使用遮罩，否则操作不了界面
-                resize:false, //禁止窗体拉伸
-                skin: 'layui-layer-molv',
-                btn: ['保存', '取消'],
-                content: $("#employeeRole"),
-                success: function(layero, index){
-                    //渲染树结构
-                    tree.render({
-                        elem: '#employeeRole'
-                        ,data: employeeRole
-                        ,showCheckbox: true  //是否显示复选框
-                        ,id: 'demoId1'
-                        ,isJump: false //是否允许点击节点时弹出新窗口跳转
-                        ,click: function(obj){
-                            var data = obj.data;  //获取当前点击的节点数据
-                            layer.msg('状态：'+ obj.state + '<br>节点数据：' + JSON.stringify(data));
-                        }
-                    });
+        //用户角色信息提交
+        form.on('submit(roleSubmit)', function(data){
+            // console.log(data.field) //当前容器的全部表单字段，名值对形式：{name: value}
+            $.ajax({
+                url: '${ctx}/employee/roleInfo',
+                type: 'POST',
+                data: console.log(checkStatus.data), //获取选中的数据
+                // data: data.field,
+                success: function (StateType) {
+                    // var status = StateType.status;//取得返回数据（Sting类型的字符串）的信息进行取值判断
+                    if (StateType == 'AddSuccess') {
+                        layer.msg('保存成功', {
+                            icon: 1,
+                            time: 1000
+                        }, function(){
+                            layer.close(rolePopUp) ;//执行关闭
+                            table.reload('employeeTable'); //刷新表格
+                        });
+                    } else if (StateType == 'AddFailed') {
+                        layer.msg("保存失败", {icon: 2});
+                    }else{
+                        layer.msg("出现错误", {icon: 2});
+                    }
                 },
-                //layui树形菜单怎么和java后台交互数据   https://fly.layui.com/jie/43920/
-                yes: function(index, layero){
-                    //将授权结点保存
-                    return false // 开启该代码可禁止点击该按钮关闭
-                },
-                btn2: function(index, layero){
-                    //按钮【按钮二】的回调
-                    //return false 开启该代码可禁止点击该按钮关闭
+                error:function (data) {
+                    layer.msg("出现错误", {icon: 2});
                 }
             });
-        }
+            return false;//false：阻止表单跳转 true：表单跳转
+        });
 
         $(document).on('click', '#cancel', function() {
             layer.close(updatePopUp) //执行关闭

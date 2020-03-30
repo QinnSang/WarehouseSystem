@@ -499,7 +499,7 @@
             $.ajax({
                 url: '${ctx}/employee/roleInfo',
                 type: 'POST',
-                data: checkStatus.data, //获取选中的数据
+                data: console.log(checkStatus.data), //获取选中的数据
                 // data: data.field,
                 success: function (StateType) {
                     // var status = StateType.status;//取得返回数据（Sting类型的字符串）的信息进行取值判断
