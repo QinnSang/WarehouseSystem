@@ -44,7 +44,7 @@ public class ReceivingServiceImpl implements ReceivingService {
         Map<String,String> params=new HashMap<>();
         params.put("orderNamePre","RE");
         params.put("receivingCode","");
-        //调用存储过程生成合同流水号
+        //调用存储过程生成入库单流水号
         receivingMapper.generateReceivingCode(params);
         //取得流水号
         String receivingCode = params.get("receivingCode");
@@ -65,7 +65,7 @@ public class ReceivingServiceImpl implements ReceivingService {
                 expenseDetail.setCheckStatus(1); //设置费用状态为未结算
             }
             //增加入库单费用明细
-            int addRow2=expenseDetailMapper.add(receiving);
+            int addRow2=expenseDetailMapper.addReceiving(receiving);
             if(addRow2>=1)
                 return  StateType.getStateType(22);
             return  StateType.getStateType(23);
@@ -75,6 +75,8 @@ public class ReceivingServiceImpl implements ReceivingService {
 
     @Override
     public StateType update(Receiving receiving,Employee employee) {
+        receiving.setReceivingBy(employee.getEmployeeId());
+        receiving.setReceivingDate(new Date());
         int updateRow1=receivingMapper.update(receiving);
         //如果修改合同信息成功
         if(updateRow1==1){
@@ -88,7 +90,7 @@ public class ReceivingServiceImpl implements ReceivingService {
                 expenseDetail.setCheckStatus(1); //设置费用状态为未结算
             }
             //增加入库单费用明细
-            int addRow2=expenseDetailMapper.add(receiving);
+            int addRow2=expenseDetailMapper.addReceiving(receiving);
             if(addRow2>=1)
                 return  StateType.getStateType(20);
             return  StateType.getStateType(21);
@@ -133,8 +135,12 @@ public class ReceivingServiceImpl implements ReceivingService {
     }
 
     @Override
-    public StateType del(int receivingId) {
+    public StateType del(Receiving receiving) {
+        //如果入库单已经确认，则不可删除
+        if(receiving.getStatus() == 2)
+            return StateType.getStateType(35);
         //先删除关联的费用明细
+        int receivingId=receiving.getReceivingId();
         expenseDetailMapper.deleteByOrderId(receivingId);
         //再删除入库单
         int delRow=receivingMapper.delByReceivingId(receivingId);

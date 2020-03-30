@@ -12,12 +12,13 @@
         <!-- 内容主体区域 -->
         <div style="padding: 15px;">
             <%--使用dto来接收参数--%>
-            <form class="layui-form" action="${ctx}/contract/add" method="post">
+            <form class="layui-form">
                 <%--添加合同基本信息--%>
                 <div class="layui-form-item">
+                    <input name="shippingId" class="layui-hide" value="${shipping.shippingId}">
                     <label class="layui-form-label" style="width:100px"><span style="color: red;">* </span>出库单名称：</label>
                     <div class="layui-input-inline" style="width:200px">
-                        <input type="tel" name="shippingName" id="shippingName" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input layui-required">
+                        <input type="tel" name="shippingName" id="shippingName" value="${shipping.shippingName}" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input layui-required">
                     </div>
                     <label class="layui-form-label"><span style="color: red;">* </span>仓储订单：</label>
                     <div class="layui-input-inline" style="width:250px">
@@ -25,14 +26,14 @@
                             <option value="0">-请选择-</option>
                             <c:forEach items="${storageList}" var="obj">
                                 <option value="${obj.storageId}"
-                                        <c:if test="${storageId eq obj.storageId}">selected</c:if>
+                                        <c:if test="${shipping.storage.storageId eq obj.storageId}">selected</c:if>
                                 >${obj.storageName}</option>
                             </c:forEach>
                         </select>
                     </div>
                     <label class="layui-form-label" ><span style="color: red;">* </span>出库时间：</label>
                     <div class="layui-input-inline" style = "width:210px">
-                        <input type="text" class="layui-input" name="shippingTime" id="shippingTime" lay-verify="required" placeholder="请选择">
+                        <input type="text" name="shippingTime" id="shippingTime"  class="layui-input" lay-verify="required" placeholder="请选择">
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -66,7 +67,7 @@
                 <div class="layui-form-item">
                         <label class="layui-form-label " style="width:100px"><span style="color: red;">* </span>出库数量：</label>
                         <div class="layui-input-inline" style = "width:130px">
-                            <input type="text" name="shippingNumber"  class="layui-input" id="shippingNumber" lay-verify="required"  placeholder="请输入">
+                            <input type="text" name="shippingNumber" id="shippingNumber"  value="${shipping.shippingNumber}"  class="layui-input" lay-verify="required"  placeholder="请输入">
                         </div>
                         <label class="layui-form-label" ><span style="color: red;">* </span>运输方式：</label>
                         <div class="layui-input-inline" style = "width:130px">
@@ -78,13 +79,13 @@
                         </div>
                     <label class="layui-form-label "style = "width:100px"><span style="color: red;">* </span>车牌或车号：</label>
                     <div class="layui-input-inline" style = "width:130px">
-                        <input type="text" name="carNo" class="layui-input" id="carNo" lay-verify="required"  placeholder="请输入">
+                        <input type="text" name="carNo" class="layui-input" id="carNo" value="${shipping.carNo}" lay-verify="required"  placeholder="请输入">
                     </div>
                     </div>
                 <div class="layui-form-item">
                         <label class="layui-form-label" >备注：</label>
                         <div class="layui-input-inline">
-                            <textarea name="remark" style = "height:10px;width:630px;" placeholder="请输入"  class="layui-textarea"></textarea>
+                            <textarea name="remark"  value="${shipping.remark}" style = "height:10px;width:630px;" placeholder="请输入"  class="layui-textarea"></textarea>
                         </div>
                     </div>
                 <%--添加费用明细--%>
@@ -141,18 +142,21 @@
     };
 
     //JavaScript代码区域
-    layui.use(['element','laydate','jquery', 'table', 'layer'], function(){
+    layui.use(['element','laydate','jquery', 'table', 'layer','util'], function(){
         var element = layui.element;
         var laydate = layui.laydate;
+        var util=layui.util;
         var $ = layui.$, table = layui.table, form = layui.form, layer = layui.layer;
 
         //执行一个laydate实例,用于渲染日期
         //日期时间选择器
         laydate.render({
             elem: '#shippingTime'
-            ,type: 'datetime'
             ,max:0
+            ,value:util.toDateString('${shipping.shippingTime}', 'yyyy-MM-dd')
         });
+
+        $("#transType").val("${shipping.shippingTransType.valueId}");
 
         //1. 根据选择的仓储订单加载拥有的货物类型和相应的收费项目信息
         form.on('select(storageId)',function () {
@@ -160,14 +164,14 @@
             var storageId=$('#storageId').val();
             //如果仓储订单为空，则将类型、名称、仓库和库位置空
             // if(storageId == 0){
-            viewObj.expenseData=[];
-            var html='<option value="0">-请选择-</option>';
-            $('#goodsTypeId').html(html);
-            $('#goodsNameId').html(html);
-            $('#warehouseId').html(html);
-            $('#locationId').html(html);
-            form.render();
-            // return ;
+                viewObj.expenseData=[];
+                var html='<option value="0">-请选择-</option>';
+                $('#goodsTypeId').html(html);
+                $('#goodsNameId').html(html);
+                $('#warehouseId').html(html);
+                $('#locationId').html(html);
+                form.render();
+                // return ;
             // }
             if(storageId !=0){
                 //根据所选仓储订单加载库存货物类型
@@ -201,13 +205,13 @@
             //通过id获取level1的id
             var goodsTypeId=$('#goodsTypeId').val();
             // if(goodsTypeId == 0){
-            //清空二级并渲染form表单
-            var html='<option value="0">-请选择-</option>';
-            $('#goodsNameId').html(html);
-            $('#warehouseId').html(html);
-            $('#locationId').html(html);
-            form.render();
-            // return ;
+                //清空二级并渲染form表单
+                var html='<option value="0">-请选择-</option>';
+                $('#goodsNameId').html(html);
+                $('#warehouseId').html(html);
+                $('#locationId').html(html);
+                form.render();
+                // return ;
             // }
             $.ajax({
                 url:'${ctx}/storageGoods/queryNameByTypeStorage',
@@ -234,12 +238,12 @@
             //通过id获取goodsNameId的id
             var goodsNameId=$('#goodsNameId').val();
             // if(goodsNameId == 0){
-            //清空二级并渲染form表单
-            var html='<option value="0">-请选择-</option>';
-            $('#warehouseId').html(html);
-            $('#locationId').html(html);
-            form.render();
-            // return ;
+                //清空二级并渲染form表单
+                var html='<option value="0">-请选择-</option>';
+                $('#warehouseId').html(html);
+                $('#locationId').html(html);
+                form.render();
+                // return ;
             // }
             $.ajax({
                 url:'${ctx}/storageGoods/queryWarehouseByGoods',
@@ -267,11 +271,11 @@
             //通过id获取warehouseId的id
             var warehouseId=$('#warehouseId').val();
             // if(warehouseId == 0){
-            //清空二级并渲染form表单
-            var html='<option value="0">-请选择-</option>';
-            $('#locationId').html(html);
-            form.render();
-            // return ;
+                //清空二级并渲染form表单
+                var html='<option value="0">-请选择-</option>';
+                $('#locationId').html(html);
+                form.render();
+                // return ;
             // }
             $.ajax({
                 url:'${ctx}/storageGoods/queryLocationByGoods',
@@ -295,39 +299,145 @@
             })
         });
 
-        //5. 保留仓储订单选择 start ===========================
+
+        //================保留仓储订单、货物与类型名称、仓库库位选择   start==================
         $(function () {
             var storageId = $('#storageId').val();
-            if(storageId !=null && storageId !=''&& storageId!=0){
-                //说明选择过仓储订单
-                //根据所选仓储订单加载库存货物类型
-                $.ajax({
-                    url:'${ctx}/storageGoods/queryGoodsTypeByStorage/'+storageId,
-                    type: 'get',
-                    success:function (data) {
-                        //根据data修改数据，重新渲染form即可
-                        var html='<option value="0">-请选择-</option>';
-                        var len=data.length;
-                        for(var i=0;i<len;i++){
-                            html += '<option value="'+data[i].goodsId+'">'+data[i].goodsName+'</option>'
-                        }
-                        $('#goodsTypeId').html(html);
-                        form.render();
-                    }
-                });
+            if(storageId !=null && storageId !='' && storageId!=0){
+                goodsType(storageId);
+                //根据所选仓储订单加载相应的收费项目信息
                 $.ajax({
                     url:'${ctx}/contractExpense/queryListByStorageId/'+storageId,
                     type: 'get',
                     success:function (data) {
                         viewObj.expenseData=data;
                     }
-                })
+                });
             }
         });
-        //保留仓储订单选择 end==============================
+
+        //保留货物类型选择
+         function goodsType(storageId){
+             var goodsTypeId='${shipping.goodsType.goodsId}';
+             if(goodsTypeId !=null && goodsTypeId !='' && goodsTypeId != 0){
+                 $.ajax({
+                     url:'${ctx}/storageGoods/queryGoodsTypeByStorage/'+storageId,
+                     type: 'get',
+                     success:function (data) {
+                         //根据data修改数据，重新渲染form即可
+                         var html='<option value="0">-请选择-</option>';
+                         var len=data.length;
+                         for(var i=0;i<len;i++){
+                             html += '<option value="'+data[i].goodsId+'"';
+                             if(goodsTypeId!=null && goodsTypeId!=undefined && goodsTypeId!=''&& goodsTypeId != 0 &&data[i].goodsId==goodsTypeId){
+                                 html+='selected';
+                             }
+                             html += '>'+data[i].goodsName+'</option>'
+                         }
+                         $('#goodsTypeId').html(html);
+                         form.render();
+                     }
+                 });
+                 goodsName(goodsTypeId,storageId);
+             }
+         }
+
+        //保留货物名称选择
+        function goodsName(goodsTypeId,storageId){
+            var goodsNameId='${shipping.goodsName.goodsId}';
+            if(goodsNameId!=null && goodsNameId!=undefined && goodsNameId!=''&& goodsNameId != 0) {
+                $.ajax({
+                    url:'${ctx}/storageGoods/queryNameByTypeStorage',
+                    data:{
+                        "goodsTypeId":goodsTypeId,
+                        "storageId":storageId
+                    },
+                    type: 'post',
+                    success:function (data) {
+                        //根据data修改数据，重新渲染form即可
+                        var html='<option value="">-请选择-</option>';
+                        var len=data.length;
+                        for(var i=0;i<len;i++){
+                            html += '<option value="'+data[i].goodsId+'"';
+                            if(goodsNameId!=null && goodsNameId!=undefined && goodsNameId!=''&& goodsNameId != 0 &&data[i].goodsId==goodsNameId){
+                                html+='selected';
+                            }
+                            html += '>'+data[i].goodsName+'</option>'
+                        }
+                        $('#goodsNameId').html(html);
+                        form.render();
+                    }
+                })
+                warehouse(goodsTypeId,storageId,goodsNameId);
+            }
+        }
+
+        //保留仓库选择
+        function warehouse(goodsTypeId,storageId,goodsNameId){
+            var warehouseId='${shipping.warehouse.warehouseId}';
+            if(warehouseId!=null && warehouseId!=undefined && warehouseId!=''&& warehouseId != 0) {
+                $.ajax({
+                    url:'${ctx}/storageGoods/queryWarehouseByGoods',
+                    data:{
+                        "goodsTypeId":goodsTypeId,
+                        "goodsNameId":goodsNameId,
+                        "storageId":storageId
+                    },
+                    type: 'post',
+                    success:function (data) {
+                        //根据data修改数据，重新渲染form即可
+                        var html='<option value="">-请选择-</option>';
+                        var len=data.length;
+                        for(var i=0;i<len;i++){
+                            html += '<option value="'+data[i].warehouseId+'"';
+                            if(warehouseId!=null && warehouseId!=undefined && warehouseId!=''&& warehouseId != 0 &&data[i].warehouseId==warehouseId){
+                                html+='selected';
+                            }
+                            html += '>'+data[i].warehouseName+'</option>'
+                        }
+                        $('#warehouseId').html(html);
+                        form.render();
+                    }
+                })
+                location(goodsTypeId,storageId,goodsNameId,warehouseId);
+            }
+        }
+
+        //保留库位选择
+        function location(goodsTypeId,storageId,goodsNameId,warehouseId){
+            var locationId='${shipping.location.locationId}';
+            if(locationId!=null && locationId!=undefined && locationId!=''&& locationId != 0) {
+                $.ajax({
+                    url:'${ctx}/storageGoods/queryLocationByGoods',
+                    data:{
+                        "goodsTypeId":goodsTypeId,
+                        "goodsNameId":goodsNameId,
+                        "warehouseId":warehouseId,
+                        "storageId":storageId
+                    },
+                    type: 'post',
+                    success:function (data) {
+                        //根据data修改数据，重新渲染form即可
+                        var html='<option value="">-请选择-</option>';
+                        var len=data.length;
+                        for(var i=0;i<len;i++){
+                            html += '<option value="'+data[i].locationId+'"';
+                            if(locationId!=null && locationId!=undefined && locationId!=''&& locationId != 0 &&data[i].locationId==locationId){
+                                html+='selected';
+                            }
+                            html += '>'+data[i].locationName+'</option>'
+                        }
+                        $('#locationId').html(html);
+                        form.render();
+                    }
+                })
+            }
+        }
+
+        //================保留仓储订单、货物与类型名称、仓库库位选择  end==================
 
 
-        //6. 监控出库数量框所输入的值，根据仓储订单、仓库、库位以及货物类型名称进行查找判断
+        //监控出库数量框所输入的值，根据仓储订单、仓库、库位以及货物类型名称进行查找判断
         $("#shippingNumber").bind("input propertychange",function(event){
             var storageId=$('#storageId').val();
             if(storageId == 0){
@@ -354,7 +464,7 @@
                 layer.tips("请选择货物所属库位",'#shippingNumber' , { tips: [3, '#FF5722'] }); //吸附提示
                 return ;
             }
-            queryGoodsNumber();
+             queryGoodsNumber();
         });
 
         function queryGoodsNumber(){
@@ -386,7 +496,11 @@
         var tableIns = table.render({
             elem: '#expenseTable',
             id: layTableId,
-            data: [],
+            url:'${ctx}/expenseDetail/queryByOrderId',
+            where:{
+                "orderId":'${shipping.shippingId}',
+                "orderType":1
+            },
             drag: false, // 关闭拖拽列功能
             even: false, //不开启隔行背景
             cols: [[
@@ -421,22 +535,25 @@
             //添加费用字段到data.field中，简化代码
             data.field.expenseDetailList=expenseDetailList;
             $.ajax({
-                url: '${ctx}/shipping/add',
+                url: '${ctx}/shipping/update',
                 type: 'POST',
                 dataType: "json",
                 contentType: "application/json",
                 data:  JSON.stringify(data.field),  //如果有list一定要json，不然数据格式不对
                 success: function (StateType) {
-                    if (StateType == 'AddSuccess') {
-                        layer.msg('添加成功', {
+                    if (StateType == 'UpdateSuccess') {
+                        layer.msg('修改成功', {
                             icon: 1,
-                            time: 1000 //2秒关闭（如果不配置，默认是3秒）
+                            time: 2000 //2秒关闭（如果不配置，默认是3秒）
                         }, function(){
                             window.location.href = "${ctx}/shipping/index";
                         });
                     } else {
-                        layer.msg("添加失败", {icon: 2});
+                        layer.msg("修改失败", {icon: 2});
                     }
+                },
+                error:function (data) {
+                    layer.msg("修改失败,请重试！", {icon: 2});
                 }
             });
             return false;//false：阻止表单跳转 true：表单跳转
@@ -450,6 +567,7 @@
                 var newRow = {tempId: new Date().valueOf(), expenseId: null, amount:null,price:null,remark:null};
                 oldData.push(newRow);
                 tableIns.reload({
+                    url:'',
                     data : oldData
                 });
             },
@@ -464,6 +582,7 @@
                     }
                 }
                 tableIns.reload({
+                    url:'',
                     data : oldData
                 });
             },
@@ -477,6 +596,7 @@
                     continue;
                 }
                 tableIns.reload({
+                    url:'',
                     data : oldData
                 });
             },

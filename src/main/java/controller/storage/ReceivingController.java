@@ -35,6 +35,9 @@ public class ReceivingController {
     @Autowired
     ContractExpenseService contractExpenseService;
 
+    @Autowired
+    LogService logService;
+
     @RequestMapping("/index")
     public String index(){
         return "storage/receiving/index";
@@ -110,13 +113,17 @@ public class ReceivingController {
     @ResponseBody
     public StateType confirm(@ModelAttribute Receiving receiving){
         StateType stateType=receivingService.confirm(receiving);
+        if(stateType == StateType.getStateType(28)){
+            //只有审核通过才可增加出库日志记录
+            logService.addReceivingLog(receiving.getStorageId(),receiving.getReceivingId());
+        }
         return stateType;
     }
 
-    @RequestMapping("/del/{receivingId}")
+    @RequestMapping("/del")
     @ResponseBody
-    public StateType del( @PathVariable("receivingId") int receivingId){
-        StateType stateType=receivingService.del(receivingId);
+    public StateType del( @ModelAttribute Receiving receiving){
+        StateType stateType=receivingService.del(receiving);
         return stateType;
     }
 

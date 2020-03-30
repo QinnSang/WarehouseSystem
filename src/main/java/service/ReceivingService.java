@@ -14,5 +14,5 @@ public interface ReceivingService {
 
     StateType confirm(Receiving receiving);
 
-    StateType del(int receivingId);
+    StateType del(Receiving receiving);
 }

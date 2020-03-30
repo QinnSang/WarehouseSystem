@@ -65,7 +65,7 @@
         <where>
             t4.type_code='CS_STATUS'
             <if test="storageId!=null">
-                and storage_id = #{storageId}
+                and t1.storage_id = #{storageId}
             </if>
             <if test="storageCode!=null and storageCode!=''">
                 and storage_code like #{storagecode}
@@ -152,39 +152,5 @@
     <update id="updateStatus" parameterType="pojo.Storage">
         update storage set status = #{status} where storage_id= #{storageId}
     </update>
-
-    <resultMap id="goodsNumberBase" type="pojo.StorageGoods">
-        <result property="goodsNumber" column="goods_number"/>
-        <association property="goodsType" javaType="pojo.Goods">
-            <result property="goodsName" column="goodsType"/>
-        </association>
-        <association property="goodsName" javaType="pojo.Goods">
-            <result property="goodsName" column="goodsName"/>
-        </association>
-        <association property="warehouse" javaType="pojo.Warehouse">
-            <result property="warehouseName" column="warehouseName"/>
-        </association>
-        <association property="location" javaType="pojo.Location">
-            <result property="locationName" column="locationName"/>
-        </association>
-    </resultMap>
-    <select id="queryGoodsNumberByStorageId" resultMap="goodsNumberBase">
-        select
-            t3.goods_name as goodsType,
-            t2.goods_name as goodsName,
-            w.warehouse_name as warehouseName,
-            l.location_name as locationName,
-            goods_number
-        from storage_goods t1
-        LEFT JOIN goods t2 on t1.goods_name_id = t2.goods_id
-        LEFT JOIN goods t3 on t1.goods_type_id =t3.goods_id
-        LEFT JOIN warehouse w on t1.warehouse_id = w.warehouse_id
-        LEFT JOIN location l on t1.location_id = l.location_id
-        where
-            l.warehouse_id = w.warehouse_id
-            and t2.parent_id = t3.goods_id
-            and t1.storage_id = #{storageId}
-    </select>
-
 
 </mapper>

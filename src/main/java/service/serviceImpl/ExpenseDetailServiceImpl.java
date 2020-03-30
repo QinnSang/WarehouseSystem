@@ -15,7 +15,7 @@ public class ExpenseDetailServiceImpl implements ExpenseDetailService {
     ExpenseDetailMapper expenseDetailMapper;
 
     @Override
-    public List<ExpenseDetail> queryByOrderId(Integer orderId) {
-        return expenseDetailMapper.queryByOrderId(orderId);
+    public List<ExpenseDetail> queryByOrderId(ExpenseDetail expenseDetail) {
+        return expenseDetailMapper.queryByOrderId(expenseDetail);
     }
 }

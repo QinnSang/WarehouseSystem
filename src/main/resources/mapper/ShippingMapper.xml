@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="mapper.ReceivingMapper">
+<mapper namespace="mapper.ShippingMapper">
 
-    <resultMap id="receivingBase" type="pojo.Receiving">
-        <result property="receivingId" column="receiving_id"/>
-        <result property="receivingName" column="receiving_name"/>
-        <result property="receivingCode" column="receiving_code"/>
-        <result property="receivingNumber" column="receiving_number"/>
+    <resultMap id="shippingBase" type="pojo.Shipping">
+        <result property="shippingId" column="shipping_id"/>
+        <result property="shippingName" column="shipping_name"/>
+        <result property="shippingCode" column="shipping_code"/>
+        <result property="shippingNumber" column="shipping_number"/>
         <result property="carNo" column="car_no"/>
-        <result property="origin" column="origin"/>
-        <result property="arriveTime" column="arrive_time"/>
+        <result property="shippingTime" column="shipping_time"/>
         <result property="remark" column="remark"/>
-        <result property="receivingDate" column="receiving_date"/>
+        <result property="createDate" column="create_date"/>
         <association property="storage" javaType="pojo.Storage">
             <id property="storageId" column="storage_id"/>
             <result property="storageName" column="storage_name"/>
@@ -33,30 +32,26 @@
             <id property="goodsId" column="goods_name_id"/>
             <result property="goodsName" column="goods_name"/>
         </association>
-        <association property="receivingTransType" javaType="pojo.DataDictionary">
+        <association property="shippingTransType" javaType="pojo.DataDictionary">
             <result property="valueId" column="trans_type_id"/>
             <result property="valueName" column="trans_type"/>
         </association>
-        <association property="receivingTakingType" javaType="pojo.DataDictionary">
-            <result property="valueId" column="taking_type_id"/>
-            <result property="valueName" column="taking_type"/>
-        </association>
-        <association property="receivingStatus" javaType="pojo.DataDictionary">
+        <association property="shippingStatus" javaType="pojo.DataDictionary">
             <result property="valueId" column="statusId"/>
             <result property="valueName" column="statusName"/>
         </association>
-        <association property="receivingByUser" javaType="pojo.Employee">
+        <association property="shippingByUser" javaType="pojo.Employee">
             <id property="employeeId" column="employee_id"/>
             <result property="realName" column="real_name"/>
         </association>
     </resultMap>
 
-    <select id="query" parameterType="pojo.Receiving" resultMap="receivingBase">
-        <if test="receivingName !=null and receivingName!=''">
-            <bind name="receivingname" value="'%'+receivingName+'%'"/>
+    <select id="query" parameterType="pojo.Shipping" resultMap="shippingBase">
+        <if test="shippingName !=null and shippingName!=''">
+            <bind name="shippingname" value="'%'+shippingName+'%'"/>
         </if>
-        <if test="receivingCode !=null and receivingCode!=''">
-            <bind name="receivingcode" value="'%'+receivingCode+'%'"/>
+        <if test="shippingCode !=null and shippingCode!=''">
+            <bind name="shippingcode" value="'%'+shippingCode+'%'"/>
         </if>
         <if test="storage!=null and storage.storageCode!=null and storage.storageCode!=''">
             <bind name="storagecode" value="'%'+storage.storageCode+'%'"/>
@@ -65,15 +60,15 @@
             <bind name="storagename" value="'%'+storage.storageName+'%'"/>
         </if>
         select
-            receiving_id,
-            receiving_name,
-            receiving_code,
+            shipping_id,
+            shipping_name,
+            shipping_code,
+            shipping_number,
             car_no,
-            origin,
-            receiving_date,
-            t1.remark,
-            arrive_time,
-            receiving_number,
+            shipping_time,
+            t1.create_date,
+            t1.remark ,
+            shipping_number,
             s.storage_id,
             s.storage_name,
             s.storage_code,
@@ -87,21 +82,18 @@
             t2.goods_name,
             d1.value_id as trans_type_id,
             d1.value_name as trans_type,
-            d2.value_id as taking_type_id,
-            d2.value_name as taking_type,
             d3.value_id as statusId,
             d3.value_name as statusName,
             e.employee_id,
             e.real_name
-        from receiving t1
+        from shipping t1
         LEFT JOIN storage s on t1.storage_id = s.storage_id
         LEFT JOIN warehouse w on t1.warehouse_id = w.warehouse_id
         LEFT JOIN location l on t1.location_id = l.location_id
         LEFT JOIN goods g on t1.goods_type_id = g.goods_id
         LEFT JOIN goods t2 on t2.goods_id=t1.goods_name_id
-        LEFT JOIN employee e on e.employee_id=t1.receiving_by
+        LEFT JOIN employee e on e.employee_id=t1.shipping_by
         LEFT JOIN data_dictionary d1 on t1.trans_type = d1.value_id
-        LEFT JOIN data_dictionary d2 on t1.taking_type = d2.value_id
         LEFT JOIN data_dictionary d3 on t1.status = d3.value_id
         <where>
             l.warehouse_id = w.warehouse_id
@@ -109,16 +101,15 @@
             and t2.classify = 2
             and g.classify = 1
             and d1.type_code = 'TRANS_TYPE'
-            and d2.type_code = 'TAKING_TYPE'
             and d3.type_code = 'RE_STATUS'
-            <if test="receivingId !=null">
-                and receiving_id = #{receivingId}
+            <if test="shippingId !=null">
+                and shipping_id = #{shippingId}
             </if>
-            <if test="receivingName !=null and receivingName!=''">
-                and receiving_name like #{receivingname}
+            <if test="shippingName !=null and shippingName!=''">
+                and shipping_name like #{shippingname}
             </if>
-            <if test="receivingCode !=null and receivingCode!=''">
-                and receiving_code like #{receivingcode}
+            <if test="shippingCode !=null and shippingCode!=''">
+                and shipping_code like #{shippingcode}
             </if>
             <if test="storage!=null and storage.storageCode!=null and storage.storageCode!=''">
                 and s.storage_code like #{storagecode}
@@ -130,26 +121,26 @@
                 and t1.status = #{status}
             </if>
         </where>
-        order by receiving_date desc, t1.arrive_time desc
+        order by shipping_time desc, t1.create_date desc
     </select>
 
-    <select  id="generateReceivingCode" parameterType="java.util.Map"
+    <select  id="generateShippingCode" parameterType="java.util.Map"
              resultType="java.util.Map" statementType="CALLABLE">
-        {CALL generate_receivingCode(#{orderNamePre,mode=IN}, #{receivingCode, mode=OUT, jdbcType=VARCHAR})}
+        {CALL generate_shippingCode(#{orderNamePre,mode=IN}, #{shippingCode, mode=OUT, jdbcType=VARCHAR})}
     </select>
 
-    <select id="queryByCode" resultType="pojo.Receiving">
-        select receiving_id from receiving where receiving_code =#{receivingCode}
+    <select id="queryByCode" resultType="pojo.Shipping">
+        select shipping_id from shipping where shipping_code =#{shippingCode}
     </select>
 
     <insert id="add">
-          insert into receiving
+        insert into shipping
         <trim prefix="(" suffix=")" prefixOverrides=",">
-            <if test="receivingName !=null and receivingName!=''">
-                ,receiving_name
+            <if test="shippingName !=null and shippingName!=''">
+                ,shipping_name
             </if>
-            <if test="receivingCode!=null and receivingCode!=''">
-                ,receiving_code
+            <if test="shippingCode!=null and shippingCode!=''">
+                ,shipping_code
             </if>
             <if test="storageId!=null">
                 ,storage_id
@@ -166,42 +157,36 @@
             <if test="goodsNameId!=null">
                 ,goods_name_id
             </if>
-            <if test="receivingNumber!=null">
-                ,receiving_number
+            <if test="shippingNumber!=null">
+                ,shipping_number
             </if>
             <if test="transType!=null">
                 ,trans_type
             </if>
-            <if test="takingType!=null">
-                ,taking_type
-            </if>
             <if test="carNo!=null and carNo!=''">
                 ,car_no
             </if>
-            <if test="origin!=null and origin!=''">
-                ,origin
-            </if>
-            <if test="arriveTime!=null">
-                ,arrive_time
+            <if test="shippingTime!=null">
+                ,shipping_time
             </if>
             <if test="remark!=null and remark!=''">
                 ,remark
             </if>
-            <if test="receivingBy!=null">
-                ,receiving_by
+            <if test="shippingBy!=null">
+                ,shipping_by
             </if>
-            <if test="receivingDate!=null">
-                ,receiving_date
+            <if test="createDate!=null">
+                ,create_date
             </if>
             ,status
         </trim>
 
         <trim prefix="values(" suffix=")" prefixOverrides=",">
-            <if test="receivingName !=null and receivingName!=''">
-                ,#{receivingName}
+            <if test="shippingName !=null and shippingName!=''">
+                ,#{shippingName}
             </if>
-            <if test="receivingCode!=null and receivingCode!=''">
-                ,#{receivingCode}
+            <if test="shippingCode!=null and shippingCode!=''">
+                ,#{shippingCode}
             </if>
             <if test="storageId!=null">
                 ,#{storageId}
@@ -218,42 +203,36 @@
             <if test="goodsNameId!=null">
                 ,#{goodsNameId}
             </if>
-            <if test="receivingNumber!=null">
-                ,#{receivingNumber}
+            <if test="shippingNumber!=null">
+                ,#{shippingNumber}
             </if>
             <if test="transType!=null">
                 ,#{transType}
             </if>
-            <if test="takingType!=null">
-                ,#{takingType}
-            </if>
             <if test="carNo!=null and carNo!=''">
                 ,#{carNo}
             </if>
-            <if test="origin!=null and origin!=''">
-                ,#{origin}
-            </if>
-            <if test="arriveTime!=null">
-                ,#{arriveTime}
+            <if test="shippingTime!=null">
+                ,#{shippingTime}
             </if>
             <if test="remark!=null and remark!=''">
                 ,#{remark}
             </if>
-            <if test="receivingBy!=null">
-                ,#{receivingBy}
+            <if test="shippingBy!=null">
+                ,#{shippingBy}
             </if>
-            <if test="receivingDate!=null">
-                ,#{receivingDate}
+            <if test="createDate!=null">
+                ,#{createDate}
             </if>
             ,1
         </trim>
     </insert>
 
-    <update id="update" parameterType="pojo.Receiving">
-        update receiving
+    <update id="update" parameterType="pojo.Shipping">
+        update shipping
         <set>
-            <if test="receivingName !=null and receivingName!=''">
-                receiving_name = #{receivingName},
+            <if test="shippingName !=null and shippingName!=''">
+                shipping_name = #{shippingName},
             </if>
             <if test="storageId!=null">
                 storage_id = #{storageId},
@@ -270,45 +249,41 @@
             <if test="goodsNameId!=null">
                 goods_name_id = #{goodsNameId},
             </if>
-            <if test="receivingNumber!=null">
-                receiving_number = #{receivingNumber},
+            <if test="shippingNumber!=null">
+                shipping_number = #{shippingNumber},
             </if>
             <if test="transType!=null">
                 trans_type = #{transType},
             </if>
-            <if test="takingType!=null">
-                taking_type = #{takingType},
-            </if>
             <if test="carNo!=null and carNo!=''">
                 car_no = #{carNo},
             </if>
-            <if test="origin!=null and origin!=''">
-                origin = #{origin},
-            </if>
-            <if test="arriveTime!=null">
-                arrive_time = #{arriveTime},
+            <if test="shippingTime!=null">
+                shipping_time = #{shippingTime},
             </if>
             <if test="remark!=null and remark!=''">
                 remark = #{remark},
             </if>
-            <if test="receivingBy!=null">
-                receiving_by = #{receivingBy},
+            <if test="shippingBy!=null">
+                shipping_by = #{shippingBy},
             </if>
-            <if test="receivingDate!=null">
-                receiving_date = #{receivingDate},
+            <if test="createDate!=null">
+                create_date = #{createDate},
             </if>
         </set>
         <where>
-            receiving_id =#{receivingId}
+            shipping_id =#{shippingId}
         </where>
     </update>
 
-    <update id="updateStatus" parameterType="pojo.Receiving">
-        update receiving set status = 2 where receiving_id = #{receivingId}
+    <update id="updateStatus">
+        update shipping set status = 2 where shipping_id = #{shippingId}
     </update>
 
-    <delete id="delByReceivingId" parameterType="integer">
-        delete from receiving where receiving_id = #{receivingId}
+    <delete id="delByShippingId">
+        delete from shipping  where shipping_id = #{shippingId}
     </delete>
+
+
 
 </mapper>

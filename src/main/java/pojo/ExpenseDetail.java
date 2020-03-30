@@ -21,7 +21,7 @@ public class ExpenseDetail {
 
     private Integer checkStatus;
 
-    private DataDictionary receivingCheckStatus;
+    private DataDictionary checkStatusData;
 
     private String remark;
 
@@ -127,12 +127,12 @@ public class ExpenseDetail {
         this.checkDate = checkDate;
     }
 
-    public DataDictionary getReceivingCheckStatus() {
-        return receivingCheckStatus;
+    public DataDictionary getCheckStatusData() {
+        return checkStatusData;
     }
 
-    public void setReceivingCheckStatus(DataDictionary receivingCheckStatus) {
-        this.receivingCheckStatus = receivingCheckStatus;
+    public void setCheckStatusData(DataDictionary checkStatusData) {
+        this.checkStatusData = checkStatusData;
     }
 
     public Employee getCheckByUser() {

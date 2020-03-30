@@ -1,6 +1,9 @@
 package pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
+import java.util.List;
 
 public class Shipping {
     private Integer shippingId;
@@ -11,27 +14,49 @@ public class Shipping {
 
     private Integer storageId;
 
+    private Storage storage;
+
     private Integer warehouseId;
+
+    private Warehouse warehouse;
 
     private Integer locationId;
 
+    private Location location;
+
     private Integer goodsTypeId;
 
+    private Goods goodsType;
+
     private Integer goodsNameId;
+
+    private Goods goodsName;
 
     private Double shippingNumber;
 
     private String transType;
 
-    private String carno;
+    private DataDictionary shippingTransType;
+
+    private String carNo;
 
     private Integer shippingBy;
 
+    private Employee shippingByUser;
+
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date shippingTime;
 
     private Integer status;
 
+    private DataDictionary shippingStatus;
+
     private String remark;
+
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
+    private Date createDate;
+
+    private List<ExpenseDetail> expenseDetailList;
 
     public Integer getShippingId() {
         return shippingId;
@@ -55,6 +80,14 @@ public class Shipping {
 
     public void setShippingCode(String shippingCode) {
         this.shippingCode = shippingCode == null ? null : shippingCode.trim();
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
     }
 
     public Integer getStorageId() {
@@ -113,12 +146,12 @@ public class Shipping {
         this.transType = transType == null ? null : transType.trim();
     }
 
-    public String getCarno() {
-        return carno;
+    public String getCarNo() {
+        return carNo;
     }
 
-    public void setCarno(String carno) {
-        this.carno = carno == null ? null : carno.trim();
+    public void setCarNo(String carNo) {
+        this.carNo = carNo;
     }
 
     public Integer getShippingBy() {
@@ -151,5 +184,77 @@ public class Shipping {
 
     public void setRemark(String remark) {
         this.remark = remark == null ? null : remark.trim();
+    }
+
+    public Storage getStorage() {
+        return storage;
+    }
+
+    public void setStorage(Storage storage) {
+        this.storage = storage;
+    }
+
+    public Warehouse getWarehouse() {
+        return warehouse;
+    }
+
+    public void setWarehouse(Warehouse warehouse) {
+        this.warehouse = warehouse;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
+    public Goods getGoodsType() {
+        return goodsType;
+    }
+
+    public void setGoodsType(Goods goodsType) {
+        this.goodsType = goodsType;
+    }
+
+    public Goods getGoodsName() {
+        return goodsName;
+    }
+
+    public void setGoodsName(Goods goodsName) {
+        this.goodsName = goodsName;
+    }
+
+    public DataDictionary getShippingTransType() {
+        return shippingTransType;
+    }
+
+    public void setShippingTransType(DataDictionary shippingTransType) {
+        this.shippingTransType = shippingTransType;
+    }
+
+    public Employee getShippingByUser() {
+        return shippingByUser;
+    }
+
+    public void setShippingByUser(Employee shippingByUser) {
+        this.shippingByUser = shippingByUser;
+    }
+
+    public DataDictionary getShippingStatus() {
+        return shippingStatus;
+    }
+
+    public void setShippingStatus(DataDictionary shippingStatus) {
+        this.shippingStatus = shippingStatus;
+    }
+
+    public List<ExpenseDetail> getExpenseDetailList() {
+        return expenseDetailList;
+    }
+
+    public void setExpenseDetailList(List<ExpenseDetail> expenseDetailList) {
+        this.expenseDetailList = expenseDetailList;
     }
 }

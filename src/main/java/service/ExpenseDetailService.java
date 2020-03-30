@@ -6,5 +6,6 @@ import pojo.ExpenseDetail;
 import java.util.List;
 
 public interface ExpenseDetailService {
-    List<ExpenseDetail> queryByOrderId(Integer orderId);
+
+    List<ExpenseDetail> queryByOrderId(ExpenseDetail expenseDetail);
 }

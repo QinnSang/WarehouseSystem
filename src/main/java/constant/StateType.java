@@ -80,6 +80,11 @@ public enum StateType {
 
     ErrorType(34,"请求类型发生错误"),
 
+    AlreadyConfirm(35,"出入库单已确认，无法删除"),
+
+    LackGoodsNumber(36,"库存不足，无法出库"),
+
+
     /**
      * 请求格式错误
      */
