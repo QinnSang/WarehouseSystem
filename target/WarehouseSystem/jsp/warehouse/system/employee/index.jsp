@@ -479,7 +479,7 @@
                 success: function(layero, index){
                     //表单赋值
                     form.val('roleFilter',{
-                       "employeeId": data.employeeId,
+                        "employeeId": data.employeeId,
                         "roleId":data.roleId,
                         "roleName":data.roleName,
                     })

@@ -22,4 +22,6 @@ public interface EmployeeService {
     StateType employeeRole(int employeeId);
 
     PageInfo<Role> queryRole();
+
+    StateType register(Employee employee);
 }

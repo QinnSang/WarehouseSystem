@@ -11,6 +11,7 @@ import pojo.Location;
 import pojo.Role;
 import service.EmployeeService;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -93,6 +94,36 @@ public class EmployeeServiceImpl implements EmployeeService {
         List<Role> list=employeeMapper.queryRole();
         PageInfo<Role> pageInfo=new PageInfo<>(list);
         return pageInfo;
+    }
+
+    @Override
+    public StateType register(Employee employee) {
+        Map<String, Object> map=new HashMap<>();
+        Employee employee1=employeeMapper.queryByName(employee.getLoginCode());
+        if(employee1==null){
+            employee1=employeeMapper.queryByEmail(employee.getEmail());
+            if(employee1==null){
+                //todo 发送邮件时把注册时间当做参数传过去，对参数进行签名。验证时与当前时间比较，减少了保存时间的操作。
+//                String pwdMd5= SecureUtils.getMD5(employee.getPassword());
+//                String validatecode=SecureUtils.getMD5(employee.getEmail());
+//                employee.setPassword(pwdMd5);
+//                employee.setLoginCode(validatecode);
+                employee.setStatus(1);
+                boolean insertFlag=employeeMapper.register(employee)==1?true:false;
+                if(insertFlag){
+                    return null;
+                }else{
+                    //注册失败
+                    return  StateType.getStateType(13);
+                }
+            }else{
+                //邮箱已被注册
+                return  StateType.getStateType(12);
+            }
+        }else{
+            //账号已被注册
+            return  StateType.getStateType(11);
+        }
     }
 
 

@@ -215,6 +215,21 @@
         LEFT JOIN employee t1 ON t1.employee_id=t5.emp_id
     </select>
 
-
+    <select id="queryByName" resultType="pojo.Employee">
+        select * from employee
+        <where>
+            login_code=#{loginCode}
+        </where>
+    </select>
+    <select id="queryByEmail" resultType="pojo.Employee">
+        select * from employee
+        <where>
+            email=#{email}
+        </where>
+    </select>
+    <insert id="register" parameterType="pojo.Employee">
+        insert into employee (login_code, password, email,status)
+        values(#{loginCode},#{password},#{email},#{status})
+    </insert>
 
 </mapper>

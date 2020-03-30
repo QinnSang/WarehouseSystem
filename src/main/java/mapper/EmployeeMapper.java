@@ -25,4 +25,11 @@ public interface EmployeeMapper {
     int employeeRole(int employee);
 
     List<Role> queryRole();
+
+    int register(Employee employee);
+
+    Employee queryByName(@Param("loginCode") String loginCode);
+
+    Employee queryByEmail(@Param("email") String email);
+
 }

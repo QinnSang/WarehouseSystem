@@ -7,13 +7,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pojo.Employee;
-import pojo.Location;
 import pojo.Role;
 import service.EmployeeService;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -48,6 +48,34 @@ public class EmployeeController {
         model.addAttribute("stateType",stateType);
 //        return "redirect:/";  //因为登录错误而需要返回页面提示消息，所以不能使用redirect，否则取不到stateType
         return "system/employee/login";
+    }
+
+//    //验证码
+//    @RequestMapping("/captcha/{flag}")
+//    public void captcha(HttpServletRequest request, HttpServletResponse response, @PathVariable("flag")boolean flag) throws Exception {
+//        //刷新验证码
+//        if(flag){
+//            CaptchaUtil.clear(request);  // 清除session中的验证码
+//        }
+//        CaptchaUtil.out(request, response);
+//    }
+
+    @RequestMapping("/toRegister")
+    public String toRegister(){
+        return "system/employee/register";
+    }
+
+    @RequestMapping("/register")
+    public String register(@ModelAttribute Employee employee, Model model){
+        StateType stateType=employeeService.register(employee);
+        if(stateType==null){
+//            registerValidateService.sendEmail(devUser);
+            return "redirect:register_success";
+        }
+        else{
+            model.addAttribute("stateType",stateType);
+            return "system/employee/register";
+        }
     }
 
     @RequestMapping("/query")
