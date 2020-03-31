@@ -206,11 +206,12 @@
             ,cols: [[ //表头
                 {field: 'storageCode', title: '仓储订单号',width:150,unresize: true}
                 ,{field: 'storageName', title: '仓储订单名称',width:180,unresize: true}
-                ,{field: 'contractName', title: '合同名称',width:200,templet:'<div>{{d.contract.contractName}}</div>',unresize: true}
+                ,{field: 'contractName', title: '合同名称',width:180,templet:'<div>{{d.contract.contractName}}</div>',unresize: true}
                 ,{field: 'contractCode', title: '合同编号',width:160,templet:'<div>{{d.contract.contractCode}}</div>',unresize: true}
                 ,{field: 'softwareSize', title: '公司名称',width:180,templet:'<div>{{d.contract.company.companyName}}</div>',unresize: true}
                 ,{field:'goodsNumber',title: '库存数量',width:90,unresize: true}
                 ,{field:'storageStatus', title: '订单状态',templet:'<div>{{d.storageStatus.valueName}}</div>',width:90,unresize: true}
+                ,{field:'createTime', title: '创建时间',width:180,unresize: true}
                 ,{ title: '操作',align:'center', toolbar: '#barDemo',width:200,unresize: true}
             ]]
             ,parseData: function(res){ //res 即为原始返回的数据
@@ -316,7 +317,10 @@
                             title: "出库",
                             event: function() {
                                 if(data.storageStatus.valueId == 2){
-                                    window.location.href = "${ctx}/shipping/toAdd/"+data.storageId;
+                                    if(data.goodsNumber ==0)
+                                        layer.msg('库存数量为0，不可出库', {icon: 2});
+                                    else
+                                        window.location.href = "${ctx}/shipping/toAdd/"+data.storageId;
                                 }else{
                                     layer.msg('仓储订单未启用，不可出库', {icon: 2});
                                 }
@@ -325,16 +329,22 @@
                         {
                             title: "进出库日志明细",
                             event: function() {
-                                if(data.storageStatus.valueId == 2){
+                                if(data.storageStatus.valueId != 1){
                                     window.location.href = "${ctx}/log/toIndex/"+data.storageCode;
                                 }else{
-                                    layer.msg('仓储订单未启用，不可出库', {icon: 2});
+                                    layer.msg('仓储订单未启用，无进查看出库明细', {icon: 2});
                                 }
                             }
                         },
                         {
                             title: "结算",
-                            url: "${ctx}/settle/settleAlone"+data.id //可直接跳转到该url
+                            event: function() {
+                                if(data.storageStatus.valueId != 1){
+                                    window.location.href = "${ctx}/shipping/toAdd/"+data.storageId;
+                                }else{
+                                    layer.msg('仓储订单未启用，无法结算', {icon: 2});
+                                }
+                            }
                         }
                     ];
                     return options;
@@ -550,15 +560,5 @@
 
     });
 </script>
-<%--设置表单样式--%>
-<style type="text/css">
-    .layui-table-cell {
-        height: auto;
-        /*设置字体大小*/
-        font-size:15px;
-        /*设置表格行高*/
-        line-height: 40px;
-    }
-</style>
 </body>
 </html>

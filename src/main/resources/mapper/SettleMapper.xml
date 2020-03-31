@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.SettleMapper">
+
+    <resultMap id="settleBase" type="pojo.Settle">
+        <result property="settleId" column="settle_id"/>
+        <result property="settleCode" column="settle_code"/>
+        <result property="settleName" column="settle_name"/>
+        <result property="totalPrice" column="total_Price"/>
+        <result property="checkDate" column="check_date"/>
+        <result property="checkStartDate" column="check_start_date"/>
+        <result property="checkEndDate" column="check_end_date"/>
+        <association property="storage" javaType="pojo.Storage">
+            <id property="storageId" column="storage_id"/>
+            <result property="storageName" column="storage_name"/>
+            <result property="storageCode" column="storage_code"/>
+        </association>
+        <association property="checkByUser" javaType="pojo.Employee">
+            <result property="realName" column="real_name"/>
+        </association>
+        <association property="checkStatus" javaType="pojo.DataDictionary">
+            <result property="valueId" column="value_id"/>
+            <result property="valueName" column="value_name"/>
+        </association>
+
+    </resultMap>
+
+    <select id="query" parameterType="pojo.Settle" resultMap="settleBase">
+        <if test="settleCode!=null and settleCode!=''">
+            <bind name="settlecode" value="'%'+settleCode+'%'"/>
+        </if>
+        <if test="settleName!=null and settleName!=''">
+            <bind name="settlename" value="'%'+settleName+'%'"/>
+        </if>
+        select
+            settle_id,
+            settle_code,
+            settle_name,
+            total_price,
+            check_date,
+            check_start_date,
+            check_end_date,
+            s.storage_id,
+            s.storage_code,
+            s.storage_name,
+            e.real_name,
+            d.value_id,
+            d.value_name
+        from settle t1
+        LEFT JOIN storage s on t1.storage_id = s.storage_id
+        LEFT JOIN employee e on t1.check_by = e.employee_id
+        LEFT JOIN data_dictionary d on t1.status = d.value_id
+        where
+            t1.storage_id = #{storageId}
+            and d.type_code = 'CHECK_STATUS'
+            <if test="settleCode!=null and settleCode!=''">
+                and settle_code like #{settlecode}
+            </if>
+            <if test="settleName!=null and settleName!=''">
+                and settle_name like #{settlename}
+            </if>
+        order by t1.create_date desc
+    </select>
+
+    <select  id="generateSettleCode" parameterType="java.util.Map"
+             resultType="java.util.Map" statementType="CALLABLE">
+        {CALL generate_settleCode(#{orderNamePre,mode=IN}, #{settleCode, mode=OUT, jdbcType=VARCHAR})}
+    </select>
+
+    <insert id="addStatement" parameterType="pojo.Settle">
+        insert into settle
+            (settle_code, settle_name, storage_id, total_price,check_start_date, check_end_date,status, create_date, create_by)
+        values
+            (#{settleCode}, #{settleName}, #{storageId}, #{totalPrice}, #{checkStartDate}, #{checkEndDate},#{status},#{createDate}, #{createBy})
+    </insert>
+
+    <delete id="del" parameterType="integer">
+        delete from settle where settle_id = #{settleId}
+    </delete>
+
+    <update id="updateSettle" parameterType="pojo.Settle">
+        update settle set status = 2 , check_by = #{checkBy} , check_date = #{checkDate}
+        where settle_id = #{settleId}
+    </update>
+
+    <select id="querySettleId" resultType="integer">
+        select settle_id from settle where settle_code = #{settleCode}
+    </select>
+
+    <update id="updateTotalPrice" parameterType="pojo.Settle">
+        update settle set total_price = #{totalPrice}
+        where settle_id = #{settleId}
+    </update>
+</mapper>

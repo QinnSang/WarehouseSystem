@@ -39,7 +39,6 @@
                     </div>
                 </div>
                 <div class="layui-form-item" style="margin-bottom: 10px;" >
-
                     <div class="layui-input-inline" style="left:40px">
                         <button class="layui-btn " lay-submit  lay-filter="search" >查 询</button>
                         <button type="reset" class="layui-btn ">重 置</button>
@@ -61,6 +60,7 @@
                 <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
             </script>
         </div>
+
     </div>
 
     <%--试着用弹窗展示查看功能，如果数据实在不行，再换成跳转式的--%>
@@ -197,9 +197,9 @@
                 ,{field:'receivingNumber', title: '入库数量',width:90,unresize: true}
                 ,{field:'location.locationName', title: '库位',templet:'<div>{{d.location.locationName}}</div>',width:90,unresize: true}
                 ,{field:'receivingByUser.realName', title: '入库员',templet:'<div>{{d.receivingByUser.realName}}</div>',width:80,unresize: true}
-                ,{field: 'receivingDate', title: '入库时间', width: 110,  sort:true,unresize: true},
-                ,{field: 'receivingStatus', title: '状态',templet:'<div>{{d.receivingStatus.valueName}}</div>', width: 76,unresize: true},
-                ,{ title: '操作', toolbar: '#barDemo',width:220,unresize: true}
+                ,{field: 'receivingDate', title: '入库时间', width: 110,  sort:true,unresize: true}
+                ,{field: 'receivingStatus', title: '状态',templet:'<div>{{d.receivingStatus.valueName}}</div>', width:80,unresize: true}
+                ,{ title: '操作', toolbar: '#barDemo',width:210,unresize: true}
             ]]
             ,parseData: function(res){ //res 即为原始返回的数据
                 return {
@@ -229,7 +229,6 @@
                     bgColor: 'ffffff' //背景颜色
                 }
             }
-
         });
 
         //==========================监听行工具事件 start==============
@@ -415,15 +414,5 @@
 
     });
 </script>
-<%--设置表单样式--%>
-<style type="text/css">
-    .layui-table-cell {
-        height: auto;
-        /*设置字体大小*/
-        font-size:15px;
-        /*设置表格行高*/
-        line-height: 40px;
-    }
-</style>
 </body>
 </html>

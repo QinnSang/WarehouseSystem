@@ -1,6 +1,10 @@
 package pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
+import java.util.List;
 
 public class Settle {
     private Integer settleId;
@@ -11,15 +15,36 @@ public class Settle {
 
     private Integer storageId;
 
+    private Storage storage;
+
     private Double totalPrice;
 
     private Integer checkBy;
 
+    private Employee checkByUser;
+
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date checkStartDate;
 
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date checkEndDate;
 
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date checkDate;
+
+    private Integer status;
+
+    private DataDictionary checkStatus;
+
+    private Date createDate;
+
+    private Integer createBy;
+
+    private Employee createByUser;
+
+    private List<ExpenseDetail> expenseDetailList;
 
     public Integer getSettleId() {
         return settleId;
@@ -91,5 +116,69 @@ public class Settle {
 
     public void setCheckDate(Date checkDate) {
         this.checkDate = checkDate;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public Integer getCreateBy() {
+        return createBy;
+    }
+
+    public void setCreateBy(Integer createBy) {
+        this.createBy = createBy;
+    }
+
+    public Storage getStorage() {
+        return storage;
+    }
+
+    public void setStorage(Storage storage) {
+        this.storage = storage;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public DataDictionary getCheckStatus() {
+        return checkStatus;
+    }
+
+    public void setCheckStatus(DataDictionary checkStatus) {
+        this.checkStatus = checkStatus;
+    }
+
+    public Employee getCreateByUser() {
+        return createByUser;
+    }
+
+    public void setCreateByUser(Employee createByUser) {
+        this.createByUser = createByUser;
+    }
+
+    public Employee getCheckByUser() {
+        return checkByUser;
+    }
+
+    public void setCheckByUser(Employee checkByUser) {
+        this.checkByUser = checkByUser;
+    }
+
+    public List<ExpenseDetail> getExpenseDetailList() {
+        return expenseDetailList;
+    }
+
+    public void setExpenseDetailList(List<ExpenseDetail> expenseDetailList) {
+        this.expenseDetailList = expenseDetailList;
     }
 }

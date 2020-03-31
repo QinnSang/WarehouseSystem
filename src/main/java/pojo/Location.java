@@ -22,6 +22,8 @@ public class Location {
 
     private Warehouse warehouse;
 
+    private String fileUrl;
+
     public Integer getLocationId() {
         return locationId;
     }
@@ -84,5 +86,13 @@ public class Location {
 
     public void setWarehouse(Warehouse warehouse) {
         this.warehouse = warehouse;
+    }
+
+    public String getFileUrl() {
+        return fileUrl;
+    }
+
+    public void setFileUrl(String fileUrl) {
+        this.fileUrl = fileUrl;
     }
 }

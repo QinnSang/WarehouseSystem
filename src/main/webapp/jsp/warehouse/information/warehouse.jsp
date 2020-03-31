@@ -4,6 +4,11 @@
 <head>
     <title>仓储物流系统</title>
     <link rel="stylesheet" href="${ctx}/static/plugins/layui/css/layui.css">
+    <style>
+        .layui-upload-img{width: 130px; height: 100px;}
+        .layui-table img{width:56%;}
+        #img_prev {max-width:98%; max-height:98%; margin: 10px auto}
+    </style>
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
@@ -45,7 +50,11 @@
                 <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
             </script>
                 <%--子表行工具--%>
+                <script type="text/html" id="location_img">
+                    <img src="{{d.fileUrl || ''}}">
+                </script>
                 <script type="text/html" id="childBar">
+                    <a class="layui-btn layui-btn-xs" lay-event="image">查看图片</a>
                     <a class="layui-btn layui-btn-xs" lay-event="childEdit">编辑</a>
                     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="childDel">删除</a>
                 </script>
@@ -118,14 +127,19 @@
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label" style="width:120px">库位图片：</label>
+            <input type="hidden" name="fileUrl">
             <div class="layui-input-inline">
                 <button type="button" class="layui-btn" id="chooseFile"><i class="layui-icon"></i>上传</button>
+            </div>
+            <div class="layui-input-inline">
+                <img class="layui-upload-img" id="locationImage">
             </div>
         </div>
         <input type="hidden" name="locationType" id="locationType">
         <%--隐藏表单提交按钮--%>
         <button type="submit" style="display:none;" class="layui-btn" lay-submit lay-filter="locationSubmit">立即提交</button>
     </form>
+
 
     <jsp:include page="/jsp/include/footer.jsp"/>
 
@@ -135,13 +149,14 @@
 <link rel="stylesheet" type="text/css" href="${ctx}/static/layuiExtend/soulTable/soulTable.css"/>
 <script>
     //JavaScript代码区域
-    layui.use(['element','jquery','form','table','layer','soulTable'], function(){
+    layui.use(['element','jquery','form','table','layer','soulTable','upload'], function(){
         var element = layui.element;
         $ =layui.jquery;
         var table = layui.table;
         var form = layui.form;
         var layer = layui.layer;
         var soulTable = layui.soulTable; //使用soulTable子表
+        var upload = layui.upload;  //得到 upload 对象
 
         var myTable = table.render({
             elem: '#warehouseTable'
@@ -175,7 +190,9 @@
                                 var childId = this.id; // 通过 this 对象获取当前子表的id
                                 if (obj.event === 'childEdit') {
                                     EidtLocation(obj.data)
-                                } else if (obj.event === 'childDel') {
+                                } else if(obj.event === 'image'){
+                                    image(obj.data);
+                                }else if (obj.event === 'childDel') {
                                     delLocation(obj.data)
                                 }
                             }
@@ -188,7 +205,7 @@
                 {field: 'remark', title: '备注', width: 130,unresize: true},
                 {field: 'createBy', title: '创建人',hide:true,templet:'<div>{{d.createByUser.realName}}</div>'},
                 {field: 'createTime', title: '创建时间',hide:true},
-                {fixed: 'right',title: '操作', width: 180, templet: '#barDemo',unresize: true}
+                {title: '操作', width: 200, templet: '#barDemo',unresize: true}
             ]]
             ,parseData: function(res){ //res 即为原始返回的数据
                 return {
@@ -199,7 +216,7 @@
                 };
             }
             ,done: function () {
-                soulTable.render(this)
+                soulTable.render(this);
             }
             ,filter: {bottom: false}
             ,excel:{ // 导出excel配置, （以下值均为默认值）
@@ -369,13 +386,46 @@
 
         //-----------------------库位信息维护------------------ start
 
+        //创建一个上传组件
+        function uploadFile(){
+            upload.render({ //允许上传的文件后缀
+                elem: '#chooseFile'
+                ,url: '${ctx}/file/uploadOneFile'
+                ,accept: 'images' //图片
+                ,acceptMime: 'image/*'
+                ,before: function(obj){
+                    //预读本地文件示例，不支持ie8
+                    obj.preview(function(index, file, result){
+                        $('#locationImage').attr('src', result); //图片链接（base64）
+                    });
+                }
+                ,done: function(result){ //上传完毕回调
+                    //假设code=0代表上传成功
+                    if(result.code == 0){
+                        //将存储路径和显示文件名保存到表单的隐藏域中
+                        $('input[name=fileUrl]').val(result.fileUrl);
+                        document.getElementById('locationImage').style.display = "block";
+                    }else
+                        return layer.msg('上传失败');
+                }
+                ,error: function(result){
+                    //演示失败状态，并实现重传
+                    var demoText = $('#demoText');
+                    demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+                    demoText.find('.demo-reload').on('click', function(){
+                        uploadInst.upload();
+                    });
+                }
+            });
+        }
+
         //新增库位信息弹窗
         $('#popLocationForm').click(function(){
             addlocationPopUp=layer.open({
                 id:'addLocationPopUp',
                 title: '添加库位',
                 type: 1, //页面层
-                area: ['600px', '380px'],
+                area: ['600px', '450px'],
                 shade: false, //禁止使用遮罩，否则操作不了界面
                 resize:false, //禁止窗体拉伸
                 offset: '70px',
@@ -385,6 +435,8 @@
                 success : function(layero, index) { // 成功弹出后回调
                     $('#locationForm')[0].reset();
                     $('#locationType').val("insert");
+                    document.getElementById('locationImage').style.display = "none";
+                    uploadFile();
                 },
                 yes: function(index, layero){  //添加仓库表单监听事件
                     layero.find('form').find('button[lay-submit]').click();//此处代码即为触发表单提交按钮
@@ -399,7 +451,7 @@
             updatelocationPopUp=layer.open({
                 title: '修改仓库',
                 type: 1, //页面层
-                area: ['600px', '380px'],
+                area: ['600px', '450px'],
                 shade: false, //禁止使用遮罩，否则操作不了界面
                 resize:false, //禁止窗体拉伸
                 offset: '70px',
@@ -415,6 +467,8 @@
                         "locationArea":data.locationArea,
                         "locationType":"update"
                     });
+                    $('#locationImage').attr('src', data.fireUrl); //图片链接（base64）
+                    document.getElementById('locationImage').style.display = "block";
                 },
                 yes: function(index, layero){  //添加仓库表单监听事件
                     layero.find('form').find('button[lay-submit]').click();//此处代码即为触发表单提交按钮
@@ -462,6 +516,19 @@
             return false;//false：阻止表单跳转 true：表单跳转
         });
 
+        function image(data){
+        //     $('#img_prev').attr('src', data.fireUrl); //图片链接（base64）
+        //      dd=layer.open({
+        //         type: 1,
+        //         title: false,
+        //         closeBtn: 0,
+        //         area: ['auto'],
+        //         skin: 'layui-layer-nobg', //没有背景色
+        //         shadeClose: true,
+        //         content: $('#prevModal')
+        //     });
+        }
+
         //删除库位信息
         function  delLocation(data) {
             layer.confirm('确认删除吗？', {
@@ -506,63 +573,63 @@
             layer.closeAll('loading');
         });
 
-        //要先加载数据表格，才能导出，不能放在click方法中
-        var locationTable = table.render({
-            elem:  '<table id="locationTable"></table>'
-            ,url: '${ctx}/warehouse/queryAllLocation'
-            ,page:true
-            ,cols: [[
-                {field: 'locationName', title: '库位名称', width: 200},
-                {field: 'locationArea', title: '库位面积(m²)', width: 200},
-                {field: 'warehouseName', title: '所属仓库', width: 200,templet:'<div>{{d.warehouse.warehouseName}}</div>'},
-                {field: 'createBy', title: '创建人', width: 200,templet:'<div>{{d.createByUser.realName}}</div>'},
-                {field: 'createTime', title: '创建时间', width: 200}
-            ]]
-            ,parseData: function(res){ //res 即为原始返回的数据
-                return {
-                    "code": res.code, //解析接口状态
-                    "msg": res.msg, //解析提示文本
-                    "data": res.data.list //解析数据列表
-                };
-            }
-            ,done: function () {
-                soulTable.render(this);
-            }
-            ,excel:{ // 导出excel配置, （以下值均为默认值）
-                on: true, //是否启用, 默认开启
-                filename: '库位信息.xlsx', // 文件名
-                head:{ // 表头样式
-                    family: 'Calibri', // 字体
-                    size: 12, // 字号
-                    color: '000000', // 字体颜色
-                    bgColor: 'C7C7C7' // 背景颜色
-                },
-                font: { // 正文样式
-                    family: 'Calibri', // 字体
-                    size: 12, // 字号
-                    color: '000000', // 字体颜色
-                    bgColor: 'FFFFFF' //背景颜色
-                }
-            }
-        });
-
         //导出库位信息
         $('#exportLocation').click(function(){
-            soulTable.export(locationTable);
+            //隐藏加载表格导出
+            var locationTable = table.render({
+                elem:  '<table id="locationTable"></table>'
+                ,url: '${ctx}/warehouse/queryAllLocation'
+                ,page:true
+                ,cols: [[
+                    {field: 'locationName', title: '库位名称', width: 200},
+                    {field: 'locationArea', title: '库位面积(m²)', width: 200},
+                    {field: 'warehouseName', title: '所属仓库', width: 200,templet:'<div>{{d.warehouse.warehouseName}}</div>'},
+                    {field: 'createBy', title: '创建人', width: 200,templet:'<div>{{d.createByUser.realName}}</div>'},
+                    {field: 'createTime', title: '创建时间', width: 200}
+                ]]
+                ,parseData: function(res){ //res 即为原始返回的数据
+                    return {
+                        "code": res.code, //解析接口状态
+                        "msg": res.msg, //解析提示文本
+                        "data": res.data.list //解析数据列表
+                    };
+                }
+                ,done: function () {
+                    soulTable.render(this);
+                    soulTable.export(this);
+                }
+                ,excel:{ // 导出excel配置, （以下值均为默认值）
+                    on: true, //是否启用, 默认开启
+                    filename: '库位信息.xlsx', // 文件名
+                    head:{ // 表头样式
+                        family: 'Calibri', // 字体
+                        size: 12, // 字号
+                        color: '000000', // 字体颜色
+                        bgColor: 'C7C7C7' // 背景颜色
+                    },
+                    font: { // 正文样式
+                        family: 'Calibri', // 字体
+                        size: 12, // 字号
+                        color: '000000', // 字体颜色
+                        bgColor: 'FFFFFF' //背景颜色
+                    }
+                }
+            });
             layer.closeAll('loading');
         });
+
     });
 </script>
 <%--设置表单样式--%>
 <style type="text/css">
     .layui-table-cell {
+        white-space: normal;
         height: auto;
         /*设置字体大小*/
         font-size:15px;
         /*设置表格行高*/
-        line-height: 40px;
+        line-height: 35px;
     }
-
     /*!*表格第一列居左*!*/
     /*.layui-table tr td:first-child{*/
         /*text-align: left;*/

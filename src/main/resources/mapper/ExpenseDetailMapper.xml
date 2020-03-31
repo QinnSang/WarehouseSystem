@@ -3,7 +3,7 @@
 <mapper namespace="mapper.ExpenseDetailMapper">
 
     <insert id="addReceiving" parameterType="pojo.Receiving">
-        insert into expense_detail (order_id, order_type, expense_id, amount, price, storage_id, check_status, remark)
+        insert into expense_detail (order_id, order_type, expense_id, amount, price, storage_id,is_confirm,check_status, remark,create_date)
         values
         <foreach collection="expenseDetailList" item="expense" separator=",">
             (
@@ -13,8 +13,29 @@
             #{expense.amount},
             #{expense.price},
             #{expense.storageId},
+            #{expense.isConfirm},
             #{expense.checkStatus},
-            #{expense.remark}
+            #{expense.remark},
+            #{receivingDate}
+            )
+        </foreach>
+    </insert>
+
+    <insert id="addShipping" parameterType="pojo.Shipping">
+        insert into expense_detail (order_id, order_type, expense_id, amount, price, storage_id, is_confirm,check_status, remark,create_date)
+        values
+        <foreach collection="expenseDetailList" item="expense" separator=",">
+            (
+            #{expense.orderId},
+            #{expense.orderType},
+            #{expense.expenseId},
+            #{expense.amount},
+            #{expense.price},
+            #{expense.storageId},
+            #{expense.isConfirm},
+            #{expense.checkStatus},
+            #{expense.remark},
+            #{createDate}
             )
         </foreach>
     </insert>
@@ -53,22 +74,90 @@
         delete from expense_detail where order_id = #{orderId}
     </delete>
 
-    <insert id="addShipping" parameterType="pojo.Shipping">
-        insert into expense_detail (order_id, order_type, expense_id, amount, price, storage_id, check_status, remark)
-        values
-        <foreach collection="expenseDetailList" item="expense" separator=",">
-            (
-            #{expense.orderId},
-            #{expense.orderType},
-            #{expense.expenseId},
-            #{expense.amount},
-            #{expense.price},
-            #{expense.storageId},
-            #{expense.checkStatus},
-            #{expense.remark}
-            )
-        </foreach>
-    </insert>
+    <update id="updateStatusConfirm" parameterType="integer">
+        update expense_detail set is_confirm = 2 where order_id = #{orderId}
+    </update>
 
+    <resultMap id="statementBase" type="pojo.ExpenseDetail">
+        <result property="remark" column="remark"/>
+        <result property="amount" column="amount"/>
+        <result property="price" column="price"/>
+        <result property="expenseName" column="expense_name"/>
+        <association property="checkStatusData" javaType="pojo.DataDictionary">
+            <result property="valueName" column="check_status"/>
+        </association>
+        <association property="storage" javaType="pojo.Storage">
+            <result property="storageCode" column="storage_code"/>
+            <association property="contract" javaType="pojo.Contract">
+                <result property="contractCode" column="contract_code"/>
+            </association>
+        </association>
+        <association property="shipping" javaType="pojo.Shipping">
+            <result property="shippingCode" column="orderCode"/>
+        </association>
+        <association property="receiving" javaType="pojo.Receiving">
+            <result property="receivingCode" column="orderCode"/>
+        </association>
+        <association property="expenseOrderType" javaType="pojo.DataDictionary">
+            <result property="valueName" column="order_type"/>
+        </association>
+
+    </resultMap>
+    <select id="queryStatement" resultMap="statementBase" parameterType="pojo.Settle">
+        select
+            t6.value_name as order_type,
+            t4.value_name as expense_name,
+            t1.amount,
+            t1.price,
+            c.contract_code,
+            t3.storage_code,
+            t5.value_name as check_status,
+            t1.remark,
+            case
+                when t1.order_type = 1 then
+                  r.receiving_code
+                when t1.order_type = 2 then
+                s.shipping_code
+            end as orderCode
+        from expense_detail t1
+        LEFT JOIN contract_expense t2 on t2.expense_id = t1.expense_id
+        LEFT JOIN shipping s on s.shipping_id = order_id
+        LEFT JOIN receiving r on r.receiving_id = order_id
+        LEFT JOIN storage t3 on t3.storage_id = t1.storage_id
+        LEFT JOIN contract c on c.contract_id = t3.contract_id
+        LEFT JOIN data_dictionary t4 on t2.expense_value_id =t4.value_id
+        LEFT JOIN data_dictionary t5 on t1.check_status =t5.value_id
+        LEFT JOIN data_dictionary t6 on t1.order_type =t6.value_id
+        where
+              t1.settle_id = #{settleId}
+			  and t4.type_code = "EXPENSE"
+			  and t5.type_code = "check_status"
+			  and t6.type_code = "ORDER_TYPE"
+    </select>
+
+    <update id="updateSettleId" parameterType="pojo.Settle">
+        update expense_detail set settle_id = #{settleId}
+        where storage_id = #{storageId}
+              and create_date &gt;= #{checkStartDate}
+              and create_date &lt;= #{checkEndDate}
+              and is_confirm = 2
+              and check_status = 1
+              and settle_id is null
+    </update>
+
+    <select id="sumOfStorage" parameterType="pojo.Settle" resultType="double">
+          select IFNULL(sum(price*amount),0) from expense_detail
+          where settle_id = #{settleId}
+    </select>
+
+    <update id="delSettleId" parameterType="integer">
+        update expense_detail set settle_id = null
+        where  settle_id = #{settleId}
+    </update>
+
+    <update id="settleExpense" parameterType="integer">
+        update expense_detail set check_status = 2
+        where settle_id = #{settleId}
+    </update>
 
 </mapper>

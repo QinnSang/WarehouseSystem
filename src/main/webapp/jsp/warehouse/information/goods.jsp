@@ -156,7 +156,7 @@
                     ]},
                 {field: 'goodsName', title: '货物类型', width: 400,unresize: true},
                 {field: 'goodsCode', title: '货物类型编码', width: 450,unresize: true},
-                {fixed: 'right',title: '操作', width: 200, templet: '#barDemo',unresize: true}
+                {fixed: 'right',title: '操作', width: 270, templet: '#barDemo',unresize: true}
             ]]
             ,done: function () {
                 soulTable.render(this)
@@ -470,49 +470,48 @@
             layer.closeAll('loading');
         });
 
-        //要先加载数据表格，才能导出，不能放在click方法中
-        var goodsNameTable = table.render({
-            elem:  '<table id="locationTable"></table>'
-            ,url: '${ctx}/goods/queryAllGoodsName'
-            ,page:false
-            ,cols: [[
-                {field: 'goodsName', title: '货物名称', fixed: 'left',width: 440,unresize: true},
-                {field: 'goodsCode', title: '货物编码', width: 450,unresize: true},
-                {field: 'warehouseName', title: '所属货物类型', width: 200,templet:'<div>{{d.belongType.goodsName}}</div>'},
-                {field: 'createBy', title: '创建人', width: 200,templet:'<div>{{d.createByUser.realName}}</div>'},
-                {field: 'createTime', title: '创建时间', width: 200}
-            ]]
-            ,parseData: function(res){ //res 即为原始返回的数据
-                return {
-                    "code": res.code, //解析接口状态
-                    "msg": res.msg, //解析提示文本
-                    "data": res.data.list //解析数据列表
-                };
-            }
-            ,done: function () {
-                soulTable.render(this);
-            }
-            ,excel:{ // 导出excel配置, （以下值均为默认值）
-                on: true, //是否启用, 默认开启
-                filename: '货物名称表.xlsx', // 文件名
-                head:{ // 表头样式
-                    family: 'Calibri', // 字体
-                    size: 12, // 字号
-                    color: '000000', // 字体颜色
-                    bgColor: 'C7C7C7' // 背景颜色
-                },
-                font: { // 正文样式
-                    family: 'Calibri', // 字体
-                    size: 12, // 字号
-                    color: '000000', // 字体颜色
-                    bgColor: 'FFFFFF' //背景颜色
-                }
-            }
-        });
-
         //导出货物名称
         $('#exportGoodsName').click(function(){
-            soulTable.export(goodsNameTable);
+            //加载数据表格导出
+            var goodsNameTable = table.render({
+                elem:  '<table id="locationTable"></table>'
+                ,url: '${ctx}/goods/queryAllGoodsName'
+                ,page:false
+                ,cols: [[
+                    {field: 'goodsName', title: '货物名称', fixed: 'left',width: 440,unresize: true},
+                    {field: 'goodsCode', title: '货物编码', width: 450,unresize: true},
+                    {field: 'warehouseName', title: '所属货物类型', width: 200,templet:'<div>{{d.belongType.goodsName}}</div>'},
+                    {field: 'createBy', title: '创建人', width: 200,templet:'<div>{{d.createByUser.realName}}</div>'},
+                    {field: 'createTime', title: '创建时间', width: 200}
+                ]]
+                ,parseData: function(res){ //res 即为原始返回的数据
+                    return {
+                        "code": res.code, //解析接口状态
+                        "msg": res.msg, //解析提示文本
+                        "data": res.data.list //解析数据列表
+                    };
+                }
+                ,done: function () {
+                    soulTable.render(this);
+                    soulTable.export(this);
+                }
+                ,excel:{ // 导出excel配置, （以下值均为默认值）
+                    on: true, //是否启用, 默认开启
+                    filename: '货物名称表.xlsx', // 文件名
+                    head:{ // 表头样式
+                        family: 'Calibri', // 字体
+                        size: 12, // 字号
+                        color: '000000', // 字体颜色
+                        bgColor: 'C7C7C7' // 背景颜色
+                    },
+                    font: { // 正文样式
+                        family: 'Calibri', // 字体
+                        size: 12, // 字号
+                        color: '000000', // 字体颜色
+                        bgColor: 'FFFFFF' //背景颜色
+                    }
+                }
+            });
             layer.closeAll('loading');
         });
 
@@ -521,13 +520,13 @@
 <%--设置表单样式--%>
 <style type="text/css">
     .layui-table-cell {
+        white-space: normal;
         height: auto;
         /*设置字体大小*/
         font-size:15px;
         /*设置表格行高*/
-        line-height: 40px;
+        line-height: 35px;
     }
-
     .layui-form-item{
         margin-bottom: 30px;
     }

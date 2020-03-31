@@ -16,15 +16,15 @@
                     <div class="layui-inline">
                         <label class="layui-form-label" style="width: 100px">仓储订单号：</label>
                         <div class="layui-input-inline" >
-                            <input type="tel" name="softwareName" lay-verify="title" autocomplete="off" placeholder="请输入仓储订单号" class="layui-input">
+                            <input type="tel" name="stoargeCode" lay-verify="title" autocomplete="off" placeholder="请输入仓储订单号" class="layui-input">
                         </div>
                         <label class="layui-form-label">合同名称：</label>
                         <div class="layui-input-inline" >
-                            <input type="tel" name="softwareName" lay-verify="title" autocomplete="off" placeholder="请输入合同名称" class="layui-input">
+                            <input type="tel" name="contractName" lay-verify="title" autocomplete="off" placeholder="请输入合同名称" class="layui-input">
                         </div>
                         <label class="layui-form-label">公司名称：</label>
                         <div class="layui-input-inline" >
-                            <input type="tel" name="softwareName" lay-verify="title" autocomplete="off" placeholder="请输入公司名称" class="layui-input">
+                            <input type="tel" name="companyName" lay-verify="title" autocomplete="off" placeholder="请输入公司名称" class="layui-input">
                         </div>
                         <div class="layui-input-inline" style="left:40px">
                             <button class="layui-btn " lay-submit  lay-filter="search" >查 询</button>
@@ -49,12 +49,15 @@
 
             <%--确认生成对账单弹窗--%>
             <form class="layui-form layui-form-pane1" id="statementForm" style="display:none;padding: 20px 0 0 0;"lay-filter="statementFormFilter">
+                <input class="layui-hide" name="storageId">
+                <input class="layui-hide" name="storageName">
                 <div class="layui-form-item">
                     <label class="layui-form-label" style="width: 170px">选择生成对账单的时间：</label>
                     <div class="layui-input-inline" style="width: 200px">
-                        <input type="text" class="layui-input" id="trueDate" placeholder="开始日期-结束日期">
+                        <input type="text" class="layui-input"  id="seDate" name="seDate"  lay-verify="required"  placeholder="开始日期-结束日期">
                     </div>
                 </div>
+                <button type="submit" style="display:none;" class="layui-btn" lay-submit lay-filter="addSettleSubmit">立即提交</button>
             </form>
         </div>
     </div>
@@ -67,11 +70,11 @@
                 <div class="layui-inline">
                     <label class="layui-form-label" style="width: 100px">结算单号：</label>
                     <div class="layui-input-inline" >
-                        <input type="tel" name="softwareName" lay-verify="title" autocomplete="off" placeholder="请输入结算单号" class="layui-input">
+                        <input type="tel" name="settleCode" lay-verify="title" autocomplete="off" placeholder="请输入结算单号" class="layui-input">
                     </div>
                     <label class="layui-form-label" style="width: 100px">结算单名称：</label>
                     <div class="layui-input-inline" >
-                        <input type="tel" name="softwareName" lay-verify="title" autocomplete="off" placeholder="请输入结算单名称" class="layui-input">
+                        <input type="tel" name="settleName" lay-verify="title" autocomplete="off" placeholder="请输入结算单名称" class="layui-input">
                     </div>
                     <div class="layui-input-inline" style="left:40px">
                         <button class="layui-btn " lay-submit  lay-filter="settleSearch" >查 询</button>
@@ -105,36 +108,37 @@
         var form = layui.form;
         var layer = layui.layer;
         var soulTable = layui.soulTable; //使用soulTable导出数据
-        var index = layer.load(); //添加laoding,0-2两种方式
         var laydate = layui.laydate;
 
         laydate.render({
-            elem: '#trueDate'
+            elem: '#seDate'
             ,range: true
+            ,max:1
         });
 
         //第一个实例
         var myTable = table.render({
             elem: '#storageTable' //表格id
-            // ,height: 312
-            <%--,url: '${ctx}/settle/query' //数据接口--%>
-            ,data:[[1,2,3,4,5,6]]
+            ,url: '${ctx}/storage/query' //数据接口
             ,method: 'post' //防止查询时中文乱码
             ,page: { //开启分页,需要配合后台PageInfo进行分页
                 first: '首页'
                 ,last: '尾页'
-                ,layout: ['count', 'prev', 'page', 'next', 'skip']
+                ,layout: ['count','prev', 'page', 'next', 'skip']
+                ,limit:10  //每页显示的条数
+                ,curr:1 //起始页
             }
-            ,limit: 5
             ,drag: false // 关闭拖拽列功能
             ,even: true //隔行背景
             ,autoSort: false  //禁用前端的排序方法
             ,cols: [[ //表头
-                {field: 'softwareName', title: '仓储订单号',unresize: true}
-                ,{field: 'softwareName', title: '仓储订单名称',unresize: true}
-                ,{field: 'apkName', title: '合同编号',unresize: true}
-                ,{field: 'softwareSize', title: '公司名称',unresize: true}
-                ,{fixed: 'right', title: '操作',align:'center', toolbar: '#barDemo',unresize: true}
+                {field: 'storageCode', title: '仓储订单号',width:150,unresize: true}
+                ,{field: 'storageName', title: '仓储订单名称',width:180,unresize: true}
+                ,{field: 'contractName', title: '合同名称',width:200,templet:'<div>{{d.contract.contractName}}</div>',unresize: true}
+                ,{field: 'contractCode', title: '合同编号',width:160,templet:'<div>{{d.contract.contractCode}}</div>',unresize: true}
+                ,{field: 'softwareSize', title: '公司名称',width:180,templet:'<div>{{d.contract.company.companyName}}</div>',unresize: true}
+                ,{field:'createTime', title: '创建时间',width:180,unresize: true}
+                ,{title: '操作',align:'center', toolbar: '#barDemo',width:180,unresize: true}
             ]]
             ,parseData: function(res){ //res 即为原始返回的数据
                 return {
@@ -145,13 +149,12 @@
                 };
             },
             done: function (res, curr, count) { ////返回数据执行回调函数
-                layer.close(index);    //返回数据关闭loading
                 // 如果有使用到导出、下拉筛选，这句话必须要
                 soulTable.render(this);
             }
             , excel:{ // 导出excel配置
                 on: true, //是否启用, 默认开启
-                filename: '仓储订单信息表.xlsx', // 文件名
+                filename: '仓储订单结算表.xlsx', // 文件名
                 head:{ // 表头样式
                     family: 'Calibri', // 字体
                     size: 12, // 字号
@@ -186,6 +189,7 @@
                 type: 1,
                 title: '是否生成对账单',
                 area:['40%','30%'],
+                offset: '130px',
                 skin: 'layui-layer-molv',
                 shade: false, //禁止使用遮罩，否则操作不了界面
                 resize:false, //禁止窗体拉伸
@@ -193,41 +197,41 @@
                 btn: ['确定', '取消'],
                 success: function(layero, index){
                     $('#statementForm')[0].reset();
-                    // 将保存按钮改变成提交按钮
-                    layero.find('.layui-layer-btn0').attr({
-                        'lay-filter' : 'addstatementSubmit',
-                        'lay-submit' : ''
-                    });
+                    form.val('statementFormFilter',{
+                        "storageId":data.storageId,
+                        "storageName":data.storageName
+                    })
                 },
                 yes: function(index, layero){  //添加货物类型表单监听事件
-                    form.on('submit(addstatementSubmit)', function(data){
-                        // console.log(data.field) //当前容器的全部表单字段，名值对形式：{name: value}
-                        $.ajax({
-                            url: '${ctx}/settle/addstatement',
-                            type: 'POST',
-                            data:  data.field,
-                            success: function (StateType) {
-                                // var status = StateType.status;//取得返回数据（Sting类型的字符串）的信息进行取值判断
-                                if (StateType == 'addSuccess') {
-                                    // layer.closeAll('loading');
-                                    layer.msg("对账单已生成！", {icon: 6});
-                                    layer.close(updatePopUp) ,//执行关闭
-                                        table.reload('goodsTypeTable') //重载表格
-                                } else {
-                                    layer.msg("对账单生成失败，请重试！", {icon: 5});
-                                }
-                            }
-                        });
-                        return false;//false：阻止表单跳转 true：表单跳转
-                    });
+                    layero.find('form').find('button[lay-submit]').click();//此处代码即为触发表单提交按钮
                     return false // 开启该代码可禁止点击该按钮关闭
                 },
-                btn2: function(index, layero){
-                    //按钮【按钮二】的回调
-                    //return false 开启该代码可禁止点击该按钮关闭
-                }
+                btn2: function(index, layero){}
             })
         }
+
+        form.on('submit(addSettleSubmit)', function(data){
+            $.ajax({
+                url: '${ctx}/settle/addStatement',
+                type: 'POST',
+                data:  data.field,
+                success: function (StateType) {
+                    if (StateType == 'AddSuccess') {
+                        layer.msg("对账单已生成！", {icon: 1});
+                        layer.close(addStatementePopup) ,//执行关闭
+                        table.reload('storageTable') //重载表格
+                    }else if(StateType == 'LackExpenseDetail'){
+                        layer.msg('无需结算的费用明细，对账单无法生成', {icon: 2});
+                    }else{
+                        layer.msg('对账单生成失败', {icon: 2});
+                    }
+                },
+                error:function (data) {
+                    layer.msg('对账单生成失败', {icon: 2});
+                }
+            });
+            return false;//false：阻止表单跳转 true：表单跳转
+        });
 
         //结算弹窗
         function settle(data,obj ){
@@ -242,30 +246,45 @@
                 success: function(layero, index){
                     var settleRender=table.render({
                         elem: '#settleTable'
-                        ,data:[[1,2,3,4,5,6]]
+                        ,url: '${ctx}/settle/query'
                         ,method: 'post' //防止查询时中文乱码
-                        // ,page: { //开启分页,需要配合后台PageInfo进行分页
-                        //     first: '首页'
-                        //     ,last: '尾页'
-                        //     ,layout: ['count', 'prev', 'page', 'next', 'skip']
-                        // }
-                        ,limit: 5
+                        ,where:{
+                            "storageId":data.storageId
+                        }
+                        ,page: { //开启分页,需要配合后台PageInfo进行分页
+                            first: '首页'
+                            ,last: '尾页'
+                            ,layout: ['count','prev', 'page', 'next', 'skip']
+                            ,limit:5  //每页显示的条数
+                            ,curr:1 //起始页
+                        }
                         ,drag: false // 关闭拖拽列功能
                         ,even: true //隔行背景
                         ,cols: [[ //表头
-                            {field: 'softwareName', title: '结算单编号',unresize: true}
-                            ,{field: 'softwareName', title: '结算单名称',unresize: true}
-                            ,{field: 'apkName', title: '结算日期',width:100,unresize: true}
-                            ,{field: 'apkName', title: '仓储订单号',unresize: true}
-                            ,{field:'flatform',title: '仓储订单名称',unresize: true}
-                            ,{field:'flatform',title: '合计费用',width:100,unresize: true}
-                            ,{field:'flatform',title: '结算状态',width:100,unresize: true}
-                            ,{fixed: 'right', title: '操作',toolbar: '#settleBar',width:270,unresize: true}
+                            {field: 'settleCode', title: '结算单编号',width:160,unresize: true}
+                            ,{field: 'settleName', title: '结算单名称',width:180,unresize: true}
+                            ,{field: 'storageCode', title: '仓储订单号',templet:'<div>{{d.storage.storageCode}}</div>',width:150,unresize: true}
+                            ,{field:'storageName',title: '仓储订单名称',width:180,templet:'<div>{{d.storage.storageName}}</div>',unresize: true}
+                            ,{field:'totalPrice',title: '合计费用',width:100,unresize: true}
+                            ,{field:'checkStatus',title: '结算状态',templet:'<div>{{d.checkStatus.valueName}}</div>',width:100,unresize: true}
+                            ,{field: 'checkDate', title: '结算日期',width:100,unresize: true}
+                            ,{field: 'checkBy', title: '结算人',width:100,unresize: true
+                                 ,templet:function (d) { return d.checkByUser ?  d.checkByUser.realName:'' ;}  //如果为空则返回空字符串
+                            }
+                            ,{ title: '操作',toolbar: '#settleBar',width:270,unresize: true}
                         ]]
+                        ,parseData: function(res){ //res 即为原始返回的数据
+                            return {
+                                "code": res.code, //解析接口状态
+                                "msg": res.msg, //解析提示文本
+                                "count": res.count, //解析数据长度
+                                "data": res.data.list //解析数据列表
+                            };
+                        }
                         ,done: function (res, curr, count) {
-
                         }////返回数据执行回调函数
                         });
+
                     //==========================结算弹窗 监听行工具事件 start==============
                     table.on('tool(settleFilter)', function(obj){ //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
                         var data = obj.data //获得当前行数据
@@ -280,17 +299,15 @@
                             exportStatement(data, obj);
                         }
                     });
+
                     //==============结算弹窗界面  监听表单查询  =============
                     form.on('submit(settleSearch)', function (data) {
-                        layer.msg("111");
                         table.reload('settleTable', {
-                            url: '${ctx}/app/query2',
-                            where: data.field //后台直接用实体接收，
-                                              // 如果是单个属性，可以以这种方式获取和传输：softwareName=data.field.softwareName
+                            url: '${ctx}/settle/query',
+                            where: data.field //后台直接用实体接收
                         });
                         return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可
                     });
-
                 }
             })
         }
@@ -306,17 +323,24 @@
             }, function(index){
                 //向服务端发送删除指令
                 $.ajax({
-                    url: "${ctx}/settle/delete",
+                    url: "${ctx}/settle/del",
                     type: "POST",
-                    data:{"appId":data.id},
-                    dataType: "json",
-                    success: function(data){
-                        // obj.del(); //删除对应行（tr）的DOM结构
-                        layer.msg("删除成功", {icon: 6});
-                        table.reload('settleTable');
+                    data:{
+                        "settleId":data.settleId,
+                        "status":data.checkStatus.valueId
+                    },
+                    success: function(StateType){
+                        if(StateType == 'DelSuccess'){
+                            layer.msg('删除成功', {icon: 1});
+                            table.reload('settleTable') //重载表格
+                        }else if(StateType == 'AlreadyConfirm'){
+                            layer.msg('该对账单已结算，无法删除', {icon: 2});
+                        }else{
+                            layer.msg('删除失败', {icon: 2});
+                        }
                     },
                     error:function (data) {
-                        layer.msg("删除失败", {icon: 5});
+                        layer.msg('删除失败', {icon: 2});
                     }
                 });
             });
@@ -332,14 +356,22 @@
                 $.ajax({
                     url: "${ctx}/settle/settleStatement",
                     type: "POST",
-                    data:{"appId":data.id},
-                    dataType: "json",
-                    success: function(data){
-                        layer.msg("结算成功", {icon: 6});
-                        table.reload('settleTable');
+                    data:{
+                        "settleId":data.settleId,
+                        "status":data.checkStatus.valueId
+                    },
+                    success: function(StateType){
+                        if(StateType == 'SettleSuccess'){
+                            layer.msg('结算成功', {icon: 1});
+                            table.reload('settleTable') //重载表格
+                        }else if(StateType == 'AlreadySettle'){
+                            layer.msg('该对账单已结算，无法再次结算', {icon: 2});
+                        }else{
+                            layer.msg('结算失败', {icon: 2});
+                        }
                     },
                     error:function (data) {
-                        layer.msg("结算失败，请重试！", {icon: 5});
+                        layer.msg('结算失败', {icon: 2});
                     }
                 });
             });
@@ -358,29 +390,41 @@
                 success: function(layero, index){
                     table.render({
                         elem: '#statementTable'
-                        ,data:[[1,2,3,4,5,6]]
+                        ,url: '${ctx}/settle/queryStatement' //数据接口
+                        ,where:{
+                            "settleId":data.settleId
+                        }
                         ,method: 'post' //防止查询时中文乱码
-                        // ,page: { //开启分页,需要配合后台PageInfo进行分页
-                        //     first: '首页'
-                        //     ,last: '尾页'
-                        //     ,layout: ['count', 'prev', 'page', 'next', 'skip']
-                        // }
-                        ,limit: 5
+                        ,page: { //开启分页,需要配合后台PageInfo进行分页
+                            first: '首页'
+                            ,last: '尾页'
+                            ,layout: ['count','prev', 'page', 'next', 'skip']
+                            ,limit:5  //每页显示的条数
+                            ,curr:1 //起始页
+                        }
                         ,drag: false // 关闭拖拽列功能
                         ,cols: [[ //表头
-                            {field: 'softwareName', title: '编码',unresize: true}
-                            ,{field: 'softwareName', title: '名称',unresize: true}
-                            ,{field:'flatform',title: '操作类型',width:100,unresize: true}
-                            ,{field: 'apkName', title: '数量',width:100,unresize: true}
-                            ,{field: 'apkName', title: '单价',width:100,unresize: true}
-                            ,{field:'flatform',title: '金额',width:100,unresize: true}
-                            ,{field:'flatform',title: '合同编码',unresize: true}
-                            ,{field:'flatform',title: '仓储订单',unresize: true}
-                            ,{field:'flatform',title: '结算状态',width:100,unresize: true}
+                            {field: 'orderCode', title: '订单号',unresize: true,
+                                templet:function (d) { return d.shipping ?  d.shipping.shippingCode:d.receiving.receivingCode ;}
+                            }
+                            ,{field:'expenseOrderType',title: '操作类型',templet:'<div>{{d.expenseOrderType.valueName}}</div>',width:100,unresize: true}
+                            ,{field: 'expenseName', title: '费用名称',unresize: true}
+                            ,{field: 'amount', title: '数量',width:100,unresize: true}
+                            ,{field: 'price', title: '单价',width:100,unresize: true}
+                            ,{field:'totalPrice',title: '金额',templet:'<div>{{d.amount*d.price}}</div>',width:100,unresize: true}
+                            ,{field:'contractCode',title: '合同编码',templet:'<div>{{d.storage.contract.contractCode}}</div>',unresize: true}
+                            ,{field:'storageCode',title: '仓储订单',templet:'<div>{{d.storage.storageCode}}</div>',unresize: true}
+                            ,{field:'checkStatus',title: '结算状态',templet:'<div>{{d.checkStatusData.valueName}}</div>',width:100,unresize: true}
                         ]]
-                        ,done: function (res, curr, count) {
-                            // layer.close(index);    //不能再弹出层的弹出层里使用该语句，否则弹出层不会弹出
+                        ,parseData: function(res){ //res 即为原始返回的数据
+                            return {
+                                "code": res.code, //解析接口状态
+                                "msg": res.msg, //解析提示文本
+                                "count": res.count, //解析数据长度
+                                "data": res.data.list //解析数据列表
+                            };
                         }
+                        ,done: function (res, curr, count) {}
                     });
                 }
             })
@@ -390,69 +434,67 @@
         function exportStatement(data, obj){
             //先隐藏加载数据表格
             var exportStatementTable=table.render({
-                elem: '#statementTable'
-                ,data:[[1,2,3,4,5,6]]
-                ,method: 'post' //防止查询时中文乱码
-                // ,page: { //开启分页,需要配合后台PageInfo进行分页
-                //     first: '首页'
-                //     ,last: '尾页'
-                //     ,layout: ['count', 'prev', 'page', 'next', 'skip']
-                // }
-                ,drag: false // 关闭拖拽列功能
-                ,cols: [[ //表头
-                    {field: 'softwareName', title: '编码',unresize: true}
-                    ,{field: 'softwareName', title: '名称',unresize: true}
-                    ,{field:'flatform',title: '操作类型',width:100,unresize: true}
-                    ,{field: 'apkName', title: '数量',width:100,unresize: true}
-                    ,{field: 'apkName', title: '单价',width:100,unresize: true}
-                    ,{field:'flatform',title: '金额',width:100,unresize: true}
-                    ,{field:'flatform',title: '合同编码',unresize: true}
-                    ,{field:'flatform',title: '仓储订单',unresize: true}
-                    ,{field:'flatform',title: '结算状态',width:100,unresize: true}
-                ]]
-                ,done: function (res, curr, count) {
-                    // 如果有使用到导出、下拉筛选，这句话必须要
-                    soulTable.render(this);
-                }
-                , excel:{ // 导出excel配置
-                    on: true, //是否启用, 默认开启
-                    filename: '对账单明细.xlsx', // 文件名
-                    head:{ // 表头样式
-                        family: 'Calibri', // 字体
-                        size: 12, // 字号
-                        color: '000000', // 字体颜色
-                        bgColor: 'C7C7C7' // 背景颜色
-                    },
-                    font: { // 正文样式
-                        family: 'Calibri', // 字体
-                        size: 10, // 字号
-                        color: '000000', // 字体颜色
-                        bgColor: 'ffffff' //背景颜色
+                    elem: '#statementTable'
+                    ,url: '${ctx}/settle/queryStatement' //数据接口
+                    ,where:{"settleId":data.settleId}
+                    ,method: 'post' //防止查询时中文乱码
+                    ,page: { //开启分页,需要配合后台PageInfo进行分页
+                        first: '首页'
+                        ,last: '尾页'
+                        ,layout: ['count','prev', 'page', 'next', 'skip']
+                        ,limit:5  //每页显示的条数
+                        ,curr:1 //起始页
                     }
-                }
-            });
-            // 导出数据表格
-            soulTable.export(exportStatementTable);
+                    ,drag: false // 关闭拖拽列功能
+                    ,cols: [[ //表头
+                        {field: 'orderCode', title: '订单号',unresize: true,
+                            templet:function (d) { return d.shipping ?  d.shipping.shippingCode:d.receiving.receivingCode ;}
+                        }
+                        ,{field:'expenseOrderType',title: '操作类型',templet:'<div>{{d.expenseOrderType.valueName}}</div>',width:100,unresize: true}
+                        ,{field: 'expenseName', title: '费用名称',unresize: true}
+                        ,{field: 'amount', title: '数量',width:100,unresize: true}
+                        ,{field: 'price', title: '单价',width:100,unresize: true}
+                        ,{field:'totalPrice',title: '金额',templet:'<div>{{d.amount*d.price}}</div>',width:100,unresize: true}
+                        ,{field:'contractCode',title: '合同编码',templet:'<div>{{d.storage.contract.contractCode}}</div>',unresize: true}
+                        ,{field:'storageCode',title: '仓储订单',templet:'<div>{{d.storage.storageCode}}</div>',unresize: true}
+                        ,{field:'checkStatus',title: '结算状态',templet:'<div>{{d.checkStatusData.valueName}}</div>',width:100,unresize: true}
+                    ]]
+                    ,parseData: function(res){ //res 即为原始返回的数据
+                        return {
+                            "code": res.code, //解析接口状态
+                            "msg": res.msg, //解析提示文本
+                            "count": res.count, //解析数据长度
+                            "data": res.data.list //解析数据列表
+                        };
+                    }
+                    ,done: function (res, curr, count) {
+                        // 如果有使用到导出、下拉筛选，这句话必须要
+                        soulTable.render(this);
+                    // 导出数据表格
+                    soulTable.export(this);
+                    }
+                    , excel:{ // 导出excel配置
+                        on: true, //是否启用, 默认开启
+                        filename: '对账单明细.xlsx', // 文件名
+                        head:{ // 表头样式
+                            family: 'Calibri', // 字体
+                            size: 12, // 字号
+                            color: '000000', // 字体颜色
+                            bgColor: 'C7C7C7' // 背景颜色
+                        },
+                        font: { // 正文样式
+                            family: 'Calibri', // 字体
+                            size: 10, // 字号
+                            color: '000000', // 字体颜色
+                            bgColor: 'ffffff' //背景颜色
+                        }
+                    }
+                });
+
         }
 
         //==========================结算弹窗 监听行工具事件 end==============
 
-
-        //监听排序事件，会自动向后台传where中的排序字段和排序方式
-        table.on('sort(settleFilter)', function(obj){ //注：appFilter是table lay-filter的值
-            //重新向服务端发送请求，从而实现服务端排序，如：
-            table.reload('settleTable', {
-                initSort: obj //记录初始排序，如果不设的话，将无法标记表头的排序状态。
-                ,where: { //请求参数（注意：这里面的参数可任意定义，并非下面固定的格式）
-                    field: obj.field //排序字段
-                    ,order: obj.type //排序方式 desc（降序）、asc（升序）、null（空对象，默认排序）
-                }
-            });
-        });
-
-        $(document).on('click', '#cancel', function() {
-            layer.close(updatePopUp) //执行关闭
-        });
 
         /** 监听表单提交，并重载table
          * 注意下:
@@ -463,7 +505,7 @@
         //==============结算主界面 监听表单提交  =============
         form.on('submit(search)', function (data) {
             table.reload('storageTable', {
-                url: '${ctx}/app/query2',
+                url: '${ctx}/storage/query',
                 where: data.field //后台直接用实体接收，
                                   // 如果是单个属性，可以以这种方式获取和传输：softwareName=data.field.softwareName
             });
@@ -474,18 +516,7 @@
         $('#exportStorage').click(function(){
             soulTable.export(myTable);
         });
-
     });
 </script>
-<%--设置表单样式--%>
-<style type="text/css">
-    .layui-table-cell {
-        height: auto;
-        /*设置字体大小*/
-        font-size:15px;
-        /*设置表格行高*/
-        line-height: 40px;
-    }
-</style>
 </body>
 </html>

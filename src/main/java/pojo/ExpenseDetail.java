@@ -7,7 +7,13 @@ public class ExpenseDetail {
 
     private Integer orderId;
 
+    private Shipping shipping;
+
+    private Receiving receiving;
+
     private Integer orderType;
+
+    private DataDictionary expenseOrderType;
 
     private Integer expenseId;
 
@@ -19,11 +25,17 @@ public class ExpenseDetail {
 
     private Integer storageId;
 
+    private Storage storage;
+
     private Integer checkStatus;
 
     private DataDictionary checkStatusData;
 
     private String remark;
+
+    private Integer isConfirm;
+
+    private Date createDate;
 
     private Integer checkBy;
 
@@ -141,5 +153,53 @@ public class ExpenseDetail {
 
     public void setCheckByUser(Employee checkByUser) {
         this.checkByUser = checkByUser;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public Integer getIsConfirm() {
+        return isConfirm;
+    }
+
+    public void setIsConfirm(Integer isConfirm) {
+        this.isConfirm = isConfirm;
+    }
+
+    public Shipping getShipping() {
+        return shipping;
+    }
+
+    public void setShipping(Shipping shipping) {
+        this.shipping = shipping;
+    }
+
+    public Receiving getReceiving() {
+        return receiving;
+    }
+
+    public void setReceiving(Receiving receiving) {
+        this.receiving = receiving;
+    }
+
+    public DataDictionary getExpenseOrderType() {
+        return expenseOrderType;
+    }
+
+    public void setExpenseOrderType(DataDictionary expenseOrderType) {
+        this.expenseOrderType = expenseOrderType;
+    }
+
+    public Storage getStorage() {
+        return storage;
+    }
+
+    public void setStorage(Storage storage) {
+        this.storage = storage;
     }
 }

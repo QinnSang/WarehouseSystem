@@ -63,6 +63,8 @@ public class ReceivingServiceImpl implements ReceivingService {
                 expenseDetail.setStorageId(receiving.getStorageId());
                 expenseDetail.setOrderType(1); //设置费用明细关联单位入库单类型
                 expenseDetail.setCheckStatus(1); //设置费用状态为未结算
+                expenseDetail.setCreateDate(receiving.getReceivingDate());
+                expenseDetail.setIsConfirm(1); //设置费用状态为未确认，不可用于结算
             }
             //增加入库单费用明细
             int addRow2=expenseDetailMapper.addReceiving(receiving);
@@ -88,6 +90,8 @@ public class ReceivingServiceImpl implements ReceivingService {
                 expenseDetail.setStorageId(receiving.getStorageId());
                 expenseDetail.setOrderType(1); //设置费用明细关联单位入库单类型
                 expenseDetail.setCheckStatus(1); //设置费用状态为未结算
+                expenseDetail.setCreateDate(receiving.getReceivingDate());
+                expenseDetail.setIsConfirm(1); //设置费用状态为未确认，不可用于结算
             }
             //增加入库单费用明细
             int addRow2=expenseDetailMapper.addReceiving(receiving);
@@ -119,6 +123,8 @@ public class ReceivingServiceImpl implements ReceivingService {
             if (result == null) {
                 storageGoods.setGoodsNumber(receiving.getReceivingNumber());
                 int addRow3 = storageGoodsMappper.add(storageGoods);
+                //更新费用明细 确认状态为已确认
+                expenseDetailMapper.updateStatusConfirm(receiving.getReceivingId());
                 if (addRow3 == 1)
                     return StateType.getStateType(28);
                 return StateType.getStateType(29);
@@ -126,6 +132,8 @@ public class ReceivingServiceImpl implements ReceivingService {
                 storageGoods.setStorageGoodsId(result.getStorageGoodsId());
                 storageGoods.setGoodsNumber(result.getGoodsNumber()+receiving.getReceivingNumber());
                 int updateRow1 = storageGoodsMappper.update(storageGoods);
+                //更新费用明细 确认状态为已确认
+                expenseDetailMapper.updateStatusConfirm(receiving.getReceivingId());
                 if (updateRow1 == 1)
                     return StateType.getStateType(28);
                 return StateType.getStateType(29);
