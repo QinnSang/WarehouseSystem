@@ -20,7 +20,7 @@
         <div style="padding-bottom: 5px;" >
             <title>仓储物流系统</title>
         </div>
-        <div style="background-color: white;width: 400px;height: 300px; border-radius: 25px;">
+        <div style="background-color: white;width: 420px;height: 370px; border-radius: 25px;">
             <div  style="width: 300px">
                 <hr>
                 <ul id="myTab" class="nav nav-tabs">
@@ -32,7 +32,7 @@
             <div id="myTabContent" class="tab-content">
                 <%--开发者登录--%>
                 <div class="tab-pane fade in active" id="home">
-                    <div class="layui-container"  style="width: 300px;margin-top: 30px">
+                    <div class="layui-container"  style="width: 300px;margin-top: 30px;margin-left: 50px">
                         <div name="loginSubmit" action="${ctx}/employee/login" method="post" class="layui-form layui-form-pane" style="margin: auto">
                             <div class="layui-form-item" style="width: 300px">
                                 <div class="layui-input-inline" style="margin-left: 0">
@@ -63,23 +63,26 @@
                             </div>
                             <div class="layui-form-item" style="width: 300px">
                                 <div class="layui-input-inline" style="margin-left: 0;padding-bottom: 8px">
-                                    <button  class="layui-btn-m layui-btn" style="width: 100px" lay-submit lay-filter="formDemo">登录</button>
-                                    <button type="reset" class="layui-btn layui-btn-primary" style="width: 70px">重置</button>
+                                    <button  class="layui-btn layui-btn-normal" style="width: 300px" lay-submit lay-filter="formDemo">登录</button>
                                 </div>
-                                <div class="layui-form-item" style="width: 300px">
-                                    <div class="layui-input-inline" style="margin-left: 0;padding-bottom: 8px">
-                                        <a href="${ctx}/employee/toRegister" class="layui-btn-m layui-btn" style="width: 170px">注册</a>
-                                    </div>
+                                <%--                                    <div class="layui-form-item" style="width: 300px">--%>
+                                <div class="layui-input-inline" style="margin-left: 0;padding-bottom: 8px">
+                                    <a href="${ctx}/employee/toRegister" class="layui-btn" style="width: 300px">注册</a>
                                 </div>
-                                <div id="error-box">
-                                    <lable id="error-info"></lable>
+                                <%--                                <div class="layui-form-item" style="width: 300px">--%>
+                                <div class="layui-input-inline" style="margin-left: 0;padding-bottom: 8px">
+                                    <button type="reset" class="layui-btn layui-btn-primary" style="width: 300px">重置</button>
                                 </div>
-                                </form>
                             </div>
+                            <div id="error-box">
+                                <lable id="error-info"></lable>
+                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 </center>
 <%--<script src="${ctx}/jsp/js/login.js"></script>--%>l
 <script src='https://code.jquery.com/jquery-3.2.1.min.js'></script>

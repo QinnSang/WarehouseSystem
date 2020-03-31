@@ -26,14 +26,15 @@
         <title>仓储物流系统</title>
     </div>
     <div style="background-color: white;width:500px;border-radius: 25px;">
-        <div  style="width: 300px">
-            <hr>
-            <ul id="myTab" class="nav nav-tabs">
-                <li class="active"><a href="#home" data-toggle="tab">用户注册</a></li>
-            </ul>
-        </div>
-
-        <div id="myTabContent" class="tab-content">
+        <center>
+            <div  style="width: 300px">
+                <hr>
+                <ul id="myTab" class="nav nav-tabs">
+                    <li class="active"><a href="#home" data-toggle="tab">用户注册</a></li>
+                </ul>
+            </div>
+        </center>
+        <div id="myTabContent" class="tab-content" style="margin-top: 30px">
             <%--开发者注册--%>
             <form action="${ctx}/employee/register" method="post" class="layui-form" name="regSubmit">
                 <div class="layui-form-item">
@@ -82,7 +83,7 @@
 
                 </div>
 
-                <div class="layui-form-item">
+                <div class="layui-form-item" style="margin-left:20px ">
                     <a href="${ctx}/index.jsp">已有账号？请登录</a>
                     <hr class="layui-bg-green"style="width:120px">
                 </div>
