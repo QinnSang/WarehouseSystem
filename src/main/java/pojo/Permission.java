@@ -1,24 +1,63 @@
 package pojo;
 
+import java.util.List;
+
 public class Permission {
-    private Integer permissionId;
-
+    //权限id
+    private Integer id;
+    //权限名称
     private String title;
-
-    private String url;
-
+    //权限类型
     private Integer permissionType;
 
-    private Integer sort;
+    private String permission;
+//    //是否默认展开
+    private boolean spread = true;
+//  复选框是否选中
+    private boolean checked;
 
-    private Integer pid;
+//    //树形节点连接，设置点击打开，未设置不会跳转
+//    private String href;
+//
+//    //菜单图标，图片链搂或是图片附件UUID
+//    private String menuIcon;
 
-    public Integer getPermissionId() {
-        return permissionId;
+    //父级菜单ID
+    private String superId;
+
+    //子菜单集合
+    private List<Permission> children;
+
+    public Integer getId() {
+        return id;
     }
 
-    public void setPermissionId(Integer permissionId) {
-        this.permissionId = permissionId;
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public boolean isSpread() {
+        return spread;
+    }
+
+    public void setSpread(boolean spread) {
+        this.spread = spread;
+    }
+
+    public boolean isChecked() {
+        return checked;
+    }
+
+    public void setChecked(boolean checked) {
+        this.checked = checked;
+    }
+
+    public String getPermission() {
+        return permission;
+    }
+
+    public void setPermission(String permission) {
+        this.permission = permission;
     }
 
     public String getTitle() {
@@ -26,15 +65,7 @@ public class Permission {
     }
 
     public void setTitle(String title) {
-        this.title = title == null ? null : title.trim();
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url == null ? null : url.trim();
+        this.title = title;
     }
 
     public Integer getPermissionType() {
@@ -45,19 +76,19 @@ public class Permission {
         this.permissionType = permissionType;
     }
 
-    public Integer getSort() {
-        return sort;
+    public String getSuperId() {
+        return superId;
     }
 
-    public void setSort(Integer sort) {
-        this.sort = sort;
+    public void setSuperId(String superId) {
+        this.superId = superId;
     }
 
-    public Integer getPid() {
-        return pid;
+    public List<Permission> getChildren() {
+        return children;
     }
 
-    public void setPid(Integer pid) {
-        this.pid = pid;
+    public void setChildren(List<Permission> children) {
+        this.children = children;
     }
 }

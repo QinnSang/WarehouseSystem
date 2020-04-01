@@ -25,7 +25,7 @@
     <div style="padding-bottom: 5px;" >
         <title>仓储物流系统</title>
     </div>
-    <div style="background-color: white;width:500px;border-radius: 25px;">
+    <div style="background-color: white;width:400px;border-radius: 25px;">
         <center>
             <div  style="width: 300px">
                 <hr>
@@ -43,7 +43,7 @@
                         <div class="layui-input-inline">
                             <input type="text" name="loginCode" id="loginCode" required lay-verify="required"
                                    placeholder="仅中、英文字母、数字和下划线" autocomplete="off"
-                                   class="layui-input"  style="width: 300px">
+                                   class="layui-input"  style="width: 250px">
                         </div>
                     </div>
 
@@ -60,7 +60,7 @@
                         <div class="layui-input-block">
                             <input type="password" name="password"  id="password" required lay-verify="required"
                                    placeholder="6~16个字符，区分大小写" autocomplete="off"
-                                   class="layui-input" style="width: 300px">
+                                   class="layui-input" style="width: 250px">
                         </div>
                     </div>
 
@@ -69,7 +69,7 @@
                         <div class="layui-input-block">
                             <input type="password" name="devRePassword" id="devRePassword" required lay-verify="required"
                                    placeholder="确认密码" autocomplete="off"
-                                   class="layui-input" style="width: 300px">
+                                   class="layui-input" style="width: 250px">
                         </div>
                     </div>
                     <%--                    <div class="layui-input-inline" style="margin-left: 0">--%>
@@ -82,16 +82,11 @@
                     <%--                    </div>--%>
 
                 </div>
-
-                <div class="layui-form-item" style="margin-left:20px ">
-                    <a href="${ctx}/index.jsp">已有账号？请登录</a>
-                    <hr class="layui-bg-green"style="width:120px">
-                </div>
                 <div class="layui-input-block" style="padding-bottom: 8px">
-                    <button type="submit" class="layui-btn" style="width: 140px" lay-submit="" lay-filter="demo1">注册</button>
-                    <button type="reset" class="layui-btn layui-btn-primary" style="width: 140px">重置</button>
+                    <button type="submit" class="layui-btn" style="width: 160px" lay-submit="" lay-filter="demo1">注册</button>
+                    <a href="${ctx}/index.jsp">已有账号？请登录</a>
                 </div>
-                <div id="error-box">
+                <div id="error-box" class="layui-input-block" style="padding-bottom: 8px">
                     <lable id="error-info"/>
                 </div>
             </form>

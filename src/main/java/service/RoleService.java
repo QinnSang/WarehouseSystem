@@ -2,11 +2,9 @@ package service;
 
 import com.github.pagehelper.PageInfo;
 import constant.StateType;
-import pojo.Contract;
-import pojo.Employee;
+import pojo.Permission;
 import pojo.Role;
 import java.util.List;
-import java.util.Map;
 
 public interface RoleService {
 
@@ -16,4 +14,8 @@ public interface RoleService {
     StateType update(Role role);
 
     StateType delRole(int roleId);
+
+    List<Permission> queryPermission(Integer roleId);
+
+    StateType rolePermission(Role role);
 }

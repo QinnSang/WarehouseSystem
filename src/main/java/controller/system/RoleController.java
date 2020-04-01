@@ -4,7 +4,6 @@ import com.github.pagehelper.PageInfo;
 import constant.StateType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pojo.*;
 import service.RoleService;
@@ -61,5 +60,17 @@ public class RoleController {
         return stateType;
     }
 
+    @RequestMapping("/queryPermission")
+    @ResponseBody
+    public List<Permission> queryPermission(@RequestParam Integer roleId){
+        return roleService.queryPermission(roleId);
+    }
+
+    @RequestMapping("/rolePermission")
+    @ResponseBody
+    public StateType rolePermission(@RequestBody Role role){
+        StateType stateType=roleService.rolePermission(role);
+        return stateType;
+    }
 
 }

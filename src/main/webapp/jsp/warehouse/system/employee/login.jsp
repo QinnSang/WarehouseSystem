@@ -25,15 +25,14 @@
                 <hr>
                 <ul id="myTab" class="nav nav-tabs">
                     <li class="active"><a href="#home" data-toggle="tab">
-                        开发者登录</a></li>
+                        用户登录</a></li>
                 </ul>
             </div>
 
             <div id="myTabContent" class="tab-content">
-                <%--开发者登录--%>
                 <div class="tab-pane fade in active" id="home">
                     <div class="layui-container"  style="width: 300px;margin-top: 30px;margin-left: 50px">
-                        <div name="loginSubmit" action="${ctx}/employee/login" method="post" class="layui-form layui-form-pane" style="margin: auto">
+                        <form name="loginSubmit" action="${ctx}/employee/login" method="post" class="layui-form layui-form-pane" style="margin: auto">
                             <div class="layui-form-item" style="width: 300px">
                                 <div class="layui-input-inline" style="margin-left: 0">
                                     <input type="text" name="loginCode" id="loginCode" required lay-verify="required" value="admin"
@@ -48,41 +47,29 @@
                                            class="layui-input" style="width: 300px">
                                 </div>
                             </div>
-                            <%--                                <div class="layui-input-inline" style="margin-left: 0">--%>
-                            <%--                                    <input name="verCode" ng-model="captcha" type="text" id="verCode" placeholder="验证码" autocomplete="off">--%>
-                            <%--                                    <div class="code-image">--%>
-                            <%--                                        &lt;%&ndash;src为requestMapping的路径&ndash;%&gt;--%>
-                            <%--                                        <img id="captchaImage" src="${ctx}/employee/captcha/false" width="130px" height="48px"  alt="验证码"/>--%>
-                            <%--                                        <a id="changeImage" href="#">看不清?换一张</a>--%>
-                            <%--                                    </div>--%>
-                            <%--                                </div>--%>
                             <div class="layui-form-item" style="width: 300px">
-                                <div class="layui-input-inline">
-                                    <input type="checkbox" name="rememberMe" id="rememberMe" title="记住密码" value="true" lay-skin="primary">
-                                </div>>
+                                    <input  name="verCode" ng-model="captcha" id="verCode" placeholder="验证码"  class="layui-input" style="width: 150px;float:left" autocomplete="off">
+                                    <img id="captchaImage" src="${ctx}/employee/captcha/false" style="width: 100px;height:30px;" alt="验证码"/>
+                                    <a id="changeImage" href="#"  style="width:100px;">换一张</a>
                             </div>
                             <div class="layui-form-item" style="width: 300px">
                                 <div class="layui-input-inline" style="margin-left: 0;padding-bottom: 8px">
                                     <button  class="layui-btn layui-btn-normal" style="width: 300px" lay-submit lay-filter="formDemo">登录</button>
                                 </div>
-                                <%--                                    <div class="layui-form-item" style="width: 300px">--%>
-                                <div class="layui-input-inline" style="margin-left: 0;padding-bottom: 8px">
-                                    <a href="${ctx}/employee/toRegister" class="layui-btn" style="width: 300px">注册</a>
-                                </div>
-                                <%--                                <div class="layui-form-item" style="width: 300px">--%>
-                                <div class="layui-input-inline" style="margin-left: 0;padding-bottom: 8px">
-                                    <button type="reset" class="layui-btn layui-btn-primary" style="width: 300px">重置</button>
-                                </div>
                             </div>
-                            <div id="error-box">
-                                <lable id="error-info"></lable>
+                            <div class="layui-form-item" style="width: 300px">
+                                <span style="width: 300px">
+                                    <a href="${ctx}/employee/forgetPwd" style="float:left">忘记密码</a>
+                                   <a id="error-info" style="color: red"/>
+                                    <a href="${ctx}/employee/toRegister" style="float:right">注册账号</a>
+                                </span>
                             </div>
-                            </form>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 </center>
 <%--<script src="${ctx}/jsp/js/login.js"></script>--%>l
 <script src='https://code.jquery.com/jquery-3.2.1.min.js'></script>

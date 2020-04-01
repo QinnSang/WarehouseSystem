@@ -92,6 +92,11 @@ public enum StateType {
 
     LackExpenseDetail(40,"无需结算的费用明细，对账单无法生成"),
 
+    AuthorizedSuccess(41,"授权成功"),
+
+    AuthorizedFailed(42,"授权失败"),
+
+
     /**
      * 请求格式错误
      */

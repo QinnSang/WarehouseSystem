@@ -1,5 +1,7 @@
 package pojo;
 
+import java.util.List;
+
 public class Role {
     private Integer roleId;
 
@@ -7,8 +9,7 @@ public class Role {
 
     private String remark;
 
-    private Employee employee;
-
+    private List<Permission> permissionList;
 
     public Integer getRoleId() {
         return roleId;
@@ -34,11 +35,11 @@ public class Role {
         this.remark = remark == null ? null : remark.trim();
     }
 
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
+    public List<Permission> getPermissionList() {
+        return permissionList;
     }
 
-    public Employee getEmployee() {
-        return employee;
+    public void setPermissionList(List<Permission> permissionList) {
+        this.permissionList = permissionList;
     }
 }

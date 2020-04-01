@@ -19,7 +19,7 @@ public interface EmployeeService {
 
     StateType freEmployee(int employeeId);
 
-    StateType employeeRole(int employeeId);
+    StateType employeeRole(Employee employee);
 
     PageInfo<Role> queryRole();
 

@@ -81,8 +81,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public StateType employeeRole(int employeeId) {
-        int roleRow1=employeeMapper.employeeRole(employeeId);
+    public StateType employeeRole(Employee employee) {
+        //首先删除已有的用户角色分配
+        employeeMapper.delRoleByEmployee(employee.getEmployeeId());
+        int roleRow1=employeeMapper.employeeRole(employee);
         //如果添加用户角色成功
         if(roleRow1>=1)
             return  StateType.getStateType(22);

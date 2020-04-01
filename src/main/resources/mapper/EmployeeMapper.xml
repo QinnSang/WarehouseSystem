@@ -83,12 +83,17 @@
         </where>
     </select>
 
-    <select id="queryById" parameterType="pojo.Employee" resultType="pojo.Employee">
-        select
-        status
-        from employee
+    <select id="queryByName" resultType="pojo.Employee">
+        select * from employee
         <where>
-            employee_id=#{employeeId}
+            login_code=#{loginCode}
+        </where>
+    </select>
+
+    <select id="queryByEmail" resultType="pojo.Employee">
+        select * from employee
+        <where>
+            email=#{email}
         </where>
     </select>
 
@@ -167,6 +172,10 @@
         delete from employee where employee_id=#{employeeId}
     </delete>
 
+    <delete id="delRoleByEmployee">
+        delete  from employee_role where emp_id = #{employeeId}
+    </delete>
+
     <update id="freEmployee">
         update employee
         <set>
@@ -177,59 +186,23 @@
         </where>
     </update>
 
-    <insert id="employeeRole">
-        insert into employee_role
-        <trim prefix="(" suffix=")" prefixOverrides=",">
-            <if test="role!=null">
-                ,role_id,
-            </if>
-        </trim>
-        <trim prefix="values(" suffix=")" prefixOverrides=",">
-            <if test="role!=null">
-                #{role}
-            </if>
-            <if test="employeeId!=null">
-            ,#{emp_id}
-            </if>
-        </trim>
-        <where>
-            emp_id=#{employeeId}
-        </where>
+    <insert id="employeeRole" parameterType="pojo.Employee">
+        insert into employee_role (emp_id, role_id)
+        values
+        <foreach collection="roleList" item="role" separator=",">
+            (
+            #{employeeId},
+            #{role.roleId}
+            )
+        </foreach>
     </insert>
 
-    <resultMap id="roleBase" type="pojo.Role">
-        <result property="roleName" column="role_name"/>
-        <result property="roleId" column="role_id"/>
-        <association property="employee" javaType="pojo.Employee">
-            <id property="employeeId" column="employee_id"/>
-        </association>
-    </resultMap>
-
-    <select id="queryRole" resultMap="roleBase">
+    <select id="queryRole" resultType="pojo.Role">
         select
-        t1.employee_id,
-        t3.role_id,
-        t3.role_name
-        from role t3
-        LEFT JOIN employee_role t5 ON t3.role_id = t5.role_id
-        LEFT JOIN employee t1 ON t1.employee_id=t5.emp_id
+          role_id,
+          role_name,
+          remark
+        from role
     </select>
-
-    <select id="queryByName" resultType="pojo.Employee">
-        select * from employee
-        <where>
-            login_code=#{loginCode}
-        </where>
-    </select>
-    <select id="queryByEmail" resultType="pojo.Employee">
-        select * from employee
-        <where>
-            email=#{email}
-        </where>
-    </select>
-    <insert id="register" parameterType="pojo.Employee">
-        insert into employee (login_code, password, email,status)
-        values(#{loginCode},#{password},#{email},#{status})
-    </insert>
 
 </mapper>

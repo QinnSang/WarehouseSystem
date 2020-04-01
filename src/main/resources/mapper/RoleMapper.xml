@@ -2,14 +2,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mapper.RoleMapper">
 
+    <resultMap id="roleBase" type="pojo.Role">
+        <id property="roleId" column="role_id"/>
+        <result property="roleName" column="role_name"/>
+        <result property="remark" column="remark"/>
+        <collection property="permissionList" ofType="pojo.Permission">
+            <result property="id" column="permission_id"/>
+        </collection>
+    </resultMap>
+
     <select id="query" parameterType="pojo.Role" resultType="pojo.Role">
         <if test="roleName!=null and roleName!=''">
                 <bind name="rolename" value="'%'+roleName+'%'"/>
         </if>
         select
-        role_id,
-        role_name,
-        remark
+            role_id,
+            role_name,
+            remark
         from role
         <where>
             <if test="roleName!=null and roleName!=''">
@@ -57,4 +66,27 @@
     <delete id="delRole">
         delete from role where role_id=#{roleId}
     </delete>
+
+    <select id="queryPermission" resultType="pojo.Permission">
+        select id, title, super_id from permission
+    </select>
+
+    <select id="queryPermissionByRole" parameterType="integer" resultType="pojo.Permission">
+        select permission_id as id from role_permission where role_id = #{roleId}
+    </select>
+
+    <delete id="delRolePermission" parameterType="integer">
+        delete from role_permission where role_id =#{roleId}
+    </delete>
+
+    <insert id="addRolePermission" parameterType="pojo.Role">
+        insert into role_permission (role_id, permission_id)
+        values
+        <foreach collection="permissionList" item="permission" separator=",">
+            (
+                #{roleId},
+                #{permission.id}
+            )
+        </foreach>
+    </insert>
 </mapper>

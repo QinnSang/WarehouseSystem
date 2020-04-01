@@ -1,6 +1,7 @@
 package controller.system;
 
 import com.github.pagehelper.PageInfo;
+import com.wf.captcha.utils.CaptchaUtil;
 import constant.StateType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,24 +34,39 @@ public class EmployeeController {
         return "system/employee/login";
     }
 
+    //验证码
+    @RequestMapping("/captcha/{flag}")
+    public void captcha( HttpServletRequest request, HttpServletResponse response, @PathVariable("flag")boolean flag) throws Exception {
+        //刷新验证码
+        if(flag){
+            CaptchaUtil.clear(request);  // 清除session中的验证码
+        }
+        CaptchaUtil.out(request, response);
+    }
+
     @RequestMapping("/login")
-    public String login(@ModelAttribute Employee employee,HttpSession  session, Model model){
-        //因为需要同时将user和查询消息同时查出来，所以用Map接受
-        Map<String,Object> map=employeeService.login(employee);
-        StateType stateType= (StateType) map.get("StateType");
-        employee= (Employee) map.get("employee");
-        if(stateType==null){
-//            利用session保存员工信息，可在jsp和后台中取得该员工信息
-            session.setAttribute("employee",employee);
-//            return "redirect:/index/index";
-             return "index";
+    public String login(@ModelAttribute Employee employee,String verCode, HttpSession session, Model model, HttpServletRequest request){
+        StateType stateType=null;
+        if (!CaptchaUtil.ver(verCode, request)) {
+            CaptchaUtil.clear(request);
+            // 清除session中的验证码
+            stateType=StateType.getStateType(16);
+        }else{
+            //因为需要同时将user和查询消息同时查出来，所以用Map接受
+            Map<String,Object> map=employeeService.login(employee);
+            employee= (Employee) map.get("employee");
+            stateType= (StateType) map.get("StateType");
+            if(stateType==null){
+                session.setAttribute("employee",employee);
+                return "redirect:/index/index";
+            }
         }
         model.addAttribute("stateType",stateType);
 //        return "redirect:/";  //因为登录错误而需要返回页面提示消息，所以不能使用redirect，否则取不到stateType
         return "system/employee/login";
     }
 
-//    //验证码
+    //验证码
 //    @RequestMapping("/captcha/{flag}")
 //    public void captcha(HttpServletRequest request, HttpServletResponse response, @PathVariable("flag")boolean flag) throws Exception {
 //        //刷新验证码
@@ -135,10 +151,10 @@ public class EmployeeController {
         return tableData;
     }
 
-    @RequestMapping("/roleInfo")
+    @RequestMapping(value = "/roleInfo", method = RequestMethod.POST)
     @ResponseBody
-    public StateType roleInfo(@ModelAttribute int employeeId){
-            StateType stateType=employeeService.employeeRole(employeeId);
-            return stateType;
+    public StateType roleInfo(@RequestBody Employee employee){
+        StateType stateType=employeeService.employeeRole(employee);
+        return stateType;
     }
 }

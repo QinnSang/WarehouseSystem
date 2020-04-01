@@ -41,8 +41,8 @@
             <table id="employeeTable" lay-filter="employeeFilter"></table>
             <script type="text/html" id="barDemo">
                 <a class="layui-btn layui-btn-xs " lay-event="detail">查看</a>
-                <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="edit">编辑</a>
-                <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="role">角色</a>
+                <%--<a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="edit">编辑</a>--%>
+                <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="role">分配角色</a>
                 <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
                 <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="freeze">冻结</a>
             </script>
@@ -144,9 +144,9 @@
     </form>
 
     <%--选择角色弹窗--%>
-    <%--<div id="logDetail" style="display:none;">--%>
     <div id="employeeRole" style="display:none;">
         <form class="layui-form layui-form-pane1" id="roleForm" style="position:relative;" lay-filter="roleFilter">
+            <input name="employeeId" class="layui-hide">
             <table id="roleTable" lay-filter="roleFilter"></table>
             <button type="submit" style="display:none;" class="layui-btn" lay-submit lay-filter="roleSubmit">立即提交</button>
         </form>
@@ -170,10 +170,8 @@
         $ =layui.jquery;
         var table = layui.table;
         var form = layui.form;
-        var checkStatus = table.checkStatus('empRoleId');
         var layer = layui.layer;
         var soulTable = layui.soulTable; //使用soulTable子表
-        // var index = layer.load(); //添加laoding,0-2两种方式
 
         //第一个实例
         var myTable = table.render({
@@ -190,39 +188,26 @@
             , drag: false // 关闭拖拽列功能
             , even: true //隔行背景
             , cols: [[ //表头
-                {field: 'loginCode', title: '用户账号',  width: 180, unresize: true},
-                {field: 'realName', title: '用户姓名',   width: 180, unresize: true},
+                {field: 'loginCode', title: '用户账号',  width: 150, unresize: true},
+                {field: 'realName', title: '用户姓名',   width: 130, unresize: true},
+                {field: 'workNo', title: '工号',   width: 100, unresize: true},
                 {field: 'sex', title: '性别',templet:'<div>{{d.employeeSex.valueName}}</div>',width: 80, unresize: true},
                 {field: 'phone', title: '手机号码', width: 180, unresize: true},
-                {field: 'email', title: '邮箱', width: 180, unresize: true},
+                {field: 'role', title: '角色', width: 180, unresize: true,
+                    templet:function (d) {
+                        if (d.roleList.length==0)
+                            return "";
+                        var roleALl = "", i = 0;
+                        for (var item; i < d.roleList.length - 1; i++) {
+                            var item = d.roleList[i];
+                            roleALl += item.roleName + "、";
+                        }
+                        return roleALl + d.roleList[i].roleName;
+                     }  //如果为空则返回空字符串
+                },
+                // {field: 'email', title: '邮箱', width: 180, unresize: true},
                 {field: 'status', title: '状态',templet:'<div>{{d.employeeStatus.valueName}}</div>', width: 80,unresize: true},
-                {fixed: 'right', title: '操作', templet: '#barDemo', unresize: true}
-            ]]
-            , parseData: function (res) { //res 即为原始返回的数据
-                return {
-                    "code": res.code, //解析接口状态
-                    "msg": res.msg, //解析提示文本
-                    "count": res.count, //解析数据长度
-                    "data": res.data.list //解析数据列表
-                };
-            }
-            ,done: function () {
-                soulTable.render(this)
-            }
-            ,filter: {bottom: false}
-        });
-
-        //用户角色弹窗
-        var roleTable =  table.render({
-            elem: '#roleTable'
-            ,height: 220
-            ,url: '${ctx}/employee/queryRole' //数据接口
-            ,title: '角色表'
-            , page: false
-            ,cols: [[ //表头
-                {type: 'checkbox', fixed: 'left'}
-                ,{field: 'roleId', title: '角色编号', width:137}
-                ,{field: 'roleName', title: '角色名称', width:220}
+                {title: '操作', templet: '#barDemo', unresize: true}
             ]]
             , parseData: function (res) { //res 即为原始返回的数据
                 return {
@@ -330,7 +315,6 @@
                 type: 'POST',
                 data: data.field,
                 success: function (StateType) {
-                    // var status = StateType.status;//取得返回数据（Sting类型的字符串）的信息进行取值判断
                     if (StateType == 'AddSuccess') {
                         layer.msg('添加成功', {
                             icon: 1,
@@ -432,7 +416,7 @@
             EmployeeDetailPopUp=layer.open({
                 type: 1,
                 title: '详情',
-                area:['50%','80%'],
+                area:['50%','50%'],
                 skin: 'layui-layer-molv',
                 shade: false, //禁止使用遮罩，否则操作不了界面
                 resize:false, //禁止窗体拉伸
@@ -470,7 +454,7 @@
             rolePopUp=layer.open({
                 type: 1,
                 title: '选择角色',
-                area:['30%','80%'],
+                area:['40%','65%'],
                 skin: 'layui-layer-molv',
                 shade: false, //禁止使用遮罩，否则操作不了界面
                 resize:false, //禁止窗体拉伸
@@ -478,11 +462,31 @@
                 btn: ['保存', '取消'],
                 success: function(layero, index){
                     //表单赋值
-                    form.val('roleFilter',{
-                        "employeeId": data.employeeId,
-                        "roleId":data.roleId,
-                        "roleName":data.roleName,
-                    })
+                    form.val('roleFilter',{ "employeeId": data.employeeId});
+                    var roleList = data.roleList;
+                    //用户角色弹窗
+                    var roleTable =  table.render({
+                        elem: '#roleTable'
+                        ,url: '${ctx}/employee/queryRole' //数据接口
+                        ,title: '角色表'
+                        , page: false
+                        ,cols: [[ //表头
+                            {type: 'checkbox'}
+                            ,{field: 'roleId', title: '编号', width:80}
+                            ,{field: 'roleName', title: '角色名称', width:190}
+                            ,{field: 'remark', title: '备注', width:220}
+                        ]]
+                        , parseData: function (res) { //res 即为原始返回的数据
+                            return {
+                                "code": res.code, //解析接口状态
+                                "msg": res.msg, //解析提示文本
+                                "count": res.count, //解析数据长度
+                                "data": res.data.list //解析数据列表
+                            };
+                        }
+                        ,done: function () {}
+                        ,filter: {bottom: false}
+                    });
                 },
                 yes: function(index, layero){  //添加用户表单监听事件
                     layero.find('form').find('button[lay-submit]').click();//此处代码即为触发表单提交按钮
@@ -490,19 +494,27 @@
                 },
                 btn2: function(index, layero){}
             })
-
         }
 
         //用户角色信息提交
         form.on('submit(roleSubmit)', function(data){
-            // console.log(data.field) //当前容器的全部表单字段，名值对形式：{name: value}
+            var checkStatus = table.checkStatus('roleTable')
+                ,roleData = checkStatus.data;
+            //循环取出表格指定field数据
+            var roleIdArray=[];
+            for (var index in roleData) {
+                roleIdArray[index] = {   //一定要为值取名，要不然后台接收不了，报400错误
+                    "roleId":roleData[index].roleId
+                };
+            }
+            data.field.roleList = roleIdArray;
             $.ajax({
                 url: '${ctx}/employee/roleInfo',
                 type: 'POST',
-                data: console.log(checkStatus.data), //获取选中的数据
-                // data: data.field,
+                dataType: "json",
+                contentType: "application/json",
+                data:  JSON.stringify(data.field),  //如果有list一定要json，不然数据格式不对
                 success: function (StateType) {
-                    // var status = StateType.status;//取得返回数据（Sting类型的字符串）的信息进行取值判断
                     if (StateType == 'AddSuccess') {
                         layer.msg('保存成功', {
                             icon: 1,
