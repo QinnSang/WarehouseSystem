@@ -71,16 +71,16 @@
     <aop:config proxy-target-class="true"></aop:config>
 
     <!--使用shiro代替-->
-    <!--<mvc:interceptors>-->
-        <!--&lt;!&ndash;拦截未登录用户的请求&ndash;&gt;-->
-        <!--<mvc:interceptor>-->
-            <!--<mvc:mapping path="/**"/>-->
-            <!--<mvc:exclude-mapping path="/dev/toLogin"/>-->
-            <!--<mvc:exclude-mapping path="/dev/login"/>-->
-            <!--<mvc:exclude-mapping path="/dev/captcha/**"/>-->
-            <!--&lt;!&ndash;<mvc:exclude-mapping path="/dev/captcha/false"/>&ndash;&gt;-->
-            <!--<bean class="interceptor.UserInterceptor"/>-->
-        <!--</mvc:interceptor>-->
-    <!--</mvc:interceptors>-->
+    <mvc:interceptors>
+        <!--拦截未登录用户的请求-->
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/employee/toLogin"/>
+            <mvc:exclude-mapping path="/employee/login"/>
+            <mvc:exclude-mapping path="/employee/captcha/**"/>
+            <!--<mvc:exclude-mapping path="/dev/captcha/false"/>-->
+            <bean class="interceptor.UserInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
     
 </beans>

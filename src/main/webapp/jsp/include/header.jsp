@@ -6,7 +6,7 @@
            仓储物流系統
         </div>
         <ul class="layui-nav layui-layout-left">
-            <li class="layui-nav-item" lay-unselect>
+            <li class="layui-nav-item" lay-unselect style="left: -60px">
                 <a ew-event="flexible" title="侧边伸缩"><i class="layui-icon layui-icon-shrink-right"></i></a>
             </li>
         </ul>
@@ -21,17 +21,17 @@
                 <a>
                     <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
                 <%--<img src="assets/images/head.png" class="layui-nav-img">--%>
-                    <cite id="huName">闲心</cite>
+                    <cite id="employeeName">${sessionScope.employee.realName}</cite>
                 </a>
                 <dl class="layui-nav-child">
+                    <dd><a href="">基本资料</a></dd>
                     <dd lay-unselect><a ew-event="psw">修改密码</a></dd>
-                    <hr>
-                    <dd lay-unselect><a ew-event="logout">退出</a></dd>
                 </dl>
             </li>
             <li class="layui-nav-item" lay-unselect>
                 <a ew-event="theme" title="设置"><i class="layui-icon layui-icon-more-vertical"></i></a>
             </li>
+            <li class="layui-nav-item"><a href="${ctx}/index/logout">退出登录</a></li>
         </ul>
     </div>
 <!-- 侧边栏 -->
@@ -40,63 +40,41 @@
         <ul class="layui-nav layui-nav-tree arrow2" id="navList" lay-accordion="true" lay-filter="admin-side-nav"
             style="margin-top: 15px;">
             <li class="layui-nav-item layui-nav-itemed">
-                <a class="" href="${ctx}/index/index">首页</a>
+                <a class="" href="${ctx}/index/index" >首页</a>
+            </li>
+            <li class="layui-nav-item layui-nav-itemed">
+                <a href="${ctx}/contract/index" >合同管理</a>
             </li>
             <li class="layui-nav-item">
-                <a href="${ctx}/contract/index">合同管理</a>
-            </li>
-            <li class="layui-nav-item">
-                <a href="javascript:;">基础信息管理</a>
+                <a href="javascript:;" style="color: #000;">基础信息管理</a>
                 <dl class="layui-nav-child">
-                    <dd><a href="${ctx}/warehouse/index">仓库库位管理</a></dd>
-                    <dd><a href="${ctx}/goods/index">货物配置</a></dd>
+                    <dd><a href="${ctx}/warehouse/index" style="color: #000;left:10px">仓库库位管理</a></dd>
+                    <dd><a href="${ctx}/goods/index" style="color: #000;left:10px">货物配置</a></dd>
                 </dl>
             </li>
             <li class="layui-nav-item">
-                <a href="javascript:;">仓储管理</a>
+                <a href="javascript:;" style="color: #000;">仓储管理</a>
                 <dl class="layui-nav-child">
-                    <dd><a href="${ctx}/storage/index">仓储订单管理</a></dd>
-                    <dd><a href="${ctx}/receiving/index">入库管理</a></dd>
-                    <dd><a href="${ctx}/shipping/index">出库管理</a></dd>
-                    <dd><a href="${ctx}/log/index">仓储订单日志</a></dd>
+                    <dd><a href="${ctx}/storage/index" style="color: #000;left:10px">仓储订单管理</a></dd>
+                    <dd><a href="${ctx}/receiving/index" style="color: #000;left:10px">入库管理</a></dd>
+                    <dd><a href="${ctx}/shipping/index" style="color: #000;left:10px">出库管理</a></dd>
+                    <dd><a href="${ctx}/log/index" style="color: #000;left:10px">仓储订单日志</a></dd>
                 </dl>
             </li>
             <li class="layui-nav-item">
-                <a href="${ctx}/settle/index">结算管理</a>
+                <a href="${ctx}/settle/index" style="color: #000;">结算管理</a>
             </li>
             <li class="layui-nav-item">
-                <a href="javascript:;">系统管理</a>
+                <a href="javascript:;" style="color: #000;">系统管理</a>
                 <dl class="layui-nav-child">
-                    <dd><a href="${ctx}/role/index">角色管理</a></dd>
-                    <dd><a href="${ctx}/employee/index">用户管理</a></dd>
-                    <dd><a href="${ctx}/company/index">公司管理</a></dd>
+                    <dd><a href="${ctx}/role/index" style="color: #000;left:10px">角色管理</a></dd>
+                    <dd><a href="${ctx}/employee/index" style="color: #000;left:10px">用户管理</a></dd>
+                    <dd><a href="${ctx}/company/index" style="color: #000;left:10px">公司管理</a></dd>
                 </dl>
             </li>
-            <%--<li class="layui-nav-item">--%>
-                <%--<a href="javascript:;">操作日志</a>--%>
-            <%--</li>--%>
         </ul>
     </div>
 </div>
-<%--<script src="${ctx}/static/plugins/layui/layui.js"></script>--%>
-<%--<script type="text/javascript">--%>
-    <%--//JavaScript代码区域--%>
-    <%--layui.use('jquery', function() {--%>
-        <%--$ =layui.jquery;--%>
-        <%--$('li a').click(function(){--%>
-            <%--// $('.layui-this').removeClass('layui-this');--%>
-            <%--// $(this).addClass("layui-this");--%>
-            <%--if (!$(this).hasClass('layui-this')) {--%>
-                <%--$(this).addClass('layui-this').siblings().removeClass('layui-this');//点击判断没有layui-this就加，其他的去除--%>
-            <%--}--%>
-        <%--});--%>
-        <%--// $('.layui-nav-item').on('click',function(){--%>
-        <%--//     if (!$(this).hasClass('layui-this')) {--%>
-        <%--//         $(this).addClass('layui-this').siblings('.layui-nav-item').removeClass('layui-this');//点击判断没有layui-this就加，其他的去除--%>
-        <%--//     }--%>
-        <%--// })--%>
-    <%--})--%>
-<%--</script>--%>
 <%--设置所有界面样式--%>
 <style type="text/css">
     /*侧边栏黑色区域宽度*/
@@ -107,7 +85,49 @@
     .layui-nav-tree{
         width: 150px;
     }
-
     /*设置头部样式*/
     .layui-header{}
+
+    /*导航栏*/
+    .layui-layout-admin .layui-header {
+        background-color: #393d49;
+    }
+    /*鼠标移到菜单之后呈现的颜色*/
+    .layui-nav .layui-nav-item a:hover{
+        background-color: #fbfbfb;
+    }
+    /*logo*/
+    .layui-layout-admin .layui-logo {
+        width: 160px;
+        font-size: 18px;
+        color: #fbfbfb;
+    }
+    /*左侧栏*/
+    .layui-side-scroll {
+        background-color: #e6e6e6;
+    }
+    /*菜单栏字体颜色*/
+    .layui-nav-itemed>a, .layui-nav-tree .layui-nav-title a, .layui-nav-tree .layui-nav-title a:hover {
+         color: #000!important;
+    }
+    /*左侧菜单栏*/
+    .layui-nav-tree .layui-nav-item a {
+        color: #fff;
+        background-color: #e6e6e6;
+    }
+    .layui-nav-child dd {
+        background-color: #e6e6e6;
+    }
+
+    /*以下为小三角颜色*/
+    .layui-nav .layui-nav-mored,.layui-nav-itemed>a .layui-nav-more {
+        border-color:transparent transparent #999
+    }
+
+    .layui-nav .layui-nav-more {
+        border-top-color:#999;
+    }
+    .layui-nav .layui-nav-mored{
+        border-color: transparent transparent #999
+    }
 </style>

@@ -3,9 +3,106 @@
 <mapper namespace="mapper.CompanyMapper">
 
     <select id="query" parameterType="pojo.Company" resultType="pojo.Company">
-        select * from company
+        <if test="companyName!=null and companyName!=''">
+            <bind name="companyname" value="'%'+companyName+'%'"/>
+        </if>
+        <if test="companyCode!=null and companyCode!=''">
+            <bind name="companycode" value="'%'+companyCode+'%'"/>
+        </if>
+        select
+            company_id,
+            company_code,
+            company_name,
+            company_address,
+            company_user,
+            company_Phone,
+            remark
+          from company
+          <where>
+              <if test="companyId!=null">
+                  and company_id = #{companyId}
+              </if>
+              <if test="companyName!=null and companyName!=''">
+                  and company_name like #{companyname}
+              </if>
+              <if test="companyCode!=null and companyCode!=''">
+                  and company_code like #{companycode}
+              </if>
+          </where>
     </select>
-    <select id="queryById" parameterType="integer" resultType="pojo.Company">
-        select * from company t1 where t1.company_id=#{companyId}
-    </select>
+
+    <insert id="addCompany" parameterType="pojo.Company">
+        insert into company
+        <trim prefix="(" suffix=")" prefixOverrides=",">
+            <if test="companyName!=null and companyName!=''">
+                ,company_name
+            </if>
+            <if test="companyCode!=null and companyCode!=''">
+                ,company_code
+            </if>
+            <if test="companyAddress!=null and companyAddress!=''">
+                ,company_address
+            </if>
+            <if test="companyUser!=null and companyUser!=''">
+                ,company_user
+            </if>
+            <if test="companyPhone!=null and companyPhone!=''">
+                ,company_phone
+            </if>
+            <if test="remark!=null and remark!=''">
+                ,remark
+            </if>
+        </trim>
+        <trim prefix="values(" suffix=")" prefixOverrides=",">
+            <if test="companyName!=null and companyName!=''">
+                ,#{companyName}
+            </if>
+            <if test="companyCode!=null and companyCode!=''">
+                ,#{companyCode}
+            </if>
+            <if test="companyAddress!=null and companyAddress!=''">
+                ,#{companyAddress}
+            </if>
+            <if test="companyUser!=null and companyUser!=''">
+                ,#{companyUser}
+            </if>
+            <if test="companyPhone!=null and companyPhone!=''">
+                ,#{companyPhone}
+            </if>
+            <if test="remark!=null and remark!=''">
+                ,#{remark}
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateCompany" parameterType="pojo.Company">
+        update company
+        <set>
+            <if test="companyName!=null and companyName!=''">
+                company_name = #{companyName},
+            </if>
+            <if test="companyCode!=null and companyCode!=''">
+                company_code = #{companyCode},
+            </if>
+            <if test="companyAddress!=null and companyAddress!=''">
+                company_address = #{companyAddress},
+            </if>
+            <if test="companyUser!=null and companyUser!=''">
+                company_user = #{companyUser},
+            </if>
+            <if test="companyPhone!=null and companyPhone!=''">
+                company_phone = #{companyPhone},
+            </if>
+            <if test="remark!=null and remark!=''">
+                remark = #{remark},
+            </if>
+        </set>
+        <where>
+            company_id=#{companyId}
+        </where>
+    </update>
+
+    <delete id="delete" parameterType="integer">
+        delete from company where company_id = #{companyId}
+    </delete>
 </mapper>
