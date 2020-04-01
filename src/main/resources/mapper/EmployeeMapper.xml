@@ -115,9 +115,13 @@
             <if test="sex!=null">
                 ,sex
             </if>
+            <if test="workNo!=null and workNo!=''">
+                ,work_no
+            </if>
             <if test="email!=null and email!=''">
                 ,email
             </if>
+                ,status
         </trim>
         <trim prefix="values(" suffix=")" prefixOverrides=",">
             <if test="loginCode!=null and loginCode!=''">
@@ -135,9 +139,13 @@
             <if test="sex!=null">
                ,#{sex}
             </if>
+            <if test="workNo!=null and workNo!=''">
+                ,#{workNo}
+            </if>
             <if test="email!=null and email!=''">
                 ,#{email}
             </if>
+                ,1
         </trim>
     </insert>
 
@@ -158,6 +166,9 @@
             </if>
             <if test="sex!=null">
                 sex=#{sex},
+            </if>
+            <if test="workNo!=null and workNo!=''">
+                work_no=#{workNo},
             </if>
             <if test="email!=null and email!=''">
                 email=#{email},
@@ -205,4 +216,8 @@
         from role
     </select>
 
+    <insert id="register" parameterType="pojo.Employee">
+        insert into employee (login_code, password,salt,sex,status)
+        values(#{loginCode},#{password},#{salt},#{sex},#{status})
+    </insert>
 </mapper>

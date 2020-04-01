@@ -64,10 +64,7 @@ public class Employee {
         this.salt = salt == null ? null : salt.trim();
     }
 
-    public String getWorkNo() {
-        return workNo;
-    }
-
+    public String getWorkNo() { return workNo; }
     public void setWorkNo(String workNo) {
         this.workNo = workNo == null ? null : workNo.trim();
     }

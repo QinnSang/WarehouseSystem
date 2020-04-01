@@ -41,7 +41,7 @@
             <table id="employeeTable" lay-filter="employeeFilter"></table>
             <script type="text/html" id="barDemo">
                 <a class="layui-btn layui-btn-xs " lay-event="detail">查看</a>
-                <%--<a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="edit">编辑</a>--%>
+                <%--                <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="edit">编辑</a>--%>
                 <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="role">分配角色</a>
                 <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
                 <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="freeze">冻结</a>
@@ -126,6 +126,12 @@
             </div>
         </div>
         <div class="layui-form-item">
+            <label class="layui-form-label"><span style="color: red;">* </span>工号：</label>
+            <div class="layui-input-inline" style="width: 450px">
+                <input type="text" name="workNo" lay-verify="required" placeholder="请输入工号"  autocomplete="off" class="layui-input" >
+            </div>
+        </div>
+        <div class="layui-form-item">
             <label class="layui-form-label"><span style="color: red;">* </span>手机号码：</label>
             <div class="layui-input-inline" style="width: 450px">
                 <input type="text" name="phone" lay-verify="required" placeholder="请输入手机号码"  autocomplete="off" class="layui-input" >
@@ -203,7 +209,7 @@
                             roleALl += item.roleName + "、";
                         }
                         return roleALl + d.roleList[i].roleName;
-                     }  //如果为空则返回空字符串
+                    }  //如果为空则返回空字符串
                 },
                 // {field: 'email', title: '邮箱', width: 180, unresize: true},
                 {field: 'status', title: '状态',templet:'<div>{{d.employeeStatus.valueName}}</div>', width: 80,unresize: true},

@@ -38,31 +38,30 @@
         </script>
     </div>
 </div>
-<%--角色信息弹框--%>
-<form class="layui-form layui-form-pane1" id="roleForm" style="display:none;padding: 20px 0 0 0;" name="popUpdateForm"  method="post" lay-filter="RoleFilter">
-    <input type="hidden" name="roleId" >
-    <div class="layui-form-item">
-        <label class="layui-form-label"style="width: 110px"><span style="color: red;">* </span>角色名称：</label>
-        <div class="layui-input-inline" style="width: 430px">
-            <input type="text" name="roleName" lay-verify="title" autocomplete="off" placeholder="请输入角色名称" class="layui-input">
+    <%--角色信息弹框--%>
+    <form class="layui-form layui-form-pane1" id="roleForm" style="display:none;padding: 20px 0 0 0;" name="popUpdateForm"  method="post" lay-filter="RoleFilter">
+        <input type="hidden" name="roleId" >
+        <div class="layui-form-item">
+            <label class="layui-form-label"style="width: 110px"><span style="color: red;">* </span>角色名称：</label>
+            <div class="layui-input-inline" style="width: 430px">
+                <input type="text" name="roleName" lay-verify="title" autocomplete="off" placeholder="请输入角色名称" class="layui-input">
+            </div>
         </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label" style="width: 110px"><span style="color: red;">* </span>角色描述：</label>
-        <div class="layui-input-inline" style="width: 430px">
-            <input type="text" name="remark" lay-verify="title" autocomplete="off" placeholder="请输入角色描述" class="layui-input">
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="width: 110px"><span style="color: red;">* </span>角色描述：</label>
+            <div class="layui-input-inline" style="width: 430px">
+                <input type="text" name="remark" lay-verify="title" autocomplete="off" placeholder="请输入角色描述" class="layui-input">
+            </div>
         </div>
-    </div>
-    <%--区分该表单是用于增加还是修改，增加或修改时分别对该属性赋值--%>
-    <input type="hidden" name="roleType" id="roleType">
-    <%--隐藏表单提交按钮--%>
-    <button type="submit" style="display:none;" class="layui-btn" lay-submit lay-filter="roleSubmit">立即提交</button>
-</form>
+        <%--区分该表单是用于增加还是修改，增加或修改时分别对该属性赋值--%>
+        <input type="hidden" name="roleType" id="roleType">
+        <%--隐藏表单提交按钮--%>
+        <button type="submit" style="display:none;" class="layui-btn" lay-submit lay-filter="roleSubmit">立即提交</button>
+    </form>
 
-<%--角色授权弹窗--%>
-<%--<div id="logDetail" style="display:none;">--%>
-<div id="roleControl" class="demo-tree-more" style="display:none;"></div>
-<%--</div>--%>
+    <%--角色授权弹窗--%>
+    <div id="roleControl" class="demo-tree-more" style="display:none;">
+    </div>
 
 <jsp:include page="/jsp/include/footer.jsp"/>
 </div>
@@ -99,7 +98,7 @@
             , drag: false // 关闭拖拽列功能
             , even: true //隔行背景
             , cols: [[ //表头
-                {field: 'roleId', title: '角色编码', unresize: true},
+                {title: '序号', type: 'numbers'},
                 {field: 'roleName', title: '角色名称', unresize: true},
                 {field: 'remark', title: '角色描述', unresize: true},
                 // {field: 'content', title: '创建人', width: 100},
@@ -265,158 +264,12 @@
         //-----------------------角色信息维护------------------ end
 
 
-        //-------------------授权弹出框   start--------------------------------
-        //模拟数据
-        var dataDemo = [{
-            title: '一级1'
-            ,id: 1
-            ,field: 'name1'
-            ,checked: true
-            ,spread: true
-            ,children: [{
-                title: '二级1-1 可允许跳转'
-                ,id: 3
-                ,field: 'name11'
-                ,href: 'https://www.layui.com/'
-                ,children: [{
-                    title: '三级1-1-3'
-                    ,id: 23
-                    ,field: ''
-                    ,children: [{
-                        title: '四级1-1-3-1'
-                        ,id: 24
-                        ,field: ''
-                        ,children: [{
-                            title: '五级1-1-3-1-1'
-                            ,id: 30
-                            ,field: ''
-                        },{
-                            title: '五级1-1-3-1-2'
-                            ,id: 31
-                            ,field: ''
-                        }]
-                    }]
-                },{
-                    title: '三级1-1-1'
-                    ,id: 7
-                    ,field: ''
-                    ,children: [{
-                        title: '四级1-1-1-1 可允许跳转'
-                        ,id: 15
-                        ,field: ''
-                        ,href: 'https://www.layui.com/doc/'
-                    }]
-                },{
-                    title: '三级1-1-2'
-                    ,id: 8
-                    ,field: ''
-                    ,children: [{
-                        title: '四级1-1-2-1'
-                        ,id: 32
-                        ,field: ''
-                    }]
-                }]
-            },{
-                title: '二级1-2'
-                ,id: 4
-                ,spread: true
-                ,children: [{
-                    title: '三级1-2-1'
-                    ,id: 9
-                    ,field: ''
-                    ,disabled: true
-                },{
-                    title: '三级1-2-2'
-                    ,id: 10
-                    ,field: ''
-                }]
-            },{
-                title: '二级1-3'
-                ,id: 20
-                ,field: ''
-                ,children: [{
-                    title: '三级1-3-1'
-                    ,id: 21
-                    ,field: ''
-                },{
-                    title: '三级1-3-2'
-                    ,id: 22
-                    ,field: ''
-                }]
-            }]
-        },{
-            title: '一级2'
-            ,id: 2
-            ,field: ''
-            ,spread: true
-            ,children: [{
-                title: '二级2-1'
-                ,id: 5
-                ,field: ''
-                ,spread: true
-                ,children: [{
-                    title: '三级2-1-1'
-                    ,id: 11
-                    ,field: ''
-                },{
-                    title: '三级2-1-2'
-                    ,id: 12
-                    ,field: ''
-                }]
-            },{
-                title: '二级2-2'
-                ,id: 6
-                ,field: ''
-                ,children: [{
-                    title: '三级2-2-1'
-                    ,id: 13
-                    ,field: ''
-                },{
-                    title: '三级2-2-2'
-                    ,id: 14
-                    ,field: ''
-                    ,disabled: true
-                }]
-            }]
-        },{
-            title: '一级3'
-            ,id: 16
-            ,field: ''
-            ,children: [{
-                title: '二级3-1'
-                ,id: 17
-                ,field: ''
-                ,fixed: true
-                ,children: [{
-                    title: '三级3-1-1'
-                    ,id: 18
-                    ,field: ''
-                },{
-                    title: '三级3-1-2'
-                    ,id: 19
-                    ,field: ''
-                }]
-            },{
-                title: '二级3-2'
-                ,id: 27
-                ,field: ''
-                ,children: [{
-                    title: '三级3-2-1'
-                    ,id: 28
-                    ,field: ''
-                },{
-                    title: '三级3-2-2'
-                    ,id: 29
-                    ,field: ''
-                }]
-            }]
-        }]
-
+        //-------------------授权弹出框   start-------------------------------
         function  control(data,obj) {
             controlRolePopUp=layer.open({
-                title: '角色授权',
+                title: '角色权限配置',
                 type: 1, //页面层
-                area: ['20%', '100%'],
+                area: ['25%', '100%'],
                 offset: 'r',
                 shade: false, //禁止使用遮罩，否则操作不了界面
                 resize:false, //禁止窗体拉伸
@@ -424,29 +277,67 @@
                 btn: ['授权', '取消'],
                 content: $("#roleControl"),
                 success: function(layero, index){
-                    //渲染树结构
-                    tree.render({
-                        elem: '#roleControl'
-                        ,data: dataDemo
-                        ,showCheckbox: true  //是否显示复选框
-                        ,id: 'demoId1'
-                        ,isJump: false //是否允许点击节点时弹出新窗口跳转
-                        ,click: function(obj){
-                            var data = obj.data;  //获取当前点击的节点数据
-                            layer.msg('状态：'+ obj.state + '<br>节点数据：' + JSON.stringify(data));
-                        }
+                    $.ajax({
+                        url: "${ctx}/role/queryPermission",
+                        type: "POST",
+                        data:{"roleId":data.roleId},
+                        success: function(treeData){
+                            //渲染树结构
+                            tree.render({
+                                elem: '#roleControl'
+                                ,data: treeData
+                                ,showCheckbox: true  //是否显示复选框
+                                ,id: 'permissionTree'
+                                ,isJump: false //是否允许点击节点时弹出新窗口跳转
+                                ,showLine:false
+                                // ,click: function(obj){
+                                //     var data = obj.data;  //获取当前点击的节点数据
+                                //     layer.msg('状态：'+ obj.state + '<br>节点数据：' + JSON.stringify(data));
+                                // }
+                            });
+                        },
+                        error:function (data) {}
                     });
                 },
                 //layui树形菜单怎么和java后台交互数据   https://fly.layui.com/jie/43920/
                 yes: function(index, layero){
-                    //将授权结点保存
+                    //获得选中的节点
+                    var checkData = tree.getChecked('permissionTree');
+                    var treeData = {
+                        permissionList : checkData,
+                        roleId:data.roleId
+                    };
+                    treeSubmit(treeData);
                     return false // 开启该代码可禁止点击该按钮关闭
                 },
-                btn2: function(index, layero){
-                    //按钮【按钮二】的回调
-                    //return false 开启该代码可禁止点击该按钮关闭
+                btn2: function(index, layero){ }
+            });
+        }
+
+        function treeSubmit(data){
+            $.ajax({
+                url: "${ctx}/role/rolePermission",
+                type: "POST",
+                data:  JSON.stringify(data),  //如果有list一定要json，不然数据格式不对
+                dataType: "json",
+                contentType: "application/json",
+                success: function(StateType){
+                    if (StateType == 'AuthorizedSuccess') {
+                        layer.msg('授权成功', {
+                            icon: 1,
+                            time: 1000 //2秒关闭（如果不配置，默认是3秒）
+                        }, function(){
+                            table.reload('roleTable');  //刷新表格
+                        });
+                    }else{
+                        layer.msg("授权失败", {icon: 2});
+                    }
+                },
+                error:function (data) {
+                    layer.msg("授权失败", {icon: 2});
                 }
             });
+
         }
 
         //-------------------授权弹出框   end--------------------------------
@@ -461,46 +352,9 @@
             return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可
         });
 
-        //要先加载数据表格，才能导出，不能放在click方法中
-        var rTable = table.render({
-            elem:  '<table id="rTable"></table>'
-            ,url: '${ctx}/role/query'
-            ,page:false
-            ,cols: [[
-                {field: 'roleId', title: '角色编码', unresize: true},
-                {field: 'roleName', title: '角色名称', unresize: true},
-                {field: 'remark', title: '角色描述', unresize: true},
-            ]]
-            ,parseData: function(res){ //res 即为原始返回的数据
-                return {
-                    "code": res.code, //解析接口状态
-                    "msg": res.msg, //解析提示文本
-                    "data": res.data.list //解析数据列表
-                };
-            }
-            ,done: function () {
-                soulTable.render(this);
-            }
-            ,excel:{ // 导出excel配置, （以下值均为默认值）
-                on: true, //是否启用, 默认开启
-                filename: '角色信息表.xlsx', // 文件名
-                head:{ // 表头样式
-                    family: 'Calibri', // 字体
-                    size: 12, // 字号
-                    color: '000000', // 字体颜色
-                    bgColor: 'C7C7C7' // 背景颜色
-                },
-                font: { // 正文样式
-                    family: 'Calibri', // 字体
-                    size: 12, // 字号
-                    color: '000000', // 字体颜色
-                    bgColor: 'FFFFFF' //背景颜色
-                }
-            }
-        });
         //导出
         $('#exportRole').click(function(){
-            soulTable.export(rTable);
+            soulTable.export(myTable);
             layer.closeAll('loading');
         });
     });

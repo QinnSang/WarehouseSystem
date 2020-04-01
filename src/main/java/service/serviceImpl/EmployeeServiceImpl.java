@@ -7,11 +7,10 @@ import mapper.EmployeeMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pojo.Employee;
-import pojo.Location;
 import pojo.Role;
+import secure.util.SecureUtils;
 import service.EmployeeService;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -106,11 +105,12 @@ public class EmployeeServiceImpl implements EmployeeService {
             employee1=employeeMapper.queryByEmail(employee.getEmail());
             if(employee1==null){
                 //todo 发送邮件时把注册时间当做参数传过去，对参数进行签名。验证时与当前时间比较，减少了保存时间的操作。
-//                String pwdMd5= SecureUtils.getMD5(employee.getPassword());
+                String pwdMd5= SecureUtils.getMD5(employee.getPassword());
 //                String validatecode=SecureUtils.getMD5(employee.getEmail());
-//                employee.setPassword(pwdMd5);
+                employee.setSalt(pwdMd5);
 //                employee.setLoginCode(validatecode);
                 employee.setStatus(1);
+                employee.setSex(1);
                 boolean insertFlag=employeeMapper.register(employee)==1?true:false;
                 if(insertFlag){
                     return null;
