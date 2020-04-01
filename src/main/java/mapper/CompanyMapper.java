@@ -10,5 +10,9 @@ import java.util.List;
 public interface CompanyMapper {
     List<Company> query(Company company);
 
-    Company queryById(@Param("companyId") Integer companyId);
+    int addCompany(Company addCompany);
+
+    int updateCompany(Company company);
+
+    int delete(int companyId);
 }
