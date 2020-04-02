@@ -21,7 +21,7 @@
 <body>
 <h2>${ErrorCode}</h2>
 
-<div style=margin-top:150px;margin-left:500px>
+<div style=margin-top:100px;margin-left:500px>
     <div style="padding-bottom: 5px;" >
         <title>仓储物流系统</title>
     </div>
@@ -41,53 +41,41 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">注册账号：</label>
                         <div class="layui-input-inline">
-                            <input type="text" name="loginCode" id="loginCode" required lay-verify="required"
+                            <input type="text" name="loginCode" id="loginCode"  lay-verify="required"
                                    placeholder="仅中、英文字母、数字和下划线" autocomplete="off"
                                    class="layui-input"  style="width: 250px">
                         </div>
                     </div>
-
-                    <%--                    <div class="layui-form-item">--%>
-                    <%--                        <label class="layui-form-label">验证邮箱：</label>--%>
-                    <%--                        <div class="layui-input-inline">--%>
-                    <%--                            <input type="text" name="email" id="email" required lay-verify="required"--%>
-                    <%--                                   autocomplete="off" class="layui-input" style="width: 300px" >--%>
-                    <%--                        </div>--%>
-                    <%--                    </div>--%>
-
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">验证邮箱：</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="email" id="email"  lay-verify="required" placeholder="请输入邮箱"
+                                   autocomplete="off" class="layui-input" style="width: 250px" >
+                        </div>
+                    </div>
                     <div class="layui-form-item">
                         <label class="layui-form-label">密码：</label>
                         <div class="layui-input-block">
-                            <input type="password" name="password"  id="password" required lay-verify="required"
+                            <input type="password" name="password"  id="password"  lay-verify="required"
                                    placeholder="6~16个字符，区分大小写" autocomplete="off"
                                    class="layui-input" style="width: 250px">
                         </div>
                     </div>
-
                     <div class="layui-form-item">
                         <label class="layui-form-label">确认密码：</label>
                         <div class="layui-input-block">
-                            <input type="password" name="devRePassword" id="devRePassword" required lay-verify="required"
+                            <input type="password" name="devRePassword" id="devRePassword"  lay-verify="required"
                                    placeholder="确认密码" autocomplete="off"
                                    class="layui-input" style="width: 250px">
                         </div>
                     </div>
-                    <%--                    <div class="layui-input-inline" style="margin-left: 0">--%>
-                    <%--                        <input name="verCode" ng-model="captcha" type="text" id="verCode" placeholder="验证码">--%>
-                    <%--                        <div class="code-image">--%>
-                    <%--                            &lt;%&ndash;src为requestMapping的路径&ndash;%&gt;--%>
-                    <%--                            <img id="captchaImage" src="${ctx}/dev/captcha/false" width="130px" height="48px"  alt="验证码"/>--%>
-                    <%--                            <a id="changeImage" href="#">看不清?换一张</a>--%>
-                    <%--                        </div>--%>
-                    <%--                    </div>--%>
-
                 </div>
                 <div class="layui-input-block" style="padding-bottom: 8px">
                     <button type="submit" class="layui-btn" style="width: 160px" lay-submit="" lay-filter="demo1">注册</button>
-                    <a href="${ctx}/index.jsp">已有账号？请登录</a>
+                    <a href="${ctx}/employee/toLogin">已有账号？请登录</a>
                 </div>
                 <div id="error-box" class="layui-input-block" style="padding-bottom: 8px">
-                    <lable id="error-info"/>
+                    <lable id="error-info" style="color: red"/>
                 </div>
             </form>
         </div>
@@ -106,7 +94,6 @@
 <%--注册失败的原因--%>
 <c:if test="${not empty stateType}">
     <script>
-        alert(222);
         <%--在script中引用model里的值，要加上''--%>
         $('#error-info').text('${stateType.value}');
         $('#error-info').show();

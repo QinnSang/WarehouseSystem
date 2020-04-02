@@ -79,6 +79,10 @@
         delete from role_permission where role_id =#{roleId}
     </delete>
 
+    <delete id="delEmployeeRole" parameterType="integer">
+        delete from employee_role where  role_id =#{roleId}
+    </delete>
+
     <insert id="addRolePermission" parameterType="pojo.Role">
         insert into role_permission (role_id, permission_id)
         values

@@ -49,6 +49,10 @@ public class RoleServiceImpl implements RoleService{
 
     @Override
     public StateType delRole(int roleId) {
+        //删除对应角色权限关系
+        roleMapper.delRolePermission(roleId);
+        //删除对应用户角色关系
+        roleMapper.delEmployeeRole(roleId);
         int delRow=roleMapper.delRole(roleId);
         if(delRow==1)
             return StateType.getStateType(24);

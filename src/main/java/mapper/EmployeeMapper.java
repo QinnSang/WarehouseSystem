@@ -10,7 +10,7 @@ import java.util.List;
 
 @Mapper
 public interface EmployeeMapper {
-    List<Employee> queryByNameAndPwd(Employee employee);
+    List<Employee> queryByCode(Employee employee);
 
    List<Employee>query(Employee employee);
 
@@ -32,5 +32,4 @@ public interface EmployeeMapper {
 
     Employee queryByEmail(String email);
 
-    int register(Employee employee);
 }

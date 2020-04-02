@@ -25,4 +25,6 @@ public interface RoleMapper {
     int addRolePermission(Role role);
 
     List<Permission> queryPermissionByRole(Integer roleId);
+
+    int delEmployeeRole(int roleId);
 }

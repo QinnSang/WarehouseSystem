@@ -39,9 +39,9 @@
     <div class="layui-side-scroll">
         <ul class="layui-nav layui-nav-tree arrow2" id="navList" lay-accordion="true" lay-filter="admin-side-nav"
             style="margin-top: 15px;">
-            <li class="layui-nav-item layui-nav-itemed">
-                <a class="" href="${ctx}/index/index" >首页</a>
-            </li>
+            <%--<li class="layui-nav-item layui-nav-itemed">--%>
+                <%--<a class="" href="${ctx}/index/index" >首页</a>--%>
+            <%--</li>--%>
             <li class="layui-nav-item layui-nav-itemed">
                 <a href="${ctx}/contract/index" >合同管理</a>
             </li>

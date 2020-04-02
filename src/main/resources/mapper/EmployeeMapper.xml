@@ -26,14 +26,11 @@
         </collection>
     </resultMap>
 
-    <select id="queryByNameAndPwd" parameterType="pojo.Employee" resultType="pojo.Employee">
+    <select id="queryByCode" parameterType="pojo.Employee" resultType="pojo.Employee">
         select * from employee
         <where>
             <if test="loginCode!=null and loginCode!=''">
                 and login_code=#{loginCode}
-            </if>
-            <if test="password!=null and password!=''">
-                and password=#{password}
             </if>
                 and status!=2
         </where>
@@ -106,6 +103,9 @@
             <if test="realName!=null and realName!=''">
                 ,real_name
             </if>
+            <if test="salt!=null and salt!=''">
+                ,salt
+            </if>
             <if test="phone!=null and phone!=''">
                 ,phone
             </if>
@@ -130,6 +130,9 @@
             <if test="realName!=null and realName!=''">
                 ,#{realName}
             </if>
+            <if test="salt!=null and salt!=''">
+                ,#{salt}
+            </if>
             <if test="phone!=null and phone!=''">
                 ,#{phone}
             </if>
@@ -145,7 +148,9 @@
             <if test="email!=null and email!=''">
                 ,#{email}
             </if>
-                ,1
+            <if test="email!=null and email!=''">
+                ,#{status}
+            </if>
         </trim>
     </insert>
 
@@ -215,9 +220,4 @@
           remark
         from role
     </select>
-
-    <insert id="register" parameterType="pojo.Employee">
-        insert into employee (login_code, password,salt,sex,status)
-        values(#{loginCode},#{password},#{salt},#{sex},#{status})
-    </insert>
 </mapper>

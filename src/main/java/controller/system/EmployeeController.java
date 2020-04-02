@@ -58,23 +58,13 @@ public class EmployeeController {
             stateType= (StateType) map.get("StateType");
             if(stateType==null){
                 session.setAttribute("employee",employee);
-                return "redirect:/index/index";
+                return "redirect:/contract/index";
             }
         }
         model.addAttribute("stateType",stateType);
 //        return "redirect:/";  //因为登录错误而需要返回页面提示消息，所以不能使用redirect，否则取不到stateType
         return "system/employee/login";
     }
-
-    //验证码
-//    @RequestMapping("/captcha/{flag}")
-//    public void captcha(HttpServletRequest request, HttpServletResponse response, @PathVariable("flag")boolean flag) throws Exception {
-//        //刷新验证码
-//        if(flag){
-//            CaptchaUtil.clear(request);  // 清除session中的验证码
-//        }
-//        CaptchaUtil.out(request, response);
-//    }
 
     @RequestMapping("/toRegister")
     public String toRegister(){

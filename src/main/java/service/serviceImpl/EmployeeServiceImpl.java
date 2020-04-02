@@ -8,9 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pojo.Employee;
 import pojo.Role;
-import secure.util.SecureUtils;
+import secure.Md5Salt;
 import service.EmployeeService;
 
+import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,14 +23,60 @@ public class EmployeeServiceImpl implements EmployeeService {
     EmployeeMapper employeeMapper;
 
     @Override
+    public StateType register(Employee employee)  {
+        Map<String, Object> map=new HashMap<>();
+        Employee employee1=employeeMapper.queryByName(employee.getLoginCode());
+        if(employee1==null){
+            employee1=employeeMapper.queryByEmail(employee.getEmail());
+            if(employee1==null){
+                Md5Salt md5Salt=new Md5Salt();
+                String pwd=employee.getPassword();
+                byte[] salt= new byte[0];
+                try {
+                    salt = md5Salt.getSalt(employee.getEmail()); //将邮箱当做初始盐，并将其转化为盐
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                String pwdMd5 = md5Salt.getSecurePassword(pwd, salt);  //对密码进行加密
+                employee.setPassword(pwdMd5);
+                employee.setSalt(new String(salt, Charset.forName("ISO-8859-1")));
+                employee.setStatus(1);
+                employee.setSex(1);
+                boolean insertFlag=employeeMapper.addEmployee(employee)==1?true:false;
+                if(insertFlag){
+                    return null;
+                }else{
+                    //注册失败
+                    return  StateType.getStateType(13);
+                }
+            }else{
+                //邮箱已被注册
+                return  StateType.getStateType(12);
+            }
+        }else{
+            //账号已被注册
+            return  StateType.getStateType(11);
+        }
+    }
+
+    @Override
     public Map<String, Object> login(Employee employee) {
-        List<Employee> employees = employeeMapper.queryByNameAndPwd(employee);
+        List<Employee> employees = employeeMapper.queryByCode(employee);
         Map<String,Object> map=new HashMap<>();
         if(employees!=null && employees.size()==1){
-            map.put("StateType",null);
-            map.put("employee",employees.get(0));
+            //验证密码是否一致
+            Employee employee1 = employees.get(0);
+            byte[] salt= employee1.getSalt().getBytes(Charset.forName("ISO-8859-1"));
+            String pwd=employee.getPassword();
+            Md5Salt md5Salt=new Md5Salt();
+            String pwdMd5 = md5Salt.getSecurePassword(pwd, salt);  //对密码进行加密
+            if(pwdMd5.equals(employee1.getPassword()) ){
+                map.put("StateType",null);
+                map.put("employee",employees.get(0));
+            }
+            else map.put("StateType", StateType.getStateType(17));
         }else{
-            map.put("StateType", StateType.getStateType(14));
+            map.put("StateType", StateType.getStateType(17));
         }
         return map;
     }
@@ -46,16 +93,33 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public StateType addEmployee(Employee employee) {
-        int addRow1=employeeMapper.addEmployee(employee);
-        //如果添加成功
-        if(addRow1==1)
-            return  StateType.getStateType(22);
+        Employee employee1=employeeMapper.queryByName(employee.getLoginCode());
+        if(employee1==null){
+            Md5Salt md5Salt=new Md5Salt();
+            String pwd=employee.getPassword();
+            byte[] salt= new byte[0];
+            try {
+                salt = md5Salt.getSalt(employee.getEmail()); //将邮箱当做初始盐，并将其转化为盐
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            String pwdMd5 = md5Salt.getSecurePassword(pwd, salt);  //对密码进行加密
+            employee.setPassword(pwdMd5);
+            employee.setSalt(new String(salt, Charset.forName("ISO-8859-1")));
+            employee.setStatus(1);
+            if(employee.getSex() == null)
+                employee.setSex(1);
+            int addRow1=employeeMapper.addEmployee(employee);
+            if(addRow1 == 1)
+                return  StateType.getStateType(22);
+            return  StateType.getStateType(23);
+        }
+
         return  StateType.getStateType(23);
     }
 
     @Override
     public StateType updateEmployee(Employee employee) {
-
         int updateRow1=employeeMapper.updateEmployee(employee);
         //如果修改用户信息成功
         if(updateRow1==1)
@@ -65,6 +129,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public StateType delEmployee(int employeeId) {
+        employeeMapper.delRoleByEmployee(employeeId);
         int delRow=employeeMapper.delEmployee(employeeId);
         if(delRow==1)
             return StateType.getStateType(24);
@@ -96,37 +161,4 @@ public class EmployeeServiceImpl implements EmployeeService {
         PageInfo<Role> pageInfo=new PageInfo<>(list);
         return pageInfo;
     }
-
-    @Override
-    public StateType register(Employee employee) {
-        Map<String, Object> map=new HashMap<>();
-        Employee employee1=employeeMapper.queryByName(employee.getLoginCode());
-        if(employee1==null){
-            employee1=employeeMapper.queryByEmail(employee.getEmail());
-            if(employee1==null){
-                //todo 发送邮件时把注册时间当做参数传过去，对参数进行签名。验证时与当前时间比较，减少了保存时间的操作。
-                String pwdMd5= SecureUtils.getMD5(employee.getPassword());
-//                String validatecode=SecureUtils.getMD5(employee.getEmail());
-                employee.setSalt(pwdMd5);
-//                employee.setLoginCode(validatecode);
-                employee.setStatus(1);
-                employee.setSex(1);
-                boolean insertFlag=employeeMapper.register(employee)==1?true:false;
-                if(insertFlag){
-                    return null;
-                }else{
-                    //注册失败
-                    return  StateType.getStateType(13);
-                }
-            }else{
-                //邮箱已被注册
-                return  StateType.getStateType(12);
-            }
-        }else{
-            //账号已被注册
-            return  StateType.getStateType(11);
-        }
-    }
-
-
 }

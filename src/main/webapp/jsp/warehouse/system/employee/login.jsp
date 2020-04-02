@@ -9,7 +9,7 @@
     <style>
         body{
             background-color: #009E94;
-            background-image:url("${ctx}/static/plugins/layui/images/login.gif");
+            background-image:url("${ctx}/static/login.gif");
             background-size: cover;
         }
     </style>

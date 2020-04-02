@@ -77,7 +77,11 @@
             <mvc:mapping path="/**"/>
             <mvc:exclude-mapping path="/employee/toLogin"/>
             <mvc:exclude-mapping path="/employee/login"/>
+            <mvc:exclude-mapping path="/employee/toRegister"/>
+            <mvc:exclude-mapping path="/employee/register"/>
+            <mvc:exclude-mapping path="/employee/forgetPwd"/>
             <mvc:exclude-mapping path="/employee/captcha/**"/>
+            <mvc:exclude-mapping path="/static/**"/>
             <!--<mvc:exclude-mapping path="/dev/captcha/false"/>-->
             <bean class="interceptor.UserInterceptor"/>
         </mvc:interceptor>
