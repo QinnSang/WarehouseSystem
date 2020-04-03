@@ -10,17 +10,30 @@
         <association property="createByUser" javaType="pojo.Employee">
             <result property="realName" column="typeCreateBy"/>
         </association>
-        <collection property="goodsNameList" ofType="pojo.Goods">
-            <id property="goodsId" column="nameId"/>
-            <result property="goodsName" column="goodsName"/>
-            <result property="goodsCode" column="nameCode"/>
-            <result property="createTime" column="nameCreateTime"/>
-            <result property="parentId" column="nameTypeId"/>
-            <association property="createByUser" javaType="pojo.Employee">
-                <result property="realName" column="nameCreateBy"/>
-            </association>
+        <collection property="goodsNameList" ofType="pojo.Goods" javaType="java.util.List"
+                    select="goodsNameList" column="{typeId=typeId,goodsName=goodsName}">
         </collection>
     </resultMap>
+
+    <resultMap id="goodsNameListMap" type="pojo.Goods">
+        <id property="goodsId" column="nameId"/>
+        <result property="goodsName" column="goodsName"/>
+        <result property="goodsCode" column="nameCode"/>
+        <result property="createTime" column="nameCreateTime"/>
+        <result property="parentId" column="nameTypeId"/>
+    </resultMap>
+
+    <select id="goodsNameList" parameterType="java.util.Map" resultMap="goodsNameListMap">
+        select
+            t2.goods_id as nameId,
+            t2.goods_name as goodsName,
+            t2.goods_code as nameCode,
+            t2.parent_id as nameTypeId,
+            t2.create_time as nameCreateTime
+        from goods t2
+        where t2.parent_id = #{typeId} and  t2.goods_name like #{goodsName}
+        order by t2.create_time desc
+    </select>
 
     <select id="queryGoodTypeName" parameterType="dto.GoodTypeNameDto" resultMap="goodsTableBase">
         <if test="typeName!=null and typeName!=''">
@@ -35,26 +48,23 @@
             t1.goods_code as typeCode,
             t3.real_name as typeCreateBy,
             t1.create_time as typeCreateTime,
-            t2.goods_id as nameId,
-            t2.goods_name as goodsName,
-            t2.goods_code as nameCode,
-            t2.parent_id as nameTypeId,
-            t4.real_name as nameCreateBy,
-            t2.create_time as nameCreateTime
+        case when (ISNULL('${goodName}')=1) || (LENGTH(trim('${goodName}'))=0) then '%%' else  '%${goodName}%' end as goodsName
         from goods t1
-        LEFT JOIN goods t2 ON t2.parent_id = t1.goods_id
         LEFT JOIN employee t3 ON t1.created_by = t3.employee_id
-        LEFT JOIN employee t4 ON t2.created_by = t4.employee_id
         <where>
             t1.classify = 1
             <if test="typeName!=null and typeName!=''">
                 and t1.goods_name like #{typename}
             </if>
             <if test="goodName!=null and goodName!=''">
-                and t2.goods_name like #{goodname}
+                and (select count(1) from goods t2
+                where
+                  t1.goods_id = t2.parent_id
+                  and t2.classify = 2
+                  and t2.goods_name like #{goodname})
             </if>
         </where>
-            order by t1.create_time desc,t2.create_time desc
+            order by t1.create_time desc
         </select>
 
     <select id="queryAllGoodsType" resultType="pojo.Goods">

@@ -37,7 +37,7 @@ public class Contract {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createDate;
 
-    private String annexid;
+    private String fileUrl;
 
     private Integer status;
 
@@ -127,12 +127,12 @@ public class Contract {
         this.createDate = createDate;
     }
 
-    public String getAnnexid() {
-        return annexid;
+    public String getFileUrl() {
+        return fileUrl;
     }
 
-    public void setAnnexid(String annexid) {
-        this.annexid = annexid == null ? null : annexid.trim();
+    public void setFileUrl(String fileUrl) {
+        this.fileUrl = fileUrl;
     }
 
     public Integer getStatus() {

@@ -555,8 +555,8 @@
         form.on('submit(search)', function (data) {
             table.reload('employeeTable', {
                 url: '${ctx}/employee/query',
-                where: data.field //后台直接用实体接收，
-                                  // 如果是单个属性，可以以这种方式获取和传输：softwareName=data.field.softwareName
+                where: data.field,
+                method:'post'
             });
             return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可
         });

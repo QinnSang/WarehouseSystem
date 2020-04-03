@@ -13,6 +13,7 @@
         <result property="createDate" column="create_date"/>
         <result property="remark" column="remark"/>
         <result property="status" column="status"/>
+        <result property="fileUrl" column="file_url"/>
         <association property="company" javaType="pojo.Company">
             <id property="companyId" column="company_id"/>
             <result property="companyName" column="company_name"/>
@@ -49,6 +50,7 @@
             content,
             create_by,
             create_date,
+            file_url,
             t1.status,
             t1.remark,
             t2.company_id ,
@@ -146,6 +148,9 @@
             <if test="remark!=null and remark!=''">
                 ,remark
             </if>
+            <if test="fileUrl!=null and fileUrl!=''">
+                ,file_url
+            </if>
             <if test="createBy!=null">
                 ,create_By
             </if>
@@ -180,6 +185,9 @@
             <if test="remark!=null and remark!=''">
                 ,#{remark}
             </if>
+            <if test="fileUrl!=null and fileUrl!=''">
+                ,#{fileUrl}
+            </if>
             <if test="createBy!=null">
                 ,#{createBy}
             </if>
@@ -213,6 +221,9 @@
             </if>
             <if test="remark!=null and remark!=''">
                 remark=#{remark},
+            </if>
+            <if test="fileUrl!=null and fileUrl!=''">
+                file_url = #{fileUrl},
             </if>
             <if test="status!=null">
                 status=#{status},

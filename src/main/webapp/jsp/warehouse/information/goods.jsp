@@ -123,7 +123,7 @@
             ,page: { //开启分页,需要配合后台PageInfo进行分页
                 first: '首页'
                 ,last: '尾页'
-                ,layout: ['prev', 'page', 'next', 'skip']
+                ,layout: ['count','prev', 'page', 'next', 'skip']
                 ,limit:10  //每页显示的条数
                 ,curr:1 //起始页
             }
@@ -136,9 +136,9 @@
                             }
                             ,drag: false // 关闭拖拽列功能
                             ,cols: [[
-                                {field: 'goodsName', title: '货物名称', fixed: 'left',width: 440,unresize: true},
-                                {field: 'goodsCode', title: '货物编码', width: 450,unresize: true},
-                                {title: '操作', width: 180, templet: '#childBar',fixed: 'right',unresize: true}
+                                {field: 'goodsName', title: '货物名称', fixed: 'left',width: 450,unresize: true},
+                                {field: 'goodsCode', title: '货物编码', width: 440,unresize: true},
+                                {title: '操作', width: 200, templet: '#childBar',fixed: 'right',unresize: true}
                             ]],
                             filter: { bottom: false  }, //关闭底部编辑筛选按钮
                             //行事件监听
@@ -154,9 +154,9 @@
                             }
                         }
                     ]},
-                {field: 'goodsName', title: '货物类型', width: 400,unresize: true},
-                {field: 'goodsCode', title: '货物类型编码', width: 450,unresize: true},
-                {fixed: 'right',title: '操作', width: 270, templet: '#barDemo',unresize: true}
+                {field: 'goodsName', title: '货物类型', width: 420,unresize: true},
+                {field: 'goodsCode', title: '货物类型编码', width: 390,unresize: true},
+                {title: '操作', width: 300, templet: '#barDemo',unresize: true}
             ]]
             ,done: function () {
                 soulTable.render(this)
@@ -359,9 +359,9 @@
         //修改货物名称信息弹窗
         function  EidtGoodsName(data) {
             updateGoodsNamePopUp=layer.open({
-                title: '修改货物类型',
+                title: '修改货物名称',
                 type: 1, //页面层
-                area: ['600px', '300px'],
+                area: ['600px', '350px'],
                 shade: false, //禁止使用遮罩，否则操作不了界面
                 resize:false, //禁止窗体拉伸
                 skin: 'layui-layer-molv',
@@ -459,7 +459,8 @@
         form.on('submit(search)', function (data) {
             table.reload('goodsTypeTable', {
                 url: '${ctx}/goods/queryGoodTypeName',
-                where: data.field
+                where: data.field,
+                method:'post'
             });
             return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可
         });

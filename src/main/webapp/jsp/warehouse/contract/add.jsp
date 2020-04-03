@@ -4,6 +4,11 @@
 <head>
     <title>仓储物流系统</title>
     <link rel="stylesheet" href="${ctx}/static/plugins/layui/css/layui.css">
+    <style>
+        .layui-upload-img{width: 130px; height: 100px;}
+        .layui-table img{width:56%;}
+        #img_prev {max-width:98%; max-height:98%; margin: 10px auto}
+    </style>
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
@@ -50,19 +55,21 @@
                  <div class="layui-form-item">
                      <label class="layui-form-label ">合同简介：</label>
                      <div class="layui-input-inline">
-                         <textarea name="content" style = "width:500px;" placeholder="请输入"  class="layui-textarea"></textarea>
+                         <textarea name="content" style = "width:400px;" placeholder="请输入"  class="layui-textarea"></textarea>
                      </div>
-                     <label class="layui-form-label" style = "left:310px">备注：</label>
+                     <label class="layui-form-label" style = "left:200px">备注：</label>
                      <div class="layui-input-inline">
-                         <textarea name="remark" style = "left:310px;width:190px;" placeholder="请输入"  class="layui-textarea"></textarea>
+                         <textarea name="remark" style = "left:200px;width:300px;" placeholder="请输入"  class="layui-textarea"></textarea>
                      </div>
                  </div>
                 <div class="layui-form-item">
                     <input type="hidden" name="fileUrl">
-                    <input type="hidden" name="filename">
                     <label class="layui-form-label" style = "left:15px">合同附件：</label>
                     <div class="layui-input-inline">
                         <button type="button" class="layui-btn" id="chooseFile"><i class="layui-icon"></i>上传</button>
+                    </div>
+                    <div class="layui-input-inline">
+                        <img class="layui-upload-img" id="locationImage">
                     </div>
                 </div>
 
@@ -122,10 +129,11 @@
     };
 
     //JavaScript代码区域
-    layui.use(['element','laydate','jquery', 'table', 'layer'], function(){
+    layui.use(['element','laydate','jquery', 'table', 'layer','upload'], function(){
         var element = layui.element;
         var laydate = layui.laydate;
         var $ = layui.$, table = layui.table, form = layui.form, layer = layui.layer;
+        var upload = layui.upload;  //得到 upload 对象
 
         //执行一个laydate实例,用于渲染日期
         laydate.render({
@@ -136,6 +144,40 @@
             elem: '#startEndDate'
             ,range: true
         });
+
+        document.getElementById('locationImage').style.display = "none";
+
+        //创建一个上传组件 ,只能渲染一次
+        upload.render({ //允许上传的文件后缀
+            elem: '#chooseFile'
+            ,url: '${ctx}/file/uploadOneFile'
+            ,accept: 'images' //图片
+            ,acceptMime: 'image/*'
+            ,before: function(obj){
+                //预读本地文件示例，不支持ie8
+                obj.preview(function(index, file, result){
+                    $('#locationImage').attr('src', result); //图片链接（base64）
+                });
+            }
+            ,done: function(result){ //上传完毕回调
+                //假设code=0代表上传成功
+                if(result.code == 0){
+                    //将存储路径和显示文件名保存到表单的隐藏域中
+                    $('input[name=fileUrl]').val(result.fileUrl);
+                    document.getElementById('locationImage').style.display = "block";
+                }else
+                    return layer.msg('上传失败');
+            }
+            ,error: function(result){
+                //演示失败状态，并实现重传
+                var demoText = $('#demoText');
+                demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+                demoText.find('.demo-reload').on('click', function(){
+                    uploadInst.upload();
+                });
+            }
+        });
+
 
         //===================根据选择公司自动填充公司代表和联系电话 start===================
         form.on('select(companyId)',function () {

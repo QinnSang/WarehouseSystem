@@ -13,14 +13,31 @@
             <id property="employeeId" column="employee_id"/>
             <result property="realName" column="real_name"/>
         </association>
-        <collection property="locationList" ofType="pojo.Location">
-            <id property="locationId" column="location_id"/>
-            <result property="locationName" column="location_name"/>
-            <result property="locationArea" column="location_area"/>
-            <result property="fileUrl" column="file_url"/>
-            <result property="warehouseId" column="locaWarehousId"/>
+        <collection property="locationList" ofType="pojo.Location" javaType="java.util.List"
+                    select="locationList" column="{warehouseId=warehouse_id,locationName=locationName}">
+
         </collection>
     </resultMap>
+
+    <resultMap id="locationListBase" type="pojo.Location">
+        <id property="locationId" column="location_id"/>
+        <result property="locationName" column="location_name"/>
+        <result property="locationArea" column="location_area"/>
+        <result property="fileUrl" column="file_url"/>
+        <result property="warehouseId" column="localWarehousId"/>
+    </resultMap>
+
+    <select id="locationList" resultMap="locationListBase">
+        select
+            t2.location_id,
+            t2.location_name,
+            t2.location_area,
+            t2.file_url,
+            t2.warehouse_id as localWarehousId
+        from location t2
+        where t2.warehouse_id =#{warehouseId} and location_name like #{locationName}
+        order by t2.create_time desc
+    </select>
 
     <select id="queryWarehouseLocation" parameterType="dto.WarehouseLocationDto" resultMap="warehouseBase">
         <if test="warehouseName!=null and warehouseName!=''">
@@ -36,25 +53,23 @@
             warehouse_phone,
             warehouse_location,
             t1.remark,
-            t2.location_id,
-            t2.location_name,
-            t2.location_area,
-            t2.file_url,
-            t2.warehouse_id as locaWarehousId,
             t3.employee_id,
-            t3.real_name
+            t3.real_name,
+        case when (ISNULL('${locationName}')=1) || (LENGTH(trim('${locationName}'))=0) then '%%' else  '%${locationName}%' end as locationName
         from warehouse t1
-        LEFT JOIN location t2 ON t1.warehouse_id = t2.warehouse_id
         LEFT JOIN employee t3 ON t1.create_by = t3.employee_id
         <where>
             <if test="warehouseName!=null and warehouseName!=''">
                 and warehouse_name like #{warehousename}
             </if>
             <if test="locationName!=null and locationName!=''">
-                and location_name like #{locationname}
+                and (select count(1) from location t2
+                where
+                t1.warehouse_id = t2.warehouse_id
+                and location_name like #{locationname})
             </if>
         </where>
-            order by t1.create_time desc,t2.create_time desc
+            order by t1.create_time desc
         </select>
 
     <select id="queryAllWarehouse" resultType="pojo.Warehouse">

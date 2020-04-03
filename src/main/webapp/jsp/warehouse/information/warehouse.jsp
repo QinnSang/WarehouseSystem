@@ -54,7 +54,7 @@
                     <img src="{{d.fileUrl || ''}}">
                 </script>
                 <script type="text/html" id="childBar">
-                    <a class="layui-btn layui-btn-xs" lay-event="image">查看图片</a>
+                    <%--<a class="layui-btn layui-btn-xs" lay-event="detail">查看</a>--%>
                     <a class="layui-btn layui-btn-xs" lay-event="childEdit">编辑</a>
                     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="childDel">删除</a>
                 </script>
@@ -165,7 +165,7 @@
             ,page: { //开启分页,需要配合后台PageInfo进行分页
                 first: '首页'
                 ,last: '尾页'
-                ,layout: ['prev', 'page', 'next', 'skip']
+                ,layout: ['count','prev', 'page', 'next', 'skip']
                 ,limit:10  //每页显示的条数
                 ,curr:1 //起始页
             }
@@ -200,12 +200,12 @@
                     ]},
                 {field: 'warehouseName', title: '仓库名称',width: 200,unresize: true},
                 {field: 'warehouseCode', title: '仓库编号', width: 140,unresize: true},
-                {field: 'warehousePhone', title: '联系电话', width: 200 ,unresize: true},
-                {field: 'warehouseLocation', title: '仓库位置', width: 250,unresize: true},
-                {field: 'remark', title: '备注', width: 130,unresize: true},
-                {field: 'createBy', title: '创建人',hide:true,templet:'<div>{{d.createByUser.realName}}</div>'},
+                {field: 'warehousePhone', title: '联系电话', width: 160 ,unresize: true},
+                {field: 'warehouseLocation', title: '仓库位置', width: 130,unresize: true},
+                {field: 'remark', title: '备注', width: 280,unresize: true},
+                // {field: 'createBy', title: '创建人',hide:true,templet:'<div>{{d.createByUser.realName}}</div>'},
                 {field: 'createTime', title: '创建时间',hide:true},
-                {title: '操作', width: 200, templet: '#barDemo',unresize: true}
+                {title: '操作', width: 180, templet: '#barDemo',unresize: true}
             ]]
             ,parseData: function(res){ //res 即为原始返回的数据
                 return {
@@ -313,7 +313,6 @@
 
         //新增、修改仓库信息提交
         form.on('submit(warehouseSubmit)', function(data){
-            // console.log(data.field) //当前容器的全部表单字段，名值对形式：{name: value}
             $.ajax({
                 url: '${ctx}/warehouse/warehouseInfo',
                 type: 'POST',
@@ -386,9 +385,8 @@
 
         //-----------------------库位信息维护------------------ start
 
-        //创建一个上传组件
-        function uploadFile(){
-            upload.render({ //允许上传的文件后缀
+        //创建一个上传组件 ,只能渲染一次
+        upload.render({ //允许上传的文件后缀
                 elem: '#chooseFile'
                 ,url: '${ctx}/file/uploadOneFile'
                 ,accept: 'images' //图片
@@ -417,7 +415,6 @@
                     });
                 }
             });
-        }
 
         //新增库位信息弹窗
         $('#popLocationForm').click(function(){
@@ -436,7 +433,6 @@
                     $('#locationForm')[0].reset();
                     $('#locationType').val("insert");
                     document.getElementById('locationImage').style.display = "none";
-                    uploadFile();
                 },
                 yes: function(index, layero){  //添加仓库表单监听事件
                     layero.find('form').find('button[lay-submit]').click();//此处代码即为触发表单提交按钮
@@ -467,7 +463,7 @@
                         "locationArea":data.locationArea,
                         "locationType":"update"
                     });
-                    $('#locationImage').attr('src', data.fireUrl); //图片链接（base64）
+                    $('#locationImage').attr('src', data.fileUrl); //图片链接（base64）
                     document.getElementById('locationImage').style.display = "block";
                 },
                 yes: function(index, layero){  //添加仓库表单监听事件
@@ -490,6 +486,7 @@
                             icon: 1,
                             time: 1000
                         }, function(){
+                            $('input[name=fileUrl]').val("");
                             layer.close(addlocationPopUp) ;//执行关闭
                             table.reload('warehouseTable');
                         });
@@ -500,6 +497,7 @@
                             icon: 1,
                             time: 1000
                         }, function(){
+                            $('input[name=fileUrl]').val("");
                             layer.close(updatelocationPopUp) ;//执行关闭
                             table.reload('warehouseTable');
                         });
@@ -561,8 +559,8 @@
         form.on('submit(search)', function (data) {
             table.reload('warehouseTable', {
                 url: '${ctx}/warehouse/queryWarehouseLocation',
-                where: data.field //后台直接用实体接收，
-                                  // 如果是单个属性，可以以这种方式获取和传输：softwareName=data.field.softwareName
+                where: data.field ,
+                method:'post'
             });
             return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可
         });
@@ -584,7 +582,7 @@
                     {field: 'locationName', title: '库位名称', width: 200},
                     {field: 'locationArea', title: '库位面积(m²)', width: 200},
                     {field: 'warehouseName', title: '所属仓库', width: 200,templet:'<div>{{d.warehouse.warehouseName}}</div>'},
-                    {field: 'createBy', title: '创建人', width: 200,templet:'<div>{{d.createByUser.realName}}</div>'},
+                    // {field: 'createBy', title: '创建人', width: 200,templet:'<div>{{d.createByUser.realName}}</div>'},
                     {field: 'createTime', title: '创建时间', width: 200}
                 ]]
                 ,parseData: function(res){ //res 即为原始返回的数据
