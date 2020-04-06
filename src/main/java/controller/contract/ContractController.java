@@ -60,7 +60,7 @@ public class ContractController {
     //将重复查询的信息封装成方法
     public void containsInformation(Model model) {
         //获取公司
-        List<Company> companies=companyService.query(new Company()).getList();
+        List<Company> companies=companyService.query(new Company(),null,null).getList();
         //获取费用
         List<DataDictionary> expenses=contractExpenseService.queryAllExpense();
 //        JsonArray expenseList = JSONArray(JSON.toJSONString(expenses));
@@ -101,6 +101,12 @@ public class ContractController {
     public StateType update(@RequestBody Contract contract){
         StateType stateType=contractService.update(contract);
         return stateType;
+    }
+
+    @RequestMapping("/del")
+    @ResponseBody
+    public StateType del(@RequestParam int contractId){
+        return contractService.del(contractId);
     }
 
     @RequestMapping("/invalid/{contractId}")

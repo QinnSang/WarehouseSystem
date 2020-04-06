@@ -26,11 +26,11 @@
                     </div>
                     <label class="layui-form-label"><span style="color: red;">* </span>签订日期：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="signDate"  id="signDate" lay-verify="required" class="layui-input "  placeholder="请选择">
+                        <input type="text" name="signDate"  id="signDate" lay-verify="required" class="layui-input "  placeholder="请选择" autocomplete="off">
                     </div>
                     <label class="layui-form-label"><span style="color: red;">* </span>起止日期：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="startEndDate" id="startEndDate" lay-verify="required" class="layui-input"  placeholder="开始日期-结束日期">
+                        <input type="text" name="startEndDate" id="startEndDate" lay-verify="required" class="layui-input"  placeholder="开始日期-结束日期" autocomplete="off">
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -67,12 +67,15 @@
                     <label class="layui-form-label" style = "left:15px">合同附件：</label>
                     <div class="layui-input-inline">
                         <button type="button" class="layui-btn" id="chooseFile"><i class="layui-icon"></i>上传</button>
-                    </div>
-                    <div class="layui-input-inline">
-                        <img class="layui-upload-img" id="locationImage">
-                    </div>
-                </div>
+                        <div id="test" style="display:none;">
+                            <div class="layui-progress" lay-showPercent="yes" lay-filter="demo" style="width: 150px">
+                                <div class="layui-progress-bar layui-bg-red" ></div>
+                            </div>
+                        </div>
+                        <label  name="fileName" id="fileName"  style="display:none;color: orangered;width: 200px"></label>
 
+                    </div>
+                 </div>
                 <%--添加费用明细--%>
                 <div id="toolbar">
                     <div>
@@ -94,7 +97,6 @@
                     </div>
                 </div>
             </form>
-
         </div>
     </div>
 
@@ -145,28 +147,33 @@
             ,range: true
         });
 
-        document.getElementById('locationImage').style.display = "none";
-
         //创建一个上传组件 ,只能渲染一次
         upload.render({ //允许上传的文件后缀
             elem: '#chooseFile'
             ,url: '${ctx}/file/uploadOneFile'
-            ,accept: 'images' //图片
-            ,acceptMime: 'image/*'
+            ,accept: 'file' //普通文件
             ,before: function(obj){
                 //预读本地文件示例，不支持ie8
                 obj.preview(function(index, file, result){
-                    $('#locationImage').attr('src', result); //图片链接（base64）
+                    $("#fileName").html(file.name);
+                    // $('input[name=fileName]').val(file.name);
                 });
+                $("#test").show();
+            }
+            ,progress: function(n, elem){
+                var percent = n + '%' ;//获取进度百分比
+                element.progress('demo', percent); //可配合 layui 进度条元素使用
             }
             ,done: function(result){ //上传完毕回调
                 //假设code=0代表上传成功
                 if(result.code == 0){
                     //将存储路径和显示文件名保存到表单的隐藏域中
                     $('input[name=fileUrl]').val(result.fileUrl);
-                    document.getElementById('locationImage').style.display = "block";
-                }else
+                    $("#fileName").show();
+                    $("#test").hide();
+                }else{
                     return layer.msg('上传失败');
+                }
             }
             ,error: function(result){
                 //演示失败状态，并实现重传

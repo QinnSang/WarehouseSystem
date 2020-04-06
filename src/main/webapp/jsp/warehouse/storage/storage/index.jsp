@@ -70,6 +70,7 @@
             <script type="text/html" id="barDemo">
                 <a class="layui-btn  layui-btn-xs" lay-event="detail">查看</a>
                 <a class="layui-btn  layui-btn-danger layui-btn-xs" lay-event="goodsNumber">库存货物</a>
+                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
                 <div class="urp-dropdown urp-dropdown-table">
                     <button class="layui-btn layui-btn-primary layui-btn-xs urp-dropdown-btn">
                         更多<i class="layui-icon layui-icon-down"></i>
@@ -126,8 +127,8 @@
             <div class="layui-input-inline" style="width: 190px">
                 <input type="text" name="storageCode" class="layui-input"readonly="readonly">
             </div>
-            <label class="layui-form-label"style="width: 100px">仓储订单名称：</label>
-            <div class="layui-input-inline" style="width: 190px">
+            <label class="layui-form-label"style="width: 150px">仓储订单名称：</label>
+            <div class="layui-input-inline" style="width: 250px">
                 <input type="text" name="storageName" class="layui-input" readonly="readonly">
             </div>
         </div>
@@ -136,19 +137,19 @@
             <div class="layui-input-inline" style="width: 190px">
                 <input type="text" name="contractCode" class="layui-input" readonly="readonly">
             </div>
-            <label class="layui-form-label" style="width: 100px">合同名称：</label>
-            <div class="layui-input-inline" style="width: 190px">
+            <label class="layui-form-label" style="width: 150px">合同名称：</label>
+            <div class="layui-input-inline" style="width: 250px">
                 <input type="text" name="contractName" class="layui-input" readonly="readonly">
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label" style="width: 100px">公司名称：</label>
-            <div class="layui-input-inline" style="width: 190px">
-                <input type="text" name="companyName" class="layui-input" readonly="readonly">
-            </div>
             <label class="layui-form-label" style="width: 100px">库存数量：</label>
             <div class="layui-input-inline" style="width: 190px">
                 <input type="text" name="goodsNumber" class="layui-input" readonly="readonly">
+            </div>
+            <label class="layui-form-label" style="width: 150px">公司名称：</label>
+            <div class="layui-input-inline" style="width: 250px">
+                <input type="text" name="companyName" class="layui-input" readonly="readonly">
             </div>
         </div>
         <div class="layui-form-item">
@@ -156,15 +157,15 @@
             <div class="layui-input-inline" style="width: 190px">
                 <input type="text" name="createBy" class="layui-input" readonly="readonly">
             </div>
-            <label class="layui-form-label" style="width: 100px">创建时间：</label>
-            <div class="layui-input-inline" style="width: 190px">
+            <label class="layui-form-label" style="width: 150px">创建时间：</label>
+            <div class="layui-input-inline" style="width: 250px">
                 <input type="text" name="createTime" class="layui-input" readonly="readonly">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label" style="width: 100px">备注：</label>
             <div class="layui-input-inline">
-                <textarea name="content" style = "width:520px;" class="layui-textarea"  readonly="readonly"></textarea>
+                <textarea name="content" style = "width:600px;" class="layui-textarea"  readonly="readonly"></textarea>
             </div>
         </div>
     </form>
@@ -212,7 +213,7 @@
                 ,{field:'goodsNumber',title: '库存数量',width:90,unresize: true}
                 ,{field:'storageStatus', title: '订单状态',templet:'<div>{{d.storageStatus.valueName}}</div>',width:90,unresize: true}
                 ,{field:'createTime', title: '创建时间',width:180,unresize: true}
-                ,{ title: '操作',align:'center', toolbar: '#barDemo',width:200,unresize: true}
+                ,{ title: '操作',align:'center', toolbar: '#barDemo',width:250,unresize: true}
             ]]
             ,parseData: function(res){ //res 即为原始返回的数据
                 return {
@@ -456,6 +457,8 @@
                 storageDetail(data,obj )
             }else if(layEvent === 'goodsNumber'){
                 goodsNumber(data,obj );
+            }else if(layEvent === 'del'){
+                delUv(data,obj);
             }
         });
 
@@ -464,7 +467,7 @@
             layer.open({
                 type: 1,
                 title: '仓储订单详情',
-                area:['50%','80%'],
+                area:['60%','80%'],
                 skin: 'layui-layer-molv',
                 shade: false, //禁止使用遮罩，否则操作不了界面
                 resize:false, //禁止窗体拉伸
@@ -528,6 +531,36 @@
 
                 }
             })
+        }
+
+        //删除仓储订单
+        function  delUv(data,obj) {
+            layer.confirm('确认删除该仓储订单吗？', {
+                skin: 'layui-layer-molv',
+                shade: .1
+            }, function(index){
+                //向服务端发送删除指令
+                $.ajax({
+                    url: "${ctx}/storage/del",
+                    type: "POST",
+                    data:{
+                        "storageId":data.storageId
+                    },
+                    success: function(StateType){
+                        if (StateType == 'DelSuccess') {
+                            layer.msg("删除成功", {icon: 1});
+                            table.reload('storageTable');
+                        }else if(StateType == 'ConfirmAlready'){
+                            layer.msg('订单已启用、作废或归档，不可删除', {icon: 2});
+                        }else{
+                            layer.msg("删除失败", {icon: 2});
+                        }
+                    },
+                    error:function (data) {
+                        layer.msg("删除失败", {icon: 2});
+                    }
+                });
+            });
         }
 
         //==========================监听行工具事件 end==============

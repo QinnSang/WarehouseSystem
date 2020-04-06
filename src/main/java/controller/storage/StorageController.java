@@ -55,6 +55,12 @@ public class StorageController {
         return stateType;
     }
 
+    @RequestMapping("/del")
+    @ResponseBody
+    public StateType del(@RequestParam int storageId){
+        return storageService.del(storageId);
+    }
+
     @RequestMapping("/invalid/{storageId}")
     @ResponseBody
     public StateType invalid(@PathVariable("storageId")int storageId){

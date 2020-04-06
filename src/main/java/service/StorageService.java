@@ -21,4 +21,6 @@ public interface StorageService {
     StateType archive(int storageId);
 
     List<Storage> queryAllValidStorage();
+
+    StateType del(int storageId);
 }

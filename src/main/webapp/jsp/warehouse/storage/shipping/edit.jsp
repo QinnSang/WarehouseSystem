@@ -152,7 +152,6 @@
         //日期时间选择器
         laydate.render({
             elem: '#shippingTime'
-            ,max:0
             ,value:util.toDateString('${shipping.shippingTime}', 'yyyy-MM-dd')
         });
 

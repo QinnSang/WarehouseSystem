@@ -123,10 +123,8 @@
                 <div id="tableRes" class="table-overlay">
                     <table id="expenseTable" lay-filter="expenseTable" class="layui-hide"></table>
                 </div>
-
                 <div class="layui-form-item">
-                    <%--style="padding-top:15px;left:900px"--%>
-                    <div class="layui-input-block" >
+                    <div class="layui-input-block" style="padding-top:15px;left:900px">
                         <button type="button" name="btnSave" class="layui-btn"  lay-submit lay-filter="formSubmit">保存</button>
                         <input type="button" class="layui-btn" onclick="javascript:history.back(-1);" value="返回">
                     </div>

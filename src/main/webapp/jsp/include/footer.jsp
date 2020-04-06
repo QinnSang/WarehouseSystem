@@ -8,13 +8,15 @@
 <style type="text/css">
     <%--侧边栏伸缩https://www.cnblogs.com/hedianzhan/p/9471486.html--%>
     <%--取消底部固定区域--%>
-    .layui-body{
-        bottom:0px;
+    .layui-layout-admin .layui-footer {
+         height: 0px;
     }
+
 
     /*主体样式*/
     .layui-body {
         position: absolute;
+        bottom:0px;
         left:150px;
         right:0;
         zindex: 998;

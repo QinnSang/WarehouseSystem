@@ -52,7 +52,7 @@ public class StorageServiceImpl implements StorageService {
 
     @Override
     public StateType invalid(int storageId) {
-        Storage storage=storageMapper.queryStatusByContractId(storageId);
+        Storage storage=storageMapper.queryStatusByStorageId(storageId);
         //如果合同已作废或归档，则不可作废
         if(storage.getStatus()== 4 || storage.getStatus()== 3)
             return StateType.getStateType(33);
@@ -66,7 +66,7 @@ public class StorageServiceImpl implements StorageService {
 
     @Override
     public StateType confirm(int storageId) {
-        Storage storage=storageMapper.queryStatusByContractId(storageId);
+        Storage storage=storageMapper.queryStatusByStorageId(storageId);
         //合同仅在审核中状态才可确认
         if(storage.getStatus() != 1 )
             return StateType.getStateType(30);
@@ -80,7 +80,7 @@ public class StorageServiceImpl implements StorageService {
 
     @Override
     public StateType archive(int storageId) {
-        Storage storage=storageMapper.queryStatusByContractId(storageId);
+        Storage storage=storageMapper.queryStatusByStorageId(storageId);
         //合同仅在归档、作废状态才不可归档
         if(storage.getStatus()== 4 || storage.getStatus()== 3)
             return StateType.getStateType(33);
@@ -95,5 +95,17 @@ public class StorageServiceImpl implements StorageService {
     @Override
     public List<Storage> queryAllValidStorage() {
         return storageMapper.queryAllValidStorage();
+    }
+
+    @Override
+    public StateType del(int storageId) {
+        //只有在审核中才可删除
+        Storage storage=storageMapper.queryStatusByStorageId(storageId);
+        if(storage.getStatus() != 1 )
+            return StateType.getStateType(30);
+        int delRow=storageMapper.del(storageId);
+        if(delRow==1)
+            return StateType.getStateType(24);
+        return StateType.getStateType(25);
     }
 }

@@ -100,6 +100,8 @@
 
     <resultMap id="contractAlone" type="pojo.Contract">
         <result property="contractCode" column="contract_code"/>
+        <result property="contractName" column="contract_name"/>
+        <result property="fileUrl" column="file_url"/>
         <association property="company" javaType="pojo.Company">
             <result property="companyName" column="company_name"/>
         </association>
@@ -108,7 +110,9 @@
     <select id="queryByContractId" resultMap="contractAlone">
         select
             contract_code,
-            company_name
+            company_name,
+            contract_name,
+            file_url
         from contract
         inner JOIN company c2 on contract.company_Id = c2.company_id
         where contract_id=#{contractId}
@@ -243,4 +247,8 @@
     <update id="updateStatus" parameterType="pojo.Contract">
         update contract set status = #{status} where contract_id =#{contractId}
     </update>
+
+    <delete id="del" parameterType="integer" >
+        delete from contract where contract_id = #{contractId}
+    </delete>
 </mapper>

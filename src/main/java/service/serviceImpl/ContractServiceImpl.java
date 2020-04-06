@@ -145,4 +145,20 @@ public class ContractServiceImpl implements ContractService {
         return contractMapper.queryByContractId(contractId);
     }
 
+    @Override
+    public StateType del(int contractId) {
+        //只有在审核中才可删除
+        Contract contract=contractMapper.queryStatusByContractId(contractId);
+        if(contract.getStatus() != 1 )
+            return StateType.getStateType(30);
+        //首先删除合同费用明细，防止外键约束不可删除
+        contractExpenseMapper.deleteByContractId(contractId);
+        //然后再删除货物类型
+        int delRow=contractMapper.del(contractId);
+        if(delRow==1)
+            return StateType.getStateType(24);
+        return StateType.getStateType(25);
+    }
+
+
 }

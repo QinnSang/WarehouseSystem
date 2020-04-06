@@ -84,7 +84,7 @@ public class ReceivingController {
         return "storage/receiving/add";
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @RequestMapping("/add")
     @ResponseBody
     public StateType add(@RequestBody Receiving receiving, HttpSession session){
         Employee employee= (Employee) session.getAttribute("employee");
@@ -102,7 +102,7 @@ public class ReceivingController {
         return "storage/receiving/edit";
     }
 
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    @RequestMapping("/update")
     @ResponseBody
     public StateType update(@RequestBody Receiving receiving,Employee employee){
         StateType stateType=receivingService.update(receiving,employee);

@@ -151,7 +151,6 @@
         laydate.render({
             elem: '#shippingTime'
             ,type: 'datetime'
-            ,max:0
         });
 
         //1. 根据选择的仓储订单加载拥有的货物类型和相应的收费项目信息

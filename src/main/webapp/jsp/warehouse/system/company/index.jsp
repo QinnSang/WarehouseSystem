@@ -119,13 +119,13 @@
             , cols: [[ //表头
                 {field: 'companyName', title: '公司名称',  width: 200,unresize: true},
                 {field: 'companyCode', title: '统一社会编码', width: 200,unresize: true},
-                {field: 'companyAddress', title: '公司地址', width: 200, unresize: true},
-                {field: 'companyUser', title: '公司联系人', width: 200,unresize: true},
-                {field: 'companyPhone', title: '联系人电话', width:155, unresize: true},
+                {field: 'companyAddress', title: '公司地址', width: 150, unresize: true},
+                {field: 'companyUser', title: '公司联系人', width: 150,unresize: true},
+                {field: 'companyPhone', title: '联系人电话', width:150, unresize: true},
                 // {field: 'content', title: '创建人', width: 100},
                 // {field: 'createTime', title: '创建时间', width: 165, filter: {type: 'date[yyyy-MM-dd HH:mm:ss]'}, sort:true},
-                {field: 'remark', title: '备注', width: 100, unresize: true},
-                {fixed: 'right', title: '操作',templet: '#barDemo',width: 120, unresize: true}
+                {field: 'remark', title: '备注', width: 180, unresize: true},
+                { title: '操作',templet: '#barDemo',width: 120, unresize: true}
             ]]
             , parseData: function (res) { //res 即为原始返回的数据
                 return {

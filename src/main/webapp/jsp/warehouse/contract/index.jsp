@@ -57,6 +57,7 @@
             <script type="text/html" id="barDemo">
                     <a class="layui-btn  layui-btn-xs" lay-event="detail">查看</a>
                     <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="edit">编辑</a>
+                    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
                     <div class="urp-dropdown urp-dropdown-table">
                         <button class="layui-btn layui-btn-primary layui-btn-xs urp-dropdown-btn">
                             更多<i class="layui-icon layui-icon-down"></i>
@@ -116,11 +117,12 @@
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <input type="hidden" name="fileUrl">
-                    <input type="hidden" name="filename">
-                    <label class="layui-form-label" style = "left:15px">合同附件：</label>
-                    <div class="layui-input-inline">
-                        <button type="button" class="layui-btn" id="chooseFile"><i class="layui-icon layui-icon-download-circle"></i> 下载</button>
+                    <input type="hidden" name="contractId" id="contractId">
+                    <div class="layui-input-inline" id="downloadFile" style="display:none;width: 300px;">
+                        <label class="layui-form-label" style = "left:15px">合同附件：</label>
+                        <a href="#" id="downloadContract" class="layui-btn layui-btn-sm">
+                            <i class="layui-icon layui-icon-download-circle">点击下载</i>
+                        </a>
                     </div>
                 </div>
             </form>
@@ -160,14 +162,14 @@
             ,drag: false // 关闭拖拽列功能
             ,even: true //隔行背景
             ,cols: [[ //表头
-                {field: 'contractCode', title: '合同编号',unresize: true}
-                ,{field: 'contractName', title: '合同名称'}
-                ,{field: 'companyName', title: '公司名称',templet:'<div>{{d.company.companyName}}</div>'}
+                {field: 'contractCode', title: '合同编号',width:160,unresize: true}
+                ,{field: 'contractName', title: '合同名称',width:230,unresize: true}
+                ,{field: 'companyName', title: '公司名称',width:200,templet:'<div>{{d.company.companyName}}</div>',unresize: true}
                 //使用templet模板获取级联属性
-                ,{field:'createByEmployee',title: '创建人',templet:'<div>{{d.createByEmployee.realName}}</div>',width:100,unresize: true}
-                ,{field:'createDate',title: '创建日期'}
-                ,{field:'contractStatus', title: '状态',templet:'<div>{{d.contractStatus.valueName}}</div>',width:100,unresize: true}
-                ,{fixed: 'right', title: '操作',align:'center', toolbar: '#barDemo',width:210,unresize: true}
+                ,{field:'createByEmployee',title: '创建人',templet:'<div>{{d.createByEmployee.realName}}</div>',width:85,unresize: true}
+                ,{field:'createDate',title: '创建日期',width:180,unresize: true}
+                ,{field:'contractStatus', title: '状态',templet:'<div>{{d.contractStatus.valueName}}</div>',width:85,unresize: true}
+                ,{title: '操作',align:'center', toolbar: '#barDemo',width:220,unresize: true}
             ]]
             ,parseData: function(res){ //res 即为原始返回的数据
                 return {
@@ -293,8 +295,14 @@
                 detail(data,obj);
                 <%--window.location.href = "${ctx}/contract/contractDetail/1"//+data.id;--%>
             } else if(layEvent === 'edit'){
+                if(data.contractStatus.valueId != 1){
+                    layer.msg('该合同已启用、作废或归档，无法编辑', {icon: 2});
+                    return ;
+                }
                 //跳转到另一个界面进行修改
                 window.location.href = "${ctx}/contract/toEdit/"+data.contractId;
+            } else if(layEvent === 'del'){
+                delUv(data,obj);
             }
         });
 
@@ -309,6 +317,12 @@
                 skin: 'layui-layer-molv',
                 content:$("#contractDetail"),
                 success: function(layero, index){
+                    //防止其他查看合同界面显示该图标
+                    $("#downloadFile").hide();
+                    //合同有附件才显示下载附件图标
+                    if(data.fileUrl!=null && data.fileUrl!=''){
+                        $("#downloadFile").show();
+                    }
                     //表单赋值
                     form.val('contractDetailFilter',{
                         "contractCode": data.contractCode,
@@ -319,7 +333,8 @@
                         "companyPhone": data.company.companyPhone,
                         "signDate": data.signDate,
                         "content": data.content,
-                        "remark": data.remark
+                        "remark": data.remark,
+                        "contractId":data.contractId
                     });
                     //费用明细
                     var expense=table.render({
@@ -348,6 +363,44 @@
                     });
                 }
             })
+        }
+
+        /** 下载合同附件 */
+        $("a[id ='downloadContract']").click(function(){
+            /** 得到需要下载的文档的id */
+            var contractId = $('#contractId').val();
+            /** 下载该文档 */
+            window.location = "${ctx}/file/downloadContract?contractId="+contractId;
+        });
+
+        //删除合同
+        function  delUv(data,obj) {
+            layer.confirm('确认删除该合同吗？', {
+                skin: 'layui-layer-molv',
+                shade: .1
+            }, function(index){
+                //向服务端发送删除指令
+                $.ajax({
+                    url: "${ctx}/contract/del",
+                    type: "POST",
+                    data:{
+                        "contractId":data.contractId
+                    },
+                    success: function(StateType){
+                        if (StateType == 'DelSuccess') {
+                            layer.msg("删除成功", {icon: 1});
+                            table.reload('contractTable');
+                        }else if(StateType == 'ConfirmAlready'){
+                                layer.msg('合同已启用、作废或归档，不可删除', {icon: 2});
+                        }else{
+                            layer.msg("删除失败", {icon: 2});
+                        }
+                    },
+                    error:function (data) {
+                        layer.msg("删除失败", {icon: 2});
+                    }
+                });
+            });
         }
 
         //==========================监听行工具事件 end==============

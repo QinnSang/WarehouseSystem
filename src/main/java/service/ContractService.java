@@ -25,4 +25,6 @@ public interface ContractService {
     List<Contract> queryAllValidContract();
 
     Contract queryByContractId(int contractId);
+
+    StateType del(int contracttId);
 }

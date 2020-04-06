@@ -28,6 +28,7 @@ public class ReceivingServiceImpl implements ReceivingService {
     @Autowired
     StorageGoodsMappper storageGoodsMappper;
 
+
     @Override
     public PageInfo<Receiving> query(Receiving receiving, Integer page, Integer limit) {
         //防止导出功能没有分页的需求

@@ -7,7 +7,7 @@ import pojo.Employee;
 
 public interface CompanyService {
 
-    PageInfo<Company> query(Company company);
+    PageInfo<Company> query(Company company, Integer page, Integer limit);
 
     Company queryById(Integer companyId);
 

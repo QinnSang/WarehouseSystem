@@ -19,7 +19,7 @@
             <%--使用dto来接收参数--%>
             <form class="layui-form" action="${ctx}/contract/add" method="post">
                 <%--修改合同基本信息--%>
-                    <input type="tel" name="contractId" value="${contract.contractId}" class="layui-hide ">
+                    <input type="tel" name="contractId" id="contractId" value="${contract.contractId}" class="layui-hide ">
                     <div class="layui-form-item">
                     <label class="layui-form-label"><span style="color: red;">* </span>合同名称：</label>
                     <div class="layui-input-inline">
@@ -27,11 +27,11 @@
                     </div>
                     <label class="layui-form-label"><span style="color: red;">* </span>签订日期：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="signDate"  id="signDate"  lay-verify="required" class="layui-input "  placeholder="请选择">
+                        <input type="text" name="signDate"  id="signDate"  lay-verify="required" class="layui-input "  placeholder="请选择" autocomplete="off">
                     </div>
                     <label class="layui-form-label"><span style="color: red;">* </span>起止日期：</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="startEndDate" id="startEndDate" lay-verify="required" class="layui-input"  placeholder="开始日期-结束日期">
+                        <input type="text" name="startEndDate" id="startEndDate" lay-verify="required" class="layui-input"  placeholder="开始日期-结束日期" autocomplete="off">
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -69,17 +69,24 @@
                          </textarea>
                      </div>
                  </div>
-                <div class="layui-form-item">
-                    <input type="hidden" name="fileUrl" value="${contract.fileUrl}">
-                    <label class="layui-form-label" style = "left:15px">合同附件：</label>
-                    <div class="layui-input-inline">
-                        <button type="button" class="layui-btn" id="chooseFile"><i class="layui-icon"></i>上传</button>
+                    <div class="layui-form-item">
+                        <input type="hidden" name="fileUrl" value="${contract.fileUrl}">
+                        <label class="layui-form-label" style = "left:15px">合同附件：</label>
+                        <div class="layui-input-inline" id="downloadFile" style="display:none;">
+                            <a href="${ctx}/file/downloadContract?contractId=${contract.contractId}" id="downloadContract" class="layui-btn">
+                                <i class="layui-icon layui-icon-download-circle"  style="font-size: 15px;">点击下载</i>
+                            </a>
+                        </div>
+                        <div class="layui-input-inline">
+                            <button type="button" class="layui-btn " id="chooseFile"><i class="layui-icon"></i>上传</button>
+                            <div id="test" style="display:none;">
+                                <div class="layui-progress" lay-showPercent="yes" lay-filter="demo" style="width: 150px">
+                                    <div class="layui-progress-bar layui-bg-red" ></div>
+                                </div>
+                            </div>
+                            <label  name="fileName" id="fileName"  style="display:none;color: orangered;width: 200px"></label>
+                        </div>
                     </div>
-                    <div class="layui-input-inline">
-                        <img class="layui-upload-img" id="locationImage" src="${contract.fileUrl}">
-                    </div>
-                </div>
-
                 <%--添加费用明细--%>
                 <div id="toolbar">
                     <div>
@@ -162,26 +169,38 @@
             })
         });
 
+        //合同有附件才显示下载附件图标
+        if('${contract.fileUrl}' !=null && '${contract.fileUrl}'!=''){
+            $("#downloadFile").show();
+        }
+
         //创建一个上传组件 ,只能渲染一次
         upload.render({ //允许上传的文件后缀
             elem: '#chooseFile'
             ,url: '${ctx}/file/uploadOneFile'
-            ,accept: 'images' //图片
-            ,acceptMime: 'image/*'
+            ,accept: 'file' //普通文件
             ,before: function(obj){
                 //预读本地文件示例，不支持ie8
                 obj.preview(function(index, file, result){
-                    $('#locationImage').attr('src', result); //图片链接（base64）
+                    $("#fileName").html(file.name);
+                    // $('input[name=fileName]').val(file.name);
                 });
+                $("#test").show();
+            }
+            ,progress: function(n, elem){
+                var percent = n + '%' ;//获取进度百分比
+                element.progress('demo', percent); //可配合 layui 进度条元素使用
             }
             ,done: function(result){ //上传完毕回调
                 //假设code=0代表上传成功
                 if(result.code == 0){
                     //将存储路径和显示文件名保存到表单的隐藏域中
                     $('input[name=fileUrl]').val(result.fileUrl);
-                    document.getElementById('locationImage').style.display = "block";
-                }else
+                    $("#fileName").show();
+                    $("#test").hide();
+                }else{
                     return layer.msg('上传失败');
+                }
             }
             ,error: function(result){
                 //演示失败状态，并实现重传
@@ -192,6 +211,14 @@
                 });
             }
         });
+
+        <%--/** 下载合同附件 */--%>
+        <%--$("a[id ='downloadContract']").click(function(){--%>
+            <%--/** 得到需要下载的文档的id */--%>
+            <%--var contractId = $('#contractId').val();--%>
+            <%--/** 下载该文档 */--%>
+            <%--window.location = "${ctx}/file/downloadContract?contractId="+contractId;--%>
+        <%--});--%>
 
         //===================根据选择公司自动填充公司代表和联系电话 start===================
         form.on('select(companyId)',function () {

@@ -90,7 +90,7 @@
         order by  t1.create_time desc
     </select>
 
-    <select id="queryStatusByContractId" resultType="pojo.Storage" parameterType="integer">
+    <select id="queryStatusByStorageId" resultType="pojo.Storage" parameterType="integer">
         select storage_id,status from storage where storage_id=#{storageId}
     </select>
 
@@ -152,5 +152,9 @@
     <update id="updateStatus" parameterType="pojo.Storage">
         update storage set status = #{status} where storage_id= #{storageId}
     </update>
+
+    <delete id="del" parameterType="integer" >
+        delete from storage where storage_id = #{storageId}
+    </delete>
 
 </mapper>

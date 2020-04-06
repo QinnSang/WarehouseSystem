@@ -17,9 +17,11 @@ public interface StorageMapper {
 
     int add(Storage storage);
 
-    Storage queryStatusByContractId(@Param("storageId")int storageId);
+    Storage queryStatusByStorageId(@Param("storageId")int storageId);
 
     int updateStatus(Storage storage);
 
     List<Storage> queryAllValidStorage();
+
+    int del(int storageId);
 }

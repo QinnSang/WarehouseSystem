@@ -29,4 +29,5 @@ public interface ContractMapper {
 
     Contract queryByCode(@Param("contractCode") String contractCode);
 
+    int del(int contractId);
 }

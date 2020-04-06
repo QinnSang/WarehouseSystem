@@ -30,10 +30,8 @@ public class CompanyController {
 
     @RequestMapping("/query")
     @ResponseBody
-    public  Map<String,Object> query(@ModelAttribute Company company, HttpSession session, Model model){
-        Employee employee= (Employee) session.getAttribute("employee");
-        System.out.println("============================="+employee.getRealName()+"=============================");
-        PageInfo<Company> pageInfo=companyService.query(company);
+    public  Map<String,Object> query(@ModelAttribute Company company, @RequestParam Integer page, @RequestParam Integer limit){
+        PageInfo<Company> pageInfo=companyService.query(company,page,limit);
         Map<String,Object> tableData =new HashMap<>();
         //这是layui数据表格要求返回的json数据格式
         tableData.put("code", 0);
