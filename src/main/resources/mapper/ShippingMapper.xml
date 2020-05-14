@@ -121,7 +121,7 @@
                 and t1.status = #{status}
             </if>
         </where>
-        order by shipping_time desc, t1.create_date desc
+        order by t1.create_date desc
     </select>
 
     <select  id="generateShippingCode" parameterType="java.util.Map"

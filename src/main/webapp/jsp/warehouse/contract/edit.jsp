@@ -258,8 +258,8 @@
                     }},
                 {field: 'price', title: '价格', edit: 'text'},
                 {field: 'remark', title: '备注', edit: 'text'},
-                {field: 'expenseId', title: '操作', templet: function(d){
-                        return '<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" lay-id="'+ d.expenseId+'"><i class="layui-icon layui-icon-delete"></i>移除</a>';
+                {field: 'tempId', title: '操作', templet: function(d){
+                        return '<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" lay-id="'+ d.tempId +'"><i class="layui-icon layui-icon-delete"></i>移除</a>';
                     }}
             ]]
         });
@@ -303,11 +303,12 @@
 
 
         //定义事件集合    注意：编辑时表格先通过url加载数据，而当增删改时还会重载表格，所以重载时需将url置空，通过oldData加载表格
+        //定义事件集合
         var active = {
             addRow: function(){	//添加一行
                 var oldData = table.cache[layTableId];
                 console.log(oldData);
-                var newRow = {expenseId: new Date().valueOf(), expenseValueId: null, price:null,remark:null};
+                var newRow = {tempId: new Date().valueOf(), expenseValueId: null, amount:null,price:null,remark:null};
                 oldData.push(newRow);
                 tableIns.reload({
                     url:'',
@@ -319,9 +320,9 @@
                 console.log(oldData);
                 for(var i=0, row; i < oldData.length; i++){
                     row = oldData[i];
-                    if(row.expenseId == obj.expenseId){
+                    if(row.tempId == obj.tempId){
                         $.extend(oldData[i], obj);
-                        return;
+                        // return;
                     }
                 }
                 tableIns.reload({
@@ -333,7 +334,7 @@
                 var oldData = table.cache[layTableId];
                 for(var i=0, row; i < oldData.length; i++){
                     row = oldData[i];
-                    if(!row || !row.expenseId){
+                    if(!row || !row.tempId){
                         oldData.splice(i, 1);    //删除一项
                     }
                     continue;
@@ -384,15 +385,14 @@
             console.log(data);
             switch(event){
                 case "expenseValueId":
-                    //console.log(data);
-                    var select = tr.find("select[name='expenseDictionaryValueId']");
+                    var select = tr.find("select[name='expenseValueId']");
                     if(select){
                         var selectedVal = select.val();
                         if(!selectedVal){
                             layer.tips("请选择收费项目", select.next('.layui-form-select'), { tips: [3, '#FF5722'] }); //吸附提示
                         }
-                        console.log(selectedVal);
-                        $.extend(obj.data, {'expenseDictionaryValueId': selectedVal});
+                        // console.log(selectedVal);
+                        $.extend(obj.data, {'expenseValueId': selectedVal});
                         activeByType('updateRow', obj.data);	//更新行记录对象
                     }
                     break;

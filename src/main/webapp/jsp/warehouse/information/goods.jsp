@@ -136,9 +136,9 @@
                             }
                             ,drag: false // 关闭拖拽列功能
                             ,cols: [[
-                                {field: 'goodsName', title: '货物名称', fixed: 'left',width: 450,unresize: true},
-                                {field: 'goodsCode', title: '货物编码', width: 440,unresize: true},
-                                {title: '操作', width: 200, templet: '#childBar',fixed: 'right',unresize: true}
+                                {field: 'goodsName', title: '货物名称',width: 460,unresize: true},
+                                {field: 'goodsCode', title: '货物编码', width: 390,unresize: true},
+                                {title: '操作', templet: '#childBar',unresize: true}
                             ]],
                             filter: { bottom: false  }, //关闭底部编辑筛选按钮
                             //行事件监听
@@ -156,7 +156,7 @@
                     ]},
                 {field: 'goodsName', title: '货物类型', width: 420,unresize: true},
                 {field: 'goodsCode', title: '货物类型编码', width: 390,unresize: true},
-                {title: '操作', width: 300, templet: '#barDemo',unresize: true}
+                {title: '操作', templet: '#barDemo',unresize: true}
             ]]
             ,done: function () {
                 soulTable.render(this)

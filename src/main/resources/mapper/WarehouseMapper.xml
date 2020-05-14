@@ -145,11 +145,8 @@
             <if test="warehouseLocation!=null and warehouseLocation!=''">
                 warehouse_location=#{warehouseLocation},
             </if>
-            <if test="createBy!=null">
-                create_by=#{createBy},
-            </if>
-            <if test="createTime!=null">
-                create_time=#{createTime},
+            <if test="remark!=null and remark!=''">
+                remark = #{remark}
             </if>
         </set>
         <where>

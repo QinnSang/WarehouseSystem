@@ -35,14 +35,14 @@
                         <form name="loginSubmit" action="${ctx}/employee/login" method="post" class="layui-form layui-form-pane" style="margin: auto">
                             <div class="layui-form-item" style="width: 300px">
                                 <div class="layui-input-inline" style="margin-left: 0">
-                                    <input type="text" name="loginCode" id="loginCode" required lay-verify="required" value="admin"
+                                    <input type="text" name="loginCode" id="loginCode" required lay-verify="required"
                                            placeholder="请输入账号" autocomplete="off"
                                            class="layui-input" style="width: 300px">
                                 </div>
                             </div>
                             <div class="layui-form-item" style="width: 300px">
                                 <div class="layui-input-inline" style="margin-left: 0">
-                                    <input type="password" name="password" id="password" required lay-verify="required" value="123456"
+                                    <input type="password" name="password" id="password" required lay-verify="required"
                                            placeholder="请输入密码" autocomplete="off"
                                            class="layui-input" style="width: 300px">
                                 </div>

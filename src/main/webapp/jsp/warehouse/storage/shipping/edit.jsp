@@ -130,6 +130,7 @@
                 html.push('<option value="');
                 html.push(item[valueField]);
                 html.push('"');
+                console.log(selectedValue+"   "+item[valueField]);
                 if(selectedValue && item[valueField] == selectedValue ){
                     html.push(' selected="selected"');
                 }
@@ -498,7 +499,7 @@
             url:'${ctx}/expenseDetail/queryByOrderId',
             where:{
                 "orderId":'${shipping.shippingId}',
-                "orderType":1
+                "orderType":2
             },
             drag: false, // 关闭拖拽列功能
             even: false, //不开启隔行背景

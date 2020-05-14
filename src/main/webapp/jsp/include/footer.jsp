@@ -12,7 +12,6 @@
          height: 0px;
     }
 
-
     /*主体样式*/
     .layui-body {
         position: absolute;

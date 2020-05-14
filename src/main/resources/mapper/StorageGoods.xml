@@ -45,7 +45,7 @@
     </select>
 
     <select id="queryGoodsTypeByStorage" resultType="pojo.Goods">
-          select
+          select distinct
               g.goods_id,
               g.goods_name
           from storage_goods t1
@@ -54,7 +54,7 @@
     </select>
 
     <select id="queryNameByTypeStorage" parameterType="pojo.StorageGoods" resultType="pojo.Goods">
-          select
+          select distinct
               g.goods_id,
               g.goods_name
           from storage_goods t1

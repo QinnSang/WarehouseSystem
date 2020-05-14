@@ -103,7 +103,7 @@
                 {field: 'remark', title: '角色描述', unresize: true},
                 // {field: 'content', title: '创建人', width: 100},
                 // {field: 'createTime', title: '更新时间', width: 165, filter: {type: 'date[yyyy-MM-dd HH:mm:ss]'}, sort:true},
-                {fixed: 'right', title: '操作',align:'center',templet: '#barDemo', unresize: true}
+                { title: '操作',align:'center',templet: '#barDemo', unresize: true}
             ]]
             , parseData: function (res) { //res 即为原始返回的数据
                 return {

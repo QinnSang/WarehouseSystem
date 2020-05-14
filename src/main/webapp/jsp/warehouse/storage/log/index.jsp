@@ -161,7 +161,7 @@
                 ,{field:'goodsNumber', title: '总库存数',unresize: true}
                 ,{field: 'orderBy', title: '操作人', unresize: true}
                 ,{field: 'orderDate', title: '操作日期',width:200,sort:true,unresize: true}
-                ,{ fixed: 'right', title: '操作', toolbar: '#barDemo',width:80,unresize: true}
+                ,{ title: '操作', toolbar: '#barDemo',width:80,unresize: true}
             ]]
             ,parseData: function(res){ //res 即为原始返回的数据
                 return {

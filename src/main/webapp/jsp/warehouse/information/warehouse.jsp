@@ -198,14 +198,14 @@
                             }
                         }
                     ]},
-                {field: 'warehouseName', title: '仓库名称',width: 200,unresize: true},
-                {field: 'warehouseCode', title: '仓库编号', width: 140,unresize: true},
+                {field: 'warehouseName', title: '仓库名称',width: 230,unresize: true},
+                {field: 'warehouseCode', title: '仓库编号', width: 150,unresize: true},
                 {field: 'warehousePhone', title: '联系电话', width: 160 ,unresize: true},
-                {field: 'warehouseLocation', title: '仓库位置', width: 130,unresize: true},
-                {field: 'remark', title: '备注', width: 280,unresize: true},
+                {field: 'warehouseLocation', title: '仓库位置', width: 200,unresize: true},
+                {field: 'remark', title: '备注', width: 240,unresize: true},
                 // {field: 'createBy', title: '创建人',hide:true,templet:'<div>{{d.createByUser.realName}}</div>'},
                 {field: 'createTime', title: '创建时间',hide:true},
-                {title: '操作', width: 180, templet: '#barDemo',unresize: true}
+                {title: '操作', templet: '#barDemo', width: 120,unresize: true}
             ]]
             ,parseData: function(res){ //res 即为原始返回的数据
                 return {

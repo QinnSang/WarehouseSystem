@@ -152,6 +152,8 @@
                 html.push('<option value="');
                 html.push(item[valueField]);
                 html.push('"');
+                console.log(selectedValue+"   "+item[valueField]);
+
                 if(selectedValue && item[valueField] == selectedValue ){
                     html.push(' selected="selected"');
                 }

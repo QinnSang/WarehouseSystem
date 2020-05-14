@@ -267,11 +267,11 @@
                             ,{field:'storageName',title: '仓储订单名称',width:180,templet:'<div>{{d.storage.storageName}}</div>',unresize: true}
                             ,{field:'totalPrice',title: '合计费用',width:100,unresize: true}
                             ,{field:'checkStatus',title: '结算状态',templet:'<div>{{d.checkStatus.valueName}}</div>',width:100,unresize: true}
-                            ,{field: 'checkDate', title: '结算日期',width:100,unresize: true}
+                            ,{field: 'checkDate', title: '结算日期',width:130,unresize: true}
                             ,{field: 'checkBy', title: '结算人',width:100,unresize: true
                                  ,templet:function (d) { return d.checkByUser ?  d.checkByUser.realName:'' ;}  //如果为空则返回空字符串
                             }
-                            ,{ title: '操作',toolbar: '#settleBar',width:270,unresize: true}
+                            ,{ title: '操作',toolbar: '#settleBar',width:320,unresize: true}
                         ]]
                         ,parseData: function(res){ //res 即为原始返回的数据
                             return {

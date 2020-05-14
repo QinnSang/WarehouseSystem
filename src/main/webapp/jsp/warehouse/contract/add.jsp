@@ -308,6 +308,7 @@
                     }
                 }
                 tableIns.reload({
+                    url:'',
                     data : oldData
                 });
             },
